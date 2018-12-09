@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,30 +29,37 @@ public class RoomVsMealEntity extends CommonEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "room_vs_meal_id")
+	@JsonProperty("roomVsMealId")
 	private Long roomVsMealId;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "meal_category_id", nullable = false)
+	@JsonProperty("mealCategory")
 	private MealCategoryEntity mealCategoryEntity;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "room_id", nullable = false)
+	@JsonProperty("room")
 	private RoomEntity roomEntity;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "meal_days_id", nullable = false)
+	@JsonProperty("mealDays")
 	private MealDaysEntity mealDaysEntity;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "meal_type_id", nullable = false)
+	@JsonProperty("mealType")
 	private MealTypeEntity mealTypeEntity;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "mpcmp_id", nullable = false)
+	@JsonProperty("mealPlanCatVsMealPlan")
 	private MealPlanCatVsMealPlanEntity mealPlanCatVsMealPlanEntity;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "mmpc_id", nullable = false)
+	@JsonProperty("mealPriceCategory")
 	private MealPriceCategoryEntity mealPriceCategoryEntity;
 	
 	@Override

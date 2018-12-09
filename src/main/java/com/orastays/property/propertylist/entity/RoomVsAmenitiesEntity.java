@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,20 +28,23 @@ public class RoomVsAmenitiesEntity extends CommonEntity {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "room_vs_ami_id")
-	private Long roomVsAmiId;
+	@Column(name = "room_vs_aminities_id")
+	@JsonProperty("roomVsAminitiesId")
+	private Long roomVsAminitiesId;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "aminities_id", nullable = false)
+	@JsonProperty("amenities")
 	private AmenitiesEntity amenitiesEntity;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "room_id", nullable = false)
+	@JsonProperty("room")
 	private RoomEntity roomEntity;
 
 	@Override
 	public String toString() {
-		return Long.toString(roomVsAmiId);
+		return Long.toString(roomVsAminitiesId);
 	}
 
 }

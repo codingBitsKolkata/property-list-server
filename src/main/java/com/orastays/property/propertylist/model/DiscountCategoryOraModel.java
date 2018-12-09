@@ -2,6 +2,8 @@ package com.orastays.property.propertylist.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +15,12 @@ import lombok.ToString;
 @ToString
 public class DiscountCategoryOraModel extends CommonModel {
 
+	@JsonProperty("dcoId")
 	private String dcoId;
-	private String disCatOraname;
-	private List<RoomModel> roomModels;
+	
+	@JsonProperty("disCatOraName")
+	private String disCatOraName;
+	
+	@JsonProperty("roomVsOraDiscounts")
+	private List<RoomVsOraDiscountModel> roomVsOraDiscountModels;
 }

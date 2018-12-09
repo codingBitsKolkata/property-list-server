@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,13 +29,16 @@ public class WishlistEntity extends CommonEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "wishlist_id")
+	@JsonProperty("wishlistId")
 	private Long wishlistId;
 	
 	@Column(name = "user_id")
+	@JsonProperty("userId")
 	private Long userId;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "property_id", nullable = false)
+	@JsonProperty("property")
 	private PropertyEntity propertyEntity;
 
 	@Override

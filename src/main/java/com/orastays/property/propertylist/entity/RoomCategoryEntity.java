@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,22 +32,28 @@ public class RoomCategoryEntity extends CommonEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "room_cat_id")
+	@JsonProperty("roomCatId")
 	private Long roomCatId;
 	
 	@Column(name = "name")
+	@JsonProperty("name")
 	private String name;
 	
 	@Column(name = "language_id")
+	@JsonProperty("languageId")
 	private Long languageId;
 
 	@Column(name = "parent_id")
+	@JsonProperty("parentId")
 	private Long parentId;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "property_type_id", nullable = false)
+	@JsonProperty("propertyType")
 	private PropertyTypeEntity propertyTypeEntity;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "roomCategoryEntity", cascade = { CascadeType.ALL })
+	@JsonProperty("rooms")
 	private List<RoomEntity> roomEntities;
 	
 	@Override

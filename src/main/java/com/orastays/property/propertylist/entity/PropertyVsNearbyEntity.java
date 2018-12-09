@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,13 +29,28 @@ public class PropertyVsNearbyEntity extends CommonEntity  {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "property_nearby_id")
+	@JsonProperty("propertyNearbyId")
 	private Long propertyNearbyId;
 
 	@Column(name = "places")
+	@JsonProperty("places")
 	private String places;
+	
+	@Column(name = "latitude")
+	@JsonProperty("latitude")
+	private String latitude;
+	
+	@Column(name = "longitude")
+	@JsonProperty("longitude")
+	private String longitude;
+	
+	@Column(name = "address")
+	@JsonProperty("address")
+	private String address;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "property_id", nullable = false)
+	@JsonProperty("property")
 	private PropertyEntity propertyEntity;
 	
 	@Override

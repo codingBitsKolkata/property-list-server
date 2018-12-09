@@ -2,6 +2,8 @@ package com.orastays.property.propertylist.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,32 +15,87 @@ import lombok.ToString;
 @ToString
 public class PropertyModel extends CommonModel {
 
-	private String propertyId;
+	@JsonProperty("propertyId")
+	private Long propertyId;
+
+	@JsonProperty("name")
 	private String name;
+
+	@JsonProperty("oraname")
 	private String oraname;
+
+	@JsonProperty("entireApartment")
 	private String entireApartment;
+
+	@JsonProperty("dedicatedSpace")
 	private String dedicatedSpace;
+
+	@JsonProperty("apartmentName")
 	private String apartmentName;
+
+	@JsonProperty("apartmentNumber")
 	private String apartmentNumber;
+
+	@JsonProperty("latitude")
 	private String latitude;
+
+	@JsonProperty("longitude")
 	private String longitude;
+
+	@JsonProperty("address")
 	private String address;
+
+	@JsonProperty("startDate")
 	private String startDate;
+
+	@JsonProperty("endDate")
 	private String endDate;
+
+	@JsonProperty("checkinTime")
 	private String checkinTime;
+
+	@JsonProperty("checkoutTime")
 	private String checkoutTime;
+
+	@JsonProperty("coverImageUrl")
 	private String coverImageUrl;
+
+	@JsonProperty("priceDrop")
 	private String priceDrop;
+
+	@JsonProperty("propertyType")
 	private PropertyTypeModel propertyTypeModel;
+
+	@JsonProperty("stayType")
+	private StayTypeModel stayTypeModel;
+
+	@JsonProperty("pgCategorySex")
+	private PGCategorySexModel pgCategorySexModel;
+
+	@JsonProperty("propertyVsDescription")
 	private List<PropertyVsDescriptionModel> propertyVsDescriptionModels;
+
+	@JsonProperty("propertyVsGuestAccess")
 	private List<PropertyVsGuestAccessModel> propertyVsGuestAccessModels;
-	private List<PropertyVsHomestayModel> propertyVsHomestayModels;
+
+	@JsonProperty("propertyVsHomestays")
+	private PropertyVsHomestayModel propertyVsHomestayModel;
+
+	@JsonProperty("propertyVsImages")
 	private List<PropertyVsImageModel> propertyVsImageModels;
+
+	@JsonProperty("propertyVsNearbys")
 	private List<PropertyVsNearbyModel> propertyVsNearbyModels;
-	private List<PropertyVsPgcsModel> propertyVsPgcsModels;
+
+	@JsonProperty("propertyVsPriceDrops")
 	private List<PropertyVsPriceDropModel> propertyVsPriceDropModels;
+
+	@JsonProperty("propertyVsSpaceRules")
 	private List<PropertyVsSpaceRuleModel> propertyVsSpaceRuleModels;
+
+	@JsonProperty("propertyVsSpecialExperiences")
 	private List<PropertyVsSpecialExperienceModel> propertyVsSpecialExperienceModels;
-	private List<PropertyVsStayTypeModel> propertyVsStayTypeModels;
-	private List<RoomModel> roomModel;
+
+	@JsonProperty("rooms")
+	private List<RoomModel> roomModels;
 }

@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,14 +29,17 @@ public class PropertyVsSpecialExperienceEntity extends CommonEntity  {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "property_exp_id")
+	@JsonProperty("propertyExpId")
 	private Long propertyExpId;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "experience_id", nullable = false)
+	@JsonProperty("specialExperience")
 	private SpecialExperienceEntity specialExperienceEntity;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "property_id", nullable = false)
+	@JsonProperty("property")
 	private PropertyEntity propertyEntity;
 	
 	@Override

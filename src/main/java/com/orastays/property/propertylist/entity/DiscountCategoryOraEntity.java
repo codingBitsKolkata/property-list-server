@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,13 +30,16 @@ public class DiscountCategoryOraEntity extends CommonEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "dco_id")
+	@JsonProperty("dcoId")
 	private Long dcoId;
 	
 	@Column(name = "dis_cat_ora_name")
-	private String disCatOraname;
+	@JsonProperty("disCatOraName")
+	private String disCatOraName;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "discountCategoryOraEntity", cascade = { CascadeType.ALL })
-	private List<RoomEntity> roomEntities;
+	@JsonProperty("roomVsOraDiscounts")
+	private List<RoomVsOraDiscountEntity> roomVsOraDiscountEntities;
 	
 	@Override
 	public String toString() {

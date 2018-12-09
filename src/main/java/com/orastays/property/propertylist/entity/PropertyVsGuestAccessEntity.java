@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,13 +29,20 @@ public class PropertyVsGuestAccessEntity extends CommonEntity  {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "property_gaccess_id")
+	@JsonProperty("propertyGAccessId")
 	private Long propertyGAccessId;
 
 	@Column(name = "guest_access")
+	@JsonProperty("guestAccess")
 	private String guestAccess;
+	
+	@Column(name = "language_id")
+	@JsonProperty("languageId")
+	private Long languageId;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "property_id", nullable = false)
+	@JsonProperty("property")
 	private PropertyEntity propertyEntity;
 	
 	@Override

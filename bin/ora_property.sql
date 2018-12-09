@@ -1,15 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
--- https://www.phpmyadmin.net/
+-- version 4.5.2
+-- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Dec 03, 2018 at 05:47 PM
--- Server version: 5.7.23
--- PHP Version: 7.2.10
+-- Host: 127.0.0.1
+-- Generation Time: Dec 09, 2018 at 10:58 AM
+-- Server version: 5.7.9
+-- PHP Version: 5.6.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -64,9 +62,11 @@ CREATE TABLE IF NOT EXISTS `master_amenities` (
   `modified_by` bigint(20) DEFAULT NULL,
   `modified_date` varchar(255) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
+  `aminities_name` varchar(255) DEFAULT NULL,
+  `filter_flag` varchar(255) DEFAULT NULL,
   `language_id` bigint(20) DEFAULT NULL,
   `parent_id` bigint(20) DEFAULT NULL,
+  `priority` varchar(255) DEFAULT NULL,
   `aminities_type_id` bigint(20) NOT NULL,
   PRIMARY KEY (`aminities_id`),
   KEY `FKp3o29x7c2yypk58qqciptjj8a` (`aminities_type_id`)
@@ -76,10 +76,10 @@ CREATE TABLE IF NOT EXISTS `master_amenities` (
 -- Dumping data for table `master_amenities`
 --
 
-INSERT INTO `master_amenities` (`aminities_id`, `created_by`, `created_date`, `modified_by`, `modified_date`, `status`, `name`, `language_id`, `parent_id`, `aminities_type_id`) VALUES
-(1, 1, '2018-09-06 01:27:34', NULL, NULL, 1, 'WIFI', 1, 0, 1),
-(2, 1, '2018-09-06 01:27:34', NULL, NULL, 1, 'Heater', 1, 0, 1),
-(3, 1, '2018-09-06 01:27:34', NULL, NULL, 1, 'Table Lamp', 1, 0, 2);
+INSERT INTO `master_amenities` (`aminities_id`, `created_by`, `created_date`, `modified_by`, `modified_date`, `status`, `aminities_name`, `filter_flag`, `language_id`, `parent_id`, `priority`, `aminities_type_id`) VALUES
+(1, 1, '2018-09-06 01:27:34', NULL, NULL, 1, 'WIFI', '1', 1, 0, '1', 1),
+(2, 1, '2018-09-06 01:27:34', NULL, NULL, 1, 'Heater', NULL, 1, 0, NULL, 1),
+(3, 1, '2018-09-06 01:27:34', NULL, NULL, 1, 'Table Lamp', '1', 1, 0, '2', 2);
 
 -- --------------------------------------------------------
 
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `master_amenities_type` (
   `modified_by` bigint(20) DEFAULT NULL,
   `modified_date` varchar(255) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
+  `aminities_type_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`aminities_type_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `master_amenities_type` (
 -- Dumping data for table `master_amenities_type`
 --
 
-INSERT INTO `master_amenities_type` (`aminities_type_id`, `created_by`, `created_date`, `modified_by`, `modified_date`, `status`, `name`) VALUES
+INSERT INTO `master_amenities_type` (`aminities_type_id`, `created_by`, `created_date`, `modified_by`, `modified_date`, `status`, `aminities_type_name`) VALUES
 (1, 1, '2018-09-06 01:27:34', NULL, NULL, 1, 'Basic'),
 (2, 1, '2018-09-06 01:27:34', NULL, NULL, 1, 'Others');
 
@@ -148,7 +148,7 @@ CREATE TABLE IF NOT EXISTS `master_discount_category_host` (
   `modified_by` bigint(20) DEFAULT NULL,
   `modified_date` varchar(255) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
+  `dis_cat_host_name` varchar(255) DEFAULT NULL,
   `language_id` bigint(20) DEFAULT NULL,
   `parent_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`dch_id`)
@@ -158,7 +158,7 @@ CREATE TABLE IF NOT EXISTS `master_discount_category_host` (
 -- Dumping data for table `master_discount_category_host`
 --
 
-INSERT INTO `master_discount_category_host` (`dch_id`, `created_by`, `created_date`, `modified_by`, `modified_date`, `status`, `name`, `language_id`, `parent_id`) VALUES
+INSERT INTO `master_discount_category_host` (`dch_id`, `created_by`, `created_date`, `modified_by`, `modified_date`, `status`, `dis_cat_host_name`, `language_id`, `parent_id`) VALUES
 (1, 1, '2018-09-06 01:27:34', NULL, NULL, 1, 'Weekly', 1, 0),
 (2, 1, '2018-09-06 01:27:34', NULL, NULL, 1, 'Monthly', 1, 0);
 
@@ -287,7 +287,7 @@ CREATE TABLE IF NOT EXISTS `master_meal_plan_category` (
   `modified_date` varchar(255) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   `language_id` bigint(20) DEFAULT NULL,
-  `mean_plan_category_name` varchar(255) DEFAULT NULL,
+  `mpc_name` varchar(255) DEFAULT NULL,
   `parent_id` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`mpc_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
@@ -296,7 +296,7 @@ CREATE TABLE IF NOT EXISTS `master_meal_plan_category` (
 -- Dumping data for table `master_meal_plan_category`
 --
 
-INSERT INTO `master_meal_plan_category` (`mpc_id`, `created_by`, `created_date`, `modified_by`, `modified_date`, `status`, `language_id`, `mean_plan_category_name`, `parent_id`) VALUES
+INSERT INTO `master_meal_plan_category` (`mpc_id`, `created_by`, `created_date`, `modified_by`, `modified_date`, `status`, `language_id`, `mpc_name`, `parent_id`) VALUES
 (1, 1, '2018-09-06 01:27:34', NULL, NULL, 1, 1, 'AP', 0),
 (2, 1, '2018-09-06 01:27:34', NULL, NULL, 1, 1, 'CP', 0);
 
@@ -423,9 +423,9 @@ CREATE TABLE IF NOT EXISTS `master_price_type` (
   `modified_by` bigint(20) DEFAULT NULL,
   `modified_date` varchar(255) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
   `language_id` bigint(20) DEFAULT NULL,
   `parent_id` bigint(20) DEFAULT NULL,
+  `price_type_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`price_type_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
@@ -433,9 +433,9 @@ CREATE TABLE IF NOT EXISTS `master_price_type` (
 -- Dumping data for table `master_price_type`
 --
 
-INSERT INTO `master_price_type` (`price_type_id`, `created_by`, `created_date`, `modified_by`, `modified_date`, `status`, `name`, `language_id`, `parent_id`) VALUES
-(1, 1, '2018-09-06 01:27:34', NULL, NULL, 1, 'Base Price', 1, 0),
-(2, 1, '2018-09-06 01:27:34', NULL, NULL, NULL, 'Convenience Fee', 1, 0);
+INSERT INTO `master_price_type` (`price_type_id`, `created_by`, `created_date`, `modified_by`, `modified_date`, `status`, `language_id`, `parent_id`, `price_type_name`) VALUES
+(1, 1, '2018-09-06 01:27:34', NULL, NULL, 1, 1, 0, 'Base Price'),
+(2, 1, '2018-09-06 01:27:34', NULL, NULL, NULL, 1, 0, 'Convenience Fee');
 
 -- --------------------------------------------------------
 
@@ -466,18 +466,14 @@ CREATE TABLE IF NOT EXISTS `master_property` (
   `oraname` varchar(255) DEFAULT NULL,
   `price_drop` varchar(255) DEFAULT NULL,
   `start_date` varchar(255) DEFAULT NULL,
+  `pgcs_id` bigint(20) NOT NULL,
   `property_type_id` bigint(20) NOT NULL,
+  `stay_type_id` bigint(20) NOT NULL,
   PRIMARY KEY (`property_id`),
-  KEY `FK5a00uodiowpit4s2fbuqgbm09` (`property_type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `master_property`
---
-
-INSERT INTO `master_property` (`property_id`, `created_by`, `created_date`, `modified_by`, `modified_date`, `status`, `address`, `apartment_name`, `apartment_number`, `checkin_time`, `checkout_time`, `cover_image_url`, `dedicated_space`, `end_date`, `entire_apartment`, `latitude`, `longitude`, `name`, `oraname`, `price_drop`, `start_date`, `property_type_id`) VALUES
-(1, 1, '2018-09-06 01:27:34', NULL, NULL, 1, 'Kolkata', 'Baitalik', '1442', '11:30', '10:30', 'google.com', '1', '2019-09-06 ', '1', '88.254', '22.451', 'Baitalik', 'ORA784SD', '1', '2018-09-06', 1),
-(2, 1, '2018-09-06 01:27:34', NULL, NULL, 1, 'Kolkata', 'Baitalik', '1982', '11:30', '10:30', 'google.com', '1', '2019-09-06 ', '1', '88.254', '22.451', 'Baitalik1', 'ORA884SD', '1', '2018-09-06', 2);
+  KEY `FKdbbufp6ie2vuvbpe1yrmhi07i` (`pgcs_id`),
+  KEY `FK5a00uodiowpit4s2fbuqgbm09` (`property_type_id`),
+  KEY `FK156vy9s4sl5mh6nxjo74bg2rv` (`stay_type_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -521,7 +517,6 @@ CREATE TABLE IF NOT EXISTS `master_room` (
   `modified_by` bigint(20) DEFAULT NULL,
   `modified_date` varchar(255) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
-  `commision` varchar(255) DEFAULT NULL,
   `cot_available` varchar(255) DEFAULT NULL,
   `floor_no` varchar(255) DEFAULT NULL,
   `no_of_child` varchar(255) DEFAULT NULL,
@@ -529,13 +524,11 @@ CREATE TABLE IF NOT EXISTS `master_room` (
   `num_of_cot` varchar(255) DEFAULT NULL,
   `shared_space` varchar(255) DEFAULT NULL,
   `accommodation_id` bigint(20) NOT NULL,
-  `dco_id` bigint(20) NOT NULL,
   `property_id` bigint(20) NOT NULL,
   `room_cat_id` bigint(20) NOT NULL,
   `room_standard_id` bigint(20) NOT NULL,
   PRIMARY KEY (`room_id`),
   KEY `FK1jg5ov7jt5k4iaivxxa58u891` (`accommodation_id`),
-  KEY `FKas320kthc654sqmr7b83lqcr7` (`dco_id`),
   KEY `FKbb90tsoincrb0l8ns200x754s` (`property_id`),
   KEY `FKjw1vho56i8n32d1tyt64yh8ey` (`room_cat_id`),
   KEY `FKk76nhy20o1xpxxvciuyo75c93` (`room_standard_id`)
@@ -817,6 +810,7 @@ CREATE TABLE IF NOT EXISTS `property_vs_guest_access` (
   `modified_date` varchar(255) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   `guest_access` varchar(255) DEFAULT NULL,
+  `language_id` bigint(20) DEFAULT NULL,
   `property_id` bigint(20) NOT NULL,
   PRIMARY KEY (`property_gaccess_id`),
   KEY `FKg443u2hdb4sbrrnjwsrsxh7rk` (`property_id`)
@@ -877,31 +871,13 @@ CREATE TABLE IF NOT EXISTS `property_vs_nearby` (
   `modified_by` bigint(20) DEFAULT NULL,
   `modified_date` varchar(255) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `latitude` varchar(255) DEFAULT NULL,
+  `longitude` varchar(255) DEFAULT NULL,
   `places` varchar(255) DEFAULT NULL,
   `property_id` bigint(20) NOT NULL,
   PRIMARY KEY (`property_nearby_id`),
   KEY `FKru2h6pp77q418s5973c7125de` (`property_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `property_vs_pgcs`
---
-
-DROP TABLE IF EXISTS `property_vs_pgcs`;
-CREATE TABLE IF NOT EXISTS `property_vs_pgcs` (
-  `property_pgcs_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `created_by` bigint(20) DEFAULT NULL,
-  `created_date` varchar(255) DEFAULT NULL,
-  `modified_by` bigint(20) DEFAULT NULL,
-  `modified_date` varchar(255) DEFAULT NULL,
-  `status` int(11) DEFAULT NULL,
-  `pgcs_id` bigint(20) NOT NULL,
-  `property_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`property_pgcs_id`),
-  KEY `FKo31dvoe2ky2ut5m3v14haw9ud` (`pgcs_id`),
-  KEY `FKevb64etpwh6q6bx8mojqnv5q8` (`property_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -951,33 +927,12 @@ CREATE TABLE IF NOT EXISTS `property_vs_space` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `property_vs_stay_type`
---
-
-DROP TABLE IF EXISTS `property_vs_stay_type`;
-CREATE TABLE IF NOT EXISTS `property_vs_stay_type` (
-  `property_staytype_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `created_by` bigint(20) DEFAULT NULL,
-  `created_date` varchar(255) DEFAULT NULL,
-  `modified_by` bigint(20) DEFAULT NULL,
-  `modified_date` varchar(255) DEFAULT NULL,
-  `status` int(11) DEFAULT NULL,
-  `property_id` bigint(20) NOT NULL,
-  `stay_type_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`property_staytype_id`),
-  KEY `FK8g1imfntfmb6kyf8broaxn342` (`property_id`),
-  KEY `FKouh3xb7902uvpf527ojvjawyk` (`stay_type_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `room_vs_amenities`
 --
 
 DROP TABLE IF EXISTS `room_vs_amenities`;
 CREATE TABLE IF NOT EXISTS `room_vs_amenities` (
-  `room_vs_ami_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `room_vs_aminities_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
@@ -985,7 +940,7 @@ CREATE TABLE IF NOT EXISTS `room_vs_amenities` (
   `status` int(11) DEFAULT NULL,
   `aminities_id` bigint(20) NOT NULL,
   `room_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`room_vs_ami_id`),
+  PRIMARY KEY (`room_vs_aminities_id`),
   KEY `FKm50c7up4jp1m0vl36325pktvw` (`aminities_id`),
   KEY `FKblve2wd06ghlbt72q1onnu1ib` (`room_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1140,20 +1095,22 @@ CREATE TABLE IF NOT EXISTS `room_vs_ora_discount` (
   `modified_by` bigint(20) DEFAULT NULL,
   `modified_date` varchar(255) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
-  `percentage` varchar(255) DEFAULT NULL,
+  `discount` varchar(255) DEFAULT NULL,
+  `dco_id` bigint(20) NOT NULL,
   `room_id` bigint(20) NOT NULL,
   PRIMARY KEY (`rod_id`),
+  KEY `FKpct47x10hg0lpqb40of2uqjye` (`dco_id`),
   KEY `FKk39qeirk6ipubv3iu87ehx7m4` (`room_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `room_vs_ora_price_percentage`
+-- Table structure for table `room_vs_ora_price`
 --
 
-DROP TABLE IF EXISTS `room_vs_ora_price_percentage`;
-CREATE TABLE IF NOT EXISTS `room_vs_ora_price_percentage` (
+DROP TABLE IF EXISTS `room_vs_ora_price`;
+CREATE TABLE IF NOT EXISTS `room_vs_ora_price` (
   `rop_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
@@ -1163,7 +1120,7 @@ CREATE TABLE IF NOT EXISTS `room_vs_ora_price_percentage` (
   `percentage` varchar(255) DEFAULT NULL,
   `room_id` bigint(20) NOT NULL,
   PRIMARY KEY (`rop_id`),
-  KEY `FK4hre7nhm5iu5c9mfkwlk32i1y` (`room_id`)
+  KEY `FK2mntqtwkqsqacajio6oi1y2kv` (`room_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -1202,11 +1159,11 @@ CREATE TABLE IF NOT EXISTS `room_vs_specialties` (
   `modified_by` bigint(20) DEFAULT NULL,
   `modified_date` varchar(255) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
-  `specialties_id` bigint(20) NOT NULL,
   `room_id` bigint(20) NOT NULL,
+  `specialties_id` bigint(20) NOT NULL,
   PRIMARY KEY (`roomspec_id`),
-  KEY `FKc1qg1bdwaks4y6i6f8vf0udql` (`specialties_id`),
-  KEY `FKmjiqftc5rdrthmteghtchnkav` (`room_id`)
+  KEY `FKmjiqftc5rdrthmteghtchnkav` (`room_id`),
+  KEY `FKoe11vqm2reg89jso2t6d4mm7d` (`specialties_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1223,14 +1180,15 @@ ALTER TABLE `master_amenities`
 -- Constraints for table `master_property`
 --
 ALTER TABLE `master_property`
-  ADD CONSTRAINT `FK5a00uodiowpit4s2fbuqgbm09` FOREIGN KEY (`property_type_id`) REFERENCES `master_property_type` (`property_type_id`);
+  ADD CONSTRAINT `FK156vy9s4sl5mh6nxjo74bg2rv` FOREIGN KEY (`stay_type_id`) REFERENCES `master_stay_type` (`stay_type_id`),
+  ADD CONSTRAINT `FK5a00uodiowpit4s2fbuqgbm09` FOREIGN KEY (`property_type_id`) REFERENCES `master_property_type` (`property_type_id`),
+  ADD CONSTRAINT `FKdbbufp6ie2vuvbpe1yrmhi07i` FOREIGN KEY (`pgcs_id`) REFERENCES `master_pg_category_sex` (`pgcs_id`);
 
 --
 -- Constraints for table `master_room`
 --
 ALTER TABLE `master_room`
   ADD CONSTRAINT `FK1jg5ov7jt5k4iaivxxa58u891` FOREIGN KEY (`accommodation_id`) REFERENCES `master_accommodation` (`accommodation_id`),
-  ADD CONSTRAINT `FKas320kthc654sqmr7b83lqcr7` FOREIGN KEY (`dco_id`) REFERENCES `master_discount_category_ora` (`dco_id`),
   ADD CONSTRAINT `FKbb90tsoincrb0l8ns200x754s` FOREIGN KEY (`property_id`) REFERENCES `master_property_type` (`property_type_id`),
   ADD CONSTRAINT `FKjw1vho56i8n32d1tyt64yh8ey` FOREIGN KEY (`room_cat_id`) REFERENCES `master_room_category` (`room_cat_id`),
   ADD CONSTRAINT `FKk76nhy20o1xpxxvciuyo75c93` FOREIGN KEY (`room_standard_id`) REFERENCES `master_room_standard` (`room_standard_id`);
@@ -1292,13 +1250,6 @@ ALTER TABLE `property_vs_nearby`
   ADD CONSTRAINT `FKru2h6pp77q418s5973c7125de` FOREIGN KEY (`property_id`) REFERENCES `master_property` (`property_id`);
 
 --
--- Constraints for table `property_vs_pgcs`
---
-ALTER TABLE `property_vs_pgcs`
-  ADD CONSTRAINT `FKevb64etpwh6q6bx8mojqnv5q8` FOREIGN KEY (`property_id`) REFERENCES `master_property` (`property_id`),
-  ADD CONSTRAINT `FKo31dvoe2ky2ut5m3v14haw9ud` FOREIGN KEY (`pgcs_id`) REFERENCES `master_pg_category_sex` (`pgcs_id`);
-
---
 -- Constraints for table `property_vs_pricedrop`
 --
 ALTER TABLE `property_vs_pricedrop`
@@ -1311,13 +1262,6 @@ ALTER TABLE `property_vs_pricedrop`
 ALTER TABLE `property_vs_space`
   ADD CONSTRAINT `FKhd1vunghcip4rtk0511i53tf7` FOREIGN KEY (`sprule_id`) REFERENCES `master_space_rule` (`sprule_id`),
   ADD CONSTRAINT `FKklkdybjqkwqcsydd52tcjt4g0` FOREIGN KEY (`property_id`) REFERENCES `master_property` (`property_id`);
-
---
--- Constraints for table `property_vs_stay_type`
---
-ALTER TABLE `property_vs_stay_type`
-  ADD CONSTRAINT `FK8g1imfntfmb6kyf8broaxn342` FOREIGN KEY (`property_id`) REFERENCES `master_property` (`property_id`),
-  ADD CONSTRAINT `FKouh3xb7902uvpf527ojvjawyk` FOREIGN KEY (`stay_type_id`) REFERENCES `master_stay_type` (`stay_type_id`);
 
 --
 -- Constraints for table `room_vs_amenities`
@@ -1373,13 +1317,14 @@ ALTER TABLE `room_vs_meal`
 -- Constraints for table `room_vs_ora_discount`
 --
 ALTER TABLE `room_vs_ora_discount`
-  ADD CONSTRAINT `FKk39qeirk6ipubv3iu87ehx7m4` FOREIGN KEY (`room_id`) REFERENCES `master_room` (`room_id`);
+  ADD CONSTRAINT `FKk39qeirk6ipubv3iu87ehx7m4` FOREIGN KEY (`room_id`) REFERENCES `master_room` (`room_id`),
+  ADD CONSTRAINT `FKpct47x10hg0lpqb40of2uqjye` FOREIGN KEY (`dco_id`) REFERENCES `master_discount_category_ora` (`dco_id`);
 
 --
--- Constraints for table `room_vs_ora_price_percentage`
+-- Constraints for table `room_vs_ora_price`
 --
-ALTER TABLE `room_vs_ora_price_percentage`
-  ADD CONSTRAINT `FK4hre7nhm5iu5c9mfkwlk32i1y` FOREIGN KEY (`room_id`) REFERENCES `master_room` (`room_id`);
+ALTER TABLE `room_vs_ora_price`
+  ADD CONSTRAINT `FK2mntqtwkqsqacajio6oi1y2kv` FOREIGN KEY (`room_id`) REFERENCES `master_room` (`room_id`);
 
 --
 -- Constraints for table `room_vs_price`
@@ -1392,9 +1337,8 @@ ALTER TABLE `room_vs_price`
 -- Constraints for table `room_vs_specialties`
 --
 ALTER TABLE `room_vs_specialties`
-  ADD CONSTRAINT `FKc1qg1bdwaks4y6i6f8vf0udql` FOREIGN KEY (`specialties_id`) REFERENCES `master_cancellation_slab` (`cancellation_slab_id`),
-  ADD CONSTRAINT `FKmjiqftc5rdrthmteghtchnkav` FOREIGN KEY (`room_id`) REFERENCES `master_room` (`room_id`);
-COMMIT;
+  ADD CONSTRAINT `FKmjiqftc5rdrthmteghtchnkav` FOREIGN KEY (`room_id`) REFERENCES `master_room` (`room_id`),
+  ADD CONSTRAINT `FKoe11vqm2reg89jso2t6d4mm7d` FOREIGN KEY (`specialties_id`) REFERENCES `master_specialties` (`specialties_id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

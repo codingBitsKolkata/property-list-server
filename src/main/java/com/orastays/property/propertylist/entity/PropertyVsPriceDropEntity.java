@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,17 +29,21 @@ public class PropertyVsPriceDropEntity extends CommonEntity  {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "property_pricedrop_id")
+	@JsonProperty("propertyPDropId")
 	private Long propertyPDropId;
 
 	@Column(name = "percentage")
+	@JsonProperty("percentage")
 	private String percentage;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "property_id", nullable = false)
+	@JsonProperty("property")
 	private PropertyEntity propertyEntity;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "price_drop_id", nullable = false)
+	@JsonProperty("priceDrop")
 	private PriceDropEntity priceDropEntity;
 	
 	@Override

@@ -11,6 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,17 +29,21 @@ public class RoomVsCancellationEntity extends CommonEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "rc_id")
+	@JsonProperty("rcId")
 	private Long rcId;
 
 	@Column(name = "percentage")
+	@JsonProperty("percentage")
 	private String percentage;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "cancellation_slab_id", nullable = false)
+	@JsonProperty("cancellationSlab")
 	private CancellationSlabEntity cancellationSlabEntity;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "room_id", nullable = false)
+	@JsonProperty("room")
 	private RoomEntity roomEntity;
 
 	@Override

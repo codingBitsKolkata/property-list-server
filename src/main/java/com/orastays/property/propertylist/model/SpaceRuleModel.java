@@ -1,5 +1,7 @@
 package com.orastays.property.propertylist.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,8 +13,15 @@ import lombok.ToString;
 @ToString
 public class SpaceRuleModel extends CommonModel {
 
+	@JsonProperty("spruleId")
 	private String spruleId;
+	
+	@JsonProperty("languageId")
 	private String languageId;
+	
+	@JsonProperty("parentId")
 	private String parentId;
+	
+	@JsonProperty("ruleName")
 	private String ruleName;
 }

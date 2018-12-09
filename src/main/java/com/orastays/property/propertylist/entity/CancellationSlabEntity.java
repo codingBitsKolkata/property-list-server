@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,15 +30,19 @@ public class CancellationSlabEntity extends CommonEntity{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "cancellation_slab_id")
+	@JsonProperty("cancellationSlabId")
 	private Long cancellationSlabId;
 	
 	@Column(name = "start_time")
+	@JsonProperty("startTime")
 	private String startTime;
 	
 	@Column(name = "end_time")
+	@JsonProperty("endTime")
 	private String endTime;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cancellationSlabEntity", cascade = { CascadeType.ALL })
+	@JsonProperty("roomVsCancellations")
 	private List<RoomVsCancellationEntity> roomVsCancellationEntities;
 	
 	@Override

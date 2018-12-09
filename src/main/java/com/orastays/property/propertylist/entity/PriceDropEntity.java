@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,12 +30,15 @@ public class PriceDropEntity extends CommonEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "price_drop_id")
+	@JsonProperty("priceDropId")
 	private Long priceDropId;
 
 	@Column(name = "after_time")
+	@JsonProperty("afterTime")
 	private String afterTime;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "priceDropEntity", cascade = { CascadeType.ALL })
+	@JsonProperty("propertyVsPriceDrops")
 	private List<PropertyVsPriceDropEntity> propertyVsPriceDropEntities;
 
 	@Override

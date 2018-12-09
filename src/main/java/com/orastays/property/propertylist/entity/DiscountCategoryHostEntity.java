@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,18 +30,23 @@ public class DiscountCategoryHostEntity extends CommonEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "dch_id")
+	@JsonProperty("dchId")
 	private Long dchId;
 	
-	@Column(name = "name")
+	@Column(name = "dis_cat_host_name")
+	@JsonProperty("disCatHostname")
 	private String disCatHostname;
 	
 	@Column(name = "language_id")
+	@JsonProperty("languageId")
 	private Long languageId;
 
 	@Column(name = "parent_id")
+	@JsonProperty("parentId")
 	private Long parentId;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "discountCategoryHostEntity", cascade = { CascadeType.ALL })
+	@JsonProperty("roomVsHostDiscounts")
 	private List<RoomVsHostDiscountEntity> roomVsHostDiscountEntities;
 	
 	@Override
