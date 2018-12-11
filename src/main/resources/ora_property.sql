@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 09, 2018 at 10:58 AM
+-- Generation Time: Dec 11, 2018 at 05:30 PM
 -- Server version: 5.7.9
 -- PHP Version: 5.6.16
 
@@ -78,8 +78,8 @@ CREATE TABLE IF NOT EXISTS `master_amenities` (
 
 INSERT INTO `master_amenities` (`aminities_id`, `created_by`, `created_date`, `modified_by`, `modified_date`, `status`, `aminities_name`, `filter_flag`, `language_id`, `parent_id`, `priority`, `aminities_type_id`) VALUES
 (1, 1, '2018-09-06 01:27:34', NULL, NULL, 1, 'WIFI', '1', 1, 0, '1', 1),
-(2, 1, '2018-09-06 01:27:34', NULL, NULL, 1, 'Heater', NULL, 1, 0, NULL, 1),
-(3, 1, '2018-09-06 01:27:34', NULL, NULL, 1, 'Table Lamp', '1', 1, 0, '2', 2);
+(2, 1, '2018-09-06 01:27:34', NULL, NULL, 1, 'Heater', '1', 1, 0, '2', 1),
+(3, 1, '2018-09-06 01:27:34', NULL, NULL, 1, 'Table Lamp', '1', 1, 0, '3', 2);
 
 -- --------------------------------------------------------
 
@@ -457,22 +457,25 @@ CREATE TABLE IF NOT EXISTS `master_property` (
   `checkin_time` varchar(255) DEFAULT NULL,
   `checkout_time` varchar(255) DEFAULT NULL,
   `cover_image_url` varchar(255) DEFAULT NULL,
-  `dedicated_space` varchar(255) DEFAULT NULL,
   `end_date` varchar(255) DEFAULT NULL,
   `entire_apartment` varchar(255) DEFAULT NULL,
+  `immediate_booking` varchar(255) DEFAULT NULL,
   `latitude` varchar(255) DEFAULT NULL,
   `longitude` varchar(255) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `oraname` varchar(255) DEFAULT NULL,
   `price_drop` varchar(255) DEFAULT NULL,
   `start_date` varchar(255) DEFAULT NULL,
+  `strict_checkin` varchar(255) DEFAULT NULL,
   `pgcs_id` bigint(20) NOT NULL,
   `property_type_id` bigint(20) NOT NULL,
   `stay_type_id` bigint(20) NOT NULL,
+  `user_vs_account_id` bigint(20) NOT NULL,
   PRIMARY KEY (`property_id`),
   KEY `FKdbbufp6ie2vuvbpe1yrmhi07i` (`pgcs_id`),
   KEY `FK5a00uodiowpit4s2fbuqgbm09` (`property_type_id`),
-  KEY `FK156vy9s4sl5mh6nxjo74bg2rv` (`stay_type_id`)
+  KEY `FK156vy9s4sl5mh6nxjo74bg2rv` (`stay_type_id`),
+  KEY `FK7ut9f4l3mjekant5shjos5dts` (`user_vs_account_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -511,25 +514,30 @@ INSERT INTO `master_property_type` (`property_type_id`, `created_by`, `created_d
 
 DROP TABLE IF EXISTS `master_room`;
 CREATE TABLE IF NOT EXISTS `master_room` (
-  `room_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_vs_document_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
   `modified_date` varchar(255) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
+  `document_number` varchar(255) DEFAULT NULL,
+  `file_url` varchar(255) DEFAULT NULL,
+  `room_id` bigint(20) NOT NULL AUTO_INCREMENT,
   `cot_available` varchar(255) DEFAULT NULL,
   `floor_no` varchar(255) DEFAULT NULL,
   `no_of_child` varchar(255) DEFAULT NULL,
   `no_of_guest` varchar(255) DEFAULT NULL,
   `num_of_cot` varchar(255) DEFAULT NULL,
   `shared_space` varchar(255) DEFAULT NULL,
-  `accommodation_id` bigint(20) NOT NULL,
+  `document_id` bigint(20) NOT NULL,
   `property_id` bigint(20) NOT NULL,
+  `accommodation_id` bigint(20) NOT NULL,
   `room_cat_id` bigint(20) NOT NULL,
   `room_standard_id` bigint(20) NOT NULL,
   PRIMARY KEY (`room_id`),
+  KEY `FKea5fxfdj6pc2f02cdhgf5moly` (`document_id`),
+  KEY `FK44tv0dyh1xvs2elrr7yr3tr1x` (`property_id`),
   KEY `FK1jg5ov7jt5k4iaivxxa58u891` (`accommodation_id`),
-  KEY `FKbb90tsoincrb0l8ns200x754s` (`property_id`),
   KEY `FKjw1vho56i8n32d1tyt64yh8ey` (`room_cat_id`),
   KEY `FKk76nhy20o1xpxxvciuyo75c93` (`room_standard_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -814,27 +822,6 @@ CREATE TABLE IF NOT EXISTS `property_vs_guest_access` (
   `property_id` bigint(20) NOT NULL,
   PRIMARY KEY (`property_gaccess_id`),
   KEY `FKg443u2hdb4sbrrnjwsrsxh7rk` (`property_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `property_vs_homestay`
---
-
-DROP TABLE IF EXISTS `property_vs_homestay`;
-CREATE TABLE IF NOT EXISTS `property_vs_homestay` (
-  `property_homestay_id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `created_by` bigint(20) DEFAULT NULL,
-  `created_date` varchar(255) DEFAULT NULL,
-  `modified_by` bigint(20) DEFAULT NULL,
-  `modified_date` varchar(255) DEFAULT NULL,
-  `status` int(11) DEFAULT NULL,
-  `immediate_booking` varchar(255) DEFAULT NULL,
-  `strict_checkin` varchar(255) DEFAULT NULL,
-  `property_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`property_homestay_id`),
-  KEY `FKrbqw1rb9fx2d4udq26ccms430` (`property_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -1166,6 +1153,32 @@ CREATE TABLE IF NOT EXISTS `room_vs_specialties` (
   KEY `FKoe11vqm2reg89jso2t6d4mm7d` (`specialties_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_vs_account`
+--
+
+DROP TABLE IF EXISTS `user_vs_account`;
+CREATE TABLE IF NOT EXISTS `user_vs_account` (
+  `document_id` bigint(20) NOT NULL,
+  `created_by` bigint(20) DEFAULT NULL,
+  `created_date` varchar(255) DEFAULT NULL,
+  `modified_by` bigint(20) DEFAULT NULL,
+  `modified_date` varchar(255) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `document_name` varchar(255) DEFAULT NULL,
+  `user_vs_account_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `account_holder_name` varchar(255) DEFAULT NULL,
+  `account_number` varchar(255) DEFAULT NULL,
+  `account_type` varchar(255) DEFAULT NULL,
+  `bank_name` varchar(255) DEFAULT NULL,
+  `branch_name` varchar(255) DEFAULT NULL,
+  `ifsc_code` varchar(255) DEFAULT NULL,
+  `user_id` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`user_vs_account_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 --
 -- Constraints for dumped tables
 --
@@ -1182,6 +1195,7 @@ ALTER TABLE `master_amenities`
 ALTER TABLE `master_property`
   ADD CONSTRAINT `FK156vy9s4sl5mh6nxjo74bg2rv` FOREIGN KEY (`stay_type_id`) REFERENCES `master_stay_type` (`stay_type_id`),
   ADD CONSTRAINT `FK5a00uodiowpit4s2fbuqgbm09` FOREIGN KEY (`property_type_id`) REFERENCES `master_property_type` (`property_type_id`),
+  ADD CONSTRAINT `FK7ut9f4l3mjekant5shjos5dts` FOREIGN KEY (`user_vs_account_id`) REFERENCES `user_vs_account` (`user_vs_account_id`),
   ADD CONSTRAINT `FKdbbufp6ie2vuvbpe1yrmhi07i` FOREIGN KEY (`pgcs_id`) REFERENCES `master_pg_category_sex` (`pgcs_id`);
 
 --
@@ -1189,7 +1203,8 @@ ALTER TABLE `master_property`
 --
 ALTER TABLE `master_room`
   ADD CONSTRAINT `FK1jg5ov7jt5k4iaivxxa58u891` FOREIGN KEY (`accommodation_id`) REFERENCES `master_accommodation` (`accommodation_id`),
-  ADD CONSTRAINT `FKbb90tsoincrb0l8ns200x754s` FOREIGN KEY (`property_id`) REFERENCES `master_property_type` (`property_type_id`),
+  ADD CONSTRAINT `FK44tv0dyh1xvs2elrr7yr3tr1x` FOREIGN KEY (`property_id`) REFERENCES `master_property` (`property_id`),
+  ADD CONSTRAINT `FKea5fxfdj6pc2f02cdhgf5moly` FOREIGN KEY (`document_id`) REFERENCES `user_vs_account` (`user_vs_account_id`),
   ADD CONSTRAINT `FKjw1vho56i8n32d1tyt64yh8ey` FOREIGN KEY (`room_cat_id`) REFERENCES `master_room_category` (`room_cat_id`),
   ADD CONSTRAINT `FKk76nhy20o1xpxxvciuyo75c93` FOREIGN KEY (`room_standard_id`) REFERENCES `master_room_standard` (`room_standard_id`);
 
@@ -1230,12 +1245,6 @@ ALTER TABLE `property_vs_experience`
 --
 ALTER TABLE `property_vs_guest_access`
   ADD CONSTRAINT `FKg443u2hdb4sbrrnjwsrsxh7rk` FOREIGN KEY (`property_id`) REFERENCES `master_property` (`property_id`);
-
---
--- Constraints for table `property_vs_homestay`
---
-ALTER TABLE `property_vs_homestay`
-  ADD CONSTRAINT `FKrbqw1rb9fx2d4udq26ccms430` FOREIGN KEY (`property_id`) REFERENCES `master_property` (`property_id`);
 
 --
 -- Constraints for table `property_vs_image`
