@@ -2,12 +2,12 @@ package com.orastays.property.propertylist.model;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Getter
 @Setter
@@ -26,9 +26,6 @@ public class PropertyModel extends CommonModel {
 
 	@JsonProperty("entireApartment")
 	private String entireApartment;
-
-	@JsonProperty("dedicatedSpace")
-	private String dedicatedSpace;
 
 	@JsonProperty("apartmentName")
 	private String apartmentName;
@@ -63,23 +60,32 @@ public class PropertyModel extends CommonModel {
 	@JsonProperty("priceDrop")
 	private String priceDrop;
 
+	@JsonProperty("immediateBooking")
+	private String immediateBooking;
+
+	@JsonProperty("strictCheckin")
+	private String strictCheckin;
+
 	@JsonProperty("propertyType")
 	private PropertyTypeModel propertyTypeModel;
+
+	@JsonProperty("propertyVsDocuments")
+	private List<PropertyVsDocumentModel> propertyVsDocumentModels;
 
 	@JsonProperty("stayType")
 	private StayTypeModel stayTypeModel;
 
+	@JsonProperty("userVsAccount")
+	private UserVsAccountModel userVsAccountModel;
+
 	@JsonProperty("pgCategorySex")
 	private PGCategorySexModel pgCategorySexModel;
 
-	@JsonProperty("propertyVsDescription")
+	@JsonProperty("propertyVsDescriptions")
 	private List<PropertyVsDescriptionModel> propertyVsDescriptionModels;
 
 	@JsonProperty("propertyVsGuestAccess")
 	private List<PropertyVsGuestAccessModel> propertyVsGuestAccessModels;
-
-	@JsonProperty("propertyVsHomestays")
-	private PropertyVsHomestayModel propertyVsHomestayModel;
 
 	@JsonProperty("propertyVsImages")
 	private List<PropertyVsImageModel> propertyVsImageModels;
