@@ -6,7 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.orastays.property.propertylist.helper.MessageUtil;
-import com.orastays.property.propertylist.service.PropertyService;
+import com.orastays.property.propertylist.service.HomeService;
+import com.orastays.property.propertylist.service.PropertyListService;
 
 public class BaseController {
 
@@ -17,7 +18,10 @@ public class BaseController {
 	protected HttpServletResponse response;
 	
 	@Autowired
-	protected PropertyService propertyService;
+	protected PropertyListService propertyService;
+	
+	@Autowired
+	protected HomeService homeService;
 	
 	@Autowired
 	protected MessageUtil messageUtil;

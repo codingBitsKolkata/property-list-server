@@ -8,6 +8,6 @@ import com.orastays.property.propertylist.model.CommonModel;
 import com.orastays.property.propertylist.model.PropertyTypeModel;
 import com.orastays.property.propertylist.model.StayTypeModel;
 
-public interface PropertyService {
+public interface PropertyListService {
 
 }

@@ -1,8 +1,8 @@
 package com.orastays.property.propertylist.helper;
 
-public final class PropertyAddConstant {
+public final class PropertyListConstant {
 
-	private PropertyAddConstant() {}
+	private PropertyListConstant() {}
 
 	public static final String COMMON_SUCCESS_CODE = "common.success.code";
 	public static final String COMMON_SUCCESS_MESSAGE = "common.success.message";
