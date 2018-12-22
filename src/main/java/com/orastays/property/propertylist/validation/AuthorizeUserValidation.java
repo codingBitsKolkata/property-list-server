@@ -13,8 +13,30 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import com.orastays.property.propertylist.dao.AccommodationDAO;
+import com.orastays.property.propertylist.dao.AmenitiesDAO;
+import com.orastays.property.propertylist.dao.CancellationSlabDAO;
+import com.orastays.property.propertylist.dao.DiscountCategoryHostDAO;
+import com.orastays.property.propertylist.dao.DiscountCategoryOraDAO;
+import com.orastays.property.propertylist.dao.DocumentDAO;
+import com.orastays.property.propertylist.dao.MealCategoryDAO;
+import com.orastays.property.propertylist.dao.MealDaysDAO;
+import com.orastays.property.propertylist.dao.MealPriceCategoryDAO;
+import com.orastays.property.propertylist.dao.MealTypeDAO;
+import com.orastays.property.propertylist.dao.PGCategorySexDAO;
+import com.orastays.property.propertylist.dao.PriceTypeDAO;
+import com.orastays.property.propertylist.dao.PropertyTypeDAO;
+import com.orastays.property.propertylist.dao.RoomCategoryDAO;
+import com.orastays.property.propertylist.dao.RoomStandardDAO;
+import com.orastays.property.propertylist.dao.RoomVsAmenitiesDAO;
+import com.orastays.property.propertylist.dao.RoomVsBedDAO;
+import com.orastays.property.propertylist.dao.RoomVsCancellationDAO;
+import com.orastays.property.propertylist.dao.SpaceRuleDAO;
+import com.orastays.property.propertylist.dao.SpecialExperienceDAO;
+import com.orastays.property.propertylist.dao.SpecialtiesDAO;
 import com.orastays.property.propertylist.exceptions.FormExceptions;
 import com.orastays.property.propertylist.helper.MessageUtil;
+import com.orastays.property.propertylist.model.CommonModel;
 import com.orastays.property.propertylist.model.ResponseModel;
 import com.orastays.property.propertylist.model.UserModel;
 
@@ -35,6 +57,69 @@ public class AuthorizeUserValidation {
 	@Autowired
 	protected HttpServletRequest request;
 	
+	@Autowired
+	protected PropertyTypeDAO propertyTypeDAO;
+	
+	@Autowired
+	protected SpaceRuleDAO spaceRuleDAO;
+	
+	@Autowired
+	protected SpecialExperienceDAO specialExperienceDAO;
+	
+	@Autowired
+	protected PGCategorySexDAO pgCategorySexDAO;
+	
+	@Autowired
+	protected DocumentDAO documentDAO;
+	
+	@Autowired
+	protected AccommodationDAO accommodationDAO;
+	
+	@Autowired
+	protected DiscountCategoryOraDAO discountCategoryOraDAO;
+	
+	@Autowired
+	protected RoomCategoryDAO roomCategoryDAO;
+	
+	@Autowired
+	protected RoomStandardDAO roomStandardDAO;
+	
+	@Autowired
+	protected RoomVsBedDAO roomVsBedDAO;
+	
+	@Autowired
+	protected RoomVsAmenitiesDAO roomVsAmenitiesDAO;
+	
+	@Autowired
+	protected RoomVsCancellationDAO roomVsCancellationDAO;
+	
+	@Autowired
+	protected CancellationSlabDAO cancellationSlabDAO;
+	
+	@Autowired
+	protected PriceTypeDAO priceTypeDAO;
+	
+	@Autowired
+	protected DiscountCategoryHostDAO discountCategoryHostDAO;	
+	
+	@Autowired
+	protected SpecialtiesDAO specialtiesDAO;
+	
+	@Autowired
+	protected MealCategoryDAO mealCategoryDAO;
+	
+	@Autowired
+	protected MealDaysDAO mealDaysDAO;
+	
+	@Autowired
+	protected MealPriceCategoryDAO mealPriceCategoryDAO;
+	
+	@Autowired
+	protected MealTypeDAO mealTypeDAO;
+	
+	@Autowired
+	protected AmenitiesDAO amenitiesDAO;
+	
 	public UserModel getUserDetails(String userToken) throws FormExceptions {
 
 		if (logger.isInfoEnabled()) {
@@ -44,7 +129,7 @@ public class AuthorizeUserValidation {
 		Map<String, Exception> exceptions = new LinkedHashMap<>();
 		UserModel userModel = null;
 		try {
-			ResponseModel responseModel = restTemplate.getForObject("http://AUTH-SERVER/api/check-token?userToken="+userToken, ResponseModel.class);
+			ResponseModel responseModel = restTemplate.getForObject(messageUtil.getBundle("auth.server.url") +"check-token?userToken="+userToken, ResponseModel.class);
 			userModel = (UserModel) responseModel.getResponseBody();
 			if(Objects.isNull(userModel)) {
 				exceptions.put(messageUtil.getBundle("token.invalid.code"), new Exception(messageUtil.getBundle("token.invalid.message")));
@@ -69,23 +154,23 @@ public class AuthorizeUserValidation {
 		return userModel;
 	}
 	
-	public UserModel validateLanguage(String languageId) throws FormExceptions {
+	public CommonModel validateLanguage(String languageId) throws FormExceptions {
 
 		if (logger.isInfoEnabled()) {
 			logger.info("validateLanguage -- START");
 		}
 		
 		Map<String, Exception> exceptions = new LinkedHashMap<>();
-		UserModel userModel = null;
+		CommonModel commonModel = null;
 		try {
-			ResponseModel responseModel = restTemplate.getForObject("http://AUTH-SERVER/api/check-language?languageId="+languageId, ResponseModel.class);
-			userModel = (UserModel) responseModel.getResponseBody();
-			if(Objects.isNull(userModel)) {
+			ResponseModel responseModel = restTemplate.getForObject(messageUtil.getBundle("auth.server.url") +"check-language?languageId="+languageId, ResponseModel.class);
+			commonModel = (CommonModel) responseModel.getResponseBody();
+			if(Objects.isNull(commonModel)) {
 				exceptions.put(messageUtil.getBundle("language.id.invalid.code"), new Exception(messageUtil.getBundle("language.id.invalid.message")));
 			}
 			
 			if (logger.isInfoEnabled()) {
-				logger.info("userModel ==>> "+userModel);
+				logger.info("commonModel ==>> "+commonModel);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -100,6 +185,6 @@ public class AuthorizeUserValidation {
 			logger.info("validateLanguage -- END");
 		}
 		
-		return userModel;
+		return commonModel;
 	}
 }

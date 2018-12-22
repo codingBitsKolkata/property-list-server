@@ -1,5 +1,8 @@
 package com.orastays.property.propertylist.controller;
 
+import java.util.List;
+import java.util.Map.Entry;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
@@ -10,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.orastays.property.propertylist.exceptions.FormExceptions;
 import com.orastays.property.propertylist.helper.PropertyListConstant;
 import com.orastays.property.propertylist.helper.Util;
 import com.orastays.property.propertylist.model.FilterCiteriaModel;
+import com.orastays.property.propertylist.model.PropertyListViewModel;
 import com.orastays.property.propertylist.model.ResponseModel;
 
 import io.swagger.annotations.Api;
@@ -44,12 +49,21 @@ public class PropertyListController extends BaseController {
 		ResponseModel responseModel = new ResponseModel();
 		Util.printLog(null, PropertyListConstant.INCOMING, "Fetch Properties", request);
 		try {
-			/*
-			 * List<ProModel> countryModels = countryService.fetchCountries();
-			 * responseModel.setResponseBody(countryModels);
-			 */
+			
+			List<PropertyListViewModel> propertyListViewModels = propertyService.fetchProperties(filterCiteriaModel);
+			responseModel.setResponseBody(propertyListViewModels);
 			responseModel.setResponseCode(messageUtil.getBundle(PropertyListConstant.COMMON_SUCCESS_CODE));
 			responseModel.setResponseMessage(messageUtil.getBundle(PropertyListConstant.COMMON_SUCCESS_MESSAGE));
+		} catch (FormExceptions fe) {
+
+			for (Entry<String, Exception> entry : fe.getExceptions().entrySet()) {
+				responseModel.setResponseCode(entry.getKey());
+				responseModel.setResponseMessage(entry.getValue().getMessage());
+				if (logger.isInfoEnabled()) {
+					logger.info("FormExceptions in Fetch Properties -- "+Util.errorToString(fe));
+				}
+				break;
+			}
 		} catch (Exception e) {
 			if (logger.isInfoEnabled()) {
 				logger.info("Exception in fetchCountries -- "+Util.errorToString(e));
