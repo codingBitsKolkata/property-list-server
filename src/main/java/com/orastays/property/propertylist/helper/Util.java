@@ -86,11 +86,44 @@ public class Util {
 		
 	}
 	
+	public static boolean checkLatitude(String lat) {
+
+		return lat
+				.matches("^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?))$");
+	}
+
+	public static boolean checkLongitude(String longi) {
+
+		return longi
+				.matches("^(\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]{1,6})?))$");
+	}
+
+	public static boolean checkTimeFormat(String time) {
+		
+		return time.matches("(1[012]|[1-9]):[0-5][0-9](\\s)?(?i):[0-5][0-9](\\s)?(?i)");
+
+	}
+	
 	public static boolean checkDate(String startDate) {
 
 		boolean flag = false;
 		try {
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			formatter.parse(startDate);
+			flag = true;
+		} catch (Exception e) {
+
+			return false;
+		}
+
+		return flag;
+	}
+	
+	public static boolean checkOnlyDate(String startDate) {
+
+		boolean flag = false;
+		try {
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			formatter.parse(startDate);
 			flag = true;
 		} catch (Exception e) {
@@ -1242,7 +1275,7 @@ public class Util {
 	public static void main(String[] args) {
 
 		try {
-			System.out.println(checkEmail("avirup.pal"));
+			System.out.println(new Date().getTime());
 		} catch (Exception e) {
 
 		}

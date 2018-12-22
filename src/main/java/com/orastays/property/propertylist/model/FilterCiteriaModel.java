@@ -17,7 +17,7 @@ public class FilterCiteriaModel {
 	private String sorting; // POPULARITY, PRICING
 	private List<SpaceRuleModel> spaceRuleModels; // Couple Friendly, Pet Friendly, Male/Female
 	private List<PGCategorySexModel> pgCategorySexModels;
-	private String propertyType; // Mandatory
+	private String propertyTypeId; // Mandatory
 	private String location; // Mandatory
 	private String checkInDate; // Mandatory
 	private String checkOutDate; // Mandatory

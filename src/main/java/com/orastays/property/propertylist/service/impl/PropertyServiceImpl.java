@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.orastays.property.propertylist.exceptions.FormExceptions;
 import com.orastays.property.propertylist.model.FilterCiteriaModel;
 import com.orastays.property.propertylist.model.PropertyListViewModel;
+import com.orastays.property.propertylist.model.UserModel;
 import com.orastays.property.propertylist.service.PropertyListService;
 
 @Service
@@ -25,7 +26,10 @@ public class PropertyServiceImpl extends BaseServiceImpl implements PropertyList
 			logger.info("fetchProperties -- START");
 		}
 		
+		UserModel userModel = propertyListValidation.validateFetchProperties(filterCiteriaModel);
 		List<PropertyListViewModel> propertyListViewModels = null;
+		
+		
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("fetchProperties -- END");
