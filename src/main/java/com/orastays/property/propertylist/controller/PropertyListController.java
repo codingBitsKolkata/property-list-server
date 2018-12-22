@@ -47,10 +47,12 @@ public class PropertyListController extends BaseController {
 		}
 
 		ResponseModel responseModel = new ResponseModel();
-		Util.printLog(null, PropertyListConstant.INCOMING, "Fetch Properties", request);
+		Util.printLog(filterCiteriaModel, PropertyListConstant.INCOMING, "Fetch Properties", request);
 		try {
-			
+			long startTime = System.nanoTime();
 			List<PropertyListViewModel> propertyListViewModels = propertyService.fetchProperties(filterCiteriaModel);
+			long elapsedTimeNs = System.nanoTime() - startTime;
+			System.err.println("elapsedTimeNs ==>> "+elapsedTimeNs);
 			responseModel.setResponseBody(propertyListViewModels);
 			responseModel.setResponseCode(messageUtil.getBundle(PropertyListConstant.COMMON_SUCCESS_CODE));
 			responseModel.setResponseMessage(messageUtil.getBundle(PropertyListConstant.COMMON_SUCCESS_MESSAGE));
@@ -66,7 +68,7 @@ public class PropertyListController extends BaseController {
 			}
 		} catch (Exception e) {
 			if (logger.isInfoEnabled()) {
-				logger.info("Exception in fetchCountries -- "+Util.errorToString(e));
+				logger.info("Exception in fetchProperties -- "+Util.errorToString(e));
 			}
 			responseModel.setResponseCode(messageUtil.getBundle(PropertyListConstant.COMMON_ERROR_CODE));
 			responseModel.setResponseMessage(messageUtil.getBundle(PropertyListConstant.COMMON_ERROR_MESSAGE));

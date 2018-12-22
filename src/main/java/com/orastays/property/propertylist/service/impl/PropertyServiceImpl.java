@@ -764,20 +764,30 @@ public class PropertyServiceImpl extends BaseServiceImpl implements PropertyList
 		}
 		
 		boolean flag = false;
-		Set<AmenitiesModel> amenitiesModels = new LinkedHashSet<>();
+		Set<String> amenitiesModels = new LinkedHashSet<>();
 		if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
 			for(RoomEntity roomEntity : propertyEntity.getRoomEntities()) {
 				if(!CollectionUtils.isEmpty(roomEntity.getRoomVsAmenitiesEntities())) {
 					for(RoomVsAmenitiesEntity roomVsAmenitiesEntity : roomEntity.getRoomVsAmenitiesEntities()) {
-						amenitiesModels.add(amenitiesConverter.entityToModel(roomVsAmenitiesEntity.getAmenitiesEntity()));
+						amenitiesModels.add(amenitiesConverter.entityToModel(roomVsAmenitiesEntity.getAmenitiesEntity()).getAminitiesName());
 					}
 				}
 			}
 		}
 		
-		if(amenitiesModels.containsAll(filterCiteriaModel.getAmenitiesModels())) {
+		List<Boolean> count = new ArrayList<>();
+		for(AmenitiesModel amenitiesModel : filterCiteriaModel.getAmenitiesModels()) {
+			if(amenitiesModels.contains(amenitiesModel.getAminitiesName())) {
+				count.add(true);
+			} else {
+				count.add(false);
+			}
+		}
+		
+		if(!count.contains(false)) {
 			flag = true;
 		}
+		
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("filterByAmmenities -- END");
