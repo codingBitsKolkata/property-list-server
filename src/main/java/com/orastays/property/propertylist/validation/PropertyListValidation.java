@@ -44,9 +44,22 @@ public class PropertyListValidation extends AuthorizeUserValidation {
 			}
 		}
 		
-		// Validate Location
-		if (StringUtils.isBlank(filterCiteriaModel.getLocation())) {
-			exceptions.put(messageUtil.getBundle("location.null.code"), new Exception(messageUtil.getBundle("location.null.message")));
+		// Validate Latitude
+		if (StringUtils.isBlank(filterCiteriaModel.getLatitude())) {
+			exceptions.put(messageUtil.getBundle("latitude.null.code"), new Exception(messageUtil.getBundle("latitude.null.message")));
+		} else {
+			if (!Util.checkLatitude(filterCiteriaModel.getLatitude())) {
+				exceptions.put(messageUtil.getBundle("latitude.invalid.code"), new Exception(messageUtil.getBundle("latitude.invalid.message")));
+			}
+		}
+
+		// Validate Longitude
+		if (StringUtils.isBlank(filterCiteriaModel.getLongitude())) {
+			exceptions.put(messageUtil.getBundle("longitude.null.code"), new Exception(messageUtil.getBundle("longitude.null.message")));
+		} else {
+			if (!Util.checkLongitude(filterCiteriaModel.getLongitude())) {
+				exceptions.put(messageUtil.getBundle("longitude.invalid.code"), new Exception(messageUtil.getBundle("longitude.invalid.message")));
+			}
 		}
 		
 		// Validate CheckIn Time

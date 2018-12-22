@@ -15,10 +15,11 @@ public class FilterCiteriaModel {
 
 	private String userToken;
 	private String sorting; // POPULARITY, PRICING
-	private List<SpaceRuleModel> spaceRuleModels; // Couple Friendly, Pet Friendly, Male/Female
-	private List<PGCategorySexModel> pgCategorySexModels;
+	private List<SpaceRuleModel> spaceRuleModels; // Couple Friendly, Pet Friendly
+	private List<PGCategorySexModel> pgCategorySexModels; // Male/Female
 	private String propertyTypeId; // Mandatory
-	private String location; // Mandatory
+	private String latitude; // Mandatory
+	private String longitude; // Mandatory
 	private String checkInDate; // Mandatory
 	private String checkOutDate; // Mandatory
 	private List<RoomModel> roomModels; // Mandatory

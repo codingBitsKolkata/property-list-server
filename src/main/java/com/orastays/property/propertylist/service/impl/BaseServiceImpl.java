@@ -2,6 +2,7 @@ package com.orastays.property.propertylist.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.client.RestTemplate;
 
 import com.orastays.property.propertylist.converter.AccommodationConverter;
 import com.orastays.property.propertylist.converter.AmenitiesConverter;
@@ -22,6 +23,7 @@ import com.orastays.property.propertylist.converter.PropertyVsSpaceRuleConverter
 import com.orastays.property.propertylist.converter.PropertyVsSpecialExperienceConverter;
 import com.orastays.property.propertylist.converter.RoomCategoryConverter;
 import com.orastays.property.propertylist.converter.RoomConverter;
+import com.orastays.property.propertylist.converter.RoomStandardConverter;
 import com.orastays.property.propertylist.converter.RoomVsAmenitiesConverter;
 import com.orastays.property.propertylist.converter.RoomVsBedConverter;
 import com.orastays.property.propertylist.converter.RoomVsCancellationConverter;
@@ -72,12 +74,19 @@ import com.orastays.property.propertylist.dao.SpecialExperienceDAO;
 import com.orastays.property.propertylist.dao.SpecialtiesDAO;
 import com.orastays.property.propertylist.dao.StayTypeDAO;
 import com.orastays.property.propertylist.dao.UserVsAccountDAO;
+import com.orastays.property.propertylist.helper.MessageUtil;
 import com.orastays.property.propertylist.validation.PropertyListValidation;
 
 public abstract class BaseServiceImpl {
 	
 	@Value("${entitymanager.packagesToScan}")
 	protected String entitymanagerPackagesToScan;
+	
+	@Autowired
+	protected RestTemplate restTemplate;
+	
+	@Autowired
+	protected MessageUtil messageUtil;
 	
 	@Autowired
 	protected PropertyListValidation propertyListValidation;
@@ -288,4 +297,7 @@ public abstract class BaseServiceImpl {
 	
 	@Autowired
 	protected RoomVsBedDAO roomVsBedDAO;
+	
+	@Autowired
+	protected RoomStandardConverter roomStandardConverter;
 }

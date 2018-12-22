@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class PropertyModel extends CommonModel {
 
 	@JsonProperty("propertyId")
-	private Long propertyId;
+	private String propertyId;
 
 	@JsonProperty("name")
 	private String name;

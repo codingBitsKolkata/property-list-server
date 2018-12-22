@@ -18,7 +18,7 @@ public class Test {
 
 	public void checkPath() throws UnsupportedEncodingException {
 
-		String rootPath = System.getProperty("user.dir");
+		String rootPath = "20" + "10";
 		System.out.println(rootPath);
 	}
 
