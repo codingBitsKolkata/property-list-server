@@ -351,7 +351,11 @@ public class PropertyServiceImpl extends BaseServiceImpl implements PropertyList
 					}
 				}
 				
+				/*System.err.println("price ==>> "+price);
+				System.out.println("roomEntity.getRoomVsOraPricePercentageEntities().get(0).getPercentage() ==>> "+roomEntity.getRoomVsOraPricePercentageEntities().get(0).getPercentage());
+				System.err.println("totalPrice ==>> "+totalPrice);*/
 				totalPrice = totalPrice + price + (Double.parseDouble(roomEntity.getRoomVsOraPricePercentageEntities().get(0).getPercentage()) * price / 100);
+				/* System.err.println("totalPrice ==>> "+totalPrice); */
 				
 				// Discount Section
 				Double discount = 0.0D;
@@ -423,8 +427,11 @@ public class PropertyServiceImpl extends BaseServiceImpl implements PropertyList
 						}
 					}
 				}
-				
+				System.err.println("discount ==>> "+discount);
+				System.out.println("discountedPrice ==>> "+discountedPrice);
+				System.err.println("totalPrice ==>> "+totalPrice);
 				discountedPrice = discountedPrice + totalPrice - discount;
+				System.out.println("discountedPrice ==>> "+discountedPrice);
 			}
 		}
 		
