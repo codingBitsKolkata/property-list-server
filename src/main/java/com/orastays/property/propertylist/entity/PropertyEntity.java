@@ -98,7 +98,24 @@ public class PropertyEntity extends CommonEntity {
 	@Column(name = "strict_checkin")
 	@JsonProperty("strictCheckin")
 	private String strictCheckin;
+	
+	@Column(name = "contact_name")
+	@JsonProperty("contactName")
+	private String contactName;
 
+	@Column(name = "alt_mobile")
+	@JsonProperty("altMobile")
+	private String altMobile;
+
+	@Column(name = "alt_email")
+	@JsonProperty("altEmail")
+	private String altEmail;
+
+	@Column(name = "landline")
+	@JsonProperty("landline")
+	private String landline;
+
+	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "property_type_id", nullable = false)
 	@JsonProperty("propertyType")

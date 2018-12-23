@@ -16,7 +16,7 @@ public class RoomVsSpecialitiesModel extends CommonModel {
 	@JsonProperty("roomspecId")
 	private String roomspecId;
 	
-	@JsonProperty("specialtiesModel")
+	@JsonProperty("specialties")
 	private SpecialtiesModel specialtiesModel;
 	
 	@JsonProperty("room")

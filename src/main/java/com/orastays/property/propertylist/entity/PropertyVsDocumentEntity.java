@@ -18,7 +18,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "master_room")
+@Table(name = "property_vs_document")
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = false)
@@ -44,14 +44,11 @@ public class PropertyVsDocumentEntity extends CommonEntity {
 	@JoinColumn(name = "property_id", nullable = false)
 	@JsonProperty("property")
 	private PropertyEntity propertyEntity;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "document_id", nullable = false)
 	@JsonProperty("document")
 	private DocumentEntity documentEntity;
-	
-	
-
 
 	@Override
 	public String toString() {

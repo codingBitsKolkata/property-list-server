@@ -15,7 +15,7 @@ import lombok.ToString;
 @ToString
 public class RoomModel extends CommonModel {
 
-	@JsonProperty("room")
+	@JsonProperty("roomId")
 	private String roomId;
 	
 	@JsonProperty("sharedSpace")
@@ -33,14 +33,16 @@ public class RoomModel extends CommonModel {
 	@JsonProperty("numOfCot")
 	private String numOfCot;
 	
-	@JsonProperty("floorNo")
-	private String floorNo;
+	@JsonProperty("roomCurrentStatus")
+	private String roomCurrentStatus;
 	
 	@JsonProperty("property")
 	private PropertyModel propertyModel;
 	
 	@JsonProperty("accommodation")
 	private AccommodationModel accommodationModel;
+	
+	@JsonProperty("discountCategoryOra")
 	private DiscountCategoryOraModel discountCategoryOraModel;
 	
 	@JsonProperty("roomCategory")
@@ -48,9 +50,6 @@ public class RoomModel extends CommonModel {
 	
 	@JsonProperty("roomStandard")
 	private RoomStandardModel roomStandardModel;
-	
-	@JsonProperty("roomVsInfo")
-	private RoomVsInfoModel roomVsInfoModel;
 	
 	@JsonProperty("roomVsBed")
 	private RoomVsBedModel roomVsBedModel;

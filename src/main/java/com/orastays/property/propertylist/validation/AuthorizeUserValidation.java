@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import com.google.gson.Gson;
 import com.orastays.property.propertylist.dao.AccommodationDAO;
 import com.orastays.property.propertylist.dao.AmenitiesDAO;
 import com.orastays.property.propertylist.dao.CancellationSlabDAO;
@@ -130,7 +131,9 @@ public class AuthorizeUserValidation {
 		UserModel userModel = null;
 		try {
 			ResponseModel responseModel = restTemplate.getForObject(messageUtil.getBundle("auth.server.url") +"check-token?userToken="+userToken, ResponseModel.class);
-			userModel = (UserModel) responseModel.getResponseBody();
+			Gson gson = new Gson();
+			String jsonString = gson.toJson(responseModel.getResponseBody());
+			userModel = gson.fromJson(jsonString, UserModel.class);
 			if(Objects.isNull(userModel)) {
 				exceptions.put(messageUtil.getBundle("token.invalid.code"), new Exception(messageUtil.getBundle("token.invalid.message")));
 			}
@@ -164,7 +167,9 @@ public class AuthorizeUserValidation {
 		CommonModel commonModel = null;
 		try {
 			ResponseModel responseModel = restTemplate.getForObject(messageUtil.getBundle("auth.server.url") +"check-language?languageId="+languageId, ResponseModel.class);
-			commonModel = (CommonModel) responseModel.getResponseBody();
+			Gson gson = new Gson();
+			String jsonString = gson.toJson(responseModel.getResponseBody());
+			commonModel = gson.fromJson(jsonString, CommonModel.class);
 			if(Objects.isNull(commonModel)) {
 				exceptions.put(messageUtil.getBundle("language.id.invalid.code"), new Exception(messageUtil.getBundle("language.id.invalid.message")));
 			}

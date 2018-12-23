@@ -36,6 +36,10 @@ public class PriceTypeEntity extends CommonEntity {
 	@Column(name = "price_type_name")
 	@JsonProperty("priceTypeName")
 	private String priceTypeName;
+	
+	@Column(name = "per_flag")
+	@JsonProperty("perFlag")
+	private String perFlag;
 
 	@Column(name = "language_id")
 	@JsonProperty("languageId")

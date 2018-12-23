@@ -32,9 +32,9 @@ public class RoomVsPriceEntity extends CommonEntity {
 	@JsonProperty("roomVsPriceId")
 	private Long roomVsPriceId;
 
-	@Column(name = "price")
-	@JsonProperty("price")
-	private String price;
+	@Column(name = "value")
+	@JsonProperty("value")
+	private String value;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "price_type_id", nullable = false)

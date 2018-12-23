@@ -16,8 +16,8 @@ public class RoomVsPriceModel extends CommonModel {
 	@JsonProperty("roomVsPriceId")
 	private String roomVsPriceId;
 	
-	@JsonProperty("price")
-	private String price;
+	@JsonProperty("value")
+	private String value;
 	
 	@JsonProperty("priceType")
 	private PriceTypeModel priceTypeModel;

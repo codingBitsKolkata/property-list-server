@@ -2,12 +2,12 @@ package com.orastays.property.propertylist.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Getter
 @Setter
@@ -65,6 +65,18 @@ public class PropertyModel extends CommonModel {
 
 	@JsonProperty("strictCheckin")
 	private String strictCheckin;
+
+	@JsonProperty("contactName")
+	private String contactName;
+
+	@JsonProperty("altMobile")
+	private String altMobile;
+
+	@JsonProperty("altEmail")
+	private String altEmail;
+
+	@JsonProperty("landline")
+	private String landline;
 
 	@JsonProperty("propertyType")
 	private PropertyTypeModel propertyTypeModel;

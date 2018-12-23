@@ -36,6 +36,10 @@ public class RoomVsOraDiscountEntity extends CommonEntity {
 	@JsonProperty("discount")
 	private String discount;
 	
+	@Column(name = "date_range")
+	@JsonProperty("dateRange")
+	private String dateRange;
+	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "dco_id", nullable = false)
 	@JsonProperty("discountCategoryOra")

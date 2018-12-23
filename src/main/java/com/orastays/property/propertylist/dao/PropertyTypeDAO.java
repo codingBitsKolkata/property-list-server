@@ -7,7 +7,7 @@ import com.orastays.property.propertylist.entity.PropertyTypeEntity;
 @Repository
 public class PropertyTypeDAO extends GenericDAO<PropertyTypeEntity, Long>{
 
-	private static final long serialVersionUID = 484373964101928009L;
+	private static final long serialVersionUID = 5907712093426716890L;
 
 	public PropertyTypeDAO() {
 		super(PropertyTypeEntity.class);

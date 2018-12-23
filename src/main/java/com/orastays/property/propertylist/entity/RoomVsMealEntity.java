@@ -43,7 +43,7 @@ public class RoomVsMealEntity extends CommonEntity{
 	private RoomEntity roomEntity;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
-	@JoinColumn(name = "meal_days_id", nullable = false)
+	@JoinColumn(name = "meal_days_id", nullable = true)
 	@JsonProperty("mealDays")
 	private MealDaysEntity mealDaysEntity;
 	
@@ -53,7 +53,7 @@ public class RoomVsMealEntity extends CommonEntity{
 	private MealTypeEntity mealTypeEntity;
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
-	@JoinColumn(name = "mpcmp_id", nullable = false)
+	@JoinColumn(name = "mpcmp_id", nullable = true)
 	@JsonProperty("mealPlanCatVsMealPlan")
 	private MealPlanCatVsMealPlanEntity mealPlanCatVsMealPlanEntity;
 	

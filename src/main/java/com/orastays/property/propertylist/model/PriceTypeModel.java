@@ -20,6 +20,9 @@ public class PriceTypeModel extends CommonModel {
 
 	@JsonProperty("priceTypeName")
 	private String priceTypeName;
+	
+	@JsonProperty("perFlag")
+	private String perFlag;
 
 	@JsonProperty("languageId")
 	private String languageId;

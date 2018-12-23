@@ -19,13 +19,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "user_vs_account")
+@Table(name = "master_document")
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = false)
 public class DocumentEntity extends CommonEntity {
 
-	private static final long serialVersionUID = 5525526393895199890L;
+	private static final long serialVersionUID = -2618733428008081069L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
