@@ -9,13 +9,17 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.transaction.Transactional;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import com.demo.demo.entity.RoomVsHostDiscountEntity;
+import com.demo.demo.entity.RoomVsOraDiscountEntity;
+import com.demo.demo.entity.RoomVsPriceEntity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.orastays.property.propertylist.entity.PropertyEntity;
@@ -23,10 +27,7 @@ import com.orastays.property.propertylist.entity.PropertyVsPriceDropEntity;
 import com.orastays.property.propertylist.entity.PropertyVsSpaceRuleEntity;
 import com.orastays.property.propertylist.entity.RoomEntity;
 import com.orastays.property.propertylist.entity.RoomVsAmenitiesEntity;
-import com.orastays.property.propertylist.entity.RoomVsHostDiscountEntity;
 import com.orastays.property.propertylist.entity.RoomVsMealEntity;
-import com.orastays.property.propertylist.entity.RoomVsOraDiscountEntity;
-import com.orastays.property.propertylist.entity.RoomVsPriceEntity;
 import com.orastays.property.propertylist.exceptions.FormExceptions;
 import com.orastays.property.propertylist.helper.HostDiscount;
 import com.orastays.property.propertylist.helper.OraDiscount;
@@ -48,9 +49,9 @@ import com.orastays.property.propertylist.service.PropertyListService;
 
 @Service
 @Transactional
-public class PropertyServiceImpl extends BaseServiceImpl implements PropertyListService {
+public class PropertyListServiceImpl extends BaseServiceImpl implements PropertyListService {
 
-	private static final Logger logger = LogManager.getLogger(PropertyServiceImpl.class);
+	private static final Logger logger = LogManager.getLogger(PropertyListServiceImpl.class);
 
 	@Override
 	public List<PropertyListViewModel> fetchProperties(FilterCiteriaModel filterCiteriaModel) throws FormExceptions {

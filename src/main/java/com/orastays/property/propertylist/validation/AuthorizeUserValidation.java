@@ -14,23 +14,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
-import com.orastays.property.propertylist.dao.AccommodationDAO;
 import com.orastays.property.propertylist.dao.AmenitiesDAO;
 import com.orastays.property.propertylist.dao.CancellationSlabDAO;
-import com.orastays.property.propertylist.dao.DiscountCategoryHostDAO;
-import com.orastays.property.propertylist.dao.DiscountCategoryOraDAO;
 import com.orastays.property.propertylist.dao.DocumentDAO;
-import com.orastays.property.propertylist.dao.MealCategoryDAO;
-import com.orastays.property.propertylist.dao.MealDaysDAO;
-import com.orastays.property.propertylist.dao.MealPriceCategoryDAO;
-import com.orastays.property.propertylist.dao.MealTypeDAO;
-import com.orastays.property.propertylist.dao.PGCategorySexDAO;
-import com.orastays.property.propertylist.dao.PriceTypeDAO;
 import com.orastays.property.propertylist.dao.PropertyTypeDAO;
 import com.orastays.property.propertylist.dao.RoomCategoryDAO;
-import com.orastays.property.propertylist.dao.RoomStandardDAO;
 import com.orastays.property.propertylist.dao.RoomVsAmenitiesDAO;
-import com.orastays.property.propertylist.dao.RoomVsBedDAO;
 import com.orastays.property.propertylist.dao.RoomVsCancellationDAO;
 import com.orastays.property.propertylist.dao.SpaceRuleDAO;
 import com.orastays.property.propertylist.dao.SpecialExperienceDAO;
@@ -67,26 +56,14 @@ public class AuthorizeUserValidation {
 	@Autowired
 	protected SpecialExperienceDAO specialExperienceDAO;
 	
-	@Autowired
-	protected PGCategorySexDAO pgCategorySexDAO;
 	
 	@Autowired
 	protected DocumentDAO documentDAO;
 	
-	@Autowired
-	protected AccommodationDAO accommodationDAO;
-	
-	@Autowired
-	protected DiscountCategoryOraDAO discountCategoryOraDAO;
 	
 	@Autowired
 	protected RoomCategoryDAO roomCategoryDAO;
 	
-	@Autowired
-	protected RoomStandardDAO roomStandardDAO;
-	
-	@Autowired
-	protected RoomVsBedDAO roomVsBedDAO;
 	
 	@Autowired
 	protected RoomVsAmenitiesDAO roomVsAmenitiesDAO;
@@ -97,26 +74,10 @@ public class AuthorizeUserValidation {
 	@Autowired
 	protected CancellationSlabDAO cancellationSlabDAO;
 	
-	@Autowired
-	protected PriceTypeDAO priceTypeDAO;
-	
-	@Autowired
-	protected DiscountCategoryHostDAO discountCategoryHostDAO;	
 	
 	@Autowired
 	protected SpecialtiesDAO specialtiesDAO;
 	
-	@Autowired
-	protected MealCategoryDAO mealCategoryDAO;
-	
-	@Autowired
-	protected MealDaysDAO mealDaysDAO;
-	
-	@Autowired
-	protected MealPriceCategoryDAO mealPriceCategoryDAO;
-	
-	@Autowired
-	protected MealTypeDAO mealTypeDAO;
 	
 	@Autowired
 	protected AmenitiesDAO amenitiesDAO;

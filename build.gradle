@@ -79,6 +79,7 @@ dependencies {
 	compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-netflix-eureka-client', version: '1.4.5.RELEASE'
 	compile group: 'org.apache.tika', name: 'tika-core', version: '1.19.1'
 	compile group: 'org.springframework.cloud', name: 'spring-cloud-starter-config', version: '1.4.3.RELEASE'
+	compile group: 'com.microsoft.azure', name: 'azure-storage', version: '8.0.0'
 	testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	

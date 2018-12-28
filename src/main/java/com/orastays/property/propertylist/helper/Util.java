@@ -119,6 +119,21 @@ public class Util {
 		return flag;
 	}
 	
+	public static boolean checkOnlyDate(String startDate) {
+
+		boolean flag = false;
+		try {
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			formatter.parse(startDate);
+			flag = true;
+		} catch (Exception e) {
+
+			return false;
+		}
+
+		return flag;
+	}
+	
 	public static boolean checkDate(String startDate, String endDate) {
 
 		boolean flag = false;
@@ -130,8 +145,7 @@ public class Util {
 
 			int i = (currDate.compareTo(stDate));
 			int j = (currDate.compareTo(edDate));
-			int k = (stDate.compareTo(edDate));
-			flag = (i <= 0 && j <= 0 && k <=0 ) ? true : false;
+			flag = (i >= 0 && j <= 0) ? true : false;
 
 		} catch (Exception e) {
 
@@ -139,10 +153,6 @@ public class Util {
 		}
 
 		return flag;
-	}
-	
-	public static void main(String[] args) {
-		System.out.println("checkDate=>" + checkDate("2018-12-24 00:00:00","2018-12-20 23:59:59"));
 	}
 
 	public static boolean checkNullOrSpaceValue(String value) {
@@ -1261,50 +1271,13 @@ public class Util {
 		Matcher m = p.matcher(value);
 		return m.find();
 	}
-	
-	public static boolean accommodationContains(String accomodation) {
 
-	    for (Accommodation c : Accommodation.values()) {
-	        if (c.name().equals(accomodation)) {
-	            return true;
-	        }
-	    }
+	public static void main(String[] args) {
 
-	    return false;
+		try {
+			System.out.println(new Date().getTime());
+		} catch (Exception e) {
+
+		}
 	}
-	
-	public static boolean sexContains(String sex) {
-
-	    for (Sex c : Sex.values()) {
-	        if (c.name().equals(sex)) {
-	            return true;
-	        }
-	    }
-
-	    return false;
-	}
-	
-	public static boolean mealTypeContains(String mealType) {
-
-	    for (MealType c : MealType.values()) {
-	        if (c.name().equals(mealType)) {
-	            return true;
-	        }
-	    }
-
-	    return false;
-	}
-	
-	public static boolean mealPriceContains(String mealPrice) {
-
-	    for (MealPriceCategory c : MealPriceCategory.values()) {
-	        if (c.name().equals(mealPrice)) {
-	            return true;
-	        }
-	    }
-
-	    return false;
-	}
-
-
 }

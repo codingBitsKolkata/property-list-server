@@ -9,15 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
-import com.orastays.property.propertylist.entity.AmenitiesEntity;
-import com.orastays.property.propertylist.entity.PriceTypeEntity;
-import com.orastays.property.propertylist.entity.PropertyEntity;
-import com.orastays.property.propertylist.entity.RoomEntity;
-import com.orastays.property.propertylist.entity.RoomVsAmenitiesEntity;
-import com.orastays.property.propertylist.entity.RoomVsMealEntity;
-import com.orastays.property.propertylist.entity.RoomVsPriceEntity;
 import com.orastays.property.propertylist.exceptions.FormExceptions;
 import com.orastays.property.propertylist.helper.Status;
 import com.orastays.property.propertylist.helper.Util;
@@ -32,20 +24,13 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 	private static final Logger logger = LogManager.getLogger(HomeServiceImpl.class);
 
 	@Override
-	public List<PropertyListViewModel> getProperty(PropertyTypeModel propertyType) {
+	public List<PropertyListViewModel> fetchPropertyByType(PropertyTypeModel propertyTypeModel) throws FormExceptions {
 
 		if (logger.isInfoEnabled()) {
-			logger.info("getProperty -- START");
+			logger.info("fetchPropertyByType -- START");
 		}
 
-		try {
-			propertyListValidation.validatePropertyType(propertyType);
-		} catch (FormExceptions e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		String propertyTypeId = propertyType.getPropertyTypeId();
+		homeValidation.validatePropertyType(propertyTypeModel);
 		List<PropertyListViewModel> propertyListViewModelList = new ArrayList<>();
 		try {
 			Map<String, String> innerMap1 = new LinkedHashMap<>();
@@ -58,16 +43,62 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 			alliasMap.put(entitymanagerPackagesToScan + ".PropertyEntity", outerMap1);
 
 			Map<String, String> innerMap2 = new LinkedHashMap<>();
-			innerMap2.put("propertyTypeId", propertyTypeId);
+			innerMap2.put("propertyTypeId", propertyTypeModel.getPropertyTypeId());
 
 			Map<String, Map<String, String>> outerMap2 = new LinkedHashMap<>();
 			outerMap2.put("eq", innerMap2);
 
 			alliasMap.put("propertyTypeEntity", outerMap2);
 
-			List<PropertyEntity> propertyEntities = propertyDAO.fetchListBySubCiteria(alliasMap);
-
+			/*List<PropertyEntity> propertyEntities = propertyDAO.fetchListBySubCiteria(alliasMap);
 			if (!CollectionUtils.isEmpty(propertyEntities)) {
+				Double price = 0.0D;
+				for(PropertyEntity propertyEntity : propertyEntities) {
+					if(Objects.nonNull(propertyEntity) && !CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
+						for(RoomEntity roomEntity : propertyEntity.getRoomEntities()) {
+							if(!CollectionUtils.isEmpty(roomEntity.getRoomVsPriceEntities())) {
+								
+								if(propertyEntity.getStayTypeEntity().getStayTypeId() == Status.INACTIVE.ordinal()) {   //short term
+							
+									if(roomEntity.getAccommodationEntity().getAccommodationId() == Status.ACTIVE.ordinal()) { //shared
+										//Shared night price 
+										RoomVsPriceEntity roomVsPriceEntity = roomEntity.getRoomVsPriceEntities().stream() 
+								                .filter(x -> PriceType.SHARED_BED_PRICE_PER_NIGHT.ordinal() == x.getRoomVsPriceId()).findAny().orElse(null);  
+										if(Objects.nonNull(roomVsPriceEntity)) {
+											price = Double.parseDouble(roomVsPriceEntity.getValue());
+										}
+									} else { //private
+										 //Private night Price
+										RoomVsPriceEntity roomVsPriceEntity = roomEntity.getRoomVsPriceEntities().stream() 
+								                .filter(x -> PriceType.ROOM_PRICE_PER_NIGHT.ordinal() == x.getRoomVsPriceId()).findAny().orElse(null);  
+										if(Objects.nonNull(roomVsPriceEntity)) {
+											price = Double.parseDouble(roomVsPriceEntity.getValue());
+										}
+									}
+							
+								} else {   //both & long term
+									
+									if(roomEntity.getAccommodationEntity().getAccommodationId() == Status.ACTIVE.ordinal()) {   //shared
+										//Shared Month price 
+										RoomVsPriceEntity roomVsPriceEntity = roomEntity.getRoomVsPriceEntities().stream() 
+								                .filter(x -> PriceType.SHARED_BED_PRICE_PER_MONTH.ordinal() == x.getRoomVsPriceId()).findAny().orElse(null);  
+										if(Objects.nonNull(roomVsPriceEntity)) {
+											price =(Double.parseDouble(roomVsPriceEntity.getValue())/30);
+										}
+									} else {   //private
+										 //Private Month Price
+										RoomVsPriceEntity roomVsPriceEntity = roomEntity.getRoomVsPriceEntities().stream() 
+								                .filter(x -> PriceType.ROOM_PRICE_PER_MONTH.ordinal() == x.getRoomVsPriceId()).findAny().orElse(null);  
+										if(Objects.nonNull(roomVsPriceEntity)) {
+											price = (Double.parseDouble(roomVsPriceEntity.getValue())/30);
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				
 				Long minPrice = 99999999L;
 				Long roomPriceForMeal = 0L;
 				Long roomPriceForMaxAmenties = 0L;
@@ -109,10 +140,10 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 							if (null != roomVsMealEntities) {
 								propertyWithMealService = propEntity;
 								roomEntityWithMeal = roomEntity;
-								/*
+								
 								 * for (RoomVsPriceEntity roomVsPriceEntity : roomVsPriceEntites) {
 								 * roomPriceForMeal = Long.parseLong(roomVsPriceEntity.getPrice()); }
-								 */
+								 
 
 							}
 							// Property with Max Amenities
@@ -127,7 +158,7 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 						}
 					}
 
-				}
+				}*/
 
 				// Setting model for min price property
 /*				List<RoomVsAmenitiesEntity> roomVsAmmenitiesEntities = roomEntityWithMinPrice
@@ -168,19 +199,19 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 				propertyListViewModel.setAmenitiesModels(amenitiesConverter.entityListToModelList(amentitieEntityList));
 				propertyListViewModel.setCoverImageURL("");
 				propertyListViewModel.setTotalPrice(totalPrice);*/
-			}
+			//}
 
-		} catch (Exception e) {
+		}catch(Exception e) {
 			if (logger.isInfoEnabled()) {
-				logger.info("Exception in getProperty -- " + Util.errorToString(e));
+				logger.info("Exception in getPropertyByType -- " + Util.errorToString(e));
 			}
 		}
 
-		if (logger.isInfoEnabled()) {
-			logger.info("getProperty -- END");
-		}
-
-		return propertyListViewModelList;
-
+	if(logger.isInfoEnabled())
+	{
+		logger.info("fetchPropertyByType -- END");
 	}
+
+	return propertyListViewModelList;
 }
+		}
