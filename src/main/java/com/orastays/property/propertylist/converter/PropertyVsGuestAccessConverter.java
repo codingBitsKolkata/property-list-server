@@ -2,15 +2,17 @@ package com.orastays.property.propertylist.converter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.orastays.property.propertylist.entity.PropertyVsGuestAccessEntity;
-import com.orastays.property.propertylist.helper.Util;
-import com.orastays.property.propertylist.model.PropertyVsGuestAccessModel;
+import com.orastays.property.propertyadd.entity.PropertyVsGuestAccessEntity;
+import com.orastays.property.propertyadd.helper.Status;
+import com.orastays.property.propertyadd.helper.Util;
+import com.orastays.property.propertyadd.model.PropertyVsGuestAccessModel;
 
 @Component
 public class PropertyVsGuestAccessConverter extends CommonConverter
@@ -21,8 +23,21 @@ public class PropertyVsGuestAccessConverter extends CommonConverter
 
 	@Override
 	public PropertyVsGuestAccessEntity modelToEntity(PropertyVsGuestAccessModel m) {
-		// TODO Auto-generated method stub
-		return null;
+
+		if (logger.isInfoEnabled()) {
+			logger.info("entityToModel -- START");
+		}
+		
+		PropertyVsGuestAccessEntity propertyVsGuestAccessEntity = new PropertyVsGuestAccessEntity();
+		propertyVsGuestAccessEntity = (PropertyVsGuestAccessEntity) Util.transform(modelMapper, m, propertyVsGuestAccessEntity);
+		propertyVsGuestAccessEntity.setStatus(Status.ACTIVE.ordinal());
+		propertyVsGuestAccessEntity.setCreatedDate(Util.getCurrentDateTime());
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("entityToModel -- END");
+		}
+		
+		return propertyVsGuestAccessEntity;
 	}
 
 	@Override
@@ -32,8 +47,12 @@ public class PropertyVsGuestAccessConverter extends CommonConverter
 			logger.info("entityToModel -- START");
 		}
 		
-		PropertyVsGuestAccessModel propertyVsGuestAccessModel = new PropertyVsGuestAccessModel();
-		propertyVsGuestAccessModel = (PropertyVsGuestAccessModel) Util.transform(modelMapper, e, propertyVsGuestAccessModel);
+		PropertyVsGuestAccessModel propertyVsGuestAccessModel = null;
+		
+		if(Objects.nonNull(e)){
+			propertyVsGuestAccessModel = new PropertyVsGuestAccessModel();
+			propertyVsGuestAccessModel = (PropertyVsGuestAccessModel) Util.transform(modelMapper, e, propertyVsGuestAccessModel);
+		}
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("entityToModel -- END");

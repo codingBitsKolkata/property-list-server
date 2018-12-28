@@ -32,7 +32,7 @@ public class PropertyVsDescriptionEntity extends CommonEntity  {
 	@JsonProperty("propertyDescId")
 	private Long propertyDescId;
 
-	@Column(name = "description")
+	@Column(name = "description", length = 65535,columnDefinition="Text")
 	@JsonProperty("description")
 	private String description;
 	

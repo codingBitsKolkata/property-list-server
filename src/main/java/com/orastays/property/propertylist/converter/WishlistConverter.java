@@ -8,9 +8,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.orastays.property.propertylist.entity.WishlistEntity;
-import com.orastays.property.propertylist.helper.Util;
-import com.orastays.property.propertylist.model.WishlistModel;
+import com.orastays.property.propertyadd.entity.WishlistEntity;
+import com.orastays.property.propertyadd.helper.Util;
+import com.orastays.property.propertyadd.model.WishlistModel;
 
 @Component
 public class WishlistConverter extends CommonConverter implements BaseConverter<WishlistEntity, WishlistModel> {

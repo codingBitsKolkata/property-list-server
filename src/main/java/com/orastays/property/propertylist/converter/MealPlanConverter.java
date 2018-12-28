@@ -2,15 +2,16 @@ package com.orastays.property.propertylist.converter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.orastays.property.propertylist.entity.MealPlanEntity;
-import com.orastays.property.propertylist.helper.Util;
-import com.orastays.property.propertylist.model.MealPlanModel;
+import com.orastays.property.propertyadd.entity.MealPlanEntity;
+import com.orastays.property.propertyadd.helper.Util;
+import com.orastays.property.propertyadd.model.MealPlanModel;
 
 @Component
 public class MealPlanConverter extends CommonConverter implements BaseConverter<MealPlanEntity, MealPlanModel> {
@@ -31,8 +32,12 @@ public class MealPlanConverter extends CommonConverter implements BaseConverter<
 			logger.info("entityToModel -- START");
 		}
 		
-		MealPlanModel mealPlanModel = new MealPlanModel();
-		mealPlanModel = (MealPlanModel) Util.transform(modelMapper, e, mealPlanModel);
+		MealPlanModel mealPlanModel = null;
+		
+		if(Objects.nonNull(e)) {
+			mealPlanModel = new MealPlanModel();
+			mealPlanModel = (MealPlanModel) Util.transform(modelMapper, e, mealPlanModel);
+		}
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("entityToModel -- END");

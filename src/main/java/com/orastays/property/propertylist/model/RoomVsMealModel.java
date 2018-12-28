@@ -15,22 +15,73 @@ public class RoomVsMealModel extends CommonModel {
 
 	@JsonProperty("roomVsMealId")
 	private String roomVsMealId;
-	
-	@JsonProperty("mealCategory")
-	private MealCategoryModel mealCategoryModel;
-	
+
+	@JsonProperty("mealTypeSunday")
+	private String mealTypeSunday;
+
+	@JsonProperty("mealTypeMonday")
+	private String mealTypeMonday;
+
+	@JsonProperty("mealTypeTuesday")
+	private String mealTypeTuesday;
+
+	@JsonProperty("mealTypeWednesday")
+	private String mealTypeWednesday;
+
+	@JsonProperty("mealTypeThursday")
+	private String mealTypeThursday;
+
+	@JsonProperty("mealTypeFriday")
+	private String mealTypeFriday;
+
+	@JsonProperty("mealTypeSaturday")
+	private String mealTypeSaturday;
+
+	@JsonProperty("mealDaysSunday")
+	private String mealDaysSunday;
+
+	@JsonProperty("mealDaysMonday")
+	private String mealDaysMonday;
+
+	@JsonProperty("mealDaysTuesday")
+	private String mealDaysTuesday;
+
+	@JsonProperty("mealDaysWednesday")
+	private String mealDaysWednesday;
+
+	@JsonProperty("mealDaysThursday")
+	private String mealDaysThursday;
+
+	@JsonProperty("mealDaysFriday")
+	private String mealDaysFriday;
+
+	@JsonProperty("mealDaysSaturday")
+	private String mealDaysSaturday;
+
+	@JsonProperty("mealPriceCategorySunday")
+	private String mealPriceCategorySunday;
+
+	@JsonProperty("mealPriceCategoryMonday")
+	private String mealPriceCategoryMonday;
+
+	@JsonProperty("mealPriceCategoryTuesday")
+	private String mealPriceCategoryTuesday;
+
+	@JsonProperty("mealPriceCategoryWednesday")
+	private String mealPriceCategoryWednesday;
+
+	@JsonProperty("mealPriceCategoryThursday")
+	private String mealPriceCategoryThursday;
+
+	@JsonProperty("mealPriceCategoryFriday")
+	private String mealPriceCategoryFriday;
+
+	@JsonProperty("mealPriceCategorySaturday")
+	private String mealPriceCategorySaturday;
+
 	@JsonProperty("room")
 	private RoomModel roomModel;
-	
-	@JsonProperty("mealDays")
-	private MealDaysModel mealDaysModel;
-	
-	@JsonProperty("mealType")
-	private MealTypeModel mealTypeModel;
-	
-	@JsonProperty("mealPlanCategoryVsMealPlan")
-	private MealPlanCategoryVsMealPlanModel mealPlanCategoryVsMealPlanModel;
-	
-	@JsonProperty("mealPriceCategory")
-	private MealPriceCategoryModel mealPriceCategoryModel;
+
+	@JsonProperty("mealPlan")
+	private MealPlanModel mealPlanModel;
 }

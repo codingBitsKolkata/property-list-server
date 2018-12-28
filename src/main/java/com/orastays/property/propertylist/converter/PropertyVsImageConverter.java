@@ -2,15 +2,17 @@ package com.orastays.property.propertylist.converter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.orastays.property.propertylist.entity.PropertyVsImageEntity;
-import com.orastays.property.propertylist.helper.Util;
-import com.orastays.property.propertylist.model.PropertyVsImageModel;
+import com.orastays.property.propertyadd.entity.PropertyVsImageEntity;
+import com.orastays.property.propertyadd.helper.Status;
+import com.orastays.property.propertyadd.helper.Util;
+import com.orastays.property.propertyadd.model.PropertyVsImageModel;
 
 @Component
 public class PropertyVsImageConverter extends CommonConverter
@@ -21,8 +23,21 @@ public class PropertyVsImageConverter extends CommonConverter
 
 	@Override
 	public PropertyVsImageEntity modelToEntity(PropertyVsImageModel m) {
-		// TODO Auto-generated method stub
-		return null;
+
+		if (logger.isInfoEnabled()) {
+			logger.info("entityToModel -- START");
+		}
+		
+		PropertyVsImageEntity propertyVsImageEntity = new PropertyVsImageEntity();
+		propertyVsImageEntity = (PropertyVsImageEntity) Util.transform(modelMapper, m, propertyVsImageEntity);
+		propertyVsImageEntity.setStatus(Status.ACTIVE.ordinal());
+		propertyVsImageEntity.setCreatedDate(Util.getCurrentDateTime());
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("entityToModel -- END");
+		}
+		
+		return propertyVsImageEntity;
 	}
 
 	@Override
@@ -32,8 +47,12 @@ public class PropertyVsImageConverter extends CommonConverter
 			logger.info("entityToModel -- START");
 		}
 		
-		PropertyVsImageModel propertyVsImageModel = new PropertyVsImageModel();
-		propertyVsImageModel = (PropertyVsImageModel) Util.transform(modelMapper, e, propertyVsImageModel);
+		PropertyVsImageModel propertyVsImageModel = null;
+		
+		if(Objects.nonNull(e)) {
+			propertyVsImageModel = new PropertyVsImageModel();
+			propertyVsImageModel = (PropertyVsImageModel) Util.transform(modelMapper, e, propertyVsImageModel);
+		}
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("entityToModel -- END");

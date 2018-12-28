@@ -2,15 +2,16 @@ package com.orastays.property.propertylist.converter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.orastays.property.propertylist.entity.AmenitiesEntity;
-import com.orastays.property.propertylist.helper.Util;
-import com.orastays.property.propertylist.model.AmenitiesModel;
+import com.orastays.property.propertyadd.entity.AmenitiesEntity;
+import com.orastays.property.propertyadd.helper.Util;
+import com.orastays.property.propertyadd.model.AmenitiesModel;
 
 @Component
 public class AmenitiesConverter extends CommonConverter implements BaseConverter<AmenitiesEntity, AmenitiesModel> {
@@ -31,8 +32,12 @@ public class AmenitiesConverter extends CommonConverter implements BaseConverter
 			logger.info("entityToModel -- START");
 		}
 		
-		AmenitiesModel amenitiesModel = new AmenitiesModel();
-		amenitiesModel = (AmenitiesModel) Util.transform(modelMapper, e, amenitiesModel);
+		AmenitiesModel amenitiesModel = null;
+		
+		if(Objects.nonNull(e)){
+			amenitiesModel = new AmenitiesModel();
+			amenitiesModel = (AmenitiesModel) Util.transform(modelMapper, e, amenitiesModel);
+		}
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("entityToModel -- END");

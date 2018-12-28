@@ -8,9 +8,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.orastays.property.propertylist.entity.SpaceRuleEntity;
-import com.orastays.property.propertylist.helper.Util;
-import com.orastays.property.propertylist.model.SpaceRuleModel;
+import com.orastays.property.propertyadd.entity.SpaceRuleEntity;
+import com.orastays.property.propertyadd.helper.Util;
+import com.orastays.property.propertyadd.model.SpaceRuleModel;
 
 @Component
 public class SpaceRuleConverter extends CommonConverter implements BaseConverter<SpaceRuleEntity, SpaceRuleModel> {

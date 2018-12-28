@@ -2,15 +2,17 @@ package com.orastays.property.propertylist.converter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.orastays.property.propertylist.entity.RoomVsImageEntity;
-import com.orastays.property.propertylist.helper.Util;
-import com.orastays.property.propertylist.model.RoomVsImageModel;
+import com.orastays.property.propertyadd.entity.RoomVsImageEntity;
+import com.orastays.property.propertyadd.helper.Status;
+import com.orastays.property.propertyadd.helper.Util;
+import com.orastays.property.propertyadd.model.RoomVsImageModel;
 
 @Component
 public class RoomVsImageConverter extends CommonConverter
@@ -21,8 +23,21 @@ public class RoomVsImageConverter extends CommonConverter
 
 	@Override
 	public RoomVsImageEntity modelToEntity(RoomVsImageModel m) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("modelToEntity -- START");
+		}
+
+		RoomVsImageEntity roomVsImageEntity = new RoomVsImageEntity();
+		roomVsImageEntity = (RoomVsImageEntity) Util.transform(modelMapper, m, roomVsImageEntity);
+		roomVsImageEntity.setStatus(Status.ACTIVE.ordinal());
+		roomVsImageEntity.setCreatedDate(Util.getCurrentDateTime());
+
+		if (logger.isInfoEnabled()) {
+			logger.info("modelToEntity -- END");
+		}
+
+		return roomVsImageEntity;
 	}
 
 	@Override
@@ -32,9 +47,11 @@ public class RoomVsImageConverter extends CommonConverter
 			logger.info("entityToModel -- START");
 		}
 		
-		RoomVsImageModel roomVsImageModel = new RoomVsImageModel();
-		roomVsImageModel = (RoomVsImageModel) Util.transform(modelMapper, e, roomVsImageModel);
-		
+		RoomVsImageModel roomVsImageModel = null;
+		if(Objects.nonNull(e)){
+			roomVsImageModel = new RoomVsImageModel();
+			roomVsImageModel = (RoomVsImageModel) Util.transform(modelMapper, e, roomVsImageModel);
+		}
 		if (logger.isInfoEnabled()) {
 			logger.info("entityToModel -- END");
 		}

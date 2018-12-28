@@ -27,6 +27,9 @@ public class PropertyModel extends CommonModel {
 	@JsonProperty("entireApartment")
 	private String entireApartment;
 
+	@JsonProperty("sexCategory")
+	private String sexCategory;
+
 	@JsonProperty("apartmentName")
 	private String apartmentName;
 
@@ -78,20 +81,20 @@ public class PropertyModel extends CommonModel {
 	@JsonProperty("landline")
 	private String landline;
 
+	@JsonProperty("advancePercentage")
+	private String advancePercentage;
+
 	@JsonProperty("propertyType")
 	private PropertyTypeModel propertyTypeModel;
-
-	@JsonProperty("propertyVsDocuments")
-	private List<PropertyVsDocumentModel> propertyVsDocumentModels;
 
 	@JsonProperty("stayType")
 	private StayTypeModel stayTypeModel;
 
-	@JsonProperty("userVsAccount")
-	private UserVsAccountModel userVsAccountModel;
+	@JsonProperty("hostVsAccount")
+	private HostVsAccountModel hostVsAccountModel;
 
-	@JsonProperty("pgCategorySex")
-	private PGCategorySexModel pgCategorySexModel;
+	@JsonProperty("propertyVsDocuments")
+	private List<PropertyVsDocumentModel> propertyVsDocumentModels;
 
 	@JsonProperty("propertyVsDescriptions")
 	private List<PropertyVsDescriptionModel> propertyVsDescriptionModels;

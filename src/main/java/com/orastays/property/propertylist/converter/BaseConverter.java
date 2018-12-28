@@ -27,5 +27,6 @@ public interface BaseConverter<E, M> extends Serializable {
 	 * @return
 	 */
 	public List<M> entityListToModelList(List<E> es);
+	
 
 }

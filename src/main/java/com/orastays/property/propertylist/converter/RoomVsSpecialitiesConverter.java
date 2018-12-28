@@ -2,15 +2,17 @@ package com.orastays.property.propertylist.converter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.orastays.property.propertylist.entity.RoomVsSpecialitiesEntity;
-import com.orastays.property.propertylist.helper.Util;
-import com.orastays.property.propertylist.model.RoomVsSpecialitiesModel;
+import com.orastays.property.propertyadd.entity.RoomVsSpecialitiesEntity;
+import com.orastays.property.propertyadd.helper.Status;
+import com.orastays.property.propertyadd.helper.Util;
+import com.orastays.property.propertyadd.model.RoomVsSpecialitiesModel;
 
 @Component
 public class RoomVsSpecialitiesConverter extends CommonConverter
@@ -22,8 +24,22 @@ public class RoomVsSpecialitiesConverter extends CommonConverter
 
 	@Override
 	public RoomVsSpecialitiesEntity modelToEntity(RoomVsSpecialitiesModel m) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("modelToEntity -- START");
+		}
+
+		RoomVsSpecialitiesEntity roomVsSpecialitiesEntity = new RoomVsSpecialitiesEntity();
+		roomVsSpecialitiesEntity = (RoomVsSpecialitiesEntity) Util.transform(modelMapper, m, roomVsSpecialitiesEntity);
+		roomVsSpecialitiesEntity.setStatus(Status.ACTIVE.ordinal());
+		roomVsSpecialitiesEntity.setCreatedDate(Util.getCurrentDateTime());
+		roomVsSpecialitiesEntity.setSpecialtiesEntity(specialtiesDAO.find(Long.valueOf(m.getSpecialtiesModel().getSpecialtiesId())));
+
+		if (logger.isInfoEnabled()) {
+			logger.info("modelToEntity -- END");
+		}
+
+		return roomVsSpecialitiesEntity;
 	}
 
 	@Override
@@ -33,8 +49,13 @@ public class RoomVsSpecialitiesConverter extends CommonConverter
 			logger.info("entityToModel -- START");
 		}
 		
-		RoomVsSpecialitiesModel roomVsSpecialitiesModel = new RoomVsSpecialitiesModel();
-		roomVsSpecialitiesModel = (RoomVsSpecialitiesModel) Util.transform(modelMapper, e, roomVsSpecialitiesModel);
+		RoomVsSpecialitiesModel roomVsSpecialitiesModel = null;
+		
+		if(Objects.nonNull(e)) {
+			roomVsSpecialitiesModel = new RoomVsSpecialitiesModel();
+			roomVsSpecialitiesModel = (RoomVsSpecialitiesModel) Util.transform(modelMapper, e, roomVsSpecialitiesModel);
+			roomVsSpecialitiesModel.setSpecialtiesModel(specialtiesConverter.entityToModel(e.getSpecialtiesEntity()));
+		}
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("entityToModel -- END");

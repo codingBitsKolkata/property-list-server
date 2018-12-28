@@ -2,15 +2,17 @@ package com.orastays.property.propertylist.converter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.orastays.property.propertylist.entity.RoomVsCancellationEntity;
-import com.orastays.property.propertylist.helper.Util;
-import com.orastays.property.propertylist.model.RoomVsCancellationModel;
+import com.orastays.property.propertyadd.entity.RoomVsCancellationEntity;
+import com.orastays.property.propertyadd.helper.Status;
+import com.orastays.property.propertyadd.helper.Util;
+import com.orastays.property.propertyadd.model.RoomVsCancellationModel;
 
 @Component
 public class RoomVsCancellationConverter extends CommonConverter
@@ -21,8 +23,22 @@ public class RoomVsCancellationConverter extends CommonConverter
 
 	@Override
 	public RoomVsCancellationEntity modelToEntity(RoomVsCancellationModel m) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("modelToEntity -- START");
+		}
+
+		RoomVsCancellationEntity roomVsCancellationEntity = new RoomVsCancellationEntity();
+		roomVsCancellationEntity = (RoomVsCancellationEntity) Util.transform(modelMapper, m, roomVsCancellationEntity);
+		roomVsCancellationEntity.setStatus(Status.ACTIVE.ordinal());
+		roomVsCancellationEntity.setCreatedDate(Util.getCurrentDateTime());
+		roomVsCancellationEntity.setCancellationSlabEntity(cancellationSlabDAO.find(Long.valueOf(m.getCancellationSlabModel().getCancellationSlabId())));
+
+		if (logger.isInfoEnabled()) {
+			logger.info("modelToEntity -- END");
+		}
+
+		return roomVsCancellationEntity;
 	}
 
 	@Override
@@ -32,8 +48,13 @@ public class RoomVsCancellationConverter extends CommonConverter
 			logger.info("entityToModel -- START");
 		}
 		
-		RoomVsCancellationModel roomVsCancellationModel = new RoomVsCancellationModel();
-		roomVsCancellationModel = (RoomVsCancellationModel) Util.transform(modelMapper, e, roomVsCancellationModel);
+		RoomVsCancellationModel roomVsCancellationModel = null;
+		
+		if(Objects.nonNull(e)){
+			roomVsCancellationModel = new RoomVsCancellationModel();
+			roomVsCancellationModel = (RoomVsCancellationModel) Util.transform(modelMapper, e, roomVsCancellationModel);
+			roomVsCancellationModel.setCancellationSlabModel(cancellationSlabConverter.entityToModel(e.getCancellationSlabEntity()));
+		}
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("entityToModel -- END");

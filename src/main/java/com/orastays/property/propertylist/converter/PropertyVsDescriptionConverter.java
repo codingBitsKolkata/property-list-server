@@ -2,15 +2,17 @@ package com.orastays.property.propertylist.converter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.orastays.property.propertylist.entity.PropertyVsDescriptionEntity;
-import com.orastays.property.propertylist.helper.Util;
-import com.orastays.property.propertylist.model.PropertyVsDescriptionModel;
+import com.orastays.property.propertyadd.entity.PropertyVsDescriptionEntity;
+import com.orastays.property.propertyadd.helper.Status;
+import com.orastays.property.propertyadd.helper.Util;
+import com.orastays.property.propertyadd.model.PropertyVsDescriptionModel;
 
 @Component
 public class PropertyVsDescriptionConverter extends CommonConverter
@@ -21,8 +23,12 @@ public class PropertyVsDescriptionConverter extends CommonConverter
 
 	@Override
 	public PropertyVsDescriptionEntity modelToEntity(PropertyVsDescriptionModel m) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		PropertyVsDescriptionEntity propertyVsDescriptionEntity = new PropertyVsDescriptionEntity();
+		propertyVsDescriptionEntity = (PropertyVsDescriptionEntity) Util.transform(modelMapper, m, propertyVsDescriptionEntity);
+		propertyVsDescriptionEntity.setStatus(Status.ACTIVE.ordinal());
+		propertyVsDescriptionEntity.setCreatedDate(Util.getCurrentDateTime());
+		return propertyVsDescriptionEntity;
 	}
 
 	@Override
@@ -32,8 +38,12 @@ public class PropertyVsDescriptionConverter extends CommonConverter
 			logger.info("entityToModel -- START");
 		}
 		
-		PropertyVsDescriptionModel propertyVsDescriptionModel = new PropertyVsDescriptionModel();
-		propertyVsDescriptionModel = (PropertyVsDescriptionModel) Util.transform(modelMapper, e, propertyVsDescriptionModel);
+		PropertyVsDescriptionModel propertyVsDescriptionModel = null;
+		
+		if(Objects.nonNull(e)){
+			propertyVsDescriptionModel = new PropertyVsDescriptionModel();
+			propertyVsDescriptionModel = (PropertyVsDescriptionModel) Util.transform(modelMapper, e, propertyVsDescriptionModel);
+		}
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("entityToModel -- END");
@@ -63,5 +73,5 @@ public class PropertyVsDescriptionConverter extends CommonConverter
 		
 		return propertyVsDescriptionModels;
 	}
-
+	
 }

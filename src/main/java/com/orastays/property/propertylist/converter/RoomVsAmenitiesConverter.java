@@ -2,15 +2,17 @@ package com.orastays.property.propertylist.converter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.orastays.property.propertylist.entity.RoomVsAmenitiesEntity;
-import com.orastays.property.propertylist.helper.Util;
-import com.orastays.property.propertylist.model.RoomVsAmenitiesModel;
+import com.orastays.property.propertyadd.entity.RoomVsAmenitiesEntity;
+import com.orastays.property.propertyadd.helper.Status;
+import com.orastays.property.propertyadd.helper.Util;
+import com.orastays.property.propertyadd.model.RoomVsAmenitiesModel;
 
 @Component
 public class RoomVsAmenitiesConverter extends CommonConverter
@@ -21,8 +23,24 @@ public class RoomVsAmenitiesConverter extends CommonConverter
 
 	@Override
 	public RoomVsAmenitiesEntity modelToEntity(RoomVsAmenitiesModel m) {
-		// TODO Auto-generated method stub
-		return null;
+
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("modelToEntity -- START");
+		}
+
+		RoomVsAmenitiesEntity roomVsAmenitiesEntity = new RoomVsAmenitiesEntity();
+		roomVsAmenitiesEntity = (RoomVsAmenitiesEntity) Util.transform(modelMapper, m, roomVsAmenitiesEntity);
+		roomVsAmenitiesEntity.setStatus(Status.ACTIVE.ordinal());
+		roomVsAmenitiesEntity.setCreatedDate(Util.getCurrentDateTime());
+		roomVsAmenitiesEntity.setAmenitiesEntity(amenitiesDAO.find(Long.valueOf(m.getAmenitiesModel().getAminitiesId())));
+
+		if (logger.isInfoEnabled()) {
+			logger.info("modelToEntity -- END");
+		}
+
+		return roomVsAmenitiesEntity;
+		
 	}
 
 	@Override
@@ -32,9 +50,13 @@ public class RoomVsAmenitiesConverter extends CommonConverter
 			logger.info("entityToModel -- START");
 		}
 		
-		RoomVsAmenitiesModel roomVsAmenitiesModel = new RoomVsAmenitiesModel();
-		roomVsAmenitiesModel = (RoomVsAmenitiesModel) Util.transform(modelMapper, e, roomVsAmenitiesModel);
+		RoomVsAmenitiesModel roomVsAmenitiesModel = null;
 		
+		if(Objects.nonNull(e)){
+			roomVsAmenitiesModel = new RoomVsAmenitiesModel();
+			roomVsAmenitiesModel = (RoomVsAmenitiesModel) Util.transform(modelMapper, e, roomVsAmenitiesModel);
+			roomVsAmenitiesModel.setAmenitiesModel(amenitiesConverter.entityToModel(e.getAmenitiesEntity()));
+		}
 		if (logger.isInfoEnabled()) {
 			logger.info("entityToModel -- END");
 		}

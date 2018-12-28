@@ -9,11 +9,10 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.orastays.property.propertylist.entity.RoomVsMealEntity;
-import com.orastays.property.propertylist.helper.MealCategory;
-import com.orastays.property.propertylist.helper.Status;
-import com.orastays.property.propertylist.helper.Util;
-import com.orastays.property.propertylist.model.RoomVsMealModel;
+import com.orastays.property.propertyadd.entity.RoomVsMealEntity;
+import com.orastays.property.propertyadd.helper.Status;
+import com.orastays.property.propertyadd.helper.Util;
+import com.orastays.property.propertyadd.model.RoomVsMealModel;
 
 @Component
 public class RoomVsMealConverter extends CommonConverter
@@ -34,15 +33,6 @@ public class RoomVsMealConverter extends CommonConverter
 		roomVsMealEntity = (RoomVsMealEntity) Util.transform(modelMapper, m, roomVsMealEntity);
 		roomVsMealEntity.setStatus(Status.ACTIVE.ordinal());
 		roomVsMealEntity.setCreatedDate(Util.getCurrentDateTime());
-		roomVsMealEntity.setMealCategoryEntity(mealCategoryDAO.find(Long.valueOf(m.getMealCategoryModel().getMealCategoryId())));
-		if(Objects.nonNull(m.getMealCategoryModel())){
-			if(m.getMealCategoryModel().getMealCatName() == String.valueOf(MealCategory.Daily.ordinal())) {
-				roomVsMealEntity.setMealDaysEntity(mealDaysDAO.find(Long.valueOf(m.getMealDaysModel().getMealDaysId())));
-			}
-		}
-		//roomVsMealEntity.setMealPlanCatVsMealPlanEntity(mealPlanCatVsMealPlanDAO.find(Long.valueOf(m.getMealPlanCategoryVsMealPlanModel().getMpcmpId())));
-		roomVsMealEntity.setMealPriceCategoryEntity(mealPriceCategoryDAO.find(Long.valueOf(m.getMealPriceCategoryModel().getMmpcId())));
-		roomVsMealEntity.setMealTypeEntity(mealTypeDAO.find(Long.valueOf(m.getMealTypeModel().getMealTypeId())));
 
 		if (logger.isInfoEnabled()) {
 			logger.info("modelToEntity -- END");
@@ -58,9 +48,12 @@ public class RoomVsMealConverter extends CommonConverter
 			logger.info("entityToModel -- START");
 		}
 		
-		RoomVsMealModel roomVsMealModel = new RoomVsMealModel();
-		roomVsMealModel = (RoomVsMealModel) Util.transform(modelMapper, e, roomVsMealModel);
+		RoomVsMealModel roomVsMealModel = null;
 		
+		if(Objects.nonNull(e)) {
+			roomVsMealModel = new RoomVsMealModel();
+			roomVsMealModel = (RoomVsMealModel) Util.transform(modelMapper, e, roomVsMealModel);
+		}
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("entityToModel -- END");

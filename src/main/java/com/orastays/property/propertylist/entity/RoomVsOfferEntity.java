@@ -18,32 +18,33 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "meal_plan_cat_vs_meal_plan")
+@Table(name = "room_vs_offer")
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = false)
-public class MealPlanCatVsMealPlanEntity extends CommonEntity {
+public class RoomVsOfferEntity extends CommonEntity {
 
-	private static final long serialVersionUID = -2218223338060085395L;
+	private static final long serialVersionUID = -188845657897816774L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "mpcmp_id")
-	@JsonProperty("mpcmpId")
-	private Long mpcmpId;
+	@Column(name = "room_vs_offer_id")
+	@JsonProperty("roomVsOfferId")
+	private Long roomVsOfferId;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
-	@JoinColumn(name = "mpc_id", nullable = false)
-	@JsonProperty("mealPlanCategory")
-	private MealPlanCategoryEntity mealPlanCategoryEntity;
+	@JoinColumn(name = "offer_id", nullable = false)
+	@JsonProperty("offer")
+	private OfferEntity offerEntity;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
-	@JoinColumn(name = "meal_plan_id", nullable = false)
-	@JsonProperty("mealPlan")
-	private MealPlanEntity mealPlanEntity;
+	@JoinColumn(name = "room_id", nullable = false)
+	@JsonProperty("room")
+	private RoomEntity roomEntity;
 
 	@Override
 	public String toString() {
-		return Long.toString(mpcmpId);
+		return Long.toString(roomVsOfferId);
 	}
+
 }

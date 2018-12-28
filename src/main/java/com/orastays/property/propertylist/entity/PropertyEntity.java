@@ -46,6 +46,10 @@ public class PropertyEntity extends CommonEntity {
 	@Column(name = "entire_apartment")
 	@JsonProperty("entireApartment")
 	private String entireApartment;
+	
+	@Column(name = "sex_category")
+	@JsonProperty("sexCategory")
+	private String sexCategory;
 
 	@Column(name = "apartment_name")
 	@JsonProperty("apartmentName")
@@ -63,8 +67,8 @@ public class PropertyEntity extends CommonEntity {
 	@JsonProperty("longitude")
 	private String longitude;
 
-	@Column(name = "address")
-	@JsonProperty("address")
+	@Column(name = "address", length = 65535,columnDefinition="Text")
+	@JsonProperty("address" )
 	private String address;
 
 	@Column(name = "start_date")
@@ -114,6 +118,10 @@ public class PropertyEntity extends CommonEntity {
 	@Column(name = "landline")
 	@JsonProperty("landline")
 	private String landline;
+	
+	@Column(name = "advance_percentage")
+	@JsonProperty("advancePercentage")
+	private String advancePercentage;
 
 	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
@@ -121,25 +129,20 @@ public class PropertyEntity extends CommonEntity {
 	@JsonProperty("propertyType")
 	private PropertyTypeEntity propertyTypeEntity;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "propertyEntity", cascade = { CascadeType.ALL })
-	@JsonProperty("propertyVsDocuments")
-	private List<PropertyVsDocumentEntity> propertyVsDocumentEntities;
-	
-
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "stay_type_id", nullable = false)
 	@JsonProperty("stayType")
 	private StayTypeEntity stayTypeEntity;
-
+	
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
-	@JoinColumn(name = "user_vs_account_id", nullable = false)
-	@JsonProperty("userVsAccount")
-	private UserVsAccountEntity userVsAccountEntity;
-
-	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
-	@JoinColumn(name = "pgcs_id", nullable = false)
-	@JsonProperty("pgCategorySex")
-	private PGCategorySexEntity pgCategorySexEntity;
+	@JoinColumn(name = "host_vs_account_id", nullable = false)
+	@JsonProperty("hostVsAccount")
+	private HostVsAccountEntity hostVsAccountEntity;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "propertyEntity", cascade = { CascadeType.ALL })
+	@JsonProperty("propertyVsDocuments")
+	private List<PropertyVsDocumentEntity> propertyVsDocumentEntities;
+	
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "propertyEntity", cascade = { CascadeType.ALL })
 	@JsonProperty("propertyVsDescriptions")

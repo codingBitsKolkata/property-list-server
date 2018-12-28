@@ -2,7 +2,7 @@ package com.orastays.property.propertylist.dao;
 
 import org.springframework.stereotype.Repository;
 
-import com.orastays.property.propertylist.entity.MealPlanCategoryEntity;
+import com.orastays.property.propertyadd.entity.MealPlanCategoryEntity;
 
 @Repository
 public class MealPlanCategoryDAO extends GenericDAO<MealPlanCategoryEntity, Long>{

@@ -2,15 +2,17 @@ package com.orastays.property.propertylist.converter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.orastays.property.propertylist.entity.PropertyVsSpecialExperienceEntity;
-import com.orastays.property.propertylist.helper.Util;
-import com.orastays.property.propertylist.model.PropertyVsSpecialExperienceModel;
+import com.orastays.property.propertyadd.entity.PropertyVsSpecialExperienceEntity;
+import com.orastays.property.propertyadd.helper.Status;
+import com.orastays.property.propertyadd.helper.Util;
+import com.orastays.property.propertyadd.model.PropertyVsSpecialExperienceModel;
 
 @Component
 public class PropertyVsSpecialExperienceConverter extends CommonConverter
@@ -21,8 +23,15 @@ public class PropertyVsSpecialExperienceConverter extends CommonConverter
 
 	@Override
 	public PropertyVsSpecialExperienceEntity modelToEntity(PropertyVsSpecialExperienceModel m) {
-		// TODO Auto-generated method stub
-		return null;
+
+		PropertyVsSpecialExperienceEntity specialExperienceEntity = new PropertyVsSpecialExperienceEntity();
+		specialExperienceEntity = (PropertyVsSpecialExperienceEntity) Util.transform(modelMapper, m, specialExperienceEntity);
+		specialExperienceEntity.setStatus(Status.ACTIVE.ordinal());
+		specialExperienceEntity.setCreatedDate(Util.getCurrentDateTime());
+		
+		specialExperienceEntity.setSpecialExperienceEntity(specialExperienceDAO.find(Long.parseLong(m.getSpecialExperienceModel().getExperienceId())));
+		
+		return specialExperienceEntity;
 	}
 
 	@Override
@@ -32,8 +41,14 @@ public class PropertyVsSpecialExperienceConverter extends CommonConverter
 			logger.info("entityToModel -- START");
 		}
 		
-		PropertyVsSpecialExperienceModel propertyVsSpecialExperienceModel = new PropertyVsSpecialExperienceModel();
-		propertyVsSpecialExperienceModel = (PropertyVsSpecialExperienceModel) Util.transform(modelMapper, e, propertyVsSpecialExperienceModel);
+		PropertyVsSpecialExperienceModel propertyVsSpecialExperienceModel = null;
+		
+		if(Objects.nonNull(e)) {
+			
+			propertyVsSpecialExperienceModel = new PropertyVsSpecialExperienceModel();
+			propertyVsSpecialExperienceModel = (PropertyVsSpecialExperienceModel) Util.transform(modelMapper, e, propertyVsSpecialExperienceModel);
+			propertyVsSpecialExperienceModel.setSpecialExperienceModel(specialExperienceConverter.entityToModel(e.getSpecialExperienceEntity()));
+		}
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("entityToModel -- END");

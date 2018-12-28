@@ -1,20 +1,20 @@
 package com.orastays.property.propertylist.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = false)
 @ToString
-public class PropertyVsDocumentModel extends CommonModel{
+public class PropertyVsDocumentModel extends CommonModel {
 
-	@JsonProperty("userVsDocumentId")
-	private Long userVsDocumentId;
+	@JsonProperty("propertyVsDocumentId")
+	private String propertyVsDocumentId;
 
 	@JsonProperty("documentNumber")
 	private String documentNumber;
@@ -24,7 +24,7 @@ public class PropertyVsDocumentModel extends CommonModel{
 
 	@JsonProperty("property")
 	private PropertyModel propertyModel;
-	
+
 	@JsonProperty("document")
 	private DocumentModel documentModel;
 }

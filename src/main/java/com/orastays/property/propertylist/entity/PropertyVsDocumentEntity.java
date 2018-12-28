@@ -28,9 +28,9 @@ public class PropertyVsDocumentEntity extends CommonEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "user_vs_document_id")
-	@JsonProperty("userVsDocumentId")
-	private Long userVsDocumentId;
+	@Column(name = "property_vs_document_id")
+	@JsonProperty("propertyVsDocumentId")
+	private Long propertyVsDocumentId;
 
 	@Column(name = "document_number")
 	@JsonProperty("documentNumber")
@@ -52,6 +52,6 @@ public class PropertyVsDocumentEntity extends CommonEntity {
 
 	@Override
 	public String toString() {
-		return Long.toString(userVsDocumentId);
+		return Long.toString(propertyVsDocumentId);
 	}
 }

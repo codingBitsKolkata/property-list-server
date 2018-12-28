@@ -23,8 +23,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = false)
-public class MealPlanEntity extends CommonEntity{
-	
+public class MealPlanEntity extends CommonEntity {
+
 	private static final long serialVersionUID = 3365288762964751801L;
 
 	@Id
@@ -32,11 +32,11 @@ public class MealPlanEntity extends CommonEntity{
 	@Column(name = "meal_plan_id")
 	@JsonProperty("mealPlanId")
 	private Long mealPlanId;
-	
+
 	@Column(name = "meal_plan_name")
 	@JsonProperty("mealPlanName")
 	private String mealPlanName;
-	
+
 	@Column(name = "language_id")
 	@JsonProperty("languageId")
 	private Long languageId;
@@ -44,11 +44,15 @@ public class MealPlanEntity extends CommonEntity{
 	@Column(name = "parent_id")
 	@JsonProperty("parentId")
 	private Long parentId;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mealPlanEntity", cascade = { CascadeType.ALL })
 	@JsonProperty("mealPlanCatVsMealPlans")
 	private List<MealPlanCatVsMealPlanEntity> mealPlanCatVsMealPlanEntities;
-	
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mealPlanEntity", cascade = { CascadeType.ALL })
+	@JsonProperty("roomVsMeals")
+	private List<RoomVsMealEntity> roomVsMealEntities;
+
 	@Override
 	public String toString() {
 		return Long.toString(mealPlanId);

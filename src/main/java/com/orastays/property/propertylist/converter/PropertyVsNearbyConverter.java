@@ -2,15 +2,17 @@ package com.orastays.property.propertylist.converter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.orastays.property.propertylist.entity.PropertyVsNearbyEntity;
-import com.orastays.property.propertylist.helper.Util;
-import com.orastays.property.propertylist.model.PropertyVsNearbyModel;
+import com.orastays.property.propertyadd.entity.PropertyVsNearbyEntity;
+import com.orastays.property.propertyadd.helper.Status;
+import com.orastays.property.propertyadd.helper.Util;
+import com.orastays.property.propertyadd.model.PropertyVsNearbyModel;
 
 @Component
 public class PropertyVsNearbyConverter extends CommonConverter
@@ -21,8 +23,21 @@ public class PropertyVsNearbyConverter extends CommonConverter
 
 	@Override
 	public PropertyVsNearbyEntity modelToEntity(PropertyVsNearbyModel m) {
-		// TODO Auto-generated method stub
-		return null;
+
+		if (logger.isInfoEnabled()) {
+			logger.info("entityToModel -- START");
+		}
+		
+		PropertyVsNearbyEntity propertyVsNearbyEntity = new PropertyVsNearbyEntity();
+		propertyVsNearbyEntity = (PropertyVsNearbyEntity) Util.transform(modelMapper, m, propertyVsNearbyEntity);
+		propertyVsNearbyEntity.setStatus(Status.ACTIVE.ordinal());
+		propertyVsNearbyEntity.setCreatedDate(Util.getCurrentDateTime());
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("entityToModel -- END");
+		}
+		
+		return propertyVsNearbyEntity;
 	}
 
 	@Override
@@ -32,8 +47,13 @@ public class PropertyVsNearbyConverter extends CommonConverter
 			logger.info("entityToModel -- START");
 		}
 		
-		PropertyVsNearbyModel propertyVsNearbyModel = new PropertyVsNearbyModel();
-		propertyVsNearbyModel = (PropertyVsNearbyModel) Util.transform(modelMapper, e, propertyVsNearbyModel);
+		PropertyVsNearbyModel propertyVsNearbyModel = null;
+		
+		if(Objects.nonNull(e)) {
+			propertyVsNearbyModel = new PropertyVsNearbyModel();
+			propertyVsNearbyModel = (PropertyVsNearbyModel) Util.transform(modelMapper, e, propertyVsNearbyModel);
+		}
+		
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("entityToModel -- END");

@@ -8,9 +8,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.orastays.property.propertylist.entity.SpecialExperienceEntity;
-import com.orastays.property.propertylist.helper.Util;
-import com.orastays.property.propertylist.model.SpecialExperienceModel;
+import com.orastays.property.propertyadd.entity.SpecialExperienceEntity;
+import com.orastays.property.propertyadd.helper.Util;
+import com.orastays.property.propertyadd.model.SpecialExperienceModel;
 
 @Component
 public class SpecialExperienceConverter extends CommonConverter

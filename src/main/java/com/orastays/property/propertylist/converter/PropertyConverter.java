@@ -2,15 +2,17 @@ package com.orastays.property.propertylist.converter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.orastays.property.propertylist.entity.PropertyEntity;
-import com.orastays.property.propertylist.helper.Util;
-import com.orastays.property.propertylist.model.PropertyModel;
+import com.orastays.property.propertyadd.helper.Status;
+import com.orastays.property.propertyadd.entity.PropertyEntity;
+import com.orastays.property.propertyadd.helper.Util;
+import com.orastays.property.propertyadd.model.PropertyModel;
 
 @Component
 public class PropertyConverter extends CommonConverter implements BaseConverter<PropertyEntity, PropertyModel> {
@@ -20,8 +22,18 @@ public class PropertyConverter extends CommonConverter implements BaseConverter<
 
 	@Override
 	public PropertyEntity modelToEntity(PropertyModel m) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		PropertyEntity propertyEntity = new PropertyEntity();
+		propertyEntity = (PropertyEntity) Util.transform(modelMapper, m, propertyEntity);
+		propertyEntity.setStatus(Status.INACTIVE.ordinal());
+		propertyEntity.setCreatedDate(Util.getCurrentDateTime());
+		
+		propertyEntity.setPropertyTypeEntity(propertyTypeDAO.find(Long.parseLong(m.getPropertyTypeModel().getPropertyTypeId())));
+		propertyEntity.setStayTypeEntity(stayTypeDAO.find(Long.valueOf(m.getStayTypeModel().getStayTypeId())));
+		
+		
+		
+		return propertyEntity;
 	}
 
 	@Override
@@ -31,8 +43,25 @@ public class PropertyConverter extends CommonConverter implements BaseConverter<
 			logger.info("entityToModel -- START");
 		}
 		
-		PropertyModel propertyModel = new PropertyModel();
-		propertyModel = (PropertyModel) Util.transform(modelMapper, e, propertyModel);
+		PropertyModel propertyModel = null;
+		if(Objects.nonNull(e)) {
+			propertyModel = new PropertyModel();
+			propertyModel = (PropertyModel) Util.transform(modelMapper, e, propertyModel);
+			propertyModel.setPropertyTypeModel(propertyTypeConverter.entityToModel(e.getPropertyTypeEntity()));
+			propertyModel.setStayTypeModel(stayTypeConverter.entityToModel(e.getStayTypeEntity()));
+			
+			propertyModel.setPropertyVsDocumentModels(propertyVsDocumentConverter.entityListToModelList(e.getPropertyVsDocumentEntities()));
+			propertyModel.setPropertyVsDescriptionModels(propertyVsDescriptionConverter.entityListToModelList(e.getPropertyVsDescriptionEntities()));
+			propertyModel.setPropertyVsGuestAccessModels(propertyVsGuestAccessConverter.entityListToModelList(e.getPropertyVsGuestAccessEntities()));
+			propertyModel.setPropertyVsImageModels(propertyVsImageConverter.entityListToModelList(e.getPropertyVsImageEntities()));
+			propertyModel.setPropertyVsNearbyModels(propertyVsNearbyConverter.entityListToModelList(e.getPropertyVsNearbyEntities()));
+			propertyModel.setPropertyVsPriceDropModels(propertyVsPriceDropConverter.entityListToModelList(e.getPropertyVsPriceDropEntities()));
+			propertyModel.setPropertyVsSpaceRuleModels(propertyVsSpaceRuleConverter.entityListToModelList(e.getPropertyVsSpaceRuleEntities()));
+			propertyModel.setPropertyVsSpecialExperienceModels(vsSpecialExperienceConverter.entityListToModelList(e.getPropertyVsSpecialExperienceEntities()));
+			
+			// Room Details
+			propertyModel.setRoomModels(roomConverter.entityListToModelList(e.getRoomEntities()));
+		}
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("entityToModel -- END");

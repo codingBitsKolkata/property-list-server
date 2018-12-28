@@ -9,8 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -25,8 +23,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = false)
-public class AmenitiesEntity extends CommonEntity{
-	
+public class AmenitiesEntity extends CommonEntity {
+
 	private static final long serialVersionUID = 5562924720677171528L;
 
 	@Id
@@ -34,19 +32,31 @@ public class AmenitiesEntity extends CommonEntity{
 	@Column(name = "aminities_id")
 	@JsonProperty("aminitiesId")
 	private Long aminitiesId;
-	
+
 	@Column(name = "aminities_name")
 	@JsonProperty("aminitiesName")
 	private String aminitiesName;
-	
+
 	@Column(name = "filter_flag")
 	@JsonProperty("filterFlag")
 	private String filterFlag;
-	
+
 	@Column(name = "priority")
 	@JsonProperty("priority")
 	private String priority;
-	
+
+	@Column(name = "express_flag")
+	@JsonProperty("expressFlag")
+	private String expressFlag;
+
+	@Column(name = "premium_flag")
+	@JsonProperty("premiumFlag")
+	private String premiumFlag;
+
+	@Column(name = "aminities_type")
+	@JsonProperty("aminitiesType")
+	private String aminitiesType;
+
 	@Column(name = "language_id")
 	@JsonProperty("languageId")
 	private Long languageId;
@@ -54,16 +64,11 @@ public class AmenitiesEntity extends CommonEntity{
 	@Column(name = "parent_id")
 	@JsonProperty("parentId")
 	private Long parentId;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "amenitiesEntity", cascade = { CascadeType.ALL })
 	@JsonProperty("roomVsAmenities")
 	private List<RoomVsAmenitiesEntity> roomVsAmenitiesEntities;
-	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
-	@JoinColumn(name = "aminities_type_id", nullable = false)
-	@JsonProperty("amenitiesType")
-	private AmenitiesTypeEntity amenitiesTypeEntity;
-	
+
 	@Override
 	public String toString() {
 		return Long.toString(aminitiesId);

@@ -2,15 +2,16 @@ package com.orastays.property.propertylist.converter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.orastays.property.propertylist.entity.SpecialtiesEntity;
-import com.orastays.property.propertylist.helper.Util;
-import com.orastays.property.propertylist.model.SpecialtiesModel;
+import com.orastays.property.propertyadd.entity.SpecialtiesEntity;
+import com.orastays.property.propertyadd.helper.Util;
+import com.orastays.property.propertyadd.model.SpecialtiesModel;
 
 @Component
 public class SpecialtiesConverter extends CommonConverter
@@ -31,10 +32,14 @@ public class SpecialtiesConverter extends CommonConverter
 		if (logger.isInfoEnabled()) {
 			logger.info("entityToModel -- START");
 		}
-
-		SpecialtiesModel specialtiesModel = new SpecialtiesModel();
-		specialtiesModel = (SpecialtiesModel) Util.transform(modelMapper, e, specialtiesModel);
-
+		
+		SpecialtiesModel specialtiesModel = null;
+		
+		if(Objects.nonNull(e)) {
+			specialtiesModel = new SpecialtiesModel();
+			specialtiesModel = (SpecialtiesModel) Util.transform(modelMapper, e, specialtiesModel);
+		}
+		
 		if (logger.isInfoEnabled()) {
 			logger.info("entityToModel -- END");
 		}

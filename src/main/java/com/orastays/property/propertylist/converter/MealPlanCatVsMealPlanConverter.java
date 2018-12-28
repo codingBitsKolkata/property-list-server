@@ -2,38 +2,45 @@ package com.orastays.property.propertylist.converter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.orastays.property.propertylist.entity.MealPlanCatVsMealPlanEntity;
-import com.orastays.property.propertylist.helper.Util;
-import com.orastays.property.propertylist.model.MealPlanCategoryVsMealPlanModel;
+import com.orastays.property.propertyadd.entity.MealPlanCatVsMealPlanEntity;
+import com.orastays.property.propertyadd.helper.Util;
+import com.orastays.property.propertyadd.model.MealPlanCatVsMealPlanModel;
 
 @Component
 public class MealPlanCatVsMealPlanConverter extends CommonConverter
-		implements BaseConverter<MealPlanCatVsMealPlanEntity, MealPlanCategoryVsMealPlanModel> {
+		implements BaseConverter<MealPlanCatVsMealPlanEntity, MealPlanCatVsMealPlanModel> {
 
 	private static final long serialVersionUID = 5446873681124249282L;
 	private static final Logger logger = LogManager.getLogger(MealPlanCatVsMealPlanConverter.class);
 
 	@Override
-	public MealPlanCatVsMealPlanEntity modelToEntity(MealPlanCategoryVsMealPlanModel m) {
-		// TODO Auto-generated method stub
+	public MealPlanCatVsMealPlanEntity modelToEntity(MealPlanCatVsMealPlanModel m) {
 		return null;
 	}
 
 	@Override
-	public MealPlanCategoryVsMealPlanModel entityToModel(MealPlanCatVsMealPlanEntity e) {
+	public MealPlanCatVsMealPlanModel entityToModel(MealPlanCatVsMealPlanEntity e) {
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("entityToModel -- START");
 		}
 		
-		MealPlanCategoryVsMealPlanModel mealPlanCategoryVsMealPlanModel = new MealPlanCategoryVsMealPlanModel();
-		mealPlanCategoryVsMealPlanModel = (MealPlanCategoryVsMealPlanModel) Util.transform(modelMapper, e, mealPlanCategoryVsMealPlanModel);
+		MealPlanCatVsMealPlanModel mealPlanCategoryVsMealPlanModel = null;
+		
+		if(Objects.nonNull(e)) {
+			
+			mealPlanCategoryVsMealPlanModel = new MealPlanCatVsMealPlanModel();
+			mealPlanCategoryVsMealPlanModel = (MealPlanCatVsMealPlanModel) Util.transform(modelMapper, e, mealPlanCategoryVsMealPlanModel);
+			mealPlanCategoryVsMealPlanModel.setMealPlanCategoryModel(mealPlanCategoryConverter.entityToModel(e.getMealPlanCategoryEntity()));
+			mealPlanCategoryVsMealPlanModel.setMealPlanModel(mealPlanConverter.entityToModel(e.getMealPlanEntity()));
+		}
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("entityToModel -- END");
@@ -43,13 +50,13 @@ public class MealPlanCatVsMealPlanConverter extends CommonConverter
 	}
 
 	@Override
-	public List<MealPlanCategoryVsMealPlanModel> entityListToModelList(List<MealPlanCatVsMealPlanEntity> es) {
+	public List<MealPlanCatVsMealPlanModel> entityListToModelList(List<MealPlanCatVsMealPlanEntity> es) {
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("entityListToModelList -- START");
 		}
 		
-		List<MealPlanCategoryVsMealPlanModel> mealPlanCategoryVsMealPlanModels = null;
+		List<MealPlanCatVsMealPlanModel> mealPlanCategoryVsMealPlanModels = null;
 		if(!CollectionUtils.isEmpty(es)) {
 			mealPlanCategoryVsMealPlanModels = new ArrayList<>();
 			for(MealPlanCatVsMealPlanEntity mealPlanCatVsMealPlanEntity:es) {

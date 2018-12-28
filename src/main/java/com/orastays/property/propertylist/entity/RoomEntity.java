@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -61,32 +60,74 @@ public class RoomEntity extends CommonEntity {
 	private String roomCurrentStatus;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
-	@JoinColumn(name = "accommodation_id", nullable = false)
-	@JsonProperty("accommodation")
-	private AccommodationEntity accommodationEntity;
-
-	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "room_cat_id", nullable = false)
 	@JsonProperty("roomCategory")
 	private RoomCategoryEntity roomCategoryEntity;
-
-	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
-	@JoinColumn(name = "room_standard_id", nullable = true)
-	@JsonProperty("roomStandard")
-	private RoomStandardEntity roomStandardEntity;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "property_id", nullable = false)
 	@JsonProperty("property")
 	private PropertyEntity propertyEntity;
 
+	@Column(name = "room_price_per_night")
+	@JsonProperty("roomPricePerNight")
+	private String roomPricePerNight;
+
+	@Column(name = "room_price_per_month")
+	@JsonProperty("roomPricePerMonth")
+	private String roomPricePerMonth;
+
+	@Column(name = "shared_bed_price_per_night")
+	@JsonProperty("sharedBedPricePerNight")
+	private String sharedBedPricePerNight;
+
+	@Column(name = "shared_bed_price_per_month")
+	@JsonProperty("sharedBedPricePerMonth")
+	private String sharedBedPricePerMonth;
+
+	@Column(name = "cot_price")
+	@JsonProperty("cotPrice")
+	private String cotPrice;
+
+	@Column(name = "shared_bed_price")
+	@JsonProperty("sharedBedPrice")
+	private String sharedBedPrice;
+
+	@Column(name = "commission")
+	@JsonProperty("commission")
+	private String commission;
+
+	@Column(name = "ora_percentage")
+	@JsonProperty("oraPercentage")
+	private String oraPercentage;
+
+	@Column(name = "host_discount_weekly")
+	@JsonProperty("hostDiscountWeekly")
+	private String hostDiscountWeekly;
+
+	@Column(name = "host_discount_monthly")
+	@JsonProperty("hostDiscountMonthly")
+	private String hostDiscountMonthly;
+	
+	@Column(name = "ora_discount_percentage")
+	@JsonProperty("oraDiscountPercentage")
+	private String oraDiscountPercentage;
+	
+	@Column(name = "accomodation_name")
+	@JsonProperty("accomodationName")
+	private String accomodationName;
+	
+	@Column(name = "room_standard")
+	@JsonProperty("roomStandard")
+	private String roomStandard;
+	
+	@Column(name = "num_of_bed")
+	@JsonProperty("numOfBed")
+	private String numOfBed;
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "roomEntity", cascade = { CascadeType.ALL })
 	@JsonProperty("roomVsAmenities")
 	private List<RoomVsAmenitiesEntity> roomVsAmenitiesEntities;
-
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "roomEntity", cascade = { CascadeType.ALL })
-	@JsonProperty("roomVsBed")
-	private RoomVsBedEntity roomVsBedEntity;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "roomEntity", cascade = { CascadeType.ALL })
 	@JsonProperty("roomVsCancellations")
@@ -97,28 +138,16 @@ public class RoomEntity extends CommonEntity {
 	private List<RoomVsImageEntity> roomVsImageEntities;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "roomEntity", cascade = { CascadeType.ALL })
-	@JsonProperty("roomVsPrices")
-	private List<RoomVsPriceEntity> roomVsPriceEntities;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "roomEntity", cascade = { CascadeType.ALL })
-	@JsonProperty("roomVsHostDiscounts")
-	private List<RoomVsHostDiscountEntity> roomVsHostDiscountEntities;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "roomEntity", cascade = { CascadeType.ALL })
-	@JsonProperty("roomVsOraDiscounts")
-	private List<RoomVsOraDiscountEntity> roomVsOraDiscountEntities;
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "roomEntity", cascade = { CascadeType.ALL })
 	@JsonProperty("roomVsSpecialities")
 	private List<RoomVsSpecialitiesEntity> roomVsSpecialitiesEntities;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "roomEntity", cascade = { CascadeType.ALL })
-	@JsonProperty("roomVsOraPricePercentages")
-	private List<RoomVsOraPricePercentageEntity> roomVsOraPricePercentageEntities;
-	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "roomEntity", cascade = { CascadeType.ALL })
 	@JsonProperty("roomVsMeals")
 	private List<RoomVsMealEntity> roomVsMealEntities;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "roomEntity", cascade = { CascadeType.ALL })
+	@JsonProperty("roomVsOffers")
+	private List<RoomVsOfferEntity> roomVsOfferEntities;
 
 	@Override
 	public String toString() {

@@ -2,16 +2,17 @@ package com.orastays.property.propertylist.converter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.orastays.property.propertylist.entity.PropertyVsDocumentEntity;
-import com.orastays.property.propertylist.helper.Status;
-import com.orastays.property.propertylist.helper.Util;
-import com.orastays.property.propertylist.model.PropertyVsDocumentModel;
+import com.orastays.property.propertyadd.entity.PropertyVsDocumentEntity;
+import com.orastays.property.propertyadd.helper.Status;
+import com.orastays.property.propertyadd.helper.Util;
+import com.orastays.property.propertyadd.model.PropertyVsDocumentModel;
 
 @Component
 public class PropertyVsDocumentConverter extends CommonConverter implements
@@ -48,8 +49,13 @@ BaseConverter<PropertyVsDocumentEntity, PropertyVsDocumentModel> {
 			logger.info("entityToModel -- START");
 		}
 		
-		PropertyVsDocumentModel propertyVsDocumentModel = new PropertyVsDocumentModel();
-		propertyVsDocumentModel = (PropertyVsDocumentModel) Util.transform(modelMapper, e, propertyVsDocumentModel);
+		PropertyVsDocumentModel propertyVsDocumentModel = null;
+		
+		if(Objects.nonNull(e)){
+			propertyVsDocumentModel = new PropertyVsDocumentModel();
+			propertyVsDocumentModel = (PropertyVsDocumentModel) Util.transform(modelMapper, e, propertyVsDocumentModel);
+			propertyVsDocumentModel.setDocumentModel(documentConverter.entityToModel(e.getDocumentEntity()));
+		}
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("entityToModel -- END");

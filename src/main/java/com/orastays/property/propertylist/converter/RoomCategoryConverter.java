@@ -8,9 +8,10 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.orastays.property.propertylist.entity.RoomCategoryEntity;
-import com.orastays.property.propertylist.helper.Util;
-import com.orastays.property.propertylist.model.RoomCategoryModel;
+import com.orastays.property.propertyadd.entity.RoomCategoryEntity;
+import com.orastays.property.propertyadd.helper.Status;
+import com.orastays.property.propertyadd.helper.Util;
+import com.orastays.property.propertyadd.model.RoomCategoryModel;
 
 @Component
 public class RoomCategoryConverter extends CommonConverter
@@ -21,8 +22,22 @@ public class RoomCategoryConverter extends CommonConverter
 
 	@Override
 	public RoomCategoryEntity modelToEntity(RoomCategoryModel m) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("modelToEntity -- START");
+		}
+
+		RoomCategoryEntity roomCategoryEntity = new RoomCategoryEntity();
+		roomCategoryEntity = (RoomCategoryEntity) Util.transform(modelMapper, m, roomCategoryEntity);
+		roomCategoryEntity.setStatus(Status.INACTIVE.ordinal());
+		roomCategoryEntity.setCreatedBy(Long.parseLong(String.valueOf(Status.ZERO.ordinal())));
+		roomCategoryEntity.setCreatedDate(Util.getCurrentDateTime());
+
+		if (logger.isInfoEnabled()) {
+			logger.info("modelToEntity -- END");
+		}
+
+		return roomCategoryEntity;
 	}
 
 	@Override

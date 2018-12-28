@@ -17,16 +17,16 @@ public class MealPlanCategoryModel extends CommonModel {
 
 	@JsonProperty("mpcId")
 	private String mpcId;
-	
+
 	@JsonProperty("mpcName")
 	private String mpcName;
-	
+
 	@JsonProperty("languageId")
 	private String languageId;
-	
+
 	@JsonProperty("parentId")
 	private String parentId;
-	
-	@JsonProperty("mealPlanCategoryVsMealPlans")
-	private List<MealPlanCategoryVsMealPlanModel> mealPlanCategoryVsMealPlanModels;
+
+	@JsonProperty("mealPlanCatVsMealPlans")
+	private List<MealPlanCatVsMealPlanModel> mealPlanCatVsMealPlanEntities;
 }

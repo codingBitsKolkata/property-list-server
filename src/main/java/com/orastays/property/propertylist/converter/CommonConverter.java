@@ -4,29 +4,19 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.RestTemplate;
 
-import com.orastays.property.propertylist.dao.AccommodationDAO;
-import com.orastays.property.propertylist.dao.AmenitiesDAO;
-import com.orastays.property.propertylist.dao.CancellationSlabDAO;
-import com.orastays.property.propertylist.dao.DiscountCategoryHostDAO;
-import com.orastays.property.propertylist.dao.DiscountCategoryOraDAO;
-import com.orastays.property.propertylist.dao.DocumentDAO;
-import com.orastays.property.propertylist.dao.MealCategoryDAO;
-import com.orastays.property.propertylist.dao.MealDaysDAO;
-import com.orastays.property.propertylist.dao.MealPlanCatVsMealPlanDAO;
-import com.orastays.property.propertylist.dao.MealPriceCategoryDAO;
-import com.orastays.property.propertylist.dao.MealTypeDAO;
-import com.orastays.property.propertylist.dao.PGCategorySexDAO;
-import com.orastays.property.propertylist.dao.PriceDropDAO;
-import com.orastays.property.propertylist.dao.PriceTypeDAO;
-import com.orastays.property.propertylist.dao.PropertyTypeDAO;
-import com.orastays.property.propertylist.dao.RoomCategoryDAO;
-import com.orastays.property.propertylist.dao.RoomStandardDAO;
-import com.orastays.property.propertylist.dao.SpaceRuleDAO;
-import com.orastays.property.propertylist.dao.SpecialExperienceDAO;
-import com.orastays.property.propertylist.dao.SpecialtiesDAO;
-import com.orastays.property.propertylist.dao.StayTypeDAO;
-import com.orastays.property.propertylist.dao.UserVsAccountDAO;
-import com.orastays.property.propertylist.helper.MessageUtil;
+import com.orastays.property.propertyadd.dao.AmenitiesDAO;
+import com.orastays.property.propertyadd.dao.CancellationSlabDAO;
+import com.orastays.property.propertyadd.dao.DocumentDAO;
+import com.orastays.property.propertyadd.dao.HostVsAccountDAO;
+import com.orastays.property.propertyadd.dao.MealPlanCatVsMealPlanDAO;
+import com.orastays.property.propertyadd.dao.PriceDropDAO;
+import com.orastays.property.propertyadd.dao.PropertyTypeDAO;
+import com.orastays.property.propertyadd.dao.RoomCategoryDAO;
+import com.orastays.property.propertyadd.dao.SpaceRuleDAO;
+import com.orastays.property.propertyadd.dao.SpecialExperienceDAO;
+import com.orastays.property.propertyadd.dao.SpecialtiesDAO;
+import com.orastays.property.propertyadd.dao.StayTypeDAO;
+import com.orastays.property.propertyadd.helper.MessageUtil;
 
 public class CommonConverter {
 
@@ -46,63 +36,117 @@ public class CommonConverter {
 	protected SpecialExperienceDAO specialExperienceDAO;
 
 	@Autowired
-	protected PGCategorySexDAO pgCategorySexDAO;
+	protected StayTypeDAO stayTypeDAO;
 
 	@Autowired
-	protected StayTypeDAO stayTypeDAO;
-	
-	@Autowired
-	protected UserVsAccountDAO userVsAccountDAO;
-	
+	protected HostVsAccountDAO userVsAccountDAO;
+
 	@Autowired
 	protected DocumentDAO documentDAO;
-	
+
 	@Autowired
 	protected PriceDropDAO priceDropDAO;
-	
+
 	@Autowired
 	protected SpaceRuleDAO spaceRuleDAO;
-	
-	@Autowired
-	protected AccommodationDAO accommodationDAO;
-	
+
 	@Autowired
 	protected RoomCategoryDAO roomCategoryDAO;
-	
-	@Autowired
-	protected RoomStandardDAO roomStandardDAO;
-	
+
 	@Autowired
 	protected AmenitiesDAO amenitiesDAO;
-	
+
 	@Autowired
 	protected CancellationSlabDAO cancellationSlabDAO;
-	
-	@Autowired
-	protected DiscountCategoryHostDAO discountCategoryHostDAO;
-	
-	@Autowired
-	protected MealCategoryDAO mealCategoryDAO;
-	
-	@Autowired
-	protected MealDaysDAO mealDaysDAO;
-	
+
 	@Autowired
 	protected MealPlanCatVsMealPlanDAO mealPlanCatVsMealPlanDAO;
-	
-	@Autowired
-	protected MealPriceCategoryDAO mealPriceCategoryDAO;
-	
-	@Autowired
-	protected MealTypeDAO mealTypeDAO; 
-	
-	@Autowired
-	protected DiscountCategoryOraDAO discountCategoryOraDAO;
-	
-	@Autowired
-	protected PriceTypeDAO priceTypeDAO;
-	
+
 	@Autowired
 	protected SpecialtiesDAO specialtiesDAO;
-	
+
+	@Autowired
+	protected PropertyTypeConverter propertyTypeConverter;
+
+	@Autowired
+	protected StayTypeConverter stayTypeConverter;
+
+	@Autowired
+	protected HostVsAccountConverter userVsAccountConverter;
+
+	@Autowired
+	protected PropertyVsDocumentConverter propertyVsDocumentConverter;
+
+	@Autowired
+	protected PropertyVsDescriptionConverter propertyVsDescriptionConverter;
+
+	@Autowired
+	protected PropertyVsGuestAccessConverter propertyVsGuestAccessConverter;
+
+	@Autowired
+	protected PropertyVsImageConverter propertyVsImageConverter;
+
+	@Autowired
+	protected PropertyVsNearbyConverter propertyVsNearbyConverter;
+
+	@Autowired
+	protected PropertyVsPriceDropConverter propertyVsPriceDropConverter;
+
+	@Autowired
+	protected PropertyVsSpaceRuleConverter propertyVsSpaceRuleConverter;
+
+	@Autowired
+	protected PropertyVsSpecialExperienceConverter vsSpecialExperienceConverter;
+
+	@Autowired
+	protected DocumentConverter documentConverter;
+
+	@Autowired
+	protected PriceDropConverter priceDropConverter;
+
+	@Autowired
+	protected SpaceRuleConverter spaceRuleConverter;
+
+	@Autowired
+	protected SpecialExperienceConverter specialExperienceConverter;
+
+	@Autowired
+	protected RoomConverter roomConverter;
+
+	@Autowired
+	protected RoomCategoryConverter roomCategoryConverter;
+
+	@Autowired
+	protected RoomVsAmenitiesConverter roomVsAmenitiesConverter;
+
+	@Autowired
+	protected AmenitiesConverter amenitiesConverter;
+
+	@Autowired
+	protected RoomVsCancellationConverter roomVsCancellationConverter;
+
+	@Autowired
+	protected CancellationSlabConverter cancellationSlabConverter;
+
+	@Autowired
+	protected RoomVsImageConverter roomVsImageConverter;
+
+	@Autowired
+	protected RoomVsSpecialitiesConverter roomVsSpecialitiesConverter;
+
+	@Autowired
+	protected SpecialtiesConverter specialtiesConverter;
+
+	@Autowired
+	protected RoomVsMealConverter roomVsMealConverter;
+
+	@Autowired
+	protected MealPlanCatVsMealPlanConverter mealPlanCatVsMealPlanConverter;
+
+	@Autowired
+	protected MealPlanCategoryConverter mealPlanCategoryConverter;
+
+	@Autowired
+	protected MealPlanConverter mealPlanConverter;
+
 }
