@@ -1,8 +1,9 @@
 package com.orastays.property.propertylist.helper;
 
-public enum Accommodation {
-
+public enum Sex {
+	
 	ZERO,
-	SHARED,
-	PRIVATE
+	MALE,
+	FEMALE,
+	BOTH
 }

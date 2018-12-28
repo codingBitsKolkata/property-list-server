@@ -2,7 +2,7 @@ package com.orastays.property.propertylist.dao;
 
 import org.springframework.stereotype.Repository;
 
-import com.orastays.property.propertyadd.entity.PropertyVsDocumentEntity;
+import com.orastays.property.propertylist.entity.PropertyVsDocumentEntity;
 
 @Repository
 public class PropertyVsDocumentDAO extends GenericDAO<PropertyVsDocumentEntity, Long> {

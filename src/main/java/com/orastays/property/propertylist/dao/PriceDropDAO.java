@@ -2,7 +2,7 @@ package com.orastays.property.propertylist.dao;
 
 import org.springframework.stereotype.Repository;
 
-import com.orastays.property.propertyadd.entity.PriceDropEntity;
+import com.orastays.property.propertylist.entity.PriceDropEntity;
 
 @Repository
 public class PriceDropDAO extends GenericDAO<PriceDropEntity, Long>{

@@ -1,8 +1,9 @@
 package com.orastays.property.propertylist.helper;
 
-public enum Accommodation {
+public enum UserType {
 
 	ZERO,
-	SHARED,
-	PRIVATE
+	ADMIN,
+	CUSTOMER,
+	HOST
 }

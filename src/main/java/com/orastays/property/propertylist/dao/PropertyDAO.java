@@ -2,7 +2,7 @@ package com.orastays.property.propertylist.dao;
 
 import org.springframework.stereotype.Repository;
 
-import com.orastays.property.propertyadd.entity.PropertyEntity;
+import com.orastays.property.propertylist.entity.PropertyEntity;
 
 @Repository
 public class PropertyDAO extends GenericDAO<PropertyEntity, Long>{

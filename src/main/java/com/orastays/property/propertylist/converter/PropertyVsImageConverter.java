@@ -9,10 +9,10 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.orastays.property.propertyadd.entity.PropertyVsImageEntity;
-import com.orastays.property.propertyadd.helper.Status;
-import com.orastays.property.propertyadd.helper.Util;
-import com.orastays.property.propertyadd.model.PropertyVsImageModel;
+import com.orastays.property.propertylist.entity.PropertyVsImageEntity;
+import com.orastays.property.propertylist.helper.Status;
+import com.orastays.property.propertylist.helper.Util;
+import com.orastays.property.propertylist.model.PropertyVsImageModel;
 
 @Component
 public class PropertyVsImageConverter extends CommonConverter

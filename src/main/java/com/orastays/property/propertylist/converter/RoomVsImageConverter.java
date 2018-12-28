@@ -9,10 +9,10 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.orastays.property.propertyadd.entity.RoomVsImageEntity;
-import com.orastays.property.propertyadd.helper.Status;
-import com.orastays.property.propertyadd.helper.Util;
-import com.orastays.property.propertyadd.model.RoomVsImageModel;
+import com.orastays.property.propertylist.entity.RoomVsImageEntity;
+import com.orastays.property.propertylist.helper.Status;
+import com.orastays.property.propertylist.helper.Util;
+import com.orastays.property.propertylist.model.RoomVsImageModel;
 
 @Component
 public class RoomVsImageConverter extends CommonConverter

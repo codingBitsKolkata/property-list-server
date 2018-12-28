@@ -9,9 +9,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.orastays.property.propertyadd.entity.MealPlanCategoryEntity;
-import com.orastays.property.propertyadd.helper.Util;
-import com.orastays.property.propertyadd.model.MealPlanCategoryModel;
+import com.orastays.property.propertylist.entity.MealPlanCategoryEntity;
+import com.orastays.property.propertylist.helper.Util;
+import com.orastays.property.propertylist.model.MealPlanCategoryModel;
 
 @Component
 public class MealPlanCategoryConverter extends CommonConverter

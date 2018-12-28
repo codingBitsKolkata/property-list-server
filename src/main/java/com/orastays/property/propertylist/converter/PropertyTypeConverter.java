@@ -9,9 +9,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.orastays.property.propertyadd.entity.PropertyTypeEntity;
-import com.orastays.property.propertyadd.helper.Util;
-import com.orastays.property.propertyadd.model.PropertyTypeModel;
+import com.orastays.property.propertylist.entity.PropertyTypeEntity;
+import com.orastays.property.propertylist.helper.Util;
+import com.orastays.property.propertylist.model.PropertyTypeModel;
 
 @Component
 public class PropertyTypeConverter extends CommonConverter

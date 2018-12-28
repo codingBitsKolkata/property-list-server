@@ -9,9 +9,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.orastays.property.propertyadd.entity.MealPlanCatVsMealPlanEntity;
-import com.orastays.property.propertyadd.helper.Util;
-import com.orastays.property.propertyadd.model.MealPlanCatVsMealPlanModel;
+import com.orastays.property.propertylist.entity.MealPlanCatVsMealPlanEntity;
+import com.orastays.property.propertylist.helper.Util;
+import com.orastays.property.propertylist.model.MealPlanCatVsMealPlanModel;
 
 @Component
 public class MealPlanCatVsMealPlanConverter extends CommonConverter

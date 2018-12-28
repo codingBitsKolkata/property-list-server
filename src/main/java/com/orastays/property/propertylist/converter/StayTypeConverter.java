@@ -9,9 +9,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.orastays.property.propertyadd.entity.StayTypeEntity;
-import com.orastays.property.propertyadd.helper.Util;
-import com.orastays.property.propertyadd.model.StayTypeModel;
+import com.orastays.property.propertylist.entity.StayTypeEntity;
+import com.orastays.property.propertylist.helper.Util;
+import com.orastays.property.propertylist.model.StayTypeModel;
 
 @Component
 public class StayTypeConverter extends CommonConverter implements BaseConverter<StayTypeEntity, StayTypeModel> {

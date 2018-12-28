@@ -2,7 +2,7 @@ package com.orastays.property.propertylist.dao;
 
 import org.springframework.stereotype.Repository;
 
-import com.orastays.property.propertyadd.entity.RoomVsAmenitiesEntity;
+import com.orastays.property.propertylist.entity.RoomVsAmenitiesEntity;
 
 @Repository
 public class RoomVsAmenitiesDAO  extends GenericDAO<RoomVsAmenitiesEntity, Long>{

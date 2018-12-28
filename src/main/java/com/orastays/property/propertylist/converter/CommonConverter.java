@@ -4,19 +4,19 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.RestTemplate;
 
-import com.orastays.property.propertyadd.dao.AmenitiesDAO;
-import com.orastays.property.propertyadd.dao.CancellationSlabDAO;
-import com.orastays.property.propertyadd.dao.DocumentDAO;
-import com.orastays.property.propertyadd.dao.HostVsAccountDAO;
-import com.orastays.property.propertyadd.dao.MealPlanCatVsMealPlanDAO;
-import com.orastays.property.propertyadd.dao.PriceDropDAO;
-import com.orastays.property.propertyadd.dao.PropertyTypeDAO;
-import com.orastays.property.propertyadd.dao.RoomCategoryDAO;
-import com.orastays.property.propertyadd.dao.SpaceRuleDAO;
-import com.orastays.property.propertyadd.dao.SpecialExperienceDAO;
-import com.orastays.property.propertyadd.dao.SpecialtiesDAO;
-import com.orastays.property.propertyadd.dao.StayTypeDAO;
-import com.orastays.property.propertyadd.helper.MessageUtil;
+import com.orastays.property.propertylist.dao.AmenitiesDAO;
+import com.orastays.property.propertylist.dao.CancellationSlabDAO;
+import com.orastays.property.propertylist.dao.DocumentDAO;
+import com.orastays.property.propertylist.dao.HostVsAccountDAO;
+import com.orastays.property.propertylist.dao.MealPlanCatVsMealPlanDAO;
+import com.orastays.property.propertylist.dao.PriceDropDAO;
+import com.orastays.property.propertylist.dao.PropertyTypeDAO;
+import com.orastays.property.propertylist.dao.RoomCategoryDAO;
+import com.orastays.property.propertylist.dao.SpaceRuleDAO;
+import com.orastays.property.propertylist.dao.SpecialExperienceDAO;
+import com.orastays.property.propertylist.dao.SpecialtiesDAO;
+import com.orastays.property.propertylist.dao.StayTypeDAO;
+import com.orastays.property.propertylist.helper.MessageUtil;
 
 public class CommonConverter {
 

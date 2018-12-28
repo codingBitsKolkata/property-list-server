@@ -9,10 +9,10 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.orastays.property.propertyadd.entity.RoomVsAmenitiesEntity;
-import com.orastays.property.propertyadd.helper.Status;
-import com.orastays.property.propertyadd.helper.Util;
-import com.orastays.property.propertyadd.model.RoomVsAmenitiesModel;
+import com.orastays.property.propertylist.entity.RoomVsAmenitiesEntity;
+import com.orastays.property.propertylist.helper.Status;
+import com.orastays.property.propertylist.helper.Util;
+import com.orastays.property.propertylist.model.RoomVsAmenitiesModel;
 
 @Component
 public class RoomVsAmenitiesConverter extends CommonConverter

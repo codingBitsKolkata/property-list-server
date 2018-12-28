@@ -2,7 +2,7 @@ package com.orastays.property.propertylist.dao;
 
 import org.springframework.stereotype.Repository;
 
-import com.orastays.property.propertyadd.entity.CancellationSlabEntity;
+import com.orastays.property.propertylist.entity.CancellationSlabEntity;
 
 @Repository
 public class CancellationSlabDAO extends GenericDAO<CancellationSlabEntity, Long>{

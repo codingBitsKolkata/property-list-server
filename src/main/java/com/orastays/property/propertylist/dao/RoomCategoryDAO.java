@@ -2,7 +2,7 @@ package com.orastays.property.propertylist.dao;
 
 import org.springframework.stereotype.Repository;
 
-import com.orastays.property.propertyadd.entity.RoomCategoryEntity;
+import com.orastays.property.propertylist.entity.RoomCategoryEntity;
 
 @Repository
 public class RoomCategoryDAO extends GenericDAO<RoomCategoryEntity, Long>{

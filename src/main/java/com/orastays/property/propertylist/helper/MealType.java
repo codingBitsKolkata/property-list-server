@@ -1,8 +1,9 @@
 package com.orastays.property.propertylist.helper;
 
-public enum Accommodation {
-
+public enum MealType {
+	
 	ZERO,
-	SHARED,
-	PRIVATE
+	VEG,
+	NONVEG,
+	BOTH
 }
