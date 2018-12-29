@@ -25,6 +25,7 @@ import com.orastays.property.propertylist.entity.PropertyVsSpaceRuleEntity;
 import com.orastays.property.propertylist.entity.RoomEntity;
 import com.orastays.property.propertylist.entity.RoomVsAmenitiesEntity;
 import com.orastays.property.propertylist.entity.RoomVsMealEntity;
+import com.orastays.property.propertylist.entity.RoomVsOfferEntity;
 import com.orastays.property.propertylist.exceptions.FormExceptions;
 import com.orastays.property.propertylist.helper.Accommodation;
 import com.orastays.property.propertylist.helper.MealPriceCategory;
@@ -269,6 +270,7 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		Double price = 0.0D;
 		Double totalPrice = 0.0D;
 		Double discountedPrice = 0.0D;
+		Double offerPrice = 0.0D;
 		if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
 			for(RoomEntity roomEntity :propertyEntity.getRoomEntities()) {
 				System.err.println("roomEntity ==>> "+roomEntity);
@@ -330,6 +332,8 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 				Double hostDiscount = 0.0D;
 				Double oraDiscount = 0.0D;
 				Double priceDropDiscount = 0.0D;
+				Double offerAmountDiscount = 0.0D;
+				Double offerPercentageDiscount = 0.0D;
 				// Check Pricedrop if any
 				if(Util.getDateDiff1(filterCiteriaModel.getCheckInDate()) == 0) { // Current Date
 					if(!CollectionUtils.isEmpty(propertyEntity.getPropertyVsPriceDropEntities())) { // Price Drop Present
@@ -370,7 +374,21 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 					}
 					
 					// Offer
-					// TODO later
+					if(!CollectionUtils.isEmpty(roomEntity.getRoomVsOfferEntities())) {
+						for(RoomVsOfferEntity roomVsOfferEntity : roomEntity.getRoomVsOfferEntities()) {
+							if(Objects.nonNull(roomVsOfferEntity)) {
+								if(Objects.nonNull(roomVsOfferEntity.getOfferEntity())) {
+									// Amount Check
+									if (!StringUtils.isBlank(roomVsOfferEntity.getOfferEntity().getAmount())) {
+										offerAmountDiscount = Double.parseDouble(roomVsOfferEntity.getOfferEntity().getAmount());
+									} else {
+										offerPercentageDiscount = Double.parseDouble(roomVsOfferEntity.getOfferEntity().getPercentage()) * price / 100;
+									}
+								}
+							}
+						}
+					}
+					
 				}
 				
 				System.err.println("priceDropDiscount ==>> "+priceDropDiscount);
@@ -379,6 +397,8 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 				System.out.println("discountedPrice before ==>> "+discountedPrice);
 				discountedPrice = discountedPrice + hostDiscount + oraDiscount + priceDropDiscount;
 				System.out.println("discountedPrice after deduction from totalPrice ==>> "+discountedPrice);
+				offerPrice = offerPrice - (offerAmountDiscount + offerPercentageDiscount);
+				System.err.println("offerPrice ==>> "+offerPrice);
 			}
 		}
 		
@@ -386,6 +406,7 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		//discountedPrice = discountedPrice * numOfDays;
 		prices.add(String.valueOf(totalPrice));
 		prices.add(String.valueOf(discountedPrice));
+		prices.add(String.valueOf(offerPrice));
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("priceCalculation -- END");
