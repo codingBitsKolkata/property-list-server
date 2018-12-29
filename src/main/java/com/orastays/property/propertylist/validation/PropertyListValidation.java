@@ -113,6 +113,7 @@ public class PropertyListValidation extends AuthorizeUserValidation {
 		else {
 			if(Util.getDayDiff(filterCiteriaModel.getCheckInDate(), filterCiteriaModel.getCheckOutDate()) <= 0) {
 				exceptions.put(messageUtil.getBundle("checkout.date.lesser.code"), new Exception(messageUtil.getBundle("checkout.date.lesser.message")));
+				throw new FormExceptions(exceptions);
 			}
 		}
 

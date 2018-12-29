@@ -24,10 +24,9 @@ public class FilterCiteriaModel {
 	@JsonProperty("spaceRule")
 	private List<SpaceRuleModel> spaceRuleModels; // Couple Friendly, Pet Friendly
 	
-	/*
-	 * @JsonProperty("pgCategorySex") private List<PGCategorySexModel>
-	 * pgCategorySexModels; // Male/Female
-	 */	
+	@JsonProperty("pgCategorySex") 
+	private String pgCategorySex;
+	
 	@JsonProperty("propertyTypeId")
 	private String propertyTypeId; // Mandatory
 	

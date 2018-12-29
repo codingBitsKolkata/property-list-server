@@ -24,7 +24,7 @@ public class PropertyListViewModel {
 	private String rating;
 	private String reviewCount;
 	private List<SpaceRuleModel> spaceRuleModels; // Couple Friendly, Pet Friendly
-	//private PGCategorySexModel pgCategorySexModel; // Male/Female
+	private String pgCategorySex; // Male/Female
 	private String totalPrice;
 	private String discountedPrice;
 	private Boolean mealFlag;

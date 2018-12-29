@@ -6,11 +6,13 @@ import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import com.google.gson.Gson;
@@ -91,21 +93,32 @@ public class AuthorizeUserValidation {
 		Map<String, Exception> exceptions = new LinkedHashMap<>();
 		UserModel userModel = null;
 		try {
-			ResponseModel responseModel = restTemplate.getForObject(messageUtil.getBundle("auth.server.url") +"check-token?userToken="+userToken, ResponseModel.class);
-			Gson gson = new Gson();
-			String jsonString = gson.toJson(responseModel.getResponseBody());
-			userModel = gson.fromJson(jsonString, UserModel.class);
-			if(Objects.isNull(userModel)) {
-				exceptions.put(messageUtil.getBundle("token.invalid.code"), new Exception(messageUtil.getBundle("token.invalid.message")));
+			
+			// Validate User Token
+			if(StringUtils.isBlank(userToken)) {
+				exceptions.put(messageUtil.getBundle("user.token.null.code"), new Exception(messageUtil.getBundle("user.token.null.message")));
+			} else {
+				try{
+					ResponseModel responseModel = restTemplate.getForObject(messageUtil.getBundle("auth.server.url") +"check-token?userToken="+userToken, ResponseModel.class);
+					Gson gson = new Gson();
+					String jsonString = gson.toJson(responseModel.getResponseBody());
+					userModel = gson.fromJson(jsonString, UserModel.class);
+					if(Objects.isNull(userModel)) {
+						exceptions.put(messageUtil.getBundle("session.expires.code"), new Exception(messageUtil.getBundle("session.expires.message")));
+					}
+				} catch(HttpClientErrorException e) {
+					exceptions.put(messageUtil.getBundle("session.expires.code"), new Exception(messageUtil.getBundle("session.expires.message")));
+				}
+				
+				if (logger.isInfoEnabled()) {
+					logger.info("userModel ==>> "+userModel);
+				}
 			}
 			
-			if (logger.isInfoEnabled()) {
-				logger.info("userModel ==>> "+userModel);
-			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			// Disabled the below line to pass the Token Validation
-			exceptions.put(messageUtil.getBundle("token.invalid.code"), new Exception(messageUtil.getBundle("token.invalid.message")));
+			exceptions.put(messageUtil.getBundle("session.expires.code"), new Exception(messageUtil.getBundle("session.expires.message")));
 		}
 		
 		if (exceptions.size() > 0)

@@ -15,7 +15,7 @@ public class Test {
 
 		try {
 			Test test = new Test();
-			System.out.println(test.getDayDiff("2018-12-22", "2018-12-23"));
+			System.out.println(MealPriceCategory.COMPLIMENTARY);
 		} catch (Exception e) {
 
 		}

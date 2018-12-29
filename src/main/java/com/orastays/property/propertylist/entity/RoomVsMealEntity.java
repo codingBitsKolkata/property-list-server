@@ -88,31 +88,31 @@ public class RoomVsMealEntity extends CommonEntity {
 	@JsonProperty("mealDaysSaturday")
 	private String mealDaysSaturday;
 
-	@Column(name = "meal_price_categorysunday")
+	@Column(name = "meal_price_category_sunday")
 	@JsonProperty("mealPriceCategorySunday")
 	private String mealPriceCategorySunday;
 
-	@Column(name = "meal_price_categorymonday")
+	@Column(name = "meal_price_category_monday")
 	@JsonProperty("mealPriceCategoryMonday")
 	private String mealPriceCategoryMonday;
 
-	@Column(name = "meal_price_categorytuesday")
+	@Column(name = "meal_price_category_tuesday")
 	@JsonProperty("mealPriceCategoryTuesday")
 	private String mealPriceCategoryTuesday;
 
-	@Column(name = "meal_price_categorywednesday")
+	@Column(name = "meal_price_category_wednesday")
 	@JsonProperty("mealPriceCategoryWednesday")
 	private String mealPriceCategoryWednesday;
 
-	@Column(name = "meal_price_categorythursday")
+	@Column(name = "meal_price_category_thursday")
 	@JsonProperty("mealPriceCategoryThursday")
 	private String mealPriceCategoryThursday;
 
-	@Column(name = "meal_price_categoryfriday")
+	@Column(name = "meal_price_category_friday")
 	@JsonProperty("mealPriceCategoryFriday")
 	private String mealPriceCategoryFriday;
 
-	@Column(name = "meal_price_categorysaturday")
+	@Column(name = "meal_price_category_saturday")
 	@JsonProperty("mealPriceCategorySaturday")
 	private String mealPriceCategorySaturday;
 

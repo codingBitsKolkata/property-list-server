@@ -17,9 +17,6 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import com.demo.demo.entity.RoomVsHostDiscountEntity;
-import com.demo.demo.entity.RoomVsOraDiscountEntity;
-import com.demo.demo.entity.RoomVsPriceEntity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.orastays.property.propertylist.entity.PropertyEntity;
@@ -29,9 +26,8 @@ import com.orastays.property.propertylist.entity.RoomEntity;
 import com.orastays.property.propertylist.entity.RoomVsAmenitiesEntity;
 import com.orastays.property.propertylist.entity.RoomVsMealEntity;
 import com.orastays.property.propertylist.exceptions.FormExceptions;
-import com.orastays.property.propertylist.helper.HostDiscount;
-import com.orastays.property.propertylist.helper.OraDiscount;
-import com.orastays.property.propertylist.helper.PriceType;
+import com.orastays.property.propertylist.helper.Accommodation;
+import com.orastays.property.propertylist.helper.MealPriceCategory;
 import com.orastays.property.propertylist.helper.PropertyListConstant;
 import com.orastays.property.propertylist.helper.Status;
 import com.orastays.property.propertylist.helper.Util;
@@ -131,7 +127,7 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 									
 									
 									// Filter by pgCategorySexModels // Male/Female
-									if(!CollectionUtils.isEmpty(filterCiteriaModel.getPgCategorySexModels())) {
+									if(!StringUtils.isBlank(filterCiteriaModel.getPgCategorySex())) {
 										if (!filterBySex(propertyEntity, filterCiteriaModel)) {
 											break;
 										}
@@ -186,10 +182,10 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		
 		if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
 			for(RoomEntity roomEntity :propertyEntity.getRoomEntities()) {
-				if(StringUtils.equals(roomEntity.getRoomStandardEntity().getName(), PropertyListConstant.ROOM_STANDARD_PREMIUM)) {
+				if(StringUtils.equals(roomEntity.getRoomStandard(), PropertyListConstant.ROOM_STANDARD_PREMIUM)) {
 					propertyListViewModel.setRoomStandard(PropertyListConstant.ROOM_STANDARD_PREMIUM);
 					break;
-				} else if(StringUtils.equals(roomEntity.getRoomStandardEntity().getName(), PropertyListConstant.ROOM_STANDARD_EXPRESS)) {
+				} else if(StringUtils.equals(roomEntity.getRoomStandard(), PropertyListConstant.ROOM_STANDARD_EXPRESS)) {
 					propertyListViewModel.setRoomStandard(PropertyListConstant.ROOM_STANDARD_EXPRESS);
 				} else {
 					propertyListViewModel.setRoomStandard(PropertyListConstant.ROOM_STANDARD_NORMAL);
@@ -214,7 +210,7 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		}
 		propertyListViewModel.setSpaceRuleModels(spaceRuleModels);
 		
-		propertyListViewModel.setPgCategorySexModel(pgCategorySexConverter.entityToModel(propertyEntity.getPgCategorySexEntity()));
+		propertyListViewModel.setPgCategorySex(propertyEntity.getSexCategory());
 		
 		// Price Section
 		List<String> prices = priceCalculation(propertyEntity, filterCiteriaModel);
@@ -227,11 +223,15 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 			for(RoomEntity roomEntity :propertyEntity.getRoomEntities()) {
 				if(!CollectionUtils.isEmpty(roomEntity.getRoomVsMealEntities())) {
 					for(RoomVsMealEntity roomVsMealEntity : roomEntity.getRoomVsMealEntities()) {
-						if(Objects.nonNull(roomVsMealEntity.getMealPriceCategoryEntity())) {
-							if(roomVsMealEntity.getMealPriceCategoryEntity().getMmpcId() == Status.ACTIVE.ordinal()) {
+						if((StringUtils.equals(roomVsMealEntity.getMealPriceCategorySunday(), MealPriceCategory.COMPLIMENTARY.name()))
+								|| (StringUtils.equals(roomVsMealEntity.getMealPriceCategoryMonday(), MealPriceCategory.COMPLIMENTARY.name()))
+								|| (StringUtils.equals(roomVsMealEntity.getMealPriceCategoryTuesday(), MealPriceCategory.COMPLIMENTARY.name()))
+								|| (StringUtils.equals(roomVsMealEntity.getMealPriceCategoryWednesday(), MealPriceCategory.COMPLIMENTARY.name()))
+								|| (StringUtils.equals(roomVsMealEntity.getMealPriceCategoryThursday(), MealPriceCategory.COMPLIMENTARY.name()))
+								|| (StringUtils.equals(roomVsMealEntity.getMealPriceCategoryFriday(), MealPriceCategory.COMPLIMENTARY.name()))
+								|| (StringUtils.equals(roomVsMealEntity.getMealPriceCategorySaturday(), MealPriceCategory.COMPLIMENTARY.name()))) {
 								propertyListViewModel.setMealFlag(true);
 								break;
-							}
 						}
 					}
 				}
@@ -271,95 +271,65 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		Double discountedPrice = 0.0D;
 		if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
 			for(RoomEntity roomEntity :propertyEntity.getRoomEntities()) {
-				if(!CollectionUtils.isEmpty(roomEntity.getRoomVsPriceEntities())) {
-					
-					// Price calculation
-					if (numOfDays >= 30 ) {
-							
-							if(propertyEntity.getStayTypeEntity().getStayTypeId() == Status.INACTIVE.ordinal()) {   //short term
+				System.err.println("roomEntity ==>> "+roomEntity);
+				// Price calculation
+				if (numOfDays >= 30 ) {
 						
-								if(roomEntity.getAccommodationEntity().getAccommodationId() == Status.ACTIVE.ordinal()) { //shared
-									//Shared night price 
-									RoomVsPriceEntity roomVsPriceEntity = roomEntity.getRoomVsPriceEntities().stream() 
-							                .filter(x -> PriceType.SHARED_BED_PRICE_PER_NIGHT.ordinal() == x.getRoomVsPriceId()).findAny().orElse(null);  
-									if(Objects.nonNull(roomVsPriceEntity)) {
-										price = price + Double.parseDouble(roomVsPriceEntity.getValue());
-									}
-								} else { //private
-									 //Private night Price
-									RoomVsPriceEntity roomVsPriceEntity = roomEntity.getRoomVsPriceEntities().stream() 
-							                .filter(x -> PriceType.ROOM_PRICE_PER_NIGHT.ordinal() == x.getRoomVsPriceId()).findAny().orElse(null);  
-									if(Objects.nonNull(roomVsPriceEntity)) {
-										price = price + Double.parseDouble(roomVsPriceEntity.getValue());
-									}
-								}
+					if(propertyEntity.getStayTypeEntity().getStayTypeId() == Status.INACTIVE.ordinal()) {   //short term (ID = 2)
+				
+						if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.SHARED.name())) { //shared
+							
+							//Shared night price 
+							price = Double.parseDouble(roomEntity.getSharedBedPricePerNight());
+						} else { //private
+							 //Private night Price
+							price = Double.parseDouble(roomEntity.getRoomPricePerNight());
+						}
+				
+					} else {   //both & long term
 						
-							} else {   //both & long term
-								
-								if(roomEntity.getAccommodationEntity().getAccommodationId() == Status.ACTIVE.ordinal()) {   //shared
-									//Shared Month price 
-									RoomVsPriceEntity roomVsPriceEntity = roomEntity.getRoomVsPriceEntities().stream() 
-							                .filter(x -> PriceType.SHARED_BED_PRICE_PER_MONTH.ordinal() == x.getRoomVsPriceId()).findAny().orElse(null);  
-									if(Objects.nonNull(roomVsPriceEntity)) {
-										price = price + (Double.parseDouble(roomVsPriceEntity.getValue())/30);
-									}
-								} else {   //private
-									 //Private Month Price
-									RoomVsPriceEntity roomVsPriceEntity = roomEntity.getRoomVsPriceEntities().stream() 
-							                .filter(x -> PriceType.ROOM_PRICE_PER_MONTH.ordinal() == x.getRoomVsPriceId()).findAny().orElse(null);  
-									if(Objects.nonNull(roomVsPriceEntity)) {
-										price = price + (Double.parseDouble(roomVsPriceEntity.getValue())/30);
-									}
-								}
-							}
-					} else {
-						if(propertyEntity.getStayTypeEntity().getStayTypeId() == Status.ACTIVE.ordinal()){   //Long term
-							
-							if(roomEntity.getAccommodationEntity().getAccommodationId() == Status.ACTIVE.ordinal()) { //shared
-								//Shared Month price 
-								RoomVsPriceEntity roomVsPriceEntity = roomEntity.getRoomVsPriceEntities().stream() 
-						                .filter(x -> PriceType.SHARED_BED_PRICE_PER_MONTH.ordinal() == x.getRoomVsPriceId()).findAny().orElse(null);  
-								if(Objects.nonNull(roomVsPriceEntity)) {
-									price = price + (Double.parseDouble(roomVsPriceEntity.getValue())/30);
-								}
-							} else { //private
-								 //Private Month Price
-								RoomVsPriceEntity roomVsPriceEntity = roomEntity.getRoomVsPriceEntities().stream() 
-						                .filter(x -> PriceType.ROOM_PRICE_PER_MONTH.ordinal() == x.getRoomVsPriceId()).findAny().orElse(null);  
-								if(Objects.nonNull(roomVsPriceEntity)) {
-									price = price + (Double.parseDouble(roomVsPriceEntity.getValue())/30);
-								}
-							}
-					
-						} else {   //both & Short term
-							
-							if(roomEntity.getAccommodationEntity().getAccommodationId() == Status.ACTIVE.ordinal()) {   //shared
-									//Shared Night price 
-								RoomVsPriceEntity roomVsPriceEntity = roomEntity.getRoomVsPriceEntities().stream() 
-						                .filter(x -> PriceType.SHARED_BED_PRICE_PER_NIGHT.ordinal() == x.getRoomVsPriceId()).findAny().orElse(null);  
-								if(Objects.nonNull(roomVsPriceEntity)) {
-									price = price + Double.parseDouble(roomVsPriceEntity.getValue());
-								}
-							} else {   //private
-								 //Private Night Price
-								RoomVsPriceEntity roomVsPriceEntity = roomEntity.getRoomVsPriceEntities().stream() 
-						                .filter(x -> PriceType.ROOM_PRICE_PER_NIGHT.ordinal() == x.getRoomVsPriceId()).findAny().orElse(null);  
-								if(Objects.nonNull(roomVsPriceEntity)) {
-									price = price + Double.parseDouble(roomVsPriceEntity.getValue());
-								}
-							}
-						}				
+						if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.SHARED.name())) { //shared
+							//Shared Month price 
+							price = (Double.parseDouble(roomEntity.getSharedBedPricePerMonth())/30);
+						} else {   //private
+							 //Private Month Price
+							price = (Double.parseDouble(roomEntity.getRoomPricePerMonth())/30);
+						}
 					}
+				} else {
+					
+					if(propertyEntity.getStayTypeEntity().getStayTypeId() == Status.ACTIVE.ordinal()){   //Long term
+						
+						if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.SHARED.name())) { //shared
+							//Shared Month price 
+							price = (Double.parseDouble(roomEntity.getSharedBedPricePerMonth())/30);
+						} else { //private
+							 //Private Month Price
+							price = (Double.parseDouble(roomEntity.getRoomPricePerMonth())/30);
+						}
+				
+					} else {   //both & Short term
+						
+						if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.SHARED.name())) { //shared
+							//Shared Night price 
+							price = Double.parseDouble(roomEntity.getSharedBedPricePerNight());
+						} else {   //private
+							 //Private Night Price
+							price = Double.parseDouble(roomEntity.getRoomPricePerNight());
+						}
+					}				
 				}
 				
-				/*System.err.println("price ==>> "+price);
-				System.out.println("roomEntity.getRoomVsOraPricePercentageEntities().get(0).getPercentage() ==>> "+roomEntity.getRoomVsOraPricePercentageEntities().get(0).getPercentage());
-				System.err.println("totalPrice ==>> "+totalPrice);*/
-				totalPrice = totalPrice + price + (Double.parseDouble(roomEntity.getRoomVsOraPricePercentageEntities().get(0).getPercentage()) * price / 100);
-				/* System.err.println("totalPrice ==>> "+totalPrice); */
+				System.err.println("price ==>> "+price);
+				System.out.println("roomEntity.getOraPercentage() ==>> "+roomEntity.getOraPercentage());
+				System.err.println("totalPrice before ==>> "+totalPrice);
+				totalPrice = totalPrice + price + (Double.parseDouble(roomEntity.getOraPercentage()) * price / 100);
+				System.err.println("totalPrice after including OraPercentage ==>> "+totalPrice); 
 				
 				// Discount Section
-				Double discount = 0.0D;
+				Double hostDiscount = 0.0D;
+				Double oraDiscount = 0.0D;
+				Double priceDropDiscount = 0.0D;
 				// Check Pricedrop if any
 				if(Util.getDateDiff1(filterCiteriaModel.getCheckInDate()) == 0) { // Current Date
 					if(!CollectionUtils.isEmpty(propertyEntity.getPropertyVsPriceDropEntities())) { // Price Drop Present
@@ -368,11 +338,11 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 							PropertyVsPriceDropEntity propertyVsPriceDropEntity = propertyEntity.getPropertyVsPriceDropEntities().get(i);
 							if(hourDifference <= Integer.parseInt(propertyVsPriceDropEntity.getPriceDropEntity().getAfterTime())) {
 								if(i == 0) { // First Condition
-									discount = price - Double.parseDouble(propertyVsPriceDropEntity.getPercentage()) * price / 100;
+									priceDropDiscount = Double.parseDouble(propertyVsPriceDropEntity.getPercentage()) * price / 100;
 									break;
 								} else {
 									propertyVsPriceDropEntity = propertyEntity.getPropertyVsPriceDropEntities().get(i -1);
-									discount = price - Double.parseDouble(propertyVsPriceDropEntity.getPercentage()) * price / 100;
+									priceDropDiscount = Double.parseDouble(propertyVsPriceDropEntity.getPercentage()) * price / 100;
 									break;
 								}
 							}
@@ -382,57 +352,33 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 					// Host Discount if any
 					if (numOfDays >= 7 && numOfDays < 30) { // Weekly
 						
-						RoomVsHostDiscountEntity roomVsHostDiscountEntity = roomEntity.getRoomVsHostDiscountEntities().stream() 
-				                .filter(x -> HostDiscount.WEEKLY.ordinal() == x.getDiscountCategoryHostEntity().getDchId()).findAny().orElse(null);
-						if(Objects.nonNull(roomVsHostDiscountEntity)) {
-							discount = price - Double.parseDouble(roomVsHostDiscountEntity.getPercentage()) * price / 100;
-						}
+						hostDiscount = Double.parseDouble(roomEntity.getHostDiscountWeekly()) * price / 100;
 						
 					} else if(numOfDays >= 30) { // Monthly
-						RoomVsHostDiscountEntity roomVsHostDiscountEntity = roomEntity.getRoomVsHostDiscountEntities().stream() 
-				                .filter(x -> HostDiscount.MONTHLY.ordinal() == x.getDiscountCategoryHostEntity().getDchId()).findAny().orElse(null);
-						if(Objects.nonNull(roomVsHostDiscountEntity)) {
-							discount = price - Double.parseDouble(roomVsHostDiscountEntity.getPercentage()) * price / 100;
-						} else {
-							 roomVsHostDiscountEntity = roomEntity.getRoomVsHostDiscountEntities().stream() 
-						                .filter(x -> HostDiscount.WEEKLY.ordinal() == x.getDiscountCategoryHostEntity().getDchId()).findAny().orElse(null);
-							if(Objects.nonNull(roomVsHostDiscountEntity)) {
-								discount = price - Double.parseDouble(roomVsHostDiscountEntity.getPercentage()) * price / 100;
-							}
+						
+						if (!StringUtils.isBlank(roomEntity.getHostDiscountMonthly())) { // Check if monthly present
+							hostDiscount = Double.parseDouble(roomEntity.getHostDiscountMonthly()) * price / 100;
+						} else if (!StringUtils.isBlank(roomEntity.getHostDiscountWeekly())) { // otherwise calculate with weekly
+							hostDiscount = Double.parseDouble(roomEntity.getHostDiscountWeekly()) * price / 100;
 						}
 					}
 					
 					// Room Vs ORA Discount
 					// Percentage
-					RoomVsOraDiscountEntity roomVsOraDiscountEntity = roomEntity.getRoomVsOraDiscountEntities().stream() 
-			                .filter(x -> OraDiscount.PERCENTAGE.ordinal() == x.getDiscountCategoryOraEntity().getDcoId()).findAny().orElse(null);
-					if(Objects.nonNull(roomVsOraDiscountEntity)) {
-						discount = price - Double.parseDouble(roomVsOraDiscountEntity.getDiscount()) * price / 100;
+					if (!StringUtils.isBlank(roomEntity.getOraDiscountPercentage())) {
+						oraDiscount = Double.parseDouble(roomEntity.getOraDiscountPercentage()) * price / 100;
 					}
 					
-					// Amount
-					roomVsOraDiscountEntity = roomEntity.getRoomVsOraDiscountEntities().stream() 
-			                .filter(x -> OraDiscount.AMOUNT.ordinal() == x.getDiscountCategoryOraEntity().getDcoId()).findAny().orElse(null);
-					if(Objects.nonNull(roomVsOraDiscountEntity)) {
-						discount = price - Double.parseDouble(roomVsOraDiscountEntity.getDiscount());
-					}
-					
-					// Date Range
-					roomVsOraDiscountEntity = roomEntity.getRoomVsOraDiscountEntities().stream() 
-			                .filter(x -> OraDiscount.DATE_RANGE.ordinal() == x.getDiscountCategoryOraEntity().getDcoId()).findAny().orElse(null);
-					if(Objects.nonNull(roomVsOraDiscountEntity)) {
-						String startDate = roomVsOraDiscountEntity.getDateRange().split(",")[0];
-						String endDate = roomVsOraDiscountEntity.getDateRange().split(",")[1];
-						if(Util.getDateDiff1(startDate) >= 0 && Util.getDateDiff1(endDate) <= 0) { // TO be check later
-							discount = price - Double.parseDouble(roomVsOraDiscountEntity.getDiscount()) * price / 100;
-						}
-					}
+					// Offer
+					// TODO later
 				}
-				System.err.println("discount ==>> "+discount);
-				System.out.println("discountedPrice ==>> "+discountedPrice);
-				System.err.println("totalPrice ==>> "+totalPrice);
-				discountedPrice = discountedPrice + totalPrice - discount;
-				System.out.println("discountedPrice ==>> "+discountedPrice);
+				
+				System.err.println("priceDropDiscount ==>> "+priceDropDiscount);
+				System.err.println("hostDiscount ==>> "+hostDiscount);
+				System.err.println("oraDiscount ==>> "+oraDiscount);
+				System.out.println("discountedPrice before ==>> "+discountedPrice);
+				discountedPrice = discountedPrice + hostDiscount + oraDiscount + priceDropDiscount;
+				System.out.println("discountedPrice after deduction from totalPrice ==>> "+discountedPrice);
 			}
 		}
 		
@@ -571,9 +517,9 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 			logger.info("filterBycheckInDate -- START");
 		}
 		
-		boolean flag = false;
+		boolean flag = true;
 		
-		try {
+		/*try {
 			BookingModel bookingModel = new BookingModel();
 			bookingModel.setPropertyId(String.valueOf(propertyEntity.getPropertyId()));
 			bookingModel.setCheckinDate(filterCiteriaModel.getCheckInDate());
@@ -598,7 +544,7 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 			if (logger.isInfoEnabled()) {
 				logger.info("Exception in filterBycheckInDate -- "+Util.errorToString(e));
 			}
-		}
+		}*/
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("filterBycheckInDate -- END");
@@ -801,10 +747,8 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		}
 		
 		boolean flag = false;
-		if(filterCiteriaModel.getPgCategorySexModels().size() < 2) {
-			if(StringUtils.equals(filterCiteriaModel.getPgCategorySexModels().get(0).getPgcsId(), String.valueOf(propertyEntity.getPgCategorySexEntity().getPgcsId()))) {
-				flag = true;
-			}
+		if(StringUtils.equals(filterCiteriaModel.getPgCategorySex(), String.valueOf(propertyEntity.getSexCategory()))) {
+			flag = true;
 		}
 		
 		if (logger.isInfoEnabled()) {
