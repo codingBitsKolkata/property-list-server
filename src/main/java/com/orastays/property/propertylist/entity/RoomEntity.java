@@ -34,6 +34,10 @@ public class RoomEntity extends CommonEntity {
 	@Column(name = "room_id")
 	@JsonProperty("roomId")
 	private Long roomId;
+	
+	@Column(name = "ora_room_name")
+	@JsonProperty("oraRoomName")
+	private String oraRoomName;
 
 	@Column(name = "shared_space")
 	@JsonProperty("sharedSpace")
