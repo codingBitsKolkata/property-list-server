@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 29, 2018 at 03:33 PM
+-- Generation Time: Dec 30, 2018 at 11:58 AM
 -- Server version: 5.7.9
 -- PHP Version: 5.6.16
 
@@ -194,13 +194,13 @@ CREATE TABLE IF NOT EXISTS `master_offer` (
 --
 
 INSERT INTO `master_offer` (`offer_id`, `created_by`, `created_date`, `modified_by`, `modified_date`, `status`, `amount`, `end_date_range`, `max_amount`, `offer_name`, `online`, `percentage`, `start_date_range`) VALUES
-(1, 1, '2018-09-06 01:27:34', NULL, NULL, 1, '500', NULL, '', 'Flat 500 OFF', NULL, NULL, NULL),
-(2, 1, '2018-09-06 01:27:34', NULL, NULL, 1, NULL, NULL, NULL, '10% off above 5000', NULL, '10', NULL),
-(3, 1, '2018-09-06 01:27:34', NULL, '', 1, '1000', NULL, NULL, '1000 off for online', 'Y', NULL, NULL),
-(4, 1, '2018-09-06 01:27:34', NULL, NULL, 1, NULL, NULL, '10000', '25% off above 10000', NULL, '25', NULL),
-(5, 1, '2018-09-06 01:27:34', NULL, NULL, 1, '1200', NULL, '12000', '1200 off above 1200', NULL, '', NULL),
-(6, 1, '2018-09-06 01:27:34', NULL, NULL, 1, '800', '2019-02-10 23:59:59', NULL, '800 off for date range', NULL, '', '2018-12-10 00:00:01'),
-(7, 1, '2018-09-06 01:27:34', NULL, NULL, 1, '', '2019-02-10 23:59:59', NULL, '18% off for date range', NULL, '18', '2018-12-10 00:00:01');
+(1, 1, '2018-09-06 01:27:34', NULL, NULL, 1, '2', NULL, NULL, 'Flat 500 OFF', NULL, NULL, NULL),
+(2, 1, '2018-09-06 01:27:34    ', NULL, NULL, 1, NULL, NULL, NULL, '10%', NULL, '1', NULL),
+(3, 1, '2018-09-06 01:27:34', NULL, '', 1, '4', NULL, NULL, '1000 off for online', 'Y', NULL, NULL),
+(4, 1, '2018-09-06 01:27:34', NULL, NULL, 1, NULL, NULL, '1000', '25% off above 10000', NULL, '5', NULL),
+(5, 1, '2018-09-06 01:27:34', NULL, NULL, 1, '5', NULL, '1200', '1200 off above 12000', NULL, '', NULL),
+(6, 1, '2018-09-06 01:27:34', NULL, NULL, 1, '9', '2019-02-10 23:59:59', NULL, '800 off for date range', NULL, '', '2018-12-10 00:00:01'),
+(7, 1, '2018-09-06 01:27:34', NULL, NULL, 1, '', '2019-02-10 23:59:59', NULL, '18% off for date range', NULL, '1.8', '2018-12-10 00:00:01');
 
 -- --------------------------------------------------------
 
@@ -894,7 +894,7 @@ INSERT INTO `property_vs_document` (`property_vs_document_id`, `created_by`, `cr
 
 DROP TABLE IF EXISTS `property_vs_experience`;
 CREATE TABLE IF NOT EXISTS `property_vs_experience` (
-  `property_exp_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `property_exp_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
@@ -905,7 +905,7 @@ CREATE TABLE IF NOT EXISTS `property_vs_experience` (
   PRIMARY KEY (`property_exp_id`),
   KEY `FK92o376xk6r7gls0he1aaugt7x` (`property_id`),
   KEY `FKn1s82f6oy0l1qh4mtmrdvjpx4` (`experience_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `property_vs_experience`
@@ -973,7 +973,7 @@ INSERT INTO `property_vs_experience` (`property_exp_id`, `created_by`, `created_
 
 DROP TABLE IF EXISTS `property_vs_guest_access`;
 CREATE TABLE IF NOT EXISTS `property_vs_guest_access` (
-  `property_gaccess_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `property_gaccess_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
@@ -984,7 +984,7 @@ CREATE TABLE IF NOT EXISTS `property_vs_guest_access` (
   `property_id` bigint(20) NOT NULL,
   PRIMARY KEY (`property_gaccess_id`),
   KEY `FKg443u2hdb4sbrrnjwsrsxh7rk` (`property_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `property_vs_guest_access`
@@ -1026,7 +1026,7 @@ INSERT INTO `property_vs_guest_access` (`property_gaccess_id`, `created_by`, `cr
 
 DROP TABLE IF EXISTS `property_vs_image`;
 CREATE TABLE IF NOT EXISTS `property_vs_image` (
-  `property_image_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `property_image_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
@@ -1036,7 +1036,7 @@ CREATE TABLE IF NOT EXISTS `property_vs_image` (
   `property_id` bigint(20) NOT NULL,
   PRIMARY KEY (`property_image_id`),
   KEY `FKdrv8bc11h2o2m8uumykk4cu57` (`property_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `property_vs_image`
@@ -1130,7 +1130,7 @@ INSERT INTO `property_vs_image` (`property_image_id`, `created_by`, `created_dat
 
 DROP TABLE IF EXISTS `property_vs_nearby`;
 CREATE TABLE IF NOT EXISTS `property_vs_nearby` (
-  `property_nearby_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `property_nearby_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
@@ -1143,7 +1143,7 @@ CREATE TABLE IF NOT EXISTS `property_vs_nearby` (
   `property_id` bigint(20) NOT NULL,
   PRIMARY KEY (`property_nearby_id`),
   KEY `FKru2h6pp77q418s5973c7125de` (`property_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `property_vs_nearby`
@@ -1237,7 +1237,7 @@ INSERT INTO `property_vs_nearby` (`property_nearby_id`, `created_by`, `created_d
 
 DROP TABLE IF EXISTS `property_vs_pricedrop`;
 CREATE TABLE IF NOT EXISTS `property_vs_pricedrop` (
-  `property_pricedrop_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `property_pricedrop_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
@@ -1249,7 +1249,7 @@ CREATE TABLE IF NOT EXISTS `property_vs_pricedrop` (
   PRIMARY KEY (`property_pricedrop_id`),
   KEY `FKnna1ewhlvt6hf3dmqx3rwd91k` (`price_drop_id`),
   KEY `FKgwycvdturw8svnhj0pveb83bg` (`property_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `property_vs_pricedrop`
@@ -1317,7 +1317,7 @@ INSERT INTO `property_vs_pricedrop` (`property_pricedrop_id`, `created_by`, `cre
 
 DROP TABLE IF EXISTS `property_vs_space`;
 CREATE TABLE IF NOT EXISTS `property_vs_space` (
-  `property_space_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `property_space_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
@@ -1329,7 +1329,7 @@ CREATE TABLE IF NOT EXISTS `property_vs_space` (
   PRIMARY KEY (`property_space_id`),
   KEY `FKklkdybjqkwqcsydd52tcjt4g0` (`property_id`),
   KEY `FKhd1vunghcip4rtk0511i53tf7` (`sprule_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `property_vs_space`
@@ -1426,7 +1426,7 @@ INSERT INTO `property_vs_space` (`property_space_id`, `created_by`, `created_dat
 
 DROP TABLE IF EXISTS `room_vs_amenities`;
 CREATE TABLE IF NOT EXISTS `room_vs_amenities` (
-  `room_vs_aminities_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `room_vs_aminities_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
@@ -1437,7 +1437,7 @@ CREATE TABLE IF NOT EXISTS `room_vs_amenities` (
   PRIMARY KEY (`room_vs_aminities_id`),
   KEY `FKm50c7up4jp1m0vl36325pktvw` (`aminities_id`),
   KEY `FKblve2wd06ghlbt72q1onnu1ib` (`room_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=386 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `room_vs_amenities`
@@ -1838,7 +1838,7 @@ INSERT INTO `room_vs_amenities` (`room_vs_aminities_id`, `created_by`, `created_
 
 DROP TABLE IF EXISTS `room_vs_cancellation`;
 CREATE TABLE IF NOT EXISTS `room_vs_cancellation` (
-  `rc_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `rc_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
@@ -1850,7 +1850,7 @@ CREATE TABLE IF NOT EXISTS `room_vs_cancellation` (
   PRIMARY KEY (`rc_id`),
   KEY `FKr3pyo2gqwl71s8k5sm32rbjha` (`cancellation_slab_id`),
   KEY `FKemhbtji1nvg41xa261axnd7vr` (`room_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=323 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `room_vs_cancellation`
@@ -2188,7 +2188,7 @@ INSERT INTO `room_vs_cancellation` (`rc_id`, `created_by`, `created_date`, `modi
 
 DROP TABLE IF EXISTS `room_vs_image`;
 CREATE TABLE IF NOT EXISTS `room_vs_image` (
-  `room_vs_image_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `room_vs_image_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
@@ -2198,7 +2198,7 @@ CREATE TABLE IF NOT EXISTS `room_vs_image` (
   `room_id` bigint(20) NOT NULL,
   PRIMARY KEY (`room_vs_image_id`),
   KEY `FKpamxay6j07bxeh97i0753dh6t` (`room_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=484 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `room_vs_image`
@@ -2697,7 +2697,7 @@ INSERT INTO `room_vs_image` (`room_vs_image_id`, `created_by`, `created_date`, `
 
 DROP TABLE IF EXISTS `room_vs_meal`;
 CREATE TABLE IF NOT EXISTS `room_vs_meal` (
-  `room_vs_meal_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `room_vs_meal_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
@@ -2729,7 +2729,7 @@ CREATE TABLE IF NOT EXISTS `room_vs_meal` (
   PRIMARY KEY (`room_vs_meal_id`),
   KEY `FKfxh94m8ds7jaej9udbouh2alf` (`meal_plan_id`),
   KEY `FKbv9gqnudk5swt4bpm37f5p28b` (`room_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=645 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `room_vs_meal`
@@ -3402,7 +3402,7 @@ CREATE TABLE IF NOT EXISTS `room_vs_offer` (
   PRIMARY KEY (`room_vs_offer_id`),
   KEY `FKfqux8yyo3blnp4xga6oa9ur78` (`offer_id`),
   KEY `FKeyvqqee0hpcmg61dl00kbqvt5` (`room_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `room_vs_offer`
@@ -3415,7 +3415,14 @@ INSERT INTO `room_vs_offer` (`room_vs_offer_id`, `created_by`, `created_date`, `
 (4, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 4, 1),
 (5, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 5, 1),
 (6, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 6, 1),
-(7, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 7, 1);
+(7, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 7, 1),
+(8, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 1, 2),
+(9, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 2, 2),
+(10, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 3, 2),
+(11, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 4, 2),
+(12, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 5, 2),
+(13, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 6, 2),
+(14, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 7, 2);
 
 -- --------------------------------------------------------
 
@@ -3425,7 +3432,7 @@ INSERT INTO `room_vs_offer` (`room_vs_offer_id`, `created_by`, `created_date`, `
 
 DROP TABLE IF EXISTS `room_vs_specialties`;
 CREATE TABLE IF NOT EXISTS `room_vs_specialties` (
-  `roomspec_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `roomspec_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
@@ -3436,7 +3443,7 @@ CREATE TABLE IF NOT EXISTS `room_vs_specialties` (
   PRIMARY KEY (`roomspec_id`),
   KEY `FKmjiqftc5rdrthmteghtchnkav` (`room_id`),
   KEY `FKoe11vqm2reg89jso2t6d4mm7d` (`specialties_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=242 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `room_vs_specialties`
@@ -3693,7 +3700,7 @@ INSERT INTO `room_vs_specialties` (`roomspec_id`, `created_by`, `created_date`, 
 
 DROP TABLE IF EXISTS `user_vs_account`;
 CREATE TABLE IF NOT EXISTS `user_vs_account` (
-  `host_vs_account_id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `host_vs_account_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
@@ -3707,7 +3714,7 @@ CREATE TABLE IF NOT EXISTS `user_vs_account` (
   `ifsc_code` varchar(255) DEFAULT NULL,
   `user_id` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`host_vs_account_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user_vs_account`
@@ -3740,137 +3747,6 @@ INSERT INTO `user_vs_account` (`host_vs_account_id`, `created_by`, `created_date
 (24, 1, '2018-12-18 15:19:01', NULL, NULL, 1, 'Sudeep Chhetri24', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1'),
 (25, 1, '2018-12-18 16:05:15', NULL, NULL, 1, 'Sudeep Chhetri25', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1'),
 (26, 1, '2018-12-18 16:09:47', NULL, NULL, 1, 'Sudeep Chhetri26', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1');
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `master_property`
---
-ALTER TABLE `master_property`
-  ADD CONSTRAINT `FK156vy9s4sl5mh6nxjo74bg2rv` FOREIGN KEY (`stay_type_id`) REFERENCES `master_stay_type` (`stay_type_id`),
-  ADD CONSTRAINT `FK5a00uodiowpit4s2fbuqgbm09` FOREIGN KEY (`property_type_id`) REFERENCES `master_property_type` (`property_type_id`),
-  ADD CONSTRAINT `FKtb8mxoehi4doi7200iynq5k3i` FOREIGN KEY (`host_vs_account_id`) REFERENCES `user_vs_account` (`host_vs_account_id`);
-
---
--- Constraints for table `master_room`
---
-ALTER TABLE `master_room`
-  ADD CONSTRAINT `FK44tv0dyh1xvs2elrr7yr3tr1x` FOREIGN KEY (`property_id`) REFERENCES `master_property` (`property_id`),
-  ADD CONSTRAINT `FKjw1vho56i8n32d1tyt64yh8ey` FOREIGN KEY (`room_cat_id`) REFERENCES `master_room_category` (`room_cat_id`);
-
---
--- Constraints for table `master_room_category`
---
-ALTER TABLE `master_room_category`
-  ADD CONSTRAINT `FKljipnikicv5k5pfpao2dflhpj` FOREIGN KEY (`property_type_id`) REFERENCES `master_property_type` (`property_type_id`);
-
---
--- Constraints for table `master_wishlist`
---
-ALTER TABLE `master_wishlist`
-  ADD CONSTRAINT `FKqp3nmgc19tiysytctn29jkypy` FOREIGN KEY (`property_id`) REFERENCES `master_property` (`property_id`);
-
---
--- Constraints for table `meal_plan_cat_vs_meal_plan`
---
-ALTER TABLE `meal_plan_cat_vs_meal_plan`
-  ADD CONSTRAINT `FKeuyapssqoidbnljl9l9lbq78u` FOREIGN KEY (`meal_plan_id`) REFERENCES `master_meal_plan` (`meal_plan_id`),
-  ADD CONSTRAINT `FKiqhjoqkinxg3b872k7m68xq13` FOREIGN KEY (`mpc_id`) REFERENCES `master_meal_plan_category` (`mpc_id`);
-
---
--- Constraints for table `property_vs_description`
---
-ALTER TABLE `property_vs_description`
-  ADD CONSTRAINT `FK53h3qarlglrohvb624pf128m2` FOREIGN KEY (`property_id`) REFERENCES `master_property` (`property_id`);
-
---
--- Constraints for table `property_vs_document`
---
-ALTER TABLE `property_vs_document`
-  ADD CONSTRAINT `FKep8ggv1h9e7p36dim56nm6e2a` FOREIGN KEY (`property_id`) REFERENCES `master_property` (`property_id`),
-  ADD CONSTRAINT `FKfgbbjwhbs884wescouui8b3gk` FOREIGN KEY (`document_id`) REFERENCES `master_document` (`document_id`);
-
---
--- Constraints for table `property_vs_experience`
---
-ALTER TABLE `property_vs_experience`
-  ADD CONSTRAINT `FK92o376xk6r7gls0he1aaugt7x` FOREIGN KEY (`property_id`) REFERENCES `master_property` (`property_id`),
-  ADD CONSTRAINT `FKn1s82f6oy0l1qh4mtmrdvjpx4` FOREIGN KEY (`experience_id`) REFERENCES `master_special_experience` (`experience_id`);
-
---
--- Constraints for table `property_vs_guest_access`
---
-ALTER TABLE `property_vs_guest_access`
-  ADD CONSTRAINT `FKg443u2hdb4sbrrnjwsrsxh7rk` FOREIGN KEY (`property_id`) REFERENCES `master_property` (`property_id`);
-
---
--- Constraints for table `property_vs_image`
---
-ALTER TABLE `property_vs_image`
-  ADD CONSTRAINT `FKdrv8bc11h2o2m8uumykk4cu57` FOREIGN KEY (`property_id`) REFERENCES `master_property` (`property_id`);
-
---
--- Constraints for table `property_vs_nearby`
---
-ALTER TABLE `property_vs_nearby`
-  ADD CONSTRAINT `FKru2h6pp77q418s5973c7125de` FOREIGN KEY (`property_id`) REFERENCES `master_property` (`property_id`);
-
---
--- Constraints for table `property_vs_pricedrop`
---
-ALTER TABLE `property_vs_pricedrop`
-  ADD CONSTRAINT `FKgwycvdturw8svnhj0pveb83bg` FOREIGN KEY (`property_id`) REFERENCES `master_property` (`property_id`),
-  ADD CONSTRAINT `FKnna1ewhlvt6hf3dmqx3rwd91k` FOREIGN KEY (`price_drop_id`) REFERENCES `master_price_drop` (`price_drop_id`);
-
---
--- Constraints for table `property_vs_space`
---
-ALTER TABLE `property_vs_space`
-  ADD CONSTRAINT `FKhd1vunghcip4rtk0511i53tf7` FOREIGN KEY (`sprule_id`) REFERENCES `master_space_rule` (`sprule_id`),
-  ADD CONSTRAINT `FKklkdybjqkwqcsydd52tcjt4g0` FOREIGN KEY (`property_id`) REFERENCES `master_property` (`property_id`);
-
---
--- Constraints for table `room_vs_amenities`
---
-ALTER TABLE `room_vs_amenities`
-  ADD CONSTRAINT `FKblve2wd06ghlbt72q1onnu1ib` FOREIGN KEY (`room_id`) REFERENCES `master_room` (`room_id`),
-  ADD CONSTRAINT `FKm50c7up4jp1m0vl36325pktvw` FOREIGN KEY (`aminities_id`) REFERENCES `master_amenities` (`aminities_id`);
-
---
--- Constraints for table `room_vs_cancellation`
---
-ALTER TABLE `room_vs_cancellation`
-  ADD CONSTRAINT `FKemhbtji1nvg41xa261axnd7vr` FOREIGN KEY (`room_id`) REFERENCES `master_room` (`room_id`),
-  ADD CONSTRAINT `FKr3pyo2gqwl71s8k5sm32rbjha` FOREIGN KEY (`cancellation_slab_id`) REFERENCES `master_cancellation_slab` (`cancellation_slab_id`);
-
---
--- Constraints for table `room_vs_image`
---
-ALTER TABLE `room_vs_image`
-  ADD CONSTRAINT `FKpamxay6j07bxeh97i0753dh6t` FOREIGN KEY (`room_id`) REFERENCES `master_room` (`room_id`);
-
---
--- Constraints for table `room_vs_meal`
---
-ALTER TABLE `room_vs_meal`
-  ADD CONSTRAINT `FKbv9gqnudk5swt4bpm37f5p28b` FOREIGN KEY (`room_id`) REFERENCES `master_room` (`room_id`),
-  ADD CONSTRAINT `FKfxh94m8ds7jaej9udbouh2alf` FOREIGN KEY (`meal_plan_id`) REFERENCES `master_meal_plan` (`meal_plan_id`);
-
---
--- Constraints for table `room_vs_offer`
---
-ALTER TABLE `room_vs_offer`
-  ADD CONSTRAINT `FKeyvqqee0hpcmg61dl00kbqvt5` FOREIGN KEY (`room_id`) REFERENCES `master_room` (`room_id`),
-  ADD CONSTRAINT `FKfqux8yyo3blnp4xga6oa9ur78` FOREIGN KEY (`offer_id`) REFERENCES `master_offer` (`offer_id`);
-
---
--- Constraints for table `room_vs_specialties`
---
-ALTER TABLE `room_vs_specialties`
-  ADD CONSTRAINT `FKmjiqftc5rdrthmteghtchnkav` FOREIGN KEY (`room_id`) REFERENCES `master_room` (`room_id`),
-  ADD CONSTRAINT `FKoe11vqm2reg89jso2t6d4mm7d` FOREIGN KEY (`specialties_id`) REFERENCES `master_specialties` (`specialties_id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
