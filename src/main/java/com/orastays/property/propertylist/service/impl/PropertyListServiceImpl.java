@@ -2,6 +2,7 @@ package com.orastays.property.propertylist.service.impl;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -19,6 +20,7 @@ import org.springframework.util.CollectionUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.orastays.property.propertylist.entity.OfferEntity;
 import com.orastays.property.propertylist.entity.PropertyEntity;
 import com.orastays.property.propertylist.entity.PropertyVsPriceDropEntity;
 import com.orastays.property.propertylist.entity.PropertyVsSpaceRuleEntity;
@@ -148,7 +150,9 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 					} else {
 						break;
 					}
-					
+//					//TODO Remove later
+//					if(propertyEntity.getPropertyId() == 1)
+//					break;
 				}
 				
 				// TODO Sorting if any
@@ -271,6 +275,7 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		Double totalPrice = 0.0D;
 		Double discountedPrice = 0.0D;
 		Double offerPrice = 0.0D;
+		Set<OfferEntity> offerEntities = new HashSet<>();
 		if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
 			for(RoomEntity roomEntity :propertyEntity.getRoomEntities()) {
 				System.err.println("roomEntity ==>> "+roomEntity);
@@ -322,9 +327,9 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 					}				
 				}
 				
-				System.err.println("price ==>> "+price);
-				System.out.println("roomEntity.getOraPercentage() ==>> "+roomEntity.getOraPercentage());
-				System.err.println("totalPrice before ==>> "+totalPrice);
+				System.out.println("price ==>> "+price);
+				System.err.println("roomEntity.getOraPercentage() ==>> "+roomEntity.getOraPercentage());
+				System.out.println("totalPrice before ==>> "+totalPrice);
 				totalPrice = totalPrice + price + (Double.parseDouble(roomEntity.getOraPercentage()) * price / 100);
 				System.err.println("totalPrice after including OraPercentage ==>> "+totalPrice); 
 				
@@ -332,8 +337,7 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 				Double hostDiscount = 0.0D;
 				Double oraDiscount = 0.0D;
 				Double priceDropDiscount = 0.0D;
-				Double offerAmountDiscount = 0.0D;
-				Double offerPercentageDiscount = 0.0D;
+				
 				// Check Pricedrop if any
 				if(Util.getDateDiff1(filterCiteriaModel.getCheckInDate()) == 0) { // Current Date
 					if(!CollectionUtils.isEmpty(propertyEntity.getPropertyVsPriceDropEntities())) { // Price Drop Present
@@ -378,12 +382,7 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 						for(RoomVsOfferEntity roomVsOfferEntity : roomEntity.getRoomVsOfferEntities()) {
 							if(Objects.nonNull(roomVsOfferEntity)) {
 								if(Objects.nonNull(roomVsOfferEntity.getOfferEntity())) {
-									// Amount Check
-									if (!StringUtils.isBlank(roomVsOfferEntity.getOfferEntity().getAmount())) {
-										offerAmountDiscount = Double.parseDouble(roomVsOfferEntity.getOfferEntity().getAmount());
-									} else {
-										offerPercentageDiscount = Double.parseDouble(roomVsOfferEntity.getOfferEntity().getPercentage()) * price / 100;
-									}
+									offerEntities.add(roomVsOfferEntity.getOfferEntity());
 								}
 							}
 						}
@@ -391,17 +390,68 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 					
 				}
 				
-				System.err.println("priceDropDiscount ==>> "+priceDropDiscount);
+				System.out.println("priceDropDiscount ==>> "+priceDropDiscount);
 				System.err.println("hostDiscount ==>> "+hostDiscount);
-				System.err.println("oraDiscount ==>> "+oraDiscount);
-				System.out.println("discountedPrice before ==>> "+discountedPrice);
+				System.out.println("oraDiscount ==>> "+oraDiscount);
+				System.err.println("discountedPrice before ==>> "+discountedPrice);
 				discountedPrice = discountedPrice + hostDiscount + oraDiscount + priceDropDiscount;
 				System.out.println("discountedPrice after deduction from totalPrice ==>> "+discountedPrice);
-				offerPrice = offerPrice - (offerAmountDiscount + offerPercentageDiscount);
-				System.err.println("offerPrice ==>> "+offerPrice);
+				
 			}
 		}
 		
+		Double calculatedPrice = totalPrice - discountedPrice;
+		System.err.println("calculatedPrice ==>> "+calculatedPrice);
+		// Offer Calculation
+		if(!CollectionUtils.isEmpty(offerEntities)) {
+			for(OfferEntity offerEntity : offerEntities) {
+				System.out.println("offerEntity ==>> "+offerEntity);
+				if(Objects.nonNull(offerEntity)) {
+					
+					System.out.println("offerEntity.getMaxAmount() ==>> "+offerEntity.getMaxAmount());
+					if (!StringUtils.isBlank(offerEntity.getMaxAmount())) { // Calculate with Max Amount
+						
+						if (Double.parseDouble(offerEntity.getMaxAmount()) <= calculatedPrice) {
+							if (!StringUtils.isBlank(offerEntity.getAmount())) { // Amount Check
+								offerPrice = offerPrice + Double.parseDouble(offerEntity.getAmount());
+								System.out.println("Calculate with Max Amount offerPrice ==>> "+offerPrice);
+							} else if (!StringUtils.isBlank(offerEntity.getPercentage())) { // Percentage Check
+								offerPrice = offerPrice + (Double.parseDouble(offerEntity.getPercentage()) * calculatedPrice / 100);
+								System.out.println("Calculate with Max Amount offerPrice ==>> "+offerPrice);
+							}
+						}
+					}
+					
+					System.out.println("offerEntity.getStartDateRange() ==>> "+offerEntity.getStartDateRange());
+					if (!StringUtils.isBlank(offerEntity.getStartDateRange()) && !StringUtils.isBlank(offerEntity.getEndDateRange())) { // Calculate with Date Range
+						if (Util.getDateDiff(offerEntity.getStartDateRange()) >= 0 && Util.getDateDiff(offerEntity.getEndDateRange()) <= 0) {
+							if (!StringUtils.isBlank(offerEntity.getAmount())) { // Amount Check
+								offerPrice = offerPrice + Double.parseDouble(offerEntity.getAmount());
+								System.out.println("Calculate with Date Range offerPrice ==>> "+offerPrice);
+							} else if (!StringUtils.isBlank(offerEntity.getPercentage())) { // Percentage Check
+								offerPrice = offerPrice + (Double.parseDouble(offerEntity.getPercentage()) * calculatedPrice / 100);
+								System.out.println("Calculate with Date Range offerPrice ==>> "+offerPrice);
+							}
+						}
+					}
+					
+					if (StringUtils.isBlank(offerEntity.getMaxAmount()) && StringUtils.isBlank(offerEntity.getStartDateRange()) && StringUtils.isBlank(offerEntity.getOnline())) { // Calculate other than Date Range & Max Amount
+						if (!StringUtils.isBlank(offerEntity.getAmount())) { // Amount Check
+							offerPrice = offerPrice + Double.parseDouble(offerEntity.getAmount());
+							System.out.println("Calculate other than Date Range & Max Amount offerPrice ==>> "+offerPrice);
+						} else if (!StringUtils.isBlank(offerEntity.getPercentage())) { // Percentage Check
+							offerPrice = offerPrice + (Double.parseDouble(offerEntity.getPercentage()) * calculatedPrice / 100);
+							System.out.println("Calculate other than Date Range & Max Amount offerPrice ==>> "+offerPrice);
+						}
+					}
+					
+				}
+			}
+		}
+		
+		System.out.println("offerPrice ==>> "+offerPrice);
+		discountedPrice = discountedPrice + offerPrice;
+		System.out.println("Final discountedPrice ==>> "+discountedPrice);
 		//totalPrice = totalPrice * numOfDays;
 		//discountedPrice = discountedPrice * numOfDays;
 		prices.add(String.valueOf(totalPrice));
