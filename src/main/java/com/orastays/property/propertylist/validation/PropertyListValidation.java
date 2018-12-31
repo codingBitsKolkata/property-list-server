@@ -16,20 +16,19 @@ import com.orastays.property.propertylist.helper.Status;
 import com.orastays.property.propertylist.helper.Util;
 import com.orastays.property.propertylist.model.FilterCiteriaModel;
 import com.orastays.property.propertylist.model.RoomModel;
-import com.orastays.property.propertylist.model.UserModel;
 
 @Component
 public class PropertyListValidation extends AuthorizeUserValidation {
 
 	private static final Logger logger = LogManager.getLogger(PropertyListValidation.class);
 	
-	public UserModel validateFetchProperties(FilterCiteriaModel filterCiteriaModel) throws FormExceptions {
+	public void validateFetchProperties(FilterCiteriaModel filterCiteriaModel) throws FormExceptions {
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("validateFetchProperties -- Start");
 		}
 
-		UserModel userModel = getUserDetails(filterCiteriaModel.getUserToken());
+		//UserModel userModel = getUserDetails(filterCiteriaModel.getUserToken());
 		Map<String, Exception> exceptions = new LinkedHashMap<>();
 		
 		// Validate Property Type
@@ -120,7 +119,5 @@ public class PropertyListValidation extends AuthorizeUserValidation {
 		if (logger.isDebugEnabled()) {
 			logger.debug("validateFetchProperties -- End");
 		}
-		
-		return userModel;
 	}
 }

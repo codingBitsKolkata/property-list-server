@@ -12,14 +12,17 @@ import lombok.ToString;
 @Setter
 @EqualsAndHashCode(callSuper = false)
 @ToString
-public class BookingVsRoomOraDiscountModel extends CommonModel {
+public class CancellationVsRoomModel extends CommonModel {
 
-	@JsonProperty("brodId")
-	private Long brodId;
-
-	@JsonProperty("rodId")
-	private String rodId;
-
+	@JsonProperty("cancellationVsRoomId")
+	private Long cancellationVsRoomId;
+	
+	@JsonProperty("cancellationSlabId")
+	private String cancellationSlabId;
+	
+	@JsonProperty("cancellations")
+	private CancellationModel cancellationModel;
+	
 	@JsonProperty("bookingVsRooms")
 	private BookingVsRoomModel bookingVsRoomModel;
 	

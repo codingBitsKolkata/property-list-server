@@ -33,6 +33,7 @@ import com.orastays.property.propertylist.helper.Accommodation;
 import com.orastays.property.propertylist.helper.MealPriceCategory;
 import com.orastays.property.propertylist.helper.PropertyListConstant;
 import com.orastays.property.propertylist.helper.Status;
+import com.orastays.property.propertylist.helper.UserType;
 import com.orastays.property.propertylist.helper.Util;
 import com.orastays.property.propertylist.model.AmenitiesModel;
 import com.orastays.property.propertylist.model.FilterCiteriaModel;
@@ -40,8 +41,8 @@ import com.orastays.property.propertylist.model.PropertyListViewModel;
 import com.orastays.property.propertylist.model.PropertyModel;
 import com.orastays.property.propertylist.model.ResponseModel;
 import com.orastays.property.propertylist.model.SpaceRuleModel;
-import com.orastays.property.propertylist.model.UserModel;
 import com.orastays.property.propertylist.model.booking.BookingModel;
+import com.orastays.property.propertylist.model.booking.BookingVsRoomModel;
 import com.orastays.property.propertylist.model.review.BookingVsRatingModel;
 import com.orastays.property.propertylist.model.review.UserReviewModel;
 import com.orastays.property.propertylist.service.PropertyListService;
@@ -59,7 +60,7 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 			logger.info("fetchProperties -- START");
 		}
 		
-		UserModel userModel = propertyListValidation.validateFetchProperties(filterCiteriaModel);
+		propertyListValidation.validateFetchProperties(filterCiteriaModel);
 		List<PropertyListViewModel> propertyListViewModels = new ArrayList<PropertyListViewModel>();
 		
 		try {
@@ -277,6 +278,7 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		Double offerPrice = 0.0D;
 		Set<OfferEntity> offerEntities = new HashSet<>();
 		if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
+			System.err.println("propertyEntity.getRoomEntities().size() ==>> "+propertyEntity.getRoomEntities().size());
 			for(RoomEntity roomEntity :propertyEntity.getRoomEntities()) {
 				System.err.println("roomEntity ==>> "+roomEntity);
 				// Price calculation
@@ -475,6 +477,7 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		try {
 			PropertyModel propertyModel = new PropertyModel();
 			propertyModel.setPropertyId(String.valueOf(propertyEntity.getPropertyId()));
+			propertyModel.setUserTypeId(String.valueOf(UserType.CUSTOMER.ordinal()));
 			ResponseModel responseModel = restTemplate.postForObject(messageUtil.getBundle("review.server.url") +"fetch-review", propertyModel, ResponseModel.class);
 			Gson gson = new Gson();
 			String jsonString = gson.toJson(responseModel.getResponseBody());
@@ -590,32 +593,144 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		
 		boolean flag = true;
 		
-		/*try {
+		try {
 			BookingModel bookingModel = new BookingModel();
 			bookingModel.setPropertyId(String.valueOf(propertyEntity.getPropertyId()));
 			bookingModel.setCheckinDate(filterCiteriaModel.getCheckInDate());
 			ResponseModel responseModel = restTemplate.postForObject(messageUtil.getBundle("booking.server.url") +"get-bookings", bookingModel, ResponseModel.class);
 			Gson gson = new Gson();
 			String jsonString = gson.toJson(responseModel.getResponseBody());
-			BookingModel bookingModel2 = gson.fromJson(jsonString, BookingModel.class);
-			if (logger.isInfoEnabled()) {
-				logger.info("bookingModel2 ==>> "+bookingModel2);
-			}
-			System.err.println("bookingModel2 ==>> "+bookingModel2);
+			gson = new Gson();
+			Type listType = new TypeToken<List<BookingModel>>() {}.getType();
+			List<BookingModel> bookingModels = gson.fromJson(jsonString, listType);
 			
-			if(Objects.isNull(bookingModel2)) {
+			if (logger.isInfoEnabled()) {
+				logger.info("bookingModels ==>> "+bookingModels);
+			}
+			System.err.println("bookingModels ==>> "+bookingModels);
+			
+			if (CollectionUtils.isEmpty(bookingModels)) {
+				List<RoomEntity> roomEntities = new ArrayList<>();
+				int roomRequired = filterCiteriaModel.getRoomModels().size();
+				System.err.println("roomRequired ==>> "+roomRequired);
+				int bedRequired = Integer.parseInt(filterCiteriaModel.getRoomModels().get(0).getNoOfGuest());
+				System.err.println("bedRequired ==>> "+bedRequired);
+				if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
+					System.out.println("propertyEntity ==>> "+propertyEntity);
+					System.err.println("propertyEntity.getRoomEntities().size()1 ==>> "+propertyEntity.getRoomEntities().size());
+					for(RoomEntity roomEntity :propertyEntity.getRoomEntities()) {
+						
+						if(roomEntity.getStatus() == Status.ACTIVE.ordinal()) { // Fetching only ACTIVE Rooms
+							System.err.println("roomEntity ==>> "+roomEntity);
+							if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.SHARED.name())) { //shared
+								
+								if(Integer.parseInt(roomEntity.getNumOfBed()) <= bedRequired) {
+									roomEntities.add(roomEntity);
+									propertyEntity.setRoomEntities(null); // Delete All Rooms
+									propertyEntity.setRoomEntities(roomEntities); // Insert Available Rooms
+									break;
+								} else {
+									roomEntities.add(roomEntity);
+									bedRequired = bedRequired - Integer.parseInt(roomEntity.getNumOfBed());
+								}
+								
+							} else { //private
+								if(roomEntities.size() < roomRequired) {
+									roomEntities.add(roomEntity);
+								} else {
+									propertyEntity.setRoomEntities(null); // Delete All Rooms
+									propertyEntity.setRoomEntities(roomEntities); // Insert Available Rooms
+									break;
+								}
+							}
+						}
+					}
+				}
 				flag = true;
 			} else {
-				// TODO Delete the rooms from PropertyEntity which are already booked
+				 //TODO Delete the rooms from PropertyEntity which are already booked
+				List<BookingVsRoomModel> bookingVsRoomModels = new ArrayList<BookingVsRoomModel>();
+				for(BookingModel bookingModel2 : bookingModels) {
+					if(Objects.nonNull(bookingModel2)) {
+						bookingVsRoomModels.addAll(bookingModel2.getBookingVsRoomModels());
+					}
+				}
+				
+				if(!CollectionUtils.isEmpty(bookingVsRoomModels)) {
+					Map<String, List<BookingVsRoomModel>> roomByOraName = new LinkedHashMap<>();
+					for(BookingVsRoomModel bookingVsRoomModel : bookingVsRoomModels) {
+						if(roomByOraName.isEmpty()) { // First Time
+							List<BookingVsRoomModel> mapBookingVsRoomModels = new ArrayList<>();
+							mapBookingVsRoomModels.add(bookingVsRoomModel);
+							roomByOraName.put(bookingVsRoomModel.getOraRoomName(), mapBookingVsRoomModels);
+						} else {
+							if(roomByOraName.containsKey(bookingVsRoomModel.getOraRoomName())) { // KEY Present
+								List<BookingVsRoomModel> mapBookingVsRoomModels = roomByOraName.get(bookingVsRoomModel.getOraRoomName());
+								mapBookingVsRoomModels.add(bookingVsRoomModel);
+								roomByOraName.put(bookingVsRoomModel.getOraRoomName(), mapBookingVsRoomModels);
+							} else { // KEY not present
+								List<BookingVsRoomModel> mapBookingVsRoomModels = new ArrayList<>();
+								mapBookingVsRoomModels.add(bookingVsRoomModel);
+								roomByOraName.put(bookingVsRoomModel.getOraRoomName(), mapBookingVsRoomModels);
+							}
+						}
+					}
+					
+					List<RoomEntity> roomEntities = new ArrayList<>();
+					int roomRequired = filterCiteriaModel.getRoomModels().size();
+					System.err.println("roomRequired ==>> "+roomRequired);
+					int bedRequired = Integer.parseInt(filterCiteriaModel.getRoomModels().get(0).getNoOfGuest());
+					System.err.println("bedRequired ==>> "+bedRequired);
+					if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
+						for(RoomEntity roomEntity :propertyEntity.getRoomEntities()) {
+							
+							if(roomEntity.getStatus() == Status.ACTIVE.ordinal()) { // Fetching only ACTIVE Rooms
+								System.err.println("roomEntity ==>> "+roomEntity);
+								
+								if(roomByOraName.containsKey(roomEntity.getOraRoomName())) { // KEY Present
+									
+									if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.SHARED.name())) { //shared
+										
+										
+									} else { //private
+										
+									}
+								} else { // KEY NOT Present that means the room is not booked.
+									if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.SHARED.name())) { //shared
+										
+										if(Integer.parseInt(roomEntity.getNumOfBed()) <= bedRequired) {
+											roomEntities.add(roomEntity);
+											propertyEntity.setRoomEntities(null); // Delete All Rooms
+											propertyEntity.setRoomEntities(roomEntities); // Insert Available Rooms
+											break;
+										} else {
+											roomEntities.add(roomEntity);
+											bedRequired = bedRequired - Integer.parseInt(roomEntity.getNumOfBed());
+										}
+										
+									} else { //private
+										if(roomEntities.size() < roomRequired) {
+											roomEntities.add(roomEntity);
+										} else {
+											propertyEntity.setRoomEntities(null); // Delete All Rooms
+											propertyEntity.setRoomEntities(roomEntities); // Insert Available Rooms
+											break;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
 			}
-			
-			
+			System.out.println("propertyEntity ==>> "+propertyEntity);
+			System.err.println("propertyEntity.getRoomEntities().size()2 ==>> "+propertyEntity.getRoomEntities().size());
 		} catch (Exception e) {
 			e.printStackTrace();
 			if (logger.isInfoEnabled()) {
 				logger.info("Exception in filterBycheckInDate -- "+Util.errorToString(e));
 			}
-		}*/
+		}
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("filterBycheckInDate -- END");
@@ -827,5 +942,58 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		}
 		
 		return flag;
+	}
+
+	@Override
+	public BookingVsRoomModel roomDetailsByOraRoomName(String oraRoomName) {
+
+		if (logger.isInfoEnabled()) {
+			logger.info("roomDetailsByOraRoomName -- START");
+		}
+		
+		BookingVsRoomModel bookingVsRoomModel = new BookingVsRoomModel();
+		
+		try {
+			Map<String, String> innerMap1 = new LinkedHashMap<>();
+			innerMap1.put("status", String.valueOf(Status.ACTIVE.ordinal()));
+			innerMap1.put("oraRoomName", oraRoomName);
+	
+			Map<String, Map<String, String>> outerMap1 = new LinkedHashMap<>();
+			outerMap1.put("eq", innerMap1);
+	
+			Map<String, Map<String, Map<String, String>>> alliasMap = new LinkedHashMap<>();
+			alliasMap.put(entitymanagerPackagesToScan+".RoomEntity", outerMap1);
+			
+			RoomEntity roomEntity = roomDAO.fetchObjectBySubCiteria(alliasMap);
+			if(Objects.nonNull(roomEntity)) {
+				bookingVsRoomModel.setTotalNumOfSharedBed(roomEntity.getNumOfBed());
+				bookingVsRoomModel.setTotalNumOfSharedCot(roomEntity.getNumOfCot());
+			}
+			
+		} catch (Exception e) {
+			if (logger.isInfoEnabled()) {
+				logger.info("Exception in roomDetailsByOraRoomName -- "+Util.errorToString(e));
+			}
+		}
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("roomDetailsByOraRoomName -- END");
+		}
+		
+		return bookingVsRoomModel;
+	}
+	
+	@Override
+	public PropertyModel fetchPropertyById(String propertyId) {
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("fetchPropertyById -- START");
+		}
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("fetchPropertyById -- END");
+		}
+		
+		return propertyConverter.entityToModel(propertyDAO.find(Long.valueOf(propertyId)));
 	}
 }

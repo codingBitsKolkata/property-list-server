@@ -1,7 +1,5 @@
 package com.orastays.property.propertylist.model.booking;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -17,21 +15,14 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false)
 @ToString
 @JsonInclude(Include.NON_NULL)
-public class GstSlabModel extends CommonModel {
+public class UserInfo extends CommonModel {
 
-	@JsonProperty("gstSlabId")
-	private Long gstSlabId;
+	@JsonProperty("customerName")
+	private String customerName;
 
-	@JsonProperty("fromAmount")
-	private String fromAmount;
+	@JsonProperty("customerEmail")
+	private String customerEmail;
 
-	@JsonProperty("toAmount")
-	private String toAmount;
-
-	@JsonProperty("percentage")
-	private String percentage;
-
-	@JsonProperty("bookingVsRooms")
-	private List<BookingVsRoomModel> bookingVsRoomModels;
-
+	@JsonProperty("customerPhone")
+	private String customerPhone;
 }

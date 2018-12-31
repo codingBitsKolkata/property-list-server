@@ -86,6 +86,9 @@ public class PropertyModel extends CommonModel {
 
 	@JsonProperty("advancePercentage")
 	private String advancePercentage;
+	
+	@JsonProperty("userTypeId")
+	private String userTypeId;
 
 	@JsonProperty("propertyType")
 	private PropertyTypeModel propertyTypeModel;

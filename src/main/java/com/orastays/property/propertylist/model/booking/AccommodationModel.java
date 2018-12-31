@@ -1,8 +1,7 @@
 package com.orastays.property.propertylist.model.booking;
 
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.orastays.property.propertylist.model.CommonModel;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
