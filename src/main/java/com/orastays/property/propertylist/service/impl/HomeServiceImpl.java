@@ -433,7 +433,7 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 		
 		PropertyEntity propertyEntity = null;
 		RoomEntity roomEntity = null;
-		Double maxValueInMap = (Collections.max(priceCount.values()));
+		Double maxValueInMap = (Collections.min(priceCount.values()));
         for (Entry<RoomEntity, Double> entry : priceCount.entrySet()) {
             if (entry.getValue() == maxValueInMap) {
             	propertyEntity = entry.getKey().getPropertyEntity();
