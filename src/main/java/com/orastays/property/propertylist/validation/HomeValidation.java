@@ -13,30 +13,28 @@ import com.orastays.property.propertylist.entity.PropertyTypeEntity;
 import com.orastays.property.propertylist.exceptions.FormExceptions;
 import com.orastays.property.propertylist.helper.Status;
 import com.orastays.property.propertylist.helper.Util;
-import com.orastays.property.propertylist.model.PropertyTypeModel;
-import com.orastays.property.propertylist.model.UserModel;
 
 @Component
 public class HomeValidation extends AuthorizeUserValidation {
 
 	private static final Logger logger = LogManager.getLogger(HomeValidation.class);
 	
-	public void validatePropertyType(PropertyTypeModel propertyTypeModel) throws FormExceptions {
+	public void validatePropertyType(String propertyTypeId) throws FormExceptions {
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("validatePropertyType -- Start");
 		}
 
-		UserModel userModel = getUserDetails(propertyTypeModel.getUserToken());
 		Map<String, Exception> exceptions = new LinkedHashMap<>();
+		
 		// Validate Property Type
-		if (StringUtils.isBlank(propertyTypeModel.getPropertyTypeId())) {
+		if (StringUtils.isBlank(propertyTypeId)) {
 			exceptions.put(messageUtil.getBundle("property.type.id.null.code"), new Exception(messageUtil.getBundle("property.type.id.null.message")));
 		} else {
-			if (!Util.isNumeric(propertyTypeModel.getPropertyTypeId())) {
+			if (!Util.isNumeric(propertyTypeId)) {
 				exceptions.put(messageUtil.getBundle("property.type.id.invalid.code"), new Exception(messageUtil.getBundle("property.type.id.invalid.message")));
 			} else {
-				PropertyTypeEntity propertyTypeEntity = propertyTypeDAO.find(Long.parseLong(propertyTypeModel.getPropertyTypeId()));
+				PropertyTypeEntity propertyTypeEntity = propertyTypeDAO.find(Long.parseLong(propertyTypeId));
 				if (Objects.isNull(propertyTypeEntity) && propertyTypeEntity.getStatus() != Status.ACTIVE.ordinal()) {
 					exceptions.put(messageUtil.getBundle("property.type.id.invalid.code"), new Exception(messageUtil.getBundle("property.type.id.invalid.message")));
 				}

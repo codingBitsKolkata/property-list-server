@@ -9,15 +9,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.orastays.property.propertylist.exceptions.FormExceptions;
 import com.orastays.property.propertylist.helper.PropertyListConstant;
 import com.orastays.property.propertylist.helper.Util;
 import com.orastays.property.propertylist.model.PropertyListViewModel;
-import com.orastays.property.propertylist.model.PropertyTypeModel;
 import com.orastays.property.propertylist.model.ResponseModel;
 
 import io.swagger.annotations.Api;
@@ -37,20 +36,19 @@ public class HomeController extends BaseController {
 	@ApiOperation(value = "Fetch Properties By Type", response = ResponseModel.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
 			@ApiResponse(code = 201, message = "Please Try after Sometime!!!"),
-			@ApiResponse(code = 320, message = "Session expires!!! Please Login to continue..."),
-			@ApiResponse(code = 321, message = "Please give User Token"),
-			@ApiResponse(code = 322, message = "Invalid user Token") })
-	public ResponseEntity<ResponseModel> fetchPropertyByType(@RequestBody PropertyTypeModel propertyTypeModel) {
+			@ApiResponse(code = 1908, message = "Please select property type id"),
+			@ApiResponse(code = 1909, message = "Invalid property type id") })
+	public ResponseEntity<ResponseModel> fetchPropertyByType(@RequestParam(value = "propertyTypeId", required = true) String propertyTypeId) {
 
 		if (logger.isInfoEnabled()) {
 			logger.info("fetchPropertyByType -- START");
 		}
 
 		ResponseModel responseModel = new ResponseModel();
-		Util.printLog(propertyTypeModel, PropertyListConstant.INCOMING, "Fetch Properties By Type", request);
+		Util.printLog(propertyTypeId, PropertyListConstant.INCOMING, "Fetch Properties By Type", request);
 		try {
 			long startTime = System.currentTimeMillis();
-			List<PropertyListViewModel> propertyListViewModels = homeService.fetchPropertyByType(propertyTypeModel);
+			List<PropertyListViewModel> propertyListViewModels = homeService.fetchPropertyByType(propertyTypeId);
 			long elapsedTimeNs = System.currentTimeMillis() - startTime;
 			System.err.println("Total Time Taken ==>> "+(elapsedTimeNs/1000));
 			responseModel.setResponseBody(propertyListViewModels);

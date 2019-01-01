@@ -22,7 +22,6 @@ import com.orastays.property.propertylist.helper.Accommodation;
 import com.orastays.property.propertylist.helper.Status;
 import com.orastays.property.propertylist.helper.Util;
 import com.orastays.property.propertylist.model.PropertyListViewModel;
-import com.orastays.property.propertylist.model.PropertyTypeModel;
 import com.orastays.property.propertylist.service.HomeService;
 
 @Service
@@ -32,13 +31,13 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 	private static final Logger logger = LogManager.getLogger(HomeServiceImpl.class);
 
 	@Override
-	public List<PropertyListViewModel> fetchPropertyByType(PropertyTypeModel propertyTypeModel) throws FormExceptions {
+	public List<PropertyListViewModel> fetchPropertyByType(String propertyTypeId) throws FormExceptions {
 
 		if (logger.isInfoEnabled()) {
 			logger.info("fetchPropertyByType -- START");
 		}
 
-		homeValidation.validatePropertyType(propertyTypeModel);
+		homeValidation.validatePropertyType(propertyTypeId);
 		List<PropertyListViewModel> propertyListViewModels = new ArrayList<>();
 		try {
 			Map<String, String> innerMap1 = new LinkedHashMap<>();
@@ -51,7 +50,7 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 			alliasMap.put(entitymanagerPackagesToScan + ".PropertyEntity", outerMap1);
 
 			Map<String, String> innerMap2 = new LinkedHashMap<>();
-			innerMap2.put("propertyTypeId", propertyTypeModel.getPropertyTypeId());
+			innerMap2.put("propertyTypeId", propertyTypeId);
 
 			Map<String, Map<String, String>> outerMap2 = new LinkedHashMap<>();
 			outerMap2.put("eq", innerMap2);
