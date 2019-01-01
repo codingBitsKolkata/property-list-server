@@ -53,6 +53,7 @@ import com.orastays.property.propertylist.dao.SpecialExperienceDAO;
 import com.orastays.property.propertylist.dao.SpecialtiesDAO;
 import com.orastays.property.propertylist.dao.StayTypeDAO;
 import com.orastays.property.propertylist.helper.MessageUtil;
+import com.orastays.property.propertylist.service.PropertyListService;
 import com.orastays.property.propertylist.validation.HomeValidation;
 import com.orastays.property.propertylist.validation.PropertyListValidation;
 
@@ -216,5 +217,8 @@ public abstract class BaseServiceImpl {
 
 	@Autowired
 	protected RoomVsCancellationDAO roomVsCancellationDAO;
+	
+	@Autowired
+	protected PropertyListService propertyListService; 
 
 }

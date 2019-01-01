@@ -140,17 +140,9 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 									
 									propertyListViewModels.add(setPropertyListView(propertyEntity, filterCiteriaModel));
 									
-								} else {
-									continue;
-								}
-							} else {
-								continue;
-							}
-						} else {
-							continue;
-						}
-					} else {
-						continue;
+								} 
+							} 
+						} 
 					}
 				}
 				
@@ -170,7 +162,8 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		return propertyListViewModels;
 	}
 	
-	private PropertyListViewModel setPropertyListView(PropertyEntity propertyEntity, FilterCiteriaModel filterCiteriaModel) {
+	@Override
+	public PropertyListViewModel setPropertyListView(PropertyEntity propertyEntity, FilterCiteriaModel filterCiteriaModel) {
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("setPropertyListView -- START");
@@ -201,7 +194,6 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 			propertyListViewModel.setRoomStandard(PropertyListConstant.ROOM_STANDARD_NORMAL);
 		}
 		
-		
 		propertyListViewModel.setRating(getRatingAndReview(propertyEntity).get(0));
 		propertyListViewModel.setReviewCount(getRatingAndReview(propertyEntity).get(1));
 		
@@ -219,9 +211,11 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		propertyListViewModel.setPgCategorySex(propertyEntity.getSexCategory());
 		
 		// Price Section
-		List<String> prices = priceCalculation(propertyEntity, filterCiteriaModel);
-		propertyListViewModel.setTotalPrice(prices.get(0));
-		propertyListViewModel.setDiscountedPrice(prices.get(1));
+		if(Objects.nonNull(filterCiteriaModel)) {
+			List<String> prices = priceCalculation(propertyEntity, filterCiteriaModel);
+			propertyListViewModel.setTotalPrice(prices.get(0));
+			propertyListViewModel.setDiscountedPrice(prices.get(1));
+		}
 		
 		// Meal Section
 		propertyListViewModel.setMealFlag(false);
@@ -844,7 +838,7 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 			
 		} catch (Exception e) {
 			if (logger.isInfoEnabled()) {
-				logger.info("Exception in getRatingAndReview -- "+Util.errorToString(e));
+				logger.info("Exception in filterByRating -- "+Util.errorToString(e));
 			}
 		}
 		
