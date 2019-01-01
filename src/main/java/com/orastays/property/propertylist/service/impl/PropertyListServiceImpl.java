@@ -32,6 +32,7 @@ import com.orastays.property.propertylist.exceptions.FormExceptions;
 import com.orastays.property.propertylist.helper.Accommodation;
 import com.orastays.property.propertylist.helper.MealPriceCategory;
 import com.orastays.property.propertylist.helper.PropertyListConstant;
+import com.orastays.property.propertylist.helper.Sex;
 import com.orastays.property.propertylist.helper.Status;
 import com.orastays.property.propertylist.helper.UserType;
 import com.orastays.property.propertylist.helper.Util;
@@ -94,14 +95,14 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 									// Filter By Rating
 									if (!CollectionUtils.isEmpty(filterCiteriaModel.getRatings())) {
 										if (!filterByRating(propertyEntity, filterCiteriaModel)) {
-											break;
+											continue;
 										}
 									}
 									
 									// Filter by amenitiesModels
 									if (!CollectionUtils.isEmpty(filterCiteriaModel.getAmenitiesModels())) {
 										if (!filterByAmmenities(propertyEntity, filterCiteriaModel)) {
-											break;
+											continue;
 										}
 									}
 									
@@ -109,7 +110,7 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 									// Filter by budgets
 									if(!CollectionUtils.isEmpty(filterCiteriaModel.getBudgets())) {
 										if (!filterByBudget(propertyEntity, filterCiteriaModel)) {
-											break;
+											continue;
 										}
 									}
 									
@@ -117,7 +118,7 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 									// Filter by popularLocations
 									if(!CollectionUtils.isEmpty(filterCiteriaModel.getPopularLocations())) {
 										if (!filterByPopularLocation(propertyEntity, filterCiteriaModel)) {
-											break;
+											continue;
 										}
 									}
 									
@@ -125,7 +126,7 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 									// Filter by spaceRuleModels // Couple Friendly, Pet Friendly
 									if(!CollectionUtils.isEmpty(filterCiteriaModel.getSpaceRuleModels())) {
 										if (!filterBySpaceRule(propertyEntity, filterCiteriaModel)) {
-											break;
+											continue;
 										}
 									}
 									
@@ -133,27 +134,24 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 									// Filter by pgCategorySexModels // Male/Female
 									if(!StringUtils.isBlank(filterCiteriaModel.getPgCategorySex())) {
 										if (!filterBySex(propertyEntity, filterCiteriaModel)) {
-											break;
+											continue;
 										}
 									}
 									
 									propertyListViewModels.add(setPropertyListView(propertyEntity, filterCiteriaModel));
 									
 								} else {
-									break;
+									continue;
 								}
 							} else {
-								break;
+								continue;
 							}
 						} else {
-							break;
+							continue;
 						}
 					} else {
-						break;
+						continue;
 					}
-//					//TODO Remove later
-//					if(propertyEntity.getPropertyId() == 1)
-//					break;
 				}
 				
 				// TODO Sorting if any
@@ -187,14 +185,16 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		propertyListViewModel.setCoverImageURL(propertyEntity.getCoverImageUrl());
 		
 		if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
-			for(RoomEntity roomEntity :propertyEntity.getRoomEntities()) {
-				if(StringUtils.equals(roomEntity.getRoomStandard(), PropertyListConstant.ROOM_STANDARD_PREMIUM)) {
-					propertyListViewModel.setRoomStandard(PropertyListConstant.ROOM_STANDARD_PREMIUM);
-					break;
-				} else if(StringUtils.equals(roomEntity.getRoomStandard(), PropertyListConstant.ROOM_STANDARD_EXPRESS)) {
-					propertyListViewModel.setRoomStandard(PropertyListConstant.ROOM_STANDARD_EXPRESS);
-				} else {
-					propertyListViewModel.setRoomStandard(PropertyListConstant.ROOM_STANDARD_NORMAL);
+			for(RoomEntity roomEntity : propertyEntity.getRoomEntities()) {
+				if(Objects.nonNull(roomEntity)) {
+					if(StringUtils.equals(roomEntity.getRoomStandard(), PropertyListConstant.ROOM_STANDARD_PREMIUM)) {
+						propertyListViewModel.setRoomStandard(PropertyListConstant.ROOM_STANDARD_PREMIUM);
+						break;
+					} else if(StringUtils.equals(roomEntity.getRoomStandard(), PropertyListConstant.ROOM_STANDARD_EXPRESS)) {
+						propertyListViewModel.setRoomStandard(PropertyListConstant.ROOM_STANDARD_EXPRESS);
+					} else {
+						propertyListViewModel.setRoomStandard(PropertyListConstant.ROOM_STANDARD_NORMAL);
+					}
 				}
 			}
 		} else {
@@ -227,17 +227,19 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		propertyListViewModel.setMealFlag(false);
 		if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
 			for(RoomEntity roomEntity :propertyEntity.getRoomEntities()) {
-				if(!CollectionUtils.isEmpty(roomEntity.getRoomVsMealEntities())) {
-					for(RoomVsMealEntity roomVsMealEntity : roomEntity.getRoomVsMealEntities()) {
-						if((StringUtils.equals(roomVsMealEntity.getMealPriceCategorySunday(), MealPriceCategory.COMPLIMENTARY.name()))
-								|| (StringUtils.equals(roomVsMealEntity.getMealPriceCategoryMonday(), MealPriceCategory.COMPLIMENTARY.name()))
-								|| (StringUtils.equals(roomVsMealEntity.getMealPriceCategoryTuesday(), MealPriceCategory.COMPLIMENTARY.name()))
-								|| (StringUtils.equals(roomVsMealEntity.getMealPriceCategoryWednesday(), MealPriceCategory.COMPLIMENTARY.name()))
-								|| (StringUtils.equals(roomVsMealEntity.getMealPriceCategoryThursday(), MealPriceCategory.COMPLIMENTARY.name()))
-								|| (StringUtils.equals(roomVsMealEntity.getMealPriceCategoryFriday(), MealPriceCategory.COMPLIMENTARY.name()))
-								|| (StringUtils.equals(roomVsMealEntity.getMealPriceCategorySaturday(), MealPriceCategory.COMPLIMENTARY.name()))) {
-								propertyListViewModel.setMealFlag(true);
-								break;
+				if(Objects.nonNull(roomEntity)) {
+					if(!CollectionUtils.isEmpty(roomEntity.getRoomVsMealEntities())) {
+						for(RoomVsMealEntity roomVsMealEntity : roomEntity.getRoomVsMealEntities()) {
+							if((StringUtils.equals(roomVsMealEntity.getMealPriceCategorySunday(), MealPriceCategory.COMPLIMENTARY.name()))
+									|| (StringUtils.equals(roomVsMealEntity.getMealPriceCategoryMonday(), MealPriceCategory.COMPLIMENTARY.name()))
+									|| (StringUtils.equals(roomVsMealEntity.getMealPriceCategoryTuesday(), MealPriceCategory.COMPLIMENTARY.name()))
+									|| (StringUtils.equals(roomVsMealEntity.getMealPriceCategoryWednesday(), MealPriceCategory.COMPLIMENTARY.name()))
+									|| (StringUtils.equals(roomVsMealEntity.getMealPriceCategoryThursday(), MealPriceCategory.COMPLIMENTARY.name()))
+									|| (StringUtils.equals(roomVsMealEntity.getMealPriceCategoryFriday(), MealPriceCategory.COMPLIMENTARY.name()))
+									|| (StringUtils.equals(roomVsMealEntity.getMealPriceCategorySaturday(), MealPriceCategory.COMPLIMENTARY.name()))) {
+									propertyListViewModel.setMealFlag(true);
+									break;
+							}
 						}
 					}
 				}
@@ -247,9 +249,11 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		Set<AmenitiesModel> amenitiesModels = new LinkedHashSet<>();
 		if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
 			for(RoomEntity roomEntity : propertyEntity.getRoomEntities()) {
-				if(!CollectionUtils.isEmpty(roomEntity.getRoomVsAmenitiesEntities())) {
-					for(RoomVsAmenitiesEntity roomVsAmenitiesEntity : roomEntity.getRoomVsAmenitiesEntities()) {
-						amenitiesModels.add(amenitiesConverter.entityToModel(roomVsAmenitiesEntity.getAmenitiesEntity()));
+				if(Objects.nonNull(roomEntity)) {
+					if(!CollectionUtils.isEmpty(roomEntity.getRoomVsAmenitiesEntities())) {
+						for(RoomVsAmenitiesEntity roomVsAmenitiesEntity : roomEntity.getRoomVsAmenitiesEntities()) {
+							amenitiesModels.add(amenitiesConverter.entityToModel(roomVsAmenitiesEntity.getAmenitiesEntity()));
+						}
 					}
 				}
 			}
@@ -281,124 +285,126 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 			System.err.println("propertyEntity.getRoomEntities().size() ==>> "+propertyEntity.getRoomEntities().size());
 			for(RoomEntity roomEntity :propertyEntity.getRoomEntities()) {
 				System.err.println("roomEntity ==>> "+roomEntity);
-				// Price calculation
-				if (numOfDays >= 30 ) {
-						
-					if(propertyEntity.getStayTypeEntity().getStayTypeId() == Status.INACTIVE.ordinal()) {   //short term (ID = 2)
-				
-						if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.SHARED.name())) { //shared
+				if(Objects.nonNull(roomEntity)) {
+					
+					// Price calculation
+					if (numOfDays >= 30 ) {
 							
-							//Shared night price 
-							price = Double.parseDouble(roomEntity.getSharedBedPricePerNight());
-						} else { //private
-							 //Private night Price
-							price = Double.parseDouble(roomEntity.getRoomPricePerNight());
-						}
-				
-					} else {   //both & long term
-						
-						if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.SHARED.name())) { //shared
-							//Shared Month price 
-							price = (Double.parseDouble(roomEntity.getSharedBedPricePerMonth())/30);
-						} else {   //private
-							 //Private Month Price
-							price = (Double.parseDouble(roomEntity.getRoomPricePerMonth())/30);
-						}
-					}
-				} else {
+						if(propertyEntity.getStayTypeEntity().getStayTypeId() == Status.INACTIVE.ordinal()) {   //short term (ID = 2)
 					
-					if(propertyEntity.getStayTypeEntity().getStayTypeId() == Status.ACTIVE.ordinal()){   //Long term
-						
-						if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.SHARED.name())) { //shared
-							//Shared Month price 
-							price = (Double.parseDouble(roomEntity.getSharedBedPricePerMonth())/30);
-						} else { //private
-							 //Private Month Price
-							price = (Double.parseDouble(roomEntity.getRoomPricePerMonth())/30);
+							if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.SHARED.name())) { //shared
+								
+								//Shared night price 
+								price = Double.parseDouble(roomEntity.getSharedBedPricePerNight());
+							} else { //private
+								 //Private night Price
+								price = Double.parseDouble(roomEntity.getRoomPricePerNight());
+							}
+					
+						} else {   //both & long term
+							
+							if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.SHARED.name())) { //shared
+								//Shared Month price 
+								price = (Double.parseDouble(roomEntity.getSharedBedPricePerMonth())/30);
+							} else {   //private
+								 //Private Month Price
+								price = (Double.parseDouble(roomEntity.getRoomPricePerMonth())/30);
+							}
 						}
-				
-					} else {   //both & Short term
+					} else {
 						
-						if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.SHARED.name())) { //shared
-							//Shared Night price 
-							price = Double.parseDouble(roomEntity.getSharedBedPricePerNight());
-						} else {   //private
-							 //Private Night Price
-							price = Double.parseDouble(roomEntity.getRoomPricePerNight());
-						}
-					}				
-				}
-				
-				System.out.println("price ==>> "+price);
-				System.err.println("roomEntity.getOraPercentage() ==>> "+roomEntity.getOraPercentage());
-				System.out.println("totalPrice before ==>> "+totalPrice);
-				totalPrice = totalPrice + price + (Double.parseDouble(roomEntity.getOraPercentage()) * price / 100);
-				System.err.println("totalPrice after including OraPercentage ==>> "+totalPrice); 
-				
-				// Discount Section
-				Double hostDiscount = 0.0D;
-				Double oraDiscount = 0.0D;
-				Double priceDropDiscount = 0.0D;
-				
-				// Check Pricedrop if any
-				if(Util.getDateDiff1(filterCiteriaModel.getCheckInDate()) == 0) { // Current Date
-					if(!CollectionUtils.isEmpty(propertyEntity.getPropertyVsPriceDropEntities())) { // Price Drop Present
-						int hourDifference = Util.getMinuteDiff(Util.getCurrentDate() + " " +propertyEntity.getCheckinTime()) / 60;
-						for(int i = 0; i< propertyEntity.getPropertyVsPriceDropEntities().size(); i++) {
-							PropertyVsPriceDropEntity propertyVsPriceDropEntity = propertyEntity.getPropertyVsPriceDropEntities().get(i);
-							if(hourDifference <= Integer.parseInt(propertyVsPriceDropEntity.getPriceDropEntity().getAfterTime())) {
-								if(i == 0) { // First Condition
-									priceDropDiscount = Double.parseDouble(propertyVsPriceDropEntity.getPercentage()) * price / 100;
-									break;
-								} else {
-									propertyVsPriceDropEntity = propertyEntity.getPropertyVsPriceDropEntities().get(i -1);
-									priceDropDiscount = Double.parseDouble(propertyVsPriceDropEntity.getPercentage()) * price / 100;
-									break;
+						if(propertyEntity.getStayTypeEntity().getStayTypeId() == Status.ACTIVE.ordinal()){   //Long term
+							
+							if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.SHARED.name())) { //shared
+								//Shared Month price 
+								price = (Double.parseDouble(roomEntity.getSharedBedPricePerMonth())/30);
+							} else { //private
+								 //Private Month Price
+								price = (Double.parseDouble(roomEntity.getRoomPricePerMonth())/30);
+							}
+					
+						} else {   //both & Short term
+							
+							if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.SHARED.name())) { //shared
+								//Shared Night price 
+								price = Double.parseDouble(roomEntity.getSharedBedPricePerNight());
+							} else {   //private
+								 //Private Night Price
+								price = Double.parseDouble(roomEntity.getRoomPricePerNight());
+							}
+						}				
+					}
+					
+					System.out.println("price ==>> "+price);
+					System.err.println("roomEntity.getOraPercentage() ==>> "+roomEntity.getOraPercentage());
+					System.out.println("totalPrice before ==>> "+totalPrice);
+					totalPrice = totalPrice + price + (Double.parseDouble(roomEntity.getOraPercentage()) * price / 100);
+					System.err.println("totalPrice after including OraPercentage ==>> "+totalPrice); 
+					
+					// Discount Section
+					Double hostDiscount = 0.0D;
+					Double oraDiscount = 0.0D;
+					Double priceDropDiscount = 0.0D;
+					
+					// Check Pricedrop if any
+					if(Util.getDateDiff1(filterCiteriaModel.getCheckInDate()) == 0) { // Current Date
+						if(!CollectionUtils.isEmpty(propertyEntity.getPropertyVsPriceDropEntities())) { // Price Drop Present
+							int hourDifference = Util.getMinuteDiff(Util.getCurrentDate() + " " +propertyEntity.getCheckinTime()) / 60;
+							for(int i = 0; i< propertyEntity.getPropertyVsPriceDropEntities().size(); i++) {
+								PropertyVsPriceDropEntity propertyVsPriceDropEntity = propertyEntity.getPropertyVsPriceDropEntities().get(i);
+								if(hourDifference <= Integer.parseInt(propertyVsPriceDropEntity.getPriceDropEntity().getAfterTime())) {
+									if(i == 0) { // First Condition
+										priceDropDiscount = Double.parseDouble(propertyVsPriceDropEntity.getPercentage()) * price / 100;
+										break;
+									} else {
+										propertyVsPriceDropEntity = propertyEntity.getPropertyVsPriceDropEntities().get(i -1);
+										priceDropDiscount = Double.parseDouble(propertyVsPriceDropEntity.getPercentage()) * price / 100;
+										break;
+									}
 								}
 							}
 						}
-					}
-				} else {
-					// Host Discount if any
-					if (numOfDays >= 7 && numOfDays < 30) { // Weekly
-						
-						hostDiscount = Double.parseDouble(roomEntity.getHostDiscountWeekly()) * price / 100;
-						
-					} else if(numOfDays >= 30) { // Monthly
-						
-						if (!StringUtils.isBlank(roomEntity.getHostDiscountMonthly())) { // Check if monthly present
-							hostDiscount = Double.parseDouble(roomEntity.getHostDiscountMonthly()) * price / 100;
-						} else if (!StringUtils.isBlank(roomEntity.getHostDiscountWeekly())) { // otherwise calculate with weekly
+					} else {
+						// Host Discount if any
+						if (numOfDays >= 7 && numOfDays < 30) { // Weekly
+							
 							hostDiscount = Double.parseDouble(roomEntity.getHostDiscountWeekly()) * price / 100;
+							
+						} else if(numOfDays >= 30) { // Monthly
+							
+							if (!StringUtils.isBlank(roomEntity.getHostDiscountMonthly())) { // Check if monthly present
+								hostDiscount = Double.parseDouble(roomEntity.getHostDiscountMonthly()) * price / 100;
+							} else if (!StringUtils.isBlank(roomEntity.getHostDiscountWeekly())) { // otherwise calculate with weekly
+								hostDiscount = Double.parseDouble(roomEntity.getHostDiscountWeekly()) * price / 100;
+							}
 						}
-					}
-					
-					// Room Vs ORA Discount
-					// Percentage
-					if (!StringUtils.isBlank(roomEntity.getOraDiscountPercentage())) {
-						oraDiscount = Double.parseDouble(roomEntity.getOraDiscountPercentage()) * price / 100;
-					}
-					
-					// Offer
-					if(!CollectionUtils.isEmpty(roomEntity.getRoomVsOfferEntities())) {
-						for(RoomVsOfferEntity roomVsOfferEntity : roomEntity.getRoomVsOfferEntities()) {
-							if(Objects.nonNull(roomVsOfferEntity)) {
-								if(Objects.nonNull(roomVsOfferEntity.getOfferEntity())) {
-									offerEntities.add(roomVsOfferEntity.getOfferEntity());
+						
+						// Room Vs ORA Discount
+						// Percentage
+						if (!StringUtils.isBlank(roomEntity.getOraDiscountPercentage())) {
+							oraDiscount = Double.parseDouble(roomEntity.getOraDiscountPercentage()) * price / 100;
+						}
+						
+						// Offer
+						if(!CollectionUtils.isEmpty(roomEntity.getRoomVsOfferEntities())) {
+							for(RoomVsOfferEntity roomVsOfferEntity : roomEntity.getRoomVsOfferEntities()) {
+								if(Objects.nonNull(roomVsOfferEntity)) {
+									if(Objects.nonNull(roomVsOfferEntity.getOfferEntity())) {
+										offerEntities.add(roomVsOfferEntity.getOfferEntity());
+									}
 								}
 							}
 						}
+						
 					}
 					
+					System.out.println("priceDropDiscount ==>> "+priceDropDiscount);
+					System.err.println("hostDiscount ==>> "+hostDiscount);
+					System.out.println("oraDiscount ==>> "+oraDiscount);
+					System.err.println("discountedPrice before ==>> "+discountedPrice);
+					discountedPrice = discountedPrice + hostDiscount + oraDiscount + priceDropDiscount;
+					System.out.println("discountedPrice after deduction from totalPrice ==>> "+discountedPrice);
 				}
-				
-				System.out.println("priceDropDiscount ==>> "+priceDropDiscount);
-				System.err.println("hostDiscount ==>> "+hostDiscount);
-				System.out.println("oraDiscount ==>> "+oraDiscount);
-				System.err.println("discountedPrice before ==>> "+discountedPrice);
-				discountedPrice = discountedPrice + hostDiscount + oraDiscount + priceDropDiscount;
-				System.out.println("discountedPrice after deduction from totalPrice ==>> "+discountedPrice);
-				
 			}
 		}
 		
@@ -456,9 +462,9 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		System.out.println("Final discountedPrice ==>> "+discountedPrice);
 		//totalPrice = totalPrice * numOfDays;
 		//discountedPrice = discountedPrice * numOfDays;
-		prices.add(String.valueOf(totalPrice));
-		prices.add(String.valueOf(discountedPrice));
-		prices.add(String.valueOf(offerPrice));
+		prices.add(String.valueOf(Math.round(totalPrice * 100D) / 100D));
+		prices.add(String.valueOf(Math.round(discountedPrice * 100D) / 100D));
+		prices.add(String.valueOf(Math.round(offerPrice * 100D) / 100D));
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("priceCalculation -- END");
@@ -493,18 +499,18 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 				// Calculate Rating
 				Map<String, String> ratingTypes = new LinkedHashMap<>();
 				for(UserReviewModel userReviewModel : userReviewModels) {
-					if(!CollectionUtils.isEmpty(userReviewModel.getBookingVsRatingModels())) {
-						for(BookingVsRatingModel bookingVsRatingModel : userReviewModel.getBookingVsRatingModels()) {
+					if(!CollectionUtils.isEmpty(userReviewModel.getBookingVsRatings())) {
+						for(BookingVsRatingModel bookingVsRatingModel : userReviewModel.getBookingVsRatings()) {
 							if(ratingTypes.isEmpty()) { // First Time
-								ratingTypes.put(bookingVsRatingModel.getRatingModel().getRatingId(), bookingVsRatingModel.getRating());
+								ratingTypes.put(bookingVsRatingModel.getRatings().getRatingId(), bookingVsRatingModel.getRating());
 							} else {
 								
-								String reviews = ratingTypes.get(bookingVsRatingModel.getRatingModel().getRatingId());
+								String reviews = ratingTypes.get(bookingVsRatingModel.getRatings().getRatingId());
 								if (StringUtils.isBlank(reviews)) { // No Such Rating ID Found
-									ratingTypes.put(bookingVsRatingModel.getRatingModel().getRatingId(), bookingVsRatingModel.getRating());
+									ratingTypes.put(bookingVsRatingModel.getRatings().getRatingId(), bookingVsRatingModel.getRating());
 								} else {
 									reviews = String.valueOf(Long.parseLong(reviews) + Long.parseLong(bookingVsRatingModel.getRating()));
-									ratingTypes.put(bookingVsRatingModel.getRatingModel().getRatingId(), reviews);
+									ratingTypes.put(bookingVsRatingModel.getRatings().getRatingId(), reviews);
 								}
 							}
 						}
@@ -574,7 +580,7 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		}
 		
 		boolean flag = false;
-		if(Util.getDayDiff(filterCiteriaModel.getCheckInDate(), propertyEntity.getStartDate()) >= 0 && Util.getDayDiff(filterCiteriaModel.getCheckOutDate(), propertyEntity.getEndDate()) >= 0) {
+		if(Util.getDayDiff(filterCiteriaModel.getCheckInDate(), propertyEntity.getStartDate()) <= 0 && Util.getDayDiff(filterCiteriaModel.getCheckOutDate(), propertyEntity.getEndDate()) >= 0) {
 			flag = true;
 		}
 		
@@ -591,7 +597,7 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 			logger.info("filterBycheckInDate -- START");
 		}
 		
-		boolean flag = true;
+		boolean flag = false;
 		
 		try {
 			BookingModel bookingModel = new BookingModel();
@@ -648,11 +654,11 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 				}
 				flag = true;
 			} else {
-				 //TODO Delete the rooms from PropertyEntity which are already booked
-				List<BookingVsRoomModel> bookingVsRoomModels = new ArrayList<BookingVsRoomModel>();
+				 // Delete the rooms from PropertyEntity which are already booked
+				List<BookingVsRoomModel> bookingVsRoomModels = new ArrayList<>();
 				for(BookingModel bookingModel2 : bookingModels) {
-					if(Objects.nonNull(bookingModel2)) {
-						bookingVsRoomModels.addAll(bookingModel2.getBookingVsRoomModels());
+					if(Objects.nonNull(bookingModel2) && !CollectionUtils.isEmpty(bookingModel2.getBookingVsRooms())) {
+						bookingVsRoomModels.addAll(bookingModel2.getBookingVsRooms());
 					}
 				}
 				
@@ -676,12 +682,13 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 						}
 					}
 					
-					List<RoomEntity> roomEntities = new ArrayList<>();
+					Set<RoomEntity> roomEntities = new HashSet<>();
 					int roomRequired = filterCiteriaModel.getRoomModels().size();
 					System.err.println("roomRequired ==>> "+roomRequired);
 					int bedRequired = Integer.parseInt(filterCiteriaModel.getRoomModels().get(0).getNoOfGuest());
-					System.err.println("bedRequired ==>> "+bedRequired);
+					System.out.println("bedRequired ==>> "+bedRequired);
 					if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
+						int count = 0;
 						for(RoomEntity roomEntity :propertyEntity.getRoomEntities()) {
 							
 							if(roomEntity.getStatus() == Status.ACTIVE.ordinal()) { // Fetching only ACTIVE Rooms
@@ -691,9 +698,37 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 									
 									if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.SHARED.name())) { //shared
 										
+										int maxBedBooked = 0;
+										List<BookingVsRoomModel> roomBooked = roomByOraName.get(roomEntity.getOraRoomName());
+										for(BookingVsRoomModel bookingVsRoomModel : roomBooked) {
+											if(maxBedBooked < Integer.parseInt(bookingVsRoomModel.getNumOfSharedBed())) {
+												maxBedBooked = Integer.parseInt(bookingVsRoomModel.getNumOfSharedBed());
+											}
+										}
+										System.out.println("maxBedBooked ==>> "+maxBedBooked);
+										if(Integer.parseInt(roomEntity.getNumOfBed()) <= bedRequired && maxBedBooked <= bedRequired) {
+											roomEntities.add(roomEntity);
+											propertyEntity.setRoomEntities(null); // Delete All Rooms
+											List<RoomEntity> listRoomEntities = new ArrayList<>(roomEntities);
+											propertyEntity.setRoomEntities(listRoomEntities); // Insert Available Rooms
+											flag = true;
+											break;
+										} else {
+											roomEntities.add(roomEntity);
+											bedRequired = bedRequired - (Integer.parseInt(roomEntity.getNumOfBed()) - maxBedBooked);
+											if(bedRequired <= 0) {
+												roomEntities.add(roomEntity);
+												propertyEntity.setRoomEntities(null); // Delete All Rooms
+												List<RoomEntity> listRoomEntities = new ArrayList<>(roomEntities);
+												propertyEntity.setRoomEntities(listRoomEntities); // Insert Available Rooms
+												flag = true;
+												break;
+											}
+											
+										}
 										
 									} else { //private
-										
+										propertyEntity.getRoomEntities().set(count, null); // S
 									}
 								} else { // KEY NOT Present that means the room is not booked.
 									if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.SHARED.name())) { //shared
@@ -701,7 +736,9 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 										if(Integer.parseInt(roomEntity.getNumOfBed()) <= bedRequired) {
 											roomEntities.add(roomEntity);
 											propertyEntity.setRoomEntities(null); // Delete All Rooms
-											propertyEntity.setRoomEntities(roomEntities); // Insert Available Rooms
+											List<RoomEntity> listRoomEntities = new ArrayList<>(roomEntities);
+											propertyEntity.setRoomEntities(listRoomEntities); // Insert Available Rooms
+											flag = true;
 											break;
 										} else {
 											roomEntities.add(roomEntity);
@@ -713,12 +750,15 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 											roomEntities.add(roomEntity);
 										} else {
 											propertyEntity.setRoomEntities(null); // Delete All Rooms
-											propertyEntity.setRoomEntities(roomEntities); // Insert Available Rooms
+											List<RoomEntity> listRoomEntities = new ArrayList<>(roomEntities);
+											propertyEntity.setRoomEntities(listRoomEntities); // Insert Available Rooms
+											flag = true;
 											break;
 										}
 									}
 								}
 							}
+							count++;
 						}
 					}
 				}
@@ -747,17 +787,20 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		
 		boolean flag = false;
 		try {
-			BookingModel bookingModel = new BookingModel();
-			bookingModel.setPropertyId(String.valueOf(propertyEntity.getPropertyId()));
-			bookingModel.setCheckinDate(filterCiteriaModel.getCheckInDate());
-			ResponseModel responseModel = restTemplate.postForObject(messageUtil.getBundle("review.server.url") +"fetch-review", bookingModel, ResponseModel.class);
-			List<UserReviewModel> userReviewModels = new ArrayList<>();
+			UserReviewModel userReviewModel2 = new UserReviewModel();
+			userReviewModel2.setPropertyId(String.valueOf(propertyEntity.getPropertyId()));
+			userReviewModel2.setUserTypeId(String.valueOf(Status.INACTIVE.ordinal()));
+			ResponseModel responseModel = restTemplate.postForObject(messageUtil.getBundle("review.server.url") +"fetch-review", userReviewModel2, ResponseModel.class);
 			Gson gson = new Gson();
 			String jsonString = gson.toJson(responseModel.getResponseBody());
-			userReviewModels = (List<UserReviewModel>) gson.fromJson(jsonString, UserReviewModel.class);
+			gson = new Gson();
+			Type listType = new TypeToken<List<UserReviewModel>>() {}.getType();
+			List<UserReviewModel> userReviewModels = gson.fromJson(jsonString, listType);
+			
 			if (logger.isInfoEnabled()) {
 				logger.info("userReviewModels ==>> "+userReviewModels);
 			}
+			System.err.println("userReviewModels ==>> "+userReviewModels);
 			
 			if(Objects.nonNull(userReviewModels) && !CollectionUtils.isEmpty(userReviewModels)) {
 				List<String> ratingsInput = filterCiteriaModel.getRatings();
@@ -765,18 +808,18 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 				// Calculate Rating
 				Map<String, String> ratingTypes = new LinkedHashMap<>();
 				for(UserReviewModel userReviewModel : userReviewModels) {
-					if(!CollectionUtils.isEmpty(userReviewModel.getBookingVsRatingModels())) {
-						for(BookingVsRatingModel bookingVsRatingModel : userReviewModel.getBookingVsRatingModels()) {
+					if(!CollectionUtils.isEmpty(userReviewModel.getBookingVsRatings())) {
+						for(BookingVsRatingModel bookingVsRatingModel : userReviewModel.getBookingVsRatings()) {
 							if(ratingTypes.isEmpty()) { // First Time
-								ratingTypes.put(bookingVsRatingModel.getRatingModel().getRatingId(), bookingVsRatingModel.getRating());
+								ratingTypes.put(bookingVsRatingModel.getRatings().getRatingId(), bookingVsRatingModel.getRating());
 							} else {
 								
-								String reviews = ratingTypes.get(bookingVsRatingModel.getRatingModel().getRatingId());
+								String reviews = ratingTypes.get(bookingVsRatingModel.getRatings().getRatingId());
 								if (StringUtils.isBlank(reviews)) { // No Such Rating ID Found
-									ratingTypes.put(bookingVsRatingModel.getRatingModel().getRatingId(), bookingVsRatingModel.getRating());
+									ratingTypes.put(bookingVsRatingModel.getRatings().getRatingId(), bookingVsRatingModel.getRating());
 								} else {
 									reviews = String.valueOf(Long.parseLong(reviews) + Long.parseLong(bookingVsRatingModel.getRating()));
-									ratingTypes.put(bookingVsRatingModel.getRatingModel().getRatingId(), reviews);
+									ratingTypes.put(bookingVsRatingModel.getRatings().getRatingId(), reviews);
 								}
 							}
 						}
@@ -822,9 +865,11 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		Set<String> amenitiesModels = new LinkedHashSet<>();
 		if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
 			for(RoomEntity roomEntity : propertyEntity.getRoomEntities()) {
-				if(!CollectionUtils.isEmpty(roomEntity.getRoomVsAmenitiesEntities())) {
-					for(RoomVsAmenitiesEntity roomVsAmenitiesEntity : roomEntity.getRoomVsAmenitiesEntities()) {
-						amenitiesModels.add(amenitiesConverter.entityToModel(roomVsAmenitiesEntity.getAmenitiesEntity()).getAminitiesName());
+				if(Objects.nonNull(roomEntity)) {
+					if(!CollectionUtils.isEmpty(roomEntity.getRoomVsAmenitiesEntities())) {
+						for(RoomVsAmenitiesEntity roomVsAmenitiesEntity : roomEntity.getRoomVsAmenitiesEntities()) {
+							amenitiesModels.add(amenitiesConverter.entityToModel(roomVsAmenitiesEntity.getAmenitiesEntity()).getAminitiesId());
+						}
 					}
 				}
 			}
@@ -832,7 +877,7 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		
 		List<Boolean> count = new ArrayList<>();
 		for(AmenitiesModel amenitiesModel : filterCiteriaModel.getAmenitiesModels()) {
-			if(amenitiesModels.contains(amenitiesModel.getAminitiesName())) {
+			if(amenitiesModels.contains(amenitiesModel.getAminitiesId())) {
 				count.add(true);
 			} else {
 				count.add(false);
@@ -866,6 +911,7 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 			Double end = Double.parseDouble(budget.split("-")[1]);
 			if(price >= start && price <= end) {
 				flag = true;
+				break;
 			}
 		}
 		
@@ -903,13 +949,18 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		boolean flag = false;
 		List<Boolean> count = new ArrayList<>();
 		if(!CollectionUtils.isEmpty(propertyEntity.getPropertyVsSpaceRuleEntities())) {
+			Set<Long> spruleId = new LinkedHashSet<>();
 			for(PropertyVsSpaceRuleEntity propertyVsSpaceRuleEntity : propertyEntity.getPropertyVsSpaceRuleEntities()) {
-				for(SpaceRuleModel spaceRuleModel : filterCiteriaModel.getSpaceRuleModels()) {
-					if(StringUtils.equals(spaceRuleModel.getSpruleId(), spaceRuleConverter.entityToModel(propertyVsSpaceRuleEntity.getSpaceRuleEntity()).getSpruleId())) {
-						count.add(true);
-					} else {
-						count.add(false);
-					}
+				if(StringUtils.equals(propertyVsSpaceRuleEntity.getAnswer(), PropertyListConstant.STR_Y)) {
+					spruleId.add(propertyVsSpaceRuleEntity.getSpaceRuleEntity().getSpruleId());
+				}
+			}
+			
+			for(SpaceRuleModel spaceRuleModel : filterCiteriaModel.getSpaceRuleModels()) {
+				if(spruleId.contains(Long.valueOf(spaceRuleModel.getSpruleId()))) {
+					count.add(true);
+				} else {
+					count.add(false);
 				}
 			}
 		}
@@ -933,7 +984,9 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		}
 		
 		boolean flag = false;
-		if(StringUtils.equals(filterCiteriaModel.getPgCategorySex(), String.valueOf(propertyEntity.getSexCategory()))) {
+		if(StringUtils.equals(String.valueOf(propertyEntity.getSexCategory()), String.valueOf(Sex.BOTH))) {
+			flag = true;
+		} else if(StringUtils.equals(filterCiteriaModel.getPgCategorySex(), String.valueOf(propertyEntity.getSexCategory()))) {
 			flag = true;
 		}
 		

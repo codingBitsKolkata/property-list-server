@@ -43,5 +43,5 @@ public class UserReviewModel {
 	private String userTypeId;
 	
 	@JsonProperty("bookingVsRatings")
-	private List<BookingVsRatingModel> bookingVsRatingModels;
+	private List<BookingVsRatingModel> bookingVsRatings;
 }

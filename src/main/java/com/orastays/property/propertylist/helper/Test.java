@@ -15,26 +15,24 @@ public class Test {
 
 		try {
 			Test test = new Test();
-			System.out.println(getMinuteDiff("2019-02-10 23:59:59"));
+			System.out.println(getDayDiff("2019-04-03", "2019-12-31 00:00:01"));
 		} catch (Exception e) {
 
 		}
 
 	}
 
-	public static int getMinuteDiff(String firstDate) {
+	public static int getDayDiff(String firstDate, String endDate) {
 
 		try {
 
-			DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			Date date1 = format.parse(firstDate);
-			String currentDate = format.format(new Date());
-			Date date2 = format.parse(currentDate);
-			Double diffInMillies = (date2.getTime() - date1.getTime()) / (1000.0 * 60);
-
+			Date date2 = format.parse(endDate);
+			Double diffInMillies = (date2.getTime() - date1.getTime()) / (1000.0 * 60 * 60 * 24);
 			return diffInMillies.intValue();
 
-		} catch (Exception e) {
+		} catch (ParseException e) {
 
 			return 0;
 		}

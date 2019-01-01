@@ -27,8 +27,8 @@ public class BookingVsRatingModel extends CommonModel {
 	private String rating;
 	
 	@JsonProperty("ratings")
-	private RatingModel ratingModel;
+	private RatingModel ratings;
 	
 	@JsonProperty("userReview")
-	private UserReviewModel userReviewModel;
+	private UserReviewModel userReview;
 }

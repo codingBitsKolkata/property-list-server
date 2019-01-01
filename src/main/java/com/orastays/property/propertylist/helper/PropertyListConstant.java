@@ -16,4 +16,6 @@ public final class PropertyListConstant {
 	public static final String ROOM_STANDARD_PREMIUM = "PREMIUM";
 	public static final String ROOM_STANDARD_EXPRESS = "EXPRESS";
 	public static final String ROOM_STANDARD_NORMAL = "NORMAL";
+	public static final String STR_Y = "Y";
+	public static final String STR_N = "N";
 }
