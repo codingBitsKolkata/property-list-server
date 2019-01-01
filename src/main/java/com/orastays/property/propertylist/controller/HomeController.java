@@ -11,7 +11,7 @@ import io.swagger.annotations.Api;
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api")
-@Api(value = "Langing Page", tags = "Langing Page")
+@Api(value = "Landing Page", tags = "Landing Page")
 public class HomeController extends BaseController {
 
 	private static final Logger logger = LogManager.getLogger(HomeController.class);
