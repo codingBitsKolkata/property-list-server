@@ -153,10 +153,86 @@ public class PropertyListController extends BaseController {
 			responseModel.setResponseMessage(messageUtil.getBundle(PropertyListConstant.COMMON_ERROR_MESSAGE));
 		}
 		
-		Util.printLog(responseModel, PropertyListConstant.OUTGOING, "List Property", request);
+		Util.printLog(responseModel, PropertyListConstant.OUTGOING, "Fetch Property By Id", request);
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("fetchPropertyById -- END");
+		}
+		
+		if (responseModel.getResponseCode().equals(messageUtil.getBundle(PropertyListConstant.COMMON_SUCCESS_CODE))) {
+			return new ResponseEntity<>(responseModel, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(responseModel, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping(value = "/budgets", produces = "application/json")
+	@ApiOperation(value = "Budgets", response = ResponseModel.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
+			@ApiResponse(code = 201, message = "Please Try after Sometime!!!") })
+	public ResponseEntity<ResponseModel> budgets() {
+
+		if (logger.isInfoEnabled()) {
+			logger.info("budgets -- START");
+		}
+
+		ResponseModel responseModel = new ResponseModel();
+		Util.printLog(null, PropertyListConstant.INCOMING, "Budgets", request);
+		try {
+			responseModel.setResponseBody(propertyService.budgets());
+			responseModel.setResponseCode(messageUtil.getBundle(PropertyListConstant.COMMON_SUCCESS_CODE));
+			responseModel.setResponseMessage(messageUtil.getBundle(PropertyListConstant.COMMON_SUCCESS_MESSAGE));
+			
+		} catch (Exception e) {
+			if (logger.isInfoEnabled()) {
+				logger.info("Exception in Budgets -- "+Util.errorToString(e));
+			}
+			responseModel.setResponseCode(messageUtil.getBundle(PropertyListConstant.COMMON_ERROR_CODE));
+			responseModel.setResponseMessage(messageUtil.getBundle(PropertyListConstant.COMMON_ERROR_MESSAGE));
+		}
+		
+		Util.printLog(responseModel, PropertyListConstant.OUTGOING, "Budgets", request);
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("budgets -- END");
+		}
+		
+		if (responseModel.getResponseCode().equals(messageUtil.getBundle(PropertyListConstant.COMMON_SUCCESS_CODE))) {
+			return new ResponseEntity<>(responseModel, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(responseModel, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@GetMapping(value = "/ratings", produces = "application/json")
+	@ApiOperation(value = "Ratings", response = ResponseModel.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
+			@ApiResponse(code = 201, message = "Please Try after Sometime!!!") })
+	public ResponseEntity<ResponseModel> ratings() {
+
+		if (logger.isInfoEnabled()) {
+			logger.info("fetchPropertyById -- START");
+		}
+
+		ResponseModel responseModel = new ResponseModel();
+		Util.printLog(null, PropertyListConstant.INCOMING, "Ratings", request);
+		try {
+			responseModel.setResponseBody(propertyService.ratings());
+			responseModel.setResponseCode(messageUtil.getBundle(PropertyListConstant.COMMON_SUCCESS_CODE));
+			responseModel.setResponseMessage(messageUtil.getBundle(PropertyListConstant.COMMON_SUCCESS_MESSAGE));
+			
+		} catch (Exception e) {
+			if (logger.isInfoEnabled()) {
+				logger.info("Exception in Ratings -- "+Util.errorToString(e));
+			}
+			responseModel.setResponseCode(messageUtil.getBundle(PropertyListConstant.COMMON_ERROR_CODE));
+			responseModel.setResponseMessage(messageUtil.getBundle(PropertyListConstant.COMMON_ERROR_MESSAGE));
+		}
+		
+		Util.printLog(responseModel, PropertyListConstant.OUTGOING, "Ratings", request);
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("ratings -- END");
 		}
 		
 		if (responseModel.getResponseCode().equals(messageUtil.getBundle(PropertyListConstant.COMMON_SUCCESS_CODE))) {

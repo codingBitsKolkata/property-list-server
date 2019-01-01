@@ -16,4 +16,8 @@ public interface PropertyListService {
 
 	PropertyModel fetchPropertyById(String propertyId);
 
+	Object budgets();
+
+	Object ratings();
+
 }

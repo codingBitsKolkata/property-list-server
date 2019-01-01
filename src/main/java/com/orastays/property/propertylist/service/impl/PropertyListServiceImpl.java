@@ -1049,4 +1049,45 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		
 		return propertyConverter.entityToModel(propertyDAO.find(Long.valueOf(propertyId)));
 	}
+
+	@Override
+	public Object budgets() {
+
+		if (logger.isInfoEnabled()) {
+			logger.info("budgets -- START");
+		}
+		
+		Map<String, String> budgets = new LinkedHashMap<>();
+		budgets.put(messageUtil.getBundle("budget.key1"), messageUtil.getBundle("budget.value1"));
+		budgets.put(messageUtil.getBundle("budget.key2"), messageUtil.getBundle("budget.value2"));
+		budgets.put(messageUtil.getBundle("budget.key3"), messageUtil.getBundle("budget.value3"));
+		budgets.put(messageUtil.getBundle("budget.key4"), messageUtil.getBundle("budget.value4"));
+		budgets.put(messageUtil.getBundle("budget.key5"), messageUtil.getBundle("budget.value5"));
+		budgets.put(messageUtil.getBundle("budget.key6"), messageUtil.getBundle("budget.value6"));
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("budgets -- END");
+		}
+		
+		return budgets;
+	}
+
+	@Override
+	public Object ratings() {
+
+		if (logger.isInfoEnabled()) {
+			logger.info("ratings -- START");
+		}
+		
+		Map<String, String> ratings = new LinkedHashMap<>();
+		ratings.put(messageUtil.getBundle("rating.key1"), messageUtil.getBundle("rating.value1"));
+		ratings.put(messageUtil.getBundle("rating.key2"), messageUtil.getBundle("rating.value2"));
+		ratings.put(messageUtil.getBundle("rating.key3"), messageUtil.getBundle("rating.value3"));
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("ratings -- END");
+		}
+		
+		return ratings;
+	}
 }
