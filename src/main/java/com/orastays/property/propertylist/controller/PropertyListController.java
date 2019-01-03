@@ -42,22 +42,7 @@ public class PropertyListController extends BaseController {
 			@ApiResponse(code = 201, message = "Please Try after Sometime!!!"),
 			@ApiResponse(code = 320, message = "Session expires!!! Please Login to continue..."),
 			@ApiResponse(code = 321, message = "Please give User Token"),
-			@ApiResponse(code = 322, message = "Invalid user Token"),
-			@ApiResponse(code = 1900, message = "Please provide latitude"),
-			@ApiResponse(code = 1901, message = "Invalid latitude"),
-			@ApiResponse(code = 1902, message = "Please provide longitude"),
-			@ApiResponse(code = 1903, message = "Invalid longitude"),
-			@ApiResponse(code = 1904, message = "Please Enter CheckIn Date"),
-			@ApiResponse(code = 1905, message = "Invalid CheckIn Date"),
-			@ApiResponse(code = 1906, message = "Please Enter CheckOut Date"),
-			@ApiResponse(code = 1907, message = "Invalid CheckOut Date"),
-			@ApiResponse(code = 1908, message = "Please select property type id"),
-			@ApiResponse(code = 1909, message = "Invalid property type id"),
-			@ApiResponse(code = 1910, message = "Please Select Room Details"),
-			@ApiResponse(code = 1911, message = "Please give No Of Adult"),
-			@ApiResponse(code = 1912, message = "Invalid No Of Adult"),
-			@ApiResponse(code = 1913, message = "Invalid No Of Child"),
-			@ApiResponse(code = 1914, message = "Checkout Date Should Be Greater Than Checkin Date") })
+			@ApiResponse(code = 322, message = "Invalid user Token") })
 	public ResponseEntity<ResponseModel> fetchProperties(@RequestBody FilterCiteriaModel filterCiteriaModel) {
 
 		if (logger.isInfoEnabled()) {
