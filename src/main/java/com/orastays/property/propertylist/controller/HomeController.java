@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +32,7 @@ public class HomeController extends BaseController {
 
 	private static final Logger logger = LogManager.getLogger(HomeController.class);
 	
-	@PostMapping(value = "/fetch-properties-by-type", produces = "application/json")
+	@GetMapping(value = "/fetch-properties-by-type", produces = "application/json")
 	@ApiOperation(value = "Fetch Properties By Type", response = ResponseModel.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
 			@ApiResponse(code = 201, message = "Please Try after Sometime!!!"),
