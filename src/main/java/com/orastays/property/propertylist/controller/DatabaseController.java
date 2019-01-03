@@ -16,7 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.orastays.property.propertylist.service.DatabaseService;
 
+import springfox.documentation.annotations.ApiIgnore;
+
 @Controller
+@ApiIgnore
 public class DatabaseController {  
 
 	private static final Logger logger = LogManager.getLogger(DatabaseController.class);

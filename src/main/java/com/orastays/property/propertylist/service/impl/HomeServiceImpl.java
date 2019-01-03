@@ -94,7 +94,8 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 		
 		PropertyListViewModel propertyListViewModel = null;
 		Map<PropertyEntity, Integer> ratingCount = new LinkedHashMap<>();
-		for(PropertyEntity propertyEntity : propertyEntities) {
+		propertyEntities.parallelStream().forEach(propertyEntity -> {
+		//for(PropertyEntity propertyEntity : propertyEntities) {
 			try {
 				UserReviewModel userReviewModel2 = new UserReviewModel();
 				userReviewModel2.setPropertyId(String.valueOf(propertyEntity.getPropertyId()));
@@ -148,7 +149,7 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 					logger.info("Exception in findByRating -- "+Util.errorToString(e));
 				}
 			}
-		}
+		});
 		
 		PropertyEntity propertyEntity = null;
 		RoomEntity roomEntity = null;
@@ -158,7 +159,7 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
             	propertyEntity = entry.getKey();
             	if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
 					for(RoomEntity roomEntity2 :propertyEntity.getRoomEntities()) {
-						if(roomEntity.getStatus() == Status.ACTIVE.ordinal()) { // Fetching only ACTIVE Rooms
+						if(roomEntity2.getStatus() == Status.ACTIVE.ordinal()) { // Fetching only ACTIVE Rooms
 							roomEntity = roomEntity2; // Considering First Room
 							break;
 						}
@@ -187,7 +188,8 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 		
 		PropertyListViewModel propertyListViewModel = null;
 		Map<PropertyEntity, Integer> bookingCount = new LinkedHashMap<>();
-		for(PropertyEntity propertyEntity : propertyEntities) {
+		propertyEntities.parallelStream().forEach(propertyEntity -> {
+			//for(PropertyEntity propertyEntity : propertyEntities) {
 			try {
 				BookingModel bookingModel = new BookingModel();
 				bookingModel.setPropertyId(String.valueOf(propertyEntity.getPropertyId()));
@@ -203,8 +205,10 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 				}
 				System.err.println("bookingModels ==>> "+bookingModels);
 				
-				if (CollectionUtils.isEmpty(bookingModels)) {
+				if (!CollectionUtils.isEmpty(bookingModels)) {
 					bookingCount.put(propertyEntity, bookingModels.size());
+				} else {
+					bookingCount.put(propertyEntity, 0);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -212,7 +216,7 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 					logger.info("Exception in findByBooking -- "+Util.errorToString(e));
 				}
 			}
-		}
+		});
 		
 		PropertyEntity propertyEntity = null;
 		RoomEntity roomEntity = null;
@@ -222,7 +226,7 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
             	propertyEntity = entry.getKey();
             	if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
 					for(RoomEntity roomEntity2 :propertyEntity.getRoomEntities()) {
-						if(roomEntity.getStatus() == Status.ACTIVE.ordinal()) { // Fetching only ACTIVE Rooms
+						if(roomEntity2.getStatus() == Status.ACTIVE.ordinal()) { // Fetching only ACTIVE Rooms
 							roomEntity = roomEntity2; // Considering First Room
 							break;
 						}
@@ -251,7 +255,8 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 		
 		PropertyListViewModel propertyListViewModel = null;
 		Map<RoomEntity, Integer> ammenitiesCount = new LinkedHashMap<>();
-		for(PropertyEntity propertyEntity : propertyEntities) {
+		propertyEntities.parallelStream().forEach(propertyEntity -> {
+			//for(PropertyEntity propertyEntity : propertyEntities) {
 			if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
 				for(RoomEntity roomEntity : propertyEntity.getRoomEntities()) {
 					if(Objects.nonNull(roomEntity)) {
@@ -261,7 +266,7 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 					}
 				}
 			}
-		}
+		});
 		
 		PropertyEntity propertyEntity = null;
 		RoomEntity roomEntity = null;
@@ -294,7 +299,8 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 		
 		PropertyListViewModel propertyListViewModel = new PropertyListViewModel();
 		Map<RoomEntity, Double> priceCount = new LinkedHashMap<>();
-		for(PropertyEntity propertyEntity : propertyEntities) {
+		propertyEntities.parallelStream().forEach(propertyEntity -> {
+			//for(PropertyEntity propertyEntity : propertyEntities) {
 			if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
 				for(RoomEntity roomEntity : propertyEntity.getRoomEntities()) {
 					if(Objects.nonNull(roomEntity)) {
@@ -330,13 +336,13 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 					}
 				}
 			}
-		}
+		});
 		
 		PropertyEntity propertyEntity = null;
 		RoomEntity roomEntity = null;
-		Double maxValueInMap = (Collections.max(priceCount.values()));
+		Double minValueInMap = (Collections.min(priceCount.values()));
         for (Entry<RoomEntity, Double> entry : priceCount.entrySet()) {
-            if (entry.getValue() == maxValueInMap) {
+            if (entry.getValue() == minValueInMap) {
             	propertyEntity = entry.getKey().getPropertyEntity();
             	roomEntity = entry.getKey();
             }

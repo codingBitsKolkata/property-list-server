@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.transaction.Transactional;
 
@@ -77,14 +78,17 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 			List<PropertyEntity> propertyEntities = propertyDAO.fetchListBySubCiteria(alliasMap);
 			System.err.println("propertyEntities ==>> "+propertyEntities);
 			if(!CollectionUtils.isEmpty(propertyEntities)) {
-				
-				for(PropertyEntity propertyEntity : propertyEntities) {
+				AtomicBoolean isContinueRating = new AtomicBoolean(false);
+				propertyEntities.parallelStream().forEach(propertyEntity -> {
+					//for(PropertyEntity propertyEntity : propertyEntities) {
+					isContinueRating.set(false);
 					
 					// Filter By Property Start Date and End Date
 					if(filterByPropertyDate(propertyEntity, filterCiteriaModel)) {
 						
 						// Filter by propertyTypeId // Mandatory
 						if (StringUtils.equals(filterCiteriaModel.getPropertyTypeId(), String.valueOf(propertyEntity.getPropertyTypeEntity().getPropertyTypeId()))) {
+							
 							// Filter by location // Mandatory
 							if(filterByLocation(propertyEntity, filterCiteriaModel)) {
 								// Filter by checkInDate // Mandatory
@@ -95,56 +99,57 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 									// Filter By Rating
 									if (!CollectionUtils.isEmpty(filterCiteriaModel.getRatings())) {
 										if (!filterByRating(propertyEntity, filterCiteriaModel)) {
-											continue;
+											isContinueRating.set(true);
 										}
 									}
 									
 									// Filter by amenitiesModels
-									if (!CollectionUtils.isEmpty(filterCiteriaModel.getAmenitiesModels())) {
+									if (!CollectionUtils.isEmpty(filterCiteriaModel.getAmenitiesModels()) && !isContinueRating.get()) {
 										if (!filterByAmmenities(propertyEntity, filterCiteriaModel)) {
-											continue;
+											isContinueRating.set(true);
 										}
 									}
 									
 									
 									// Filter by budgets
-									if(!CollectionUtils.isEmpty(filterCiteriaModel.getBudgets())) {
+									if(!CollectionUtils.isEmpty(filterCiteriaModel.getBudgets()) && !isContinueRating.get()) {
 										if (!filterByBudget(propertyEntity, filterCiteriaModel)) {
-											continue;
+											isContinueRating.set(true);
 										}
 									}
 									
 									
 									// Filter by popularLocations
-									if(!CollectionUtils.isEmpty(filterCiteriaModel.getPopularLocations())) {
+									if(!CollectionUtils.isEmpty(filterCiteriaModel.getPopularLocations()) && !isContinueRating.get()) {
 										if (!filterByPopularLocation(propertyEntity, filterCiteriaModel)) {
-											continue;
+											isContinueRating.set(true);
 										}
 									}
 									
 									
 									// Filter by spaceRuleModels // Couple Friendly, Pet Friendly
-									if(!CollectionUtils.isEmpty(filterCiteriaModel.getSpaceRuleModels())) {
+									if(!CollectionUtils.isEmpty(filterCiteriaModel.getSpaceRuleModels()) && !isContinueRating.get()) {
 										if (!filterBySpaceRule(propertyEntity, filterCiteriaModel)) {
-											continue;
+											isContinueRating.set(true);
 										}
 									}
 									
 									
 									// Filter by pgCategorySexModels // Male/Female
-									if(!StringUtils.isBlank(filterCiteriaModel.getPgCategorySex())) {
+									if(!StringUtils.isBlank(filterCiteriaModel.getPgCategorySex()) && !isContinueRating.get()) {
 										if (!filterBySex(propertyEntity, filterCiteriaModel)) {
-											continue;
+											isContinueRating.set(true);
 										}
 									}
 									
-									propertyListViewModels.add(setPropertyListView(propertyEntity, filterCiteriaModel));
+									if(!isContinueRating.get())
+										propertyListViewModels.add(setPropertyListView(propertyEntity, filterCiteriaModel));
 									
 								} 
 							} 
 						} 
 					}
-				}
+				});
 				
 				// TODO Sorting if any
 			}
