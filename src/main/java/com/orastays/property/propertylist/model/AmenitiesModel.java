@@ -44,6 +44,12 @@ public class AmenitiesModel extends CommonModel {
 
 	@JsonProperty("parentId")
 	private String parentId;
+	
+	@JsonProperty("imgUrl1")
+	private String imgUrl1;
+	
+	@JsonProperty("imgUrl2")
+	private String imgUrl2;
 
 	@JsonProperty("roomVsAmenities")
 	private List<RoomVsAmenitiesModel> roomVsAmenitiesModels;

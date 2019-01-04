@@ -45,6 +45,10 @@ public class SpaceRuleEntity extends CommonEntity {
 	@JsonProperty("ruleName")
 	private String ruleName;
 	
+	@Column(name = "img_url")
+	@JsonProperty("imgUrl")
+	private String imgUrl;
+	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "spaceRuleEntity", cascade = { CascadeType.ALL })
 	@JsonProperty("propertyVsSpaceRules")
 	private List<PropertyVsSpaceRuleEntity> propertyVsSpaceRuleEntities;

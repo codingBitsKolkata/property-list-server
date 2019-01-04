@@ -1,4 +1,5 @@
 package com.orastays.property.propertylist.entity;
+
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -22,7 +23,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = false)
-public class StayTypeEntity  extends CommonEntity {
+public class StayTypeEntity extends CommonEntity {
 
 	private static final long serialVersionUID = -3614599798351715620L;
 
@@ -31,7 +32,7 @@ public class StayTypeEntity  extends CommonEntity {
 	@Column(name = "stay_type_id")
 	@JsonProperty("stayTypeId")
 	private Long stayTypeId;
-	
+
 	@Column(name = "language_id")
 	@JsonProperty("languageId")
 	private Long languageId;
@@ -43,14 +44,14 @@ public class StayTypeEntity  extends CommonEntity {
 	@Column(name = "stay_type_name")
 	@JsonProperty("stayTypeName")
 	private String stayTypeName;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "stayTypeEntity", cascade = { CascadeType.ALL })
 	@JsonProperty("propertys")
 	private List<PropertyEntity> propertyEntities;
-	
+
 	@Override
 	public String toString() {
 		return Long.toString(stayTypeId);
 	}
-	
+
 }

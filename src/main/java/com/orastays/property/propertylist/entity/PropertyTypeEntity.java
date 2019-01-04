@@ -45,6 +45,10 @@ public class PropertyTypeEntity extends CommonEntity {
 	@JsonProperty("name")
 	private String name;
 	
+	@Column(name = "img_url")
+	@JsonProperty("imgUrl")
+	private String imgUrl;
+	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "propertyTypeEntity", cascade = { CascadeType.ALL })
 	@JsonProperty("propertys")
 	private List<PropertyEntity> propertyEntities;

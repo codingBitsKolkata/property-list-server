@@ -30,6 +30,9 @@ public class PropertyTypeModel extends CommonModel {
 	@JsonProperty("name")
 	private String name;
 	
+	@JsonProperty("imgUrl")
+	private String imgUrl;
+	
 	@JsonProperty("property")
 	private List<PropertyModel> propertyModels;
 	

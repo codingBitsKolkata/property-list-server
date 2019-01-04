@@ -18,16 +18,16 @@ public class StayTypeModel extends CommonModel {
 
 	@JsonProperty("stayTypeId")
 	private String stayTypeId;
-	
+
 	@JsonProperty("languageId")
 	private String languageId;
-	
+
 	@JsonProperty("parentId")
 	private String parentId;
-	
+
 	@JsonProperty("stayTypeName")
 	private String stayTypeName;
-	
+
 	@JsonProperty("property")
 	private PropertyModel propertyModel;
 }
