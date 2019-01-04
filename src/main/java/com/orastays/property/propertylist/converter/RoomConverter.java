@@ -15,8 +15,7 @@ import com.orastays.property.propertylist.helper.Util;
 import com.orastays.property.propertylist.model.RoomModel;
 
 @Component
-public class RoomConverter extends CommonConverter
-		implements BaseConverter<RoomEntity, RoomModel> {
+public class RoomConverter extends CommonConverter implements BaseConverter<RoomEntity, RoomModel> {
 
 	
 	private static final long serialVersionUID = -6532505845959859730L;
@@ -53,7 +52,7 @@ public class RoomConverter extends CommonConverter
 		
 		RoomModel roomModel = null;
 		
-		if(Objects.nonNull(e)){
+		if(Objects.nonNull(e) && e.getStatus() == Status.ACTIVE.ordinal()) {
 			roomModel = new RoomModel();
 			roomModel = (RoomModel) Util.transform(modelMapper, e, roomModel);
 			

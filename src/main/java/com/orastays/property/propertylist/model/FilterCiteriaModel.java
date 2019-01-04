@@ -59,4 +59,7 @@ public class FilterCiteriaModel {
 	
 	@JsonProperty("popularLocations")
 	private List<String> popularLocations;
+	
+	@JsonProperty("propertyId")
+	private String propertyId;
 }

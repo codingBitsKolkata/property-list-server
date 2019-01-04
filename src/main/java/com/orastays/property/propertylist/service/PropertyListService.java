@@ -23,4 +23,6 @@ public interface PropertyListService {
 
 	PropertyListViewModel setPropertyListView(PropertyEntity propertyEntity, FilterCiteriaModel filterCiteriaModel);
 
+	PropertyModel fetchPropertyDetails(FilterCiteriaModel filterCiteriaModel) throws FormExceptions;
+
 }

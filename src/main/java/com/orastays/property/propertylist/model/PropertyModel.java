@@ -125,4 +125,13 @@ public class PropertyModel extends CommonModel {
 
 	@JsonProperty("rooms")
 	private List<RoomModel> roomModels;
+	
+	@JsonProperty("totalPrice")
+	private String totalPrice;
+	
+	@JsonProperty("discountedPrice")
+	private String discountedPrice;
+	
+	@JsonProperty("convenienceFee")
+	private String convenienceFee;
 }

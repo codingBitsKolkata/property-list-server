@@ -20,6 +20,7 @@ import com.orastays.property.propertylist.helper.PropertyListConstant;
 import com.orastays.property.propertylist.helper.Util;
 import com.orastays.property.propertylist.model.FilterCiteriaModel;
 import com.orastays.property.propertylist.model.PropertyListViewModel;
+import com.orastays.property.propertylist.model.PropertyModel;
 import com.orastays.property.propertylist.model.ResponseModel;
 import com.orastays.property.propertylist.model.booking.BookingVsRoomModel;
 
@@ -27,6 +28,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -129,6 +131,7 @@ public class PropertyListController extends BaseController {
 	}
 	
 	@GetMapping(value = "/fetch-property-by-id", produces = "application/json")
+	@ApiIgnore
 	@ApiOperation(value = "Fetch Property By Id", response = ResponseModel.class)
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
 			@ApiResponse(code = 201, message = "Please Try after Sometime!!!") })
@@ -233,6 +236,60 @@ public class PropertyListController extends BaseController {
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("ratings -- END");
+		}
+		
+		if (responseModel.getResponseCode().equals(messageUtil.getBundle(PropertyListConstant.COMMON_SUCCESS_CODE))) {
+			return new ResponseEntity<>(responseModel, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(responseModel, HttpStatus.BAD_REQUEST);
+		}
+	}
+	
+	@PostMapping(value = "/fetch-property-details", produces = "application/json")
+	@ApiOperation(value = "Fetch Property Details", response = ResponseModel.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
+			@ApiResponse(code = 201, message = "Please Try after Sometime!!!"),
+			@ApiResponse(code = 320, message = "Session expires!!! Please Login to continue..."),
+			@ApiResponse(code = 321, message = "Please give User Token"),
+			@ApiResponse(code = 322, message = "Invalid user Token") })
+	public ResponseEntity<ResponseModel> fetchPropertyDetails(@RequestBody FilterCiteriaModel filterCiteriaModel) {
+
+		if (logger.isInfoEnabled()) {
+			logger.info("fetchPropertyDetails -- START");
+		}
+
+		ResponseModel responseModel = new ResponseModel();
+		Util.printLog(filterCiteriaModel, PropertyListConstant.INCOMING, "Fetch Property Details", request);
+		try {
+			long startTime = System.currentTimeMillis();
+			PropertyModel propertyModel = propertyService.fetchPropertyDetails(filterCiteriaModel);
+			long elapsedTimeNs = System.currentTimeMillis() - startTime;
+			System.err.println("Total Time Taken ==>> "+(elapsedTimeNs/1000));
+			responseModel.setResponseBody(propertyModel);
+			responseModel.setResponseCode(messageUtil.getBundle(PropertyListConstant.COMMON_SUCCESS_CODE));
+			responseModel.setResponseMessage(messageUtil.getBundle(PropertyListConstant.COMMON_SUCCESS_MESSAGE));
+		} catch (FormExceptions fe) {
+
+			for (Entry<String, Exception> entry : fe.getExceptions().entrySet()) {
+				responseModel.setResponseCode(entry.getKey());
+				responseModel.setResponseMessage(entry.getValue().getMessage());
+				if (logger.isInfoEnabled()) {
+					logger.info("FormExceptions in Fetch Property Details -- "+Util.errorToString(fe));
+				}
+				break;
+			}
+		} catch (Exception e) {
+			if (logger.isInfoEnabled()) {
+				logger.info("Exception in fetchPropertyDetails -- "+Util.errorToString(e));
+			}
+			responseModel.setResponseCode(messageUtil.getBundle(PropertyListConstant.COMMON_ERROR_CODE));
+			responseModel.setResponseMessage(messageUtil.getBundle(PropertyListConstant.COMMON_ERROR_MESSAGE));
+		}
+
+		Util.printLog(responseModel, PropertyListConstant.OUTGOING, "Fetch Property Details", request);
+
+		if (logger.isInfoEnabled()) {
+			logger.info("fetchPropertyDetails -- END");
 		}
 		
 		if (responseModel.getResponseCode().equals(messageUtil.getBundle(PropertyListConstant.COMMON_SUCCESS_CODE))) {

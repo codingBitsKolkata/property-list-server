@@ -107,5 +107,17 @@ public class RoomModel extends CommonModel {
 	
 	@JsonProperty("roomVsOffers")
 	private List<RoomVsOfferModel> roomVsOfferModels;
+	
+	@JsonProperty("oraPrice")
+	private String oraPrice;
+	
+	@JsonProperty("oraDiscount")
+	private String oraDiscount;
+	
+	@JsonProperty("offer")
+	private String offer;
+	
+	@JsonProperty("priceDrop")
+	private String priceDrop;
 
 }
