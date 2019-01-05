@@ -47,6 +47,9 @@ public class AuthorizeUserValidation {
 
 	@Autowired
 	protected HttpServletRequest request;
+	
+	@Autowired
+	protected PropertyListValidation propertyListValidation;
 
 	@Autowired
 	protected PropertyTypeDAO propertyTypeDAO;
@@ -90,15 +93,12 @@ public class AuthorizeUserValidation {
 		Map<String, Exception> exceptions = new LinkedHashMap<>();
 		UserModel userModel = null;
 		try {
-			ResponseModel responseModel = restTemplate.getForObject(
-					messageUtil.getBundle("auth.server.url") + "check-token?userToken=" + userToken,
-					ResponseModel.class);
+			ResponseModel responseModel = restTemplate.getForObject(messageUtil.getBundle("auth.server.url") + "check-token?userToken=" + userToken, ResponseModel.class);
 			Gson gson = new Gson();
 			String jsonString = gson.toJson(responseModel.getResponseBody());
 			userModel = gson.fromJson(jsonString, UserModel.class);
 			if (Objects.isNull(userModel)) {
-				exceptions.put(messageUtil.getBundle("token.invalid.code"),
-						new Exception(messageUtil.getBundle("token.invalid.message")));
+				exceptions.put(messageUtil.getBundle("token.invalid.code"), new Exception(messageUtil.getBundle("token.invalid.message")));
 			}
 
 			if (logger.isInfoEnabled()) {
@@ -107,8 +107,7 @@ public class AuthorizeUserValidation {
 		} catch (Exception e) {
 			e.printStackTrace();
 			// Disabled the below line to pass the Token Validation
-			exceptions.put(messageUtil.getBundle("token.invalid.code"),
-					new Exception(messageUtil.getBundle("token.invalid.message")));
+			exceptions.put(messageUtil.getBundle("token.invalid.code"), new Exception(messageUtil.getBundle("token.invalid.message")));
 		}
 
 		if (exceptions.size() > 0)
@@ -130,15 +129,12 @@ public class AuthorizeUserValidation {
 		Map<String, Exception> exceptions = new LinkedHashMap<>();
 		CommonModel commonModel = null;
 		try {
-			ResponseModel responseModel = restTemplate.getForObject(
-					messageUtil.getBundle("auth.server.url") + "check-language?languageId=" + languageId,
-					ResponseModel.class);
+			ResponseModel responseModel = restTemplate.getForObject( messageUtil.getBundle("auth.server.url") + "check-language?languageId=" + languageId, ResponseModel.class);
 			Gson gson = new Gson();
 			String jsonString = gson.toJson(responseModel.getResponseBody());
 			commonModel = gson.fromJson(jsonString, CommonModel.class);
 			if (Objects.isNull(commonModel)) {
-				exceptions.put(messageUtil.getBundle("language.id.invalid.code"),
-						new Exception(messageUtil.getBundle("language.id.invalid.message")));
+				exceptions.put(messageUtil.getBundle("language.id.invalid.code"), new Exception(messageUtil.getBundle("language.id.invalid.message")));
 			}
 
 			if (logger.isInfoEnabled()) {
@@ -147,8 +143,7 @@ public class AuthorizeUserValidation {
 		} catch (Exception e) {
 			e.printStackTrace();
 			// Disabled the below line to pass the Language Validation
-			exceptions.put(messageUtil.getBundle("language.id.invalid.code"),
-					new Exception(messageUtil.getBundle("language.id.invalid.message")));
+			exceptions.put(messageUtil.getBundle("language.id.invalid.code"), new Exception(messageUtil.getBundle("language.id.invalid.message")));
 		}
 
 		if (exceptions.size() > 0)

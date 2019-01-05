@@ -54,6 +54,7 @@ import com.orastays.property.propertylist.dao.SpecialtiesDAO;
 import com.orastays.property.propertylist.dao.StayTypeDAO;
 import com.orastays.property.propertylist.helper.MessageUtil;
 import com.orastays.property.propertylist.service.PropertyListService;
+import com.orastays.property.propertylist.validation.BookingValidation;
 import com.orastays.property.propertylist.validation.HomeValidation;
 import com.orastays.property.propertylist.validation.PropertyListValidation;
 
@@ -67,12 +68,15 @@ public abstract class BaseServiceImpl {
 
 	@Autowired
 	protected MessageUtil messageUtil;
-
+	
 	@Autowired
 	protected PropertyListValidation propertyListValidation;
 
 	@Autowired
 	protected HomeValidation homeValidation;
+	
+	@Autowired
+	protected BookingValidation bookingValidation;
 
 	@Autowired
 	protected PropertyTypeDAO propertyTypeDAO;

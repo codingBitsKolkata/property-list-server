@@ -134,4 +134,19 @@ public class PropertyModel extends CommonModel {
 	
 	@JsonProperty("convenienceFee")
 	private String convenienceFee;
+	
+	@JsonProperty("convenienceGSTPercentage")
+	private String convenienceGSTPercentage;
+	
+	@JsonProperty("convenienceGSTAmount")
+	private String convenienceGSTAmount;
+	
+	@JsonProperty("gstPercentage")
+	private String gstPercentage;
+	
+	@JsonProperty("amountWithGST")
+	private String amountWithGST;
+	
+	@JsonProperty("amountPayable")
+	private String amountPayable;
 }

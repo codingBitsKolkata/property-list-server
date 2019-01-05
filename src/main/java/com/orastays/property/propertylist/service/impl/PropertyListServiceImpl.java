@@ -46,6 +46,8 @@ import com.orastays.property.propertylist.model.RoomModel;
 import com.orastays.property.propertylist.model.SpaceRuleModel;
 import com.orastays.property.propertylist.model.booking.BookingModel;
 import com.orastays.property.propertylist.model.booking.BookingVsRoomModel;
+import com.orastays.property.propertylist.model.booking.ConvenienceModel;
+import com.orastays.property.propertylist.model.booking.GstSlabModel;
 import com.orastays.property.propertylist.model.review.BookingVsRatingModel;
 import com.orastays.property.propertylist.model.review.UserReviewModel;
 import com.orastays.property.propertylist.service.PropertyListService;
@@ -1166,8 +1168,60 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 							List<String> prices = priceCalculation(propertyEntity, filterCiteriaModel);
 							propertyModel.setTotalPrice(prices.get(0));
 							propertyModel.setDiscountedPrice(prices.get(1));
-							// TODO set Convenience Fee
-							propertyModel.setConvenienceFee("0");
+							
+							// Calculate Convenience
+							try {
+								ResponseModel responseModel = restTemplate.getForObject(messageUtil.getBundle("booking.server.url") +"get-convenience", ResponseModel.class);
+								Gson gson = new Gson();
+								String jsonString = gson.toJson(responseModel.getResponseBody());
+								ConvenienceModel convenienceModel = gson.fromJson(jsonString, ConvenienceModel.class);
+								
+								if (logger.isInfoEnabled()) {
+									logger.info("convenienceModel ==>> "+convenienceModel);
+								}
+								System.err.println("convenienceModel ==>> "+convenienceModel);
+								
+								if (Objects.nonNull(convenienceModel)) {
+									propertyModel.setConvenienceFee(convenienceModel.getAmount());
+									propertyModel.setConvenienceGSTPercentage(convenienceModel.getGstPercentage());
+									propertyModel.setConvenienceGSTAmount(String.valueOf(Math.round(Double.parseDouble(convenienceModel.getAmount()) * Double.parseDouble(convenienceModel.getGstPercentage()) / 100 * 100D) / 100D));
+								}
+							} catch (Exception e) {
+								if (logger.isInfoEnabled()) {
+									logger.info("Exception in getConvenience -- "+Util.errorToString(e));
+								}
+								propertyModel.setConvenienceFee("0");
+								propertyModel.setConvenienceGSTPercentage("0");
+								propertyModel.setConvenienceGSTAmount("0");
+							}
+							
+							// Calculate GST
+							try {
+								String amount = String.valueOf(Math.round(Double.parseDouble(propertyModel.getTotalPrice()) - Double.parseDouble(propertyModel.getDiscountedPrice()))* 100D / 100D);
+								System.err.println("amount ==>> "+amount);
+								propertyModel.setAmountPayable(amount);
+								ResponseModel responseModel = restTemplate.getForObject(messageUtil.getBundle("booking.server.url") +"get-gst-price?amount="+amount, ResponseModel.class);
+								Gson gson = new Gson();
+								String jsonString = gson.toJson(responseModel.getResponseBody());
+								GstSlabModel gstSlabModel = gson.fromJson(jsonString, GstSlabModel.class);
+								
+								if (logger.isInfoEnabled()) {
+									logger.info("gstSlabModel ==>> "+gstSlabModel);
+								}
+								System.err.println("gstSlabModel ==>> "+gstSlabModel);
+								
+								if (Objects.nonNull(gstSlabModel)) {
+									propertyModel.setGstPercentage(gstSlabModel.getPercentage());
+									propertyModel.setAmountWithGST(String.valueOf(Math.round(Double.parseDouble(amount) * Double.parseDouble(gstSlabModel.getPercentage()) / 100 * 100D) / 100D));
+								}
+							} catch (Exception e) {
+								if (logger.isInfoEnabled()) {
+									logger.info("Exception in getGSTPrice -- "+Util.errorToString(e));
+								}
+								propertyModel.setGstPercentage("0");
+								propertyModel.setAmountWithGST("0");
+							}
+							
 							if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
 								for(RoomEntity roomEntity : propertyEntity.getRoomEntities()) {
 									if(Objects.nonNull(roomEntity) && roomEntity.getStatus() == Status.ACTIVE.ordinal()) {

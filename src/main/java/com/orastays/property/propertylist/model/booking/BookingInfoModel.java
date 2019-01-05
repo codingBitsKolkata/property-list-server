@@ -51,7 +51,4 @@ public class BookingInfoModel extends CommonModel {
 	@JsonProperty("idFileUrl")
 	private String idFileUrl;
 
-	@JsonProperty("bookings")
-	private BookingModel bookingModel;
-
 }
