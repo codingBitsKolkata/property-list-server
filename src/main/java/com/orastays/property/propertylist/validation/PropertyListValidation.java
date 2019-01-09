@@ -70,6 +70,10 @@ public class PropertyListValidation extends AuthorizeUserValidation {
 		} else {
 			if (!Util.checkOnlyDate(filterCiteriaModel.getCheckInDate())) {
 				exceptions.put(messageUtil.getBundle("checkin.date.invalid.code"), new Exception(messageUtil.getBundle("checkin.date.invalid.message")));
+			} else {
+				if (Util.getMinuteDiff(filterCiteriaModel.getCheckInDate()) < 0) {
+					exceptions.put(messageUtil.getBundle("checkin.date.invalid.code"), new Exception(messageUtil.getBundle("checkin.date.invalid.message")));
+				}
 			}
 		}
 
@@ -79,6 +83,10 @@ public class PropertyListValidation extends AuthorizeUserValidation {
 		} else {
 			if (!Util.checkOnlyDate(filterCiteriaModel.getCheckOutDate())) {
 				exceptions.put(messageUtil.getBundle("checkout.date.invalid.code"), new Exception(messageUtil.getBundle("checkout.date.invalid.message")));
+			} else {
+				if (Util.getMinuteDiff(filterCiteriaModel.getCheckOutDate()) < 0) {
+					exceptions.put(messageUtil.getBundle("checkout.date.invalid.code"), new Exception(messageUtil.getBundle("checkout.date.invalid.message")));
+				}
 			}
 		}
 		

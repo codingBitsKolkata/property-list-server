@@ -60,6 +60,10 @@ public class OfferEntity extends CommonEntity {
 	@Column(name = "max_amount")
 	@JsonProperty("maxAmount")
 	private String maxAmount;
+	
+	@Column(name = "img_url")
+	@JsonProperty("imgUrl")
+	private String imgUrl;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "offerEntity", cascade = { CascadeType.ALL })
 	@JsonProperty("roomVsOffers")

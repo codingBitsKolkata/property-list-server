@@ -22,8 +22,12 @@ import com.orastays.property.propertylist.entity.PropertyEntity;
 import com.orastays.property.propertylist.entity.RoomEntity;
 import com.orastays.property.propertylist.exceptions.FormExceptions;
 import com.orastays.property.propertylist.helper.Accommodation;
+import com.orastays.property.propertylist.helper.PropertyListConstant;
 import com.orastays.property.propertylist.helper.Status;
 import com.orastays.property.propertylist.helper.Util;
+import com.orastays.property.propertylist.model.FilterCiteriaModel;
+import com.orastays.property.propertylist.model.OfferModel;
+import com.orastays.property.propertylist.model.PriceCalculatorModel;
 import com.orastays.property.propertylist.model.PropertyListViewModel;
 import com.orastays.property.propertylist.model.ResponseModel;
 import com.orastays.property.propertylist.model.booking.BookingModel;
@@ -171,7 +175,7 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
         propertyListViewModel = propertyListService.setPropertyListView(propertyEntity, null);
         List<String> prices = priceCalculation(propertyEntity, roomEntity);
         propertyListViewModel.setTotalPrice(prices.get(0));
-		//propertyListViewModel.setDiscountedPrice(prices.get(1));
+		propertyListViewModel.setDiscountedPrice(prices.get(1));
         
 		if (logger.isInfoEnabled()) {
 			logger.info("findByRating -- END");
@@ -351,7 +355,7 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
         propertyListViewModel = propertyListService.setPropertyListView(propertyEntity, null);
         List<String> prices = priceCalculation(propertyEntity, roomEntity);
         propertyListViewModel.setTotalPrice(prices.get(0));
-		//propertyListViewModel.setDiscountedPrice(prices.get(1));
+		propertyListViewModel.setDiscountedPrice(prices.get(1));
         
 		if (logger.isInfoEnabled()) {
 			logger.info("findByPrice -- END");
@@ -397,6 +401,15 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 		totalPrice = totalPrice + price + (Double.parseDouble(roomEntity.getOraPercentage()) * price / 100);
 		System.err.println("totalPrice after including OraPercentage ==>> "+totalPrice); 
 		
+		Double oraDiscount = 0.0D;
+		// Room Vs ORA Discount
+		// Percentage
+		if (!StringUtils.isBlank(roomEntity.getOraDiscountPercentage())) {
+			oraDiscount = Double.parseDouble(roomEntity.getOraDiscountPercentage()) * price / 100;
+		}
+		
+		discountedPrice = totalPrice - oraDiscount;
+		
 		prices.add(String.valueOf(Math.round(totalPrice * 100D) / 100D));
 		prices.add(String.valueOf(Math.round(discountedPrice * 100D) / 100D));
 		
@@ -405,5 +418,132 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 		}
 		
 		return prices;
+	}
+
+	@Override
+	public Object priceCalculator(PriceCalculatorModel priceCalculatorModel) throws FormExceptions {
+
+		if (logger.isInfoEnabled()) {
+			logger.info("priceCalculation -- START");
+		}
+		
+		FilterCiteriaModel filterCiteriaModel = homeValidation.validatePriceCalculator(priceCalculatorModel);
+		Object price = 0;
+		if(Objects.nonNull(filterCiteriaModel)) {
+			List<PropertyEntity> propertyEntities = propertyDAO.selectByRadius(filterCiteriaModel);
+			System.err.println("propertyEntities ==>> "+propertyEntities);
+			if(!CollectionUtils.isEmpty(propertyEntities)) {
+				List<PropertyEntity> filteredPropertyEntities = new ArrayList<>();
+				for(PropertyEntity propertyEntity : propertyEntities) {
+					if(StringUtils.equals(String.valueOf(propertyEntity.getPropertyTypeEntity().getPropertyTypeId()) , priceCalculatorModel.getPropertyTypeId())) {
+						filteredPropertyEntities.add(propertyEntity);
+					}
+				}
+				
+				if(!CollectionUtils.isEmpty(filteredPropertyEntities)) {
+					 price = findByPrice(filteredPropertyEntities, priceCalculatorModel.getNoOfGuest());
+				}
+			}
+		}
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("priceCalculation -- END");
+		}
+		
+		return price;
+	}
+	
+	private Object findByPrice(List<PropertyEntity> propertyEntities, String noOfGuest) {
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("findByPrice -- START");
+		}
+		
+		Object returnPrice = 0;
+		Map<RoomEntity, Double> priceCount = new LinkedHashMap<>();
+		//propertyEntities.parallelStream().forEach(propertyEntity -> {
+		for(PropertyEntity propertyEntity : propertyEntities) {
+			if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
+				for(RoomEntity roomEntity : propertyEntity.getRoomEntities()) {
+					if(Objects.nonNull(roomEntity)) {
+						Double price = 0.0D;
+						if(propertyEntity.getStayTypeEntity().getStayTypeId() == Status.ACTIVE.ordinal()){   //Long term
+							
+							if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.SHARED.name())) { //shared
+								//Shared Month price 
+								price = (Double.parseDouble(roomEntity.getSharedBedPricePerMonth())/30);
+							} else { //private
+								 //Private Month Price
+								price = (Double.parseDouble(roomEntity.getRoomPricePerMonth())/30/Double.parseDouble(roomEntity.getNoOfGuest()));
+							}
+					
+						} else {   //both & Short term
+							
+							if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.SHARED.name())) { //shared
+								//Shared Night price 
+								price = Double.parseDouble(roomEntity.getSharedBedPricePerNight());
+							} else {   //private
+								 //Private Night Price
+								price = Double.parseDouble(roomEntity.getRoomPricePerNight())/Double.parseDouble(roomEntity.getNoOfGuest());
+							}
+						}
+						System.out.println("price ==>> "+price);
+						priceCount.put(roomEntity, price);
+					}
+				}
+			}
+		//});
+		}
+		
+		RoomEntity roomEntity = null;
+		Double maxValueInMap = (Collections.max(priceCount.values()));
+        for (Entry<RoomEntity, Double> entry : priceCount.entrySet()) {
+            if (entry.getValue() == maxValueInMap) {
+            	roomEntity = entry.getKey();
+            	break;
+            }
+        }
+        
+        returnPrice = maxValueInMap * Double.parseDouble(noOfGuest) * 30;
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("findByPrice -- END");
+		}
+		
+		return returnPrice;
+	}
+	
+	@Override
+	public List<OfferModel> fetchOffer() throws FormExceptions {
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("fetchPropertyTypes -- START");
+		}
+		
+		List<OfferModel> offerModels = null;
+		
+		try {
+			Map<String, String> innerMap1 = new LinkedHashMap<>();
+			innerMap1.put(PropertyListConstant.STATUS, String.valueOf(Status.ACTIVE.ordinal()));
+	
+			Map<String, Map<String, String>> outerMap1 = new LinkedHashMap<>();
+			outerMap1.put("eq", innerMap1);
+	
+			Map<String, Map<String, Map<String, String>>> alliasMap = new LinkedHashMap<>();
+			alliasMap.put(entitymanagerPackagesToScan+".OfferEntity", outerMap1);
+			
+			offerModels = offerConverter.entityListToModelList(offerDAO.fetchListBySubCiteria(alliasMap));
+
+		} catch (Exception e) {
+			if (logger.isInfoEnabled()) {
+				logger.info("Exception in fetchOffer -- "+Util.errorToString(e));
+			}
+		}
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("fetchOffer -- END");
+		}
+		
+		return offerModels;
 	}
 }

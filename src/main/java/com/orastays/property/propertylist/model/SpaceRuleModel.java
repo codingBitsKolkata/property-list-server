@@ -32,6 +32,12 @@ public class SpaceRuleModel extends CommonModel {
 	
 	@JsonProperty("imgUrl")
 	private String imgUrl;
+	
+	@JsonProperty("smImgUrl")
+	private String smImgUrl;
+	
+	@JsonProperty("listingFlag")
+	private String listingFlag;
 
 	@JsonProperty("propertyVsSpaceRules")
 	private List<PropertyVsSpaceRuleModel> propertyVsSpaceRuleModels;

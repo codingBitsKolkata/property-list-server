@@ -6,6 +6,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.orastays.property.propertylist.converter.AmenitiesConverter;
 import com.orastays.property.propertylist.converter.CancellationSlabConverter;
+import com.orastays.property.propertylist.converter.OfferConverter;
 import com.orastays.property.propertylist.converter.PriceDropConverter;
 import com.orastays.property.propertylist.converter.PropertyConverter;
 import com.orastays.property.propertylist.converter.PropertyTypeConverter;
@@ -30,6 +31,7 @@ import com.orastays.property.propertylist.converter.SpecialtiesConverter;
 import com.orastays.property.propertylist.converter.StayTypeConverter;
 import com.orastays.property.propertylist.dao.AmenitiesDAO;
 import com.orastays.property.propertylist.dao.CancellationSlabDAO;
+import com.orastays.property.propertylist.dao.OfferDAO;
 import com.orastays.property.propertylist.dao.PriceDropDAO;
 import com.orastays.property.propertylist.dao.PropertyDAO;
 import com.orastays.property.propertylist.dao.PropertyTypeDAO;
@@ -212,6 +214,12 @@ public abstract class BaseServiceImpl {
 
 	@Autowired
 	protected RoomVsMealConverter roomVsMealConverter;
+	
+	@Autowired
+	protected OfferConverter offerConverter;
+	
+	@Autowired
+	protected OfferDAO offerDAO;
 
 	@Autowired
 	protected RoomVsMealDAO roomVsMealDAO;

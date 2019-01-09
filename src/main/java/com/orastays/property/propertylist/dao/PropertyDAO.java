@@ -38,9 +38,9 @@ public class PropertyDAO extends GenericDAO<PropertyEntity, Long>{
 		}
 		
 		List<PropertyEntity> propertyEntities = null;
-		 Session session = this.sessionFactory.getCurrentSession();
+		 Session session = null;
 		 try {
-			   	
+			 session = this.sessionFactory.openSession();
 			 Query query = session.createSQLQuery("SELECT property_id, ( 6371 * acos( cos( radians("+filterCiteriaModel.getLatitude()+") ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians("+filterCiteriaModel.getLongitude()+") ) + sin( radians("+filterCiteriaModel.getLatitude()+") ) * sin( radians( latitude ) ) ) ) "
 			 		+ "AS distance FROM master_property HAVING distance < "+messageUtil.getBundle("radius")+" ORDER BY distance");  
 			 
@@ -51,8 +51,7 @@ public class PropertyDAO extends GenericDAO<PropertyEntity, Long>{
 				 propertyEntities = new ArrayList<>();
 				 for (Object[] object : output) {
 					 
-					 PropertyEntity propertyEntity = new PropertyEntity();
-					 propertyEntity.setPropertyId(Long.valueOf(String.valueOf(object[0])));
+					 PropertyEntity propertyEntity = find(Long.valueOf(String.valueOf(object[0])));
 					 propertyEntities.add(propertyEntity);
 				 }
 			 }
@@ -61,8 +60,18 @@ public class PropertyDAO extends GenericDAO<PropertyEntity, Long>{
 		 } catch (HibernateException e) {
 			 if (logger.isInfoEnabled()) {
 					logger.info("Exception in selectByRadius -- "+Util.errorToString(e));
+			 }
+		 } finally {
+			 try {
+				if(Objects.nonNull(session)) {
+					session.close();
 				}
-		 }
+			 } catch (Exception e) {
+				 if (logger.isInfoEnabled()) {
+						logger.info("Exception in selectByRadius finally -- "+Util.errorToString(e));
+				 }
+			 }
+		}
 		 
 		 if (logger.isInfoEnabled()) {
 				logger.info("selectByRadius -- END");

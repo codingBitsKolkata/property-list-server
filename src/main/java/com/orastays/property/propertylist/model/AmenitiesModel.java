@@ -2,6 +2,8 @@ package com.orastays.property.propertylist.model;
 
 import java.util.List;
 
+import javax.persistence.Column;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -50,6 +52,10 @@ public class AmenitiesModel extends CommonModel {
 	
 	@JsonProperty("imgUrl2")
 	private String imgUrl2;
+	
+	@Column(name = "smimg_url")
+	@JsonProperty("smImgUrl")
+	private String smImgUrl;
 
 	@JsonProperty("roomVsAmenities")
 	private List<RoomVsAmenitiesModel> roomVsAmenitiesModels;

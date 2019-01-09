@@ -86,7 +86,7 @@ public class PropertyModel extends CommonModel {
 
 	@JsonProperty("advancePercentage")
 	private String advancePercentage;
-	
+
 	@JsonProperty("userTypeId")
 	private String userTypeId;
 
@@ -125,28 +125,22 @@ public class PropertyModel extends CommonModel {
 
 	@JsonProperty("rooms")
 	private List<RoomModel> roomModels;
-	
-	@JsonProperty("totalPrice")
-	private String totalPrice;
-	
-	@JsonProperty("discountedPrice")
-	private String discountedPrice;
-	
+
+	@JsonProperty("propertyOffer")
+	private String propertyOffer;
+
 	@JsonProperty("convenienceFee")
 	private String convenienceFee;
-	
+
 	@JsonProperty("convenienceGSTPercentage")
 	private String convenienceGSTPercentage;
-	
+
 	@JsonProperty("convenienceGSTAmount")
 	private String convenienceGSTAmount;
 	
-	@JsonProperty("gstPercentage")
-	private String gstPercentage;
-	
-	@JsonProperty("amountWithGST")
-	private String amountWithGST;
-	
+	@JsonProperty("totalAmount")
+	private String totalAmount;
+
 	@JsonProperty("amountPayable")
 	private String amountPayable;
 }

@@ -72,6 +72,10 @@ public class AmenitiesEntity extends CommonEntity {
 	@Column(name = "img_url2")
 	@JsonProperty("imgUrl2")
 	private String imgUrl2;
+	
+	@Column(name = "smimg_url")
+	@JsonProperty("smImgUrl")
+	private String smImgUrl;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "amenitiesEntity", cascade = { CascadeType.ALL })
 	@JsonProperty("roomVsAmenities")

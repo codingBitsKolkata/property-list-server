@@ -41,6 +41,9 @@ public class OfferModel extends CommonModel {
 
 	@JsonProperty("maxAmount")
 	private String maxAmount;
+	
+	@JsonProperty("imgUrl")
+	private String imgUrl;
 
 	@JsonProperty("roomVsOffers")
 	private List<RoomVsOfferModel> roomVsOfferModels;

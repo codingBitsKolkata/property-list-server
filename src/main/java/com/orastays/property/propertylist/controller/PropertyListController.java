@@ -72,6 +72,7 @@ public class PropertyListController extends BaseController {
 				break;
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			if (logger.isInfoEnabled()) {
 				logger.info("Exception in fetchProperties -- "+Util.errorToString(e));
 			}

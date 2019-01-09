@@ -14,8 +14,8 @@
 
 		<!-- Rolling File Appender -->
 		<RollingFile name="FileAppender"
-			fileName="logs/property_list_server.log"
-			filePattern="logs/log4j2-demo-%d{yyyy-MM-dd}-%i.log">
+			fileName="logs/property list server/property_list_server.log"
+			filePattern="logs/property list server/%d{yyyy-MM-dd}/property_list_server-%i.log">
 			<PatternLayout>
 				<Pattern>${LOG_PATTERN}</Pattern>
 			</PatternLayout>
@@ -29,7 +29,7 @@
 	</Appenders>
 
 	<Loggers>
-		<AsyncLogger name="com.orastays.authserver" level="debug"
+		<AsyncLogger name="com.orastays.propertylistserver" level="debug"
 			additivity="false">
 			<AppenderRef ref="ConsoleAppender" />
 			<AppenderRef ref="FileAppender" />

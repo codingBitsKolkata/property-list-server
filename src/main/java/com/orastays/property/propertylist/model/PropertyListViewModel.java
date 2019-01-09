@@ -61,6 +61,12 @@ public class PropertyListViewModel {
 	@JsonProperty("mealFlag")
 	private Boolean mealFlag;
 	
+	@JsonProperty("ratingText")
+	private String ratingText;
+	
+	@JsonProperty("analyticsText")
+	private String analyticsText;
+	
 	@JsonProperty("amenities")
 	private Set<AmenitiesModel> amenitiesModels;
 }
