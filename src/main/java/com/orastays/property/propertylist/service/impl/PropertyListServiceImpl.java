@@ -1,6 +1,5 @@
 package com.orastays.property.propertylist.service.impl;
 
-import java.awt.BufferCapabilities.FlipContents;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -659,6 +658,15 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 					}
 				}
 			}
+			
+			//new logic implemented------------------------------------------------------------------
+			//put the booked rooms in a set. the set wil contain the ora room names
+			
+			
+			
+			
+			
+			//---------------------------------------------------------------------------------------
 			
 			Set<RoomEntity> filteredRoomEntities = new HashSet<>();
 			System.out.println("propertyEntity ==>> "+propertyEntity);
