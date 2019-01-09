@@ -50,6 +50,7 @@ import com.orastays.property.propertylist.model.booking.BookingVsRoomModel;
 import com.orastays.property.propertylist.model.review.BookingVsRatingModel;
 import com.orastays.property.propertylist.model.review.UserReviewModel;
 import com.orastays.property.propertylist.service.PropertyListService;
+import com.orastays.property.propertylist.utils.PropertyListRoomUtil;
 
 @Service
 @Transactional
@@ -660,9 +661,10 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 			}
 			
 			//new logic implemented------------------------------------------------------------------
-			//put the booked rooms in a set. the set wil contain the ora room names
 			
+			//populate a map where all available rooms will be present
 			
+			//PropertyListRoomUtil.populateAvailableRoomMap(bookingModels, roomMap, propertyEntity.getRoomEntities());
 			
 			
 			
