@@ -50,7 +50,6 @@ import com.orastays.property.propertylist.model.booking.BookingVsRoomModel;
 import com.orastays.property.propertylist.model.review.BookingVsRatingModel;
 import com.orastays.property.propertylist.model.review.UserReviewModel;
 import com.orastays.property.propertylist.service.PropertyListService;
-import com.orastays.property.propertylist.utils.PropertyListRoomUtil;
 
 @Service
 @Transactional
@@ -84,7 +83,7 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 			System.err.println("propertyEntities ==>> "+propertyEntities);
 			if(!CollectionUtils.isEmpty(propertyEntities)) {
 				AtomicBoolean isContinueRating = new AtomicBoolean(false);
-				propertyEntities.parallelStream().forEach(propertyEntity -> {
+				propertyEntities.stream().forEach(propertyEntity -> {
 					//for(PropertyEntity propertyEntity : propertyEntities) {
 					isContinueRating.set(false);
 					
@@ -613,262 +612,208 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		boolean flag = false;
 		
 		try {
-			BookingModel bookingModel = new BookingModel();
-			bookingModel.setPropertyId(String.valueOf(propertyEntity.getPropertyId()));
-			bookingModel.setCheckinDate(filterCiteriaModel.getCheckInDate());
-			ResponseModel responseModel = restTemplate.postForObject(messageUtil.getBundle("booking.server.url") +"get-bookings", bookingModel, ResponseModel.class);
-			Gson gson = new Gson();
-			String jsonString = gson.toJson(responseModel.getResponseBody());
-			gson = new Gson();
-			Type listType = new TypeToken<List<BookingModel>>() {}.getType();
-			List<BookingModel> bookingModels = gson.fromJson(jsonString, listType);
-			
-			if (logger.isInfoEnabled()) {
-				logger.info("bookingModels ==>> "+bookingModels);
-			}
-			
-			System.err.println("bookingModels ==>> "+bookingModels);
-			
-			Map<String, List<BookingVsRoomModel>> roomByOraName = new LinkedHashMap<>();
-			if (!CollectionUtils.isEmpty(bookingModels)) {
-				
-				List<BookingVsRoomModel> bookingVsRoomModels = new ArrayList<>();
-				for(BookingModel bookingModel2 : bookingModels) {
-					if(Objects.nonNull(bookingModel2) && !CollectionUtils.isEmpty(bookingModel2.getBookingVsRooms())) {
-						bookingVsRoomModels.addAll(bookingModel2.getBookingVsRooms());
-					}
-				}
-				
-				if(!CollectionUtils.isEmpty(bookingVsRoomModels)) {
-					for(BookingVsRoomModel bookingVsRoomModel : bookingVsRoomModels) {
-						if(roomByOraName.isEmpty()) { // First Time
-							List<BookingVsRoomModel> mapBookingVsRoomModels = new ArrayList<>();
-							mapBookingVsRoomModels.add(bookingVsRoomModel);
-							roomByOraName.put(bookingVsRoomModel.getOraRoomName(), mapBookingVsRoomModels);
-						} else {
-							if(roomByOraName.containsKey(bookingVsRoomModel.getOraRoomName())) { // KEY Present
-								List<BookingVsRoomModel> mapBookingVsRoomModels = roomByOraName.get(bookingVsRoomModel.getOraRoomName());
-								mapBookingVsRoomModels.add(bookingVsRoomModel);
-								roomByOraName.put(bookingVsRoomModel.getOraRoomName(), mapBookingVsRoomModels);
-							} else { // KEY not present
-								List<BookingVsRoomModel> mapBookingVsRoomModels = new ArrayList<>();
-								mapBookingVsRoomModels.add(bookingVsRoomModel);
-								roomByOraName.put(bookingVsRoomModel.getOraRoomName(), mapBookingVsRoomModels);
-							}
-						}
-					}
-				}
-			}
-			
-			//new logic implemented------------------------------------------------------------------
-			
-			//populate a map where all available rooms will be present
-			
-			//PropertyListRoomUtil.populateAvailableRoomMap(bookingModels, roomMap, propertyEntity.getRoomEntities());
-			
-			
-			
-			//---------------------------------------------------------------------------------------
-			
-			Set<RoomEntity> filteredRoomEntities = new HashSet<>();
-			System.out.println("propertyEntity ==>> "+propertyEntity);
-			if(CollectionUtils.isEmpty(roomByOraName)) { // No Rooms Are Booked
-				
-				List<Boolean> countFlag = new ArrayList<>();
-				List<RoomEntity> deletableRoomEntities = new CopyOnWriteArrayList<>();
-				deletableRoomEntities = propertyEntity.getRoomEntities();
-				System.out.println("deletableRoomEntities ==>> "+deletableRoomEntities);
-				for(RoomModel roomModel : filterCiteriaModel.getRoomModels()) {
-					
-					int bedRequired = Integer.parseInt(roomModel.getNoOfGuest());
-					System.err.println("bedRequired ==>> "+bedRequired);
-					
-					for(int i = 0; i < deletableRoomEntities.size(); i++) {
-						
-						RoomEntity roomEntity = deletableRoomEntities.get(i);
-						System.err.println("First Loop roomEntity ==>> "+roomEntity);
-						
-						if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.SHARED.name())) { //shared
-							
-							int totalBed = 0;
-							if(StringUtils.isBlank(roomEntity.getNumOfCot())) {
-								totalBed = Integer.parseInt(roomEntity.getNumOfBed());
-							} else {
-								totalBed = (Integer.parseInt(roomEntity.getNumOfBed()) + (Integer.parseInt(roomEntity.getNumOfCot())));
-							}
-							
-							System.err.println("totalBed ==>> "+totalBed);
-							
-							if(bedRequired <= totalBed) { // Bed + Cot
-								
-								System.err.println("Less than Bed + Cot");
-								filteredRoomEntities.add(roomEntity);
-								deletableRoomEntities.remove(i);
-							} else {
-								bedRequired = bedRequired - totalBed;
-								filteredRoomEntities.add(roomEntity);
-								deletableRoomEntities.remove(i);
-							}
-						} else { //private
-							
-							int totalBed = 0;
-							if(StringUtils.isBlank(roomEntity.getNumOfCot())) {
-								totalBed = Integer.parseInt(roomEntity.getNoOfGuest());
-							} else {
-								totalBed = (Integer.parseInt(roomEntity.getNoOfGuest()) + (Integer.parseInt(roomEntity.getNumOfCot())));
-							}
-							
-							System.err.println("totalBed ==>> "+totalBed);
-							
-							int userChild = 0;
-							if(!StringUtils.isBlank(roomModel.getNoOfChild())) {
-								userChild = Integer.parseInt(roomModel.getNoOfChild());
-							}
-							
-							int dbChild = 0;
-							if(!StringUtils.isBlank(roomEntity.getNoOfChild())) {
-								dbChild = Integer.parseInt(roomEntity.getNoOfChild());
-							}
-							
-							if(bedRequired <= totalBed && (userChild <= dbChild)) { // Bed + Cot
-								
-								System.err.println("Less than Bed + Cot");
-								filteredRoomEntities.add(roomEntity);
-								deletableRoomEntities.remove(i);
-							}
-						}
-					}
-					
-					System.out.println("filteredRoomEntities ==>> "+filteredRoomEntities);
-					if(!CollectionUtils.isEmpty(filteredRoomEntities)) { // Contains MIN 1 ROOM
-						propertyEntity.setRoomEntities(null); // Delete All Rooms
-						List<RoomEntity> listRoomEntities = new ArrayList<>(filteredRoomEntities); // SET to LIST
-						propertyEntity.setRoomEntities(listRoomEntities); // Insert Available Rooms
-						countFlag.add(true);
-					} else {
-						countFlag.add(false);
-					}
-				}
-				
-				if(!countFlag.contains(false)) {
-					flag = true;
-				}
-			} else { // Property Is Booked
-				
-				List<Boolean> countFlag = new ArrayList<>();
-				List<RoomEntity> deletableRoomEntities = new CopyOnWriteArrayList<>();
-				deletableRoomEntities = propertyEntity.getRoomEntities();
-				for(RoomModel roomModel : filterCiteriaModel.getRoomModels()) {
-					
-					int bedRequired = Integer.parseInt(roomModel.getNoOfGuest());
-					System.err.println("bedRequired ==>> "+bedRequired);
-					
-					for(int i = 0; i < deletableRoomEntities.size(); i++) {
-						
-						RoomEntity roomEntity = deletableRoomEntities.get(i);
-						System.err.println("First Loop roomEntity ==>> "+roomEntity);
-						if(roomByOraName.containsKey(roomEntity.getOraRoomName())) { // KEY Present
-							
-							if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.SHARED.name())) { //shared
-								
-								int maxBedBooked = 0;
-								List<BookingVsRoomModel> roomBooked = roomByOraName.get(roomEntity.getOraRoomName());
-								for(BookingVsRoomModel bookingVsRoomModel : roomBooked) {
-									maxBedBooked = maxBedBooked + Integer.parseInt(bookingVsRoomModel.getNumOfSharedBed());
-								}
-								
-								System.out.println("maxBedBooked ==>> "+maxBedBooked);
-								
-								int totalBed = 0;
-								if(StringUtils.isBlank(roomEntity.getNumOfCot())) {
-									totalBed = Integer.parseInt(roomEntity.getNumOfBed());
-								} else {
-									totalBed = (Integer.parseInt(roomEntity.getNumOfBed()) + (Integer.parseInt(roomEntity.getNumOfCot())));
-								}
-								
-								totalBed = totalBed - maxBedBooked;
-								System.err.println("totalBed ==>> "+totalBed);
-								
-								if(bedRequired <= totalBed) { // Bed + Cot
-									
-									System.err.println("Less than Bed + Cot");
-									filteredRoomEntities.add(roomEntity);
-									deletableRoomEntities.remove(i);
-								} else {
-									bedRequired = bedRequired - totalBed;
-									filteredRoomEntities.add(roomEntity);
-									deletableRoomEntities.remove(i);
-								}
-							}
-						} else { // ROOM Not Booked
-							
-							if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.SHARED.name())) { //shared
-								
-								int totalBed = 0;
-								if(!StringUtils.isBlank(roomEntity.getNumOfCot())) {
-									totalBed = Integer.parseInt(roomEntity.getNumOfBed());
-								} else {
-									totalBed = (Integer.parseInt(roomEntity.getNumOfBed()) + (Integer.parseInt(roomEntity.getNumOfCot())));
-								}
-								System.err.println("totalBed ==>> "+totalBed);
-								
-								if(bedRequired <= totalBed) { // Bed + Cot
-								
-								System.err.println("Less than Bed + Cot");
-								filteredRoomEntities.add(roomEntity);
-								deletableRoomEntities.remove(i);
-							} else {
-								bedRequired = bedRequired - totalBed;
-								filteredRoomEntities.add(roomEntity);
-								deletableRoomEntities.remove(i);
-							}
-							} else { //private
-								
-								int totalBed = 0;
-								if(!StringUtils.isBlank(roomEntity.getNumOfCot())) {
-									totalBed = Integer.parseInt(roomEntity.getNoOfGuest());
-								} else {
-									totalBed = (Integer.parseInt(roomEntity.getNoOfGuest()) + (Integer.parseInt(roomEntity.getNumOfCot())));
-								}
-								
-								System.err.println("totalBed ==>> "+totalBed);
-								
-								int userChild = 0;
-								if(!StringUtils.isBlank(roomModel.getNoOfChild())) {
-									userChild = Integer.parseInt(roomModel.getNoOfChild());
-								}
-								
-								int dbChild = 0;
-								if(!StringUtils.isBlank(roomEntity.getNoOfChild())) {
-									dbChild = Integer.parseInt(roomEntity.getNoOfChild());
-								}
-								
-								if(bedRequired <= totalBed && (userChild <= dbChild)) { // Bed + Cot
-									
-									System.err.println("Less than Bed + Cot");
-									filteredRoomEntities.add(roomEntity);
-									deletableRoomEntities.remove(i);
-								}
-							}
-						}
-					}
-					
-					if(!CollectionUtils.isEmpty(filteredRoomEntities)) { // Contains MIN 1 ROOM
-						propertyEntity.setRoomEntities(null); // Delete All Rooms
-						List<RoomEntity> listRoomEntities = new ArrayList<>(filteredRoomEntities); // SET to LIST
-						propertyEntity.setRoomEntities(listRoomEntities); // Insert Available Rooms
-						countFlag.add(true);
-					} else {
-						countFlag.add(false);
-					}
-				}
-				
-				if(!countFlag.contains(false)) {
-					flag = true;
-				}
-			}
-			
-		} catch (Exception e) {
+			filterRoomsUtil.getRoomsByPropertyWithCheckinDateFilter(propertyEntity, filterCiteriaModel);
+			/*
+			 * BookingModel bookingModel = new BookingModel();
+			 * bookingModel.setPropertyId(String.valueOf(propertyEntity.getPropertyId()));
+			 * bookingModel.setCheckinDate(filterCiteriaModel.getCheckInDate());
+			 * ResponseModel responseModel =
+			 * restTemplate.postForObject(messageUtil.getBundle("booking.server.url")
+			 * +"get-bookings", bookingModel, ResponseModel.class); Gson gson = new Gson();
+			 * String jsonString = gson.toJson(responseModel.getResponseBody()); gson = new
+			 * Gson(); Type listType = new TypeToken<List<BookingModel>>() {}.getType();
+			 * List<BookingModel> bookingModels = gson.fromJson(jsonString, listType);
+			 * 
+			 * if (logger.isInfoEnabled()) {
+			 * logger.info("bookingModels ==>> "+bookingModels); }
+			 * 
+			 * System.err.println("bookingModels ==>> "+bookingModels);
+			 * 
+			 * Map<String, List<BookingVsRoomModel>> roomByOraName = new LinkedHashMap<>();
+			 * if (!CollectionUtils.isEmpty(bookingModels)) {
+			 * 
+			 * List<BookingVsRoomModel> bookingVsRoomModels = new ArrayList<>();
+			 * for(BookingModel bookingModel2 : bookingModels) {
+			 * if(Objects.nonNull(bookingModel2) &&
+			 * !CollectionUtils.isEmpty(bookingModel2.getBookingVsRooms())) {
+			 * bookingVsRoomModels.addAll(bookingModel2.getBookingVsRooms()); } }
+			 * 
+			 * if(!CollectionUtils.isEmpty(bookingVsRoomModels)) { for(BookingVsRoomModel
+			 * bookingVsRoomModel : bookingVsRoomModels) { if(roomByOraName.isEmpty()) { //
+			 * First Time List<BookingVsRoomModel> mapBookingVsRoomModels = new
+			 * ArrayList<>(); mapBookingVsRoomModels.add(bookingVsRoomModel);
+			 * roomByOraName.put(bookingVsRoomModel.getOraRoomName(),
+			 * mapBookingVsRoomModels); } else {
+			 * if(roomByOraName.containsKey(bookingVsRoomModel.getOraRoomName())) { // KEY
+			 * Present List<BookingVsRoomModel> mapBookingVsRoomModels =
+			 * roomByOraName.get(bookingVsRoomModel.getOraRoomName());
+			 * mapBookingVsRoomModels.add(bookingVsRoomModel);
+			 * roomByOraName.put(bookingVsRoomModel.getOraRoomName(),
+			 * mapBookingVsRoomModels); } else { // KEY not present List<BookingVsRoomModel>
+			 * mapBookingVsRoomModels = new ArrayList<>();
+			 * mapBookingVsRoomModels.add(bookingVsRoomModel);
+			 * roomByOraName.put(bookingVsRoomModel.getOraRoomName(),
+			 * mapBookingVsRoomModels); } } } } }
+			 * 
+			 * //new logic
+			 * implemented------------------------------------------------------------------
+			 * 
+			 * //populate a map where all available rooms will be present
+			 * 
+			 * //PropertyListRoomUtil.populateAvailableRoomMap(bookingModels, roomMap,
+			 * propertyEntity.getRoomEntities());
+			 * 
+			 * 
+			 * 
+			 * //---------------------------------------------------------------------------
+			 * ------------
+			 * 
+			 * Set<RoomEntity> filteredRoomEntities = new HashSet<>();
+			 * System.out.println("propertyEntity ==>> "+propertyEntity);
+			 * if(CollectionUtils.isEmpty(roomByOraName)) { // No Rooms Are Booked
+			 * 
+			 * List<Boolean> countFlag = new ArrayList<>(); List<RoomEntity>
+			 * deletableRoomEntities = new CopyOnWriteArrayList<>(); deletableRoomEntities =
+			 * propertyEntity.getRoomEntities();
+			 * System.out.println("deletableRoomEntities ==>> "+deletableRoomEntities);
+			 * for(RoomModel roomModel : filterCiteriaModel.getRoomModels()) {
+			 * 
+			 * int bedRequired = Integer.parseInt(roomModel.getNoOfGuest());
+			 * System.err.println("bedRequired ==>> "+bedRequired);
+			 * 
+			 * for(int i = 0; i < deletableRoomEntities.size(); i++) {
+			 * 
+			 * RoomEntity roomEntity = deletableRoomEntities.get(i);
+			 * System.err.println("First Loop roomEntity ==>> "+roomEntity);
+			 * 
+			 * if(StringUtils.equals(roomEntity.getAccomodationName(),
+			 * Accommodation.SHARED.name())) { //shared
+			 * 
+			 * int totalBed = 0; if(StringUtils.isBlank(roomEntity.getNumOfCot())) {
+			 * totalBed = Integer.parseInt(roomEntity.getNumOfBed()); } else { totalBed =
+			 * (Integer.parseInt(roomEntity.getNumOfBed()) +
+			 * (Integer.parseInt(roomEntity.getNumOfCot()))); }
+			 * 
+			 * System.err.println("totalBed ==>> "+totalBed);
+			 * 
+			 * if(bedRequired <= totalBed) { // Bed + Cot
+			 * 
+			 * System.err.println("Less than Bed + Cot");
+			 * filteredRoomEntities.add(roomEntity); deletableRoomEntities.remove(i); } else
+			 * { bedRequired = bedRequired - totalBed; filteredRoomEntities.add(roomEntity);
+			 * deletableRoomEntities.remove(i); } } else { //private
+			 * 
+			 * int totalBed = 0; if(StringUtils.isBlank(roomEntity.getNumOfCot())) {
+			 * totalBed = Integer.parseInt(roomEntity.getNoOfGuest()); } else { totalBed =
+			 * (Integer.parseInt(roomEntity.getNoOfGuest()) +
+			 * (Integer.parseInt(roomEntity.getNumOfCot()))); }
+			 * 
+			 * System.err.println("totalBed ==>> "+totalBed);
+			 * 
+			 * int userChild = 0; if(!StringUtils.isBlank(roomModel.getNoOfChild())) {
+			 * userChild = Integer.parseInt(roomModel.getNoOfChild()); }
+			 * 
+			 * int dbChild = 0; if(!StringUtils.isBlank(roomEntity.getNoOfChild())) {
+			 * dbChild = Integer.parseInt(roomEntity.getNoOfChild()); }
+			 * 
+			 * if(bedRequired <= totalBed && (userChild <= dbChild)) { // Bed + Cot
+			 * 
+			 * System.err.println("Less than Bed + Cot");
+			 * filteredRoomEntities.add(roomEntity); deletableRoomEntities.remove(i); } } }
+			 * 
+			 * System.out.println("filteredRoomEntities ==>> "+filteredRoomEntities);
+			 * if(!CollectionUtils.isEmpty(filteredRoomEntities)) { // Contains MIN 1 ROOM
+			 * propertyEntity.setRoomEntities(null); // Delete All Rooms List<RoomEntity>
+			 * listRoomEntities = new ArrayList<>(filteredRoomEntities); // SET to LIST
+			 * propertyEntity.setRoomEntities(listRoomEntities); // Insert Available Rooms
+			 * countFlag.add(true); } else { countFlag.add(false); } }
+			 * 
+			 * if(!countFlag.contains(false)) { flag = true; } } else { // Property Is
+			 * Booked
+			 * 
+			 * List<Boolean> countFlag = new ArrayList<>(); List<RoomEntity>
+			 * deletableRoomEntities = new CopyOnWriteArrayList<>(); deletableRoomEntities =
+			 * propertyEntity.getRoomEntities(); for(RoomModel roomModel :
+			 * filterCiteriaModel.getRoomModels()) {
+			 * 
+			 * int bedRequired = Integer.parseInt(roomModel.getNoOfGuest());
+			 * System.err.println("bedRequired ==>> "+bedRequired);
+			 * 
+			 * for(int i = 0; i < deletableRoomEntities.size(); i++) {
+			 * 
+			 * RoomEntity roomEntity = deletableRoomEntities.get(i);
+			 * System.err.println("First Loop roomEntity ==>> "+roomEntity);
+			 * if(roomByOraName.containsKey(roomEntity.getOraRoomName())) { // KEY Present
+			 * 
+			 * if(StringUtils.equals(roomEntity.getAccomodationName(),
+			 * Accommodation.SHARED.name())) { //shared
+			 * 
+			 * int maxBedBooked = 0; List<BookingVsRoomModel> roomBooked =
+			 * roomByOraName.get(roomEntity.getOraRoomName()); for(BookingVsRoomModel
+			 * bookingVsRoomModel : roomBooked) { maxBedBooked = maxBedBooked +
+			 * Integer.parseInt(bookingVsRoomModel.getNumOfSharedBed()); }
+			 * 
+			 * System.out.println("maxBedBooked ==>> "+maxBedBooked);
+			 * 
+			 * int totalBed = 0; if(StringUtils.isBlank(roomEntity.getNumOfCot())) {
+			 * totalBed = Integer.parseInt(roomEntity.getNumOfBed()); } else { totalBed =
+			 * (Integer.parseInt(roomEntity.getNumOfBed()) +
+			 * (Integer.parseInt(roomEntity.getNumOfCot()))); }
+			 * 
+			 * totalBed = totalBed - maxBedBooked;
+			 * System.err.println("totalBed ==>> "+totalBed);
+			 * 
+			 * if(bedRequired <= totalBed) { // Bed + Cot
+			 * 
+			 * System.err.println("Less than Bed + Cot");
+			 * filteredRoomEntities.add(roomEntity); deletableRoomEntities.remove(i); } else
+			 * { bedRequired = bedRequired - totalBed; filteredRoomEntities.add(roomEntity);
+			 * deletableRoomEntities.remove(i); } } } else { // ROOM Not Booked
+			 * 
+			 * if(StringUtils.equals(roomEntity.getAccomodationName(),
+			 * Accommodation.SHARED.name())) { //shared
+			 * 
+			 * int totalBed = 0; if(!StringUtils.isBlank(roomEntity.getNumOfCot())) {
+			 * totalBed = Integer.parseInt(roomEntity.getNumOfBed()); } else { totalBed =
+			 * (Integer.parseInt(roomEntity.getNumOfBed()) +
+			 * (Integer.parseInt(roomEntity.getNumOfCot()))); }
+			 * System.err.println("totalBed ==>> "+totalBed);
+			 * 
+			 * if(bedRequired <= totalBed) { // Bed + Cot
+			 * 
+			 * System.err.println("Less than Bed + Cot");
+			 * filteredRoomEntities.add(roomEntity); deletableRoomEntities.remove(i); } else
+			 * { bedRequired = bedRequired - totalBed; filteredRoomEntities.add(roomEntity);
+			 * deletableRoomEntities.remove(i); } } else { //private
+			 * 
+			 * int totalBed = 0; if(!StringUtils.isBlank(roomEntity.getNumOfCot())) {
+			 * totalBed = Integer.parseInt(roomEntity.getNoOfGuest()); } else { totalBed =
+			 * (Integer.parseInt(roomEntity.getNoOfGuest()) +
+			 * (Integer.parseInt(roomEntity.getNumOfCot()))); }
+			 * 
+			 * System.err.println("totalBed ==>> "+totalBed);
+			 * 
+			 * int userChild = 0; if(!StringUtils.isBlank(roomModel.getNoOfChild())) {
+			 * userChild = Integer.parseInt(roomModel.getNoOfChild()); }
+			 * 
+			 * int dbChild = 0; if(!StringUtils.isBlank(roomEntity.getNoOfChild())) {
+			 * dbChild = Integer.parseInt(roomEntity.getNoOfChild()); }
+			 * 
+			 * if(bedRequired <= totalBed && (userChild <= dbChild)) { // Bed + Cot
+			 * 
+			 * System.err.println("Less than Bed + Cot");
+			 * filteredRoomEntities.add(roomEntity); deletableRoomEntities.remove(i); } } }
+			 * }
+			 * 
+			 * if(!CollectionUtils.isEmpty(filteredRoomEntities)) { // Contains MIN 1 ROOM
+			 * propertyEntity.setRoomEntities(null); // Delete All Rooms List<RoomEntity>
+			 * listRoomEntities = new ArrayList<>(filteredRoomEntities); // SET to LIST
+			 * propertyEntity.setRoomEntities(listRoomEntities); // Insert Available Rooms
+			 * countFlag.add(true); } else { countFlag.add(false); } }
+			 * 
+			 * if(!countFlag.contains(false)) { flag = true; } }
+			 * 
+			 */} catch (Exception e) {
 			e.printStackTrace();
 			if (logger.isInfoEnabled()) {
 				logger.info("Exception in filterBycheckInDate -- "+Util.errorToString(e));
