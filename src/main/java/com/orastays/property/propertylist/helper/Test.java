@@ -10,7 +10,7 @@ public class Test {
 
 		try {
 			Test test = new Test();
-			System.out.println(test.getMinuteDiff("2019-12-22 00:00:01"));
+			System.out.println(test.getMinuteDiff("2019-01-12 00:00:01"));
 		} catch (Exception e) {
 
 		}

@@ -64,20 +64,20 @@ public class PropertyListValidation extends AuthorizeUserValidation {
 			}
 		}
 		
-		// Validate CheckIn Time
+		// Validate CheckIn Date
 		if (StringUtils.isBlank(filterCiteriaModel.getCheckInDate())) {
 			exceptions.put(messageUtil.getBundle("checkin.date.null.code"), new Exception(messageUtil.getBundle("checkin.date.null.message")));
 		} else {
 			if (!Util.checkOnlyDate(filterCiteriaModel.getCheckInDate())) {
 				exceptions.put(messageUtil.getBundle("checkin.date.invalid.code"), new Exception(messageUtil.getBundle("checkin.date.invalid.message")));
 			} else {
-				if (Util.getMinuteDiff(filterCiteriaModel.getCheckInDate() + " 00:00:01") > 0) {
+				if (Util.getMinuteDiff(filterCiteriaModel.getCheckInDate() + " 00:00:01") < 0) {
 					exceptions.put(messageUtil.getBundle("checkin.date.invalid.code"), new Exception(messageUtil.getBundle("checkin.date.invalid.message")));
 				}
 			}
 		}
 
-		// Validate CheckOut Time
+		// Validate CheckOut Date
 		if (StringUtils.isBlank(filterCiteriaModel.getCheckOutDate())) {
 			exceptions.put(messageUtil.getBundle("checkout.date.null.code"), new Exception(messageUtil.getBundle("checkout.date.null.message")));
 		} else {
@@ -186,21 +186,29 @@ public class PropertyListValidation extends AuthorizeUserValidation {
 			}
 		}
 		
-		// Validate CheckIn Time
+		// Validate CheckIn Date
 		if (StringUtils.isBlank(filterCiteriaModel.getCheckInDate())) {
 			exceptions.put(messageUtil.getBundle("checkin.date.null.code"), new Exception(messageUtil.getBundle("checkin.date.null.message")));
 		} else {
 			if (!Util.checkOnlyDate(filterCiteriaModel.getCheckInDate())) {
 				exceptions.put(messageUtil.getBundle("checkin.date.invalid.code"), new Exception(messageUtil.getBundle("checkin.date.invalid.message")));
+			} else {
+				if (Util.getMinuteDiff(filterCiteriaModel.getCheckInDate() + " 00:00:01") > 0) {
+					exceptions.put(messageUtil.getBundle("checkin.date.invalid.code"), new Exception(messageUtil.getBundle("checkin.date.invalid.message")));
+				}
 			}
 		}
 
-		// Validate CheckOut Time
+		// Validate CheckOut Date
 		if (StringUtils.isBlank(filterCiteriaModel.getCheckOutDate())) {
 			exceptions.put(messageUtil.getBundle("checkout.date.null.code"), new Exception(messageUtil.getBundle("checkout.date.null.message")));
 		} else {
 			if (!Util.checkOnlyDate(filterCiteriaModel.getCheckOutDate())) {
 				exceptions.put(messageUtil.getBundle("checkout.date.invalid.code"), new Exception(messageUtil.getBundle("checkout.date.invalid.message")));
+			} else {
+				if (Util.getMinuteDiff(filterCiteriaModel.getCheckOutDate() + " 11:59:59") > 0) {
+					exceptions.put(messageUtil.getBundle("checkout.date.invalid.code"), new Exception(messageUtil.getBundle("checkout.date.invalid.message")));
+				}
 			}
 		}
 		
