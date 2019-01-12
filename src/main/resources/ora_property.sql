@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.2
--- http://www.phpmyadmin.net
+-- version 4.8.3
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 09, 2019 at 03:36 AM
--- Server version: 5.7.9
--- PHP Version: 5.6.16
+-- Generation Time: Jan 12, 2019 at 09:01 AM
+-- Server version: 10.1.36-MariaDB
+-- PHP Version: 7.2.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -26,9 +28,8 @@ SET time_zone = "+00:00";
 -- Table structure for table `master_amenities`
 --
 
-DROP TABLE IF EXISTS `master_amenities`;
-CREATE TABLE IF NOT EXISTS `master_amenities` (
-  `aminities_id` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `master_amenities` (
+  `aminities_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
@@ -44,9 +45,8 @@ CREATE TABLE IF NOT EXISTS `master_amenities` (
   `parent_id` bigint(20) DEFAULT NULL,
   `premium_flag` varchar(255) DEFAULT NULL,
   `priority` varchar(255) DEFAULT NULL,
-  `smimg_url` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`aminities_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  `smimg_url` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `master_amenities`
@@ -64,18 +64,16 @@ INSERT INTO `master_amenities` (`aminities_id`, `created_by`, `created_date`, `m
 -- Table structure for table `master_cancellation_slab`
 --
 
-DROP TABLE IF EXISTS `master_cancellation_slab`;
-CREATE TABLE IF NOT EXISTS `master_cancellation_slab` (
-  `cancellation_slab_id` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `master_cancellation_slab` (
+  `cancellation_slab_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
   `modified_date` varchar(255) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   `end_time` varchar(255) DEFAULT NULL,
-  `start_time` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`cancellation_slab_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `start_time` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `master_cancellation_slab`
@@ -91,18 +89,16 @@ INSERT INTO `master_cancellation_slab` (`cancellation_slab_id`, `created_by`, `c
 -- Table structure for table `master_convenience`
 --
 
-DROP TABLE IF EXISTS `master_convenience`;
-CREATE TABLE IF NOT EXISTS `master_convenience` (
-  `convenience_id` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `master_convenience` (
+  `convenience_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
   `modified_date` varchar(255) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   `amount` varchar(255) DEFAULT NULL,
-  `gst_percentage` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`convenience_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `gst_percentage` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `master_convenience`
@@ -117,17 +113,15 @@ INSERT INTO `master_convenience` (`convenience_id`, `created_by`, `created_date`
 -- Table structure for table `master_document`
 --
 
-DROP TABLE IF EXISTS `master_document`;
-CREATE TABLE IF NOT EXISTS `master_document` (
-  `document_id` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `master_document` (
+  `document_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
   `modified_date` varchar(255) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
-  `document_name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`document_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `document_name` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `master_document`
@@ -143,9 +137,8 @@ INSERT INTO `master_document` (`document_id`, `created_by`, `created_date`, `mod
 -- Table structure for table `master_gst_slab`
 --
 
-DROP TABLE IF EXISTS `master_gst_slab`;
-CREATE TABLE IF NOT EXISTS `master_gst_slab` (
-  `gst_slab_id` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `master_gst_slab` (
+  `gst_slab_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
@@ -153,9 +146,8 @@ CREATE TABLE IF NOT EXISTS `master_gst_slab` (
   `status` int(11) DEFAULT NULL,
   `from_amount` varchar(255) DEFAULT NULL,
   `percentage` varchar(255) DEFAULT NULL,
-  `to_amount` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`gst_slab_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  `to_amount` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `master_gst_slab`
@@ -173,9 +165,8 @@ INSERT INTO `master_gst_slab` (`gst_slab_id`, `created_by`, `created_date`, `mod
 -- Table structure for table `master_meal_plan`
 --
 
-DROP TABLE IF EXISTS `master_meal_plan`;
-CREATE TABLE IF NOT EXISTS `master_meal_plan` (
-  `meal_plan_id` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `master_meal_plan` (
+  `meal_plan_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
@@ -183,9 +174,8 @@ CREATE TABLE IF NOT EXISTS `master_meal_plan` (
   `status` int(11) DEFAULT NULL,
   `language_id` bigint(20) DEFAULT NULL,
   `meal_plan_name` varchar(255) DEFAULT NULL,
-  `parent_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`meal_plan_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  `parent_id` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `master_meal_plan`
@@ -203,9 +193,8 @@ INSERT INTO `master_meal_plan` (`meal_plan_id`, `created_by`, `created_date`, `m
 -- Table structure for table `master_meal_plan_category`
 --
 
-DROP TABLE IF EXISTS `master_meal_plan_category`;
-CREATE TABLE IF NOT EXISTS `master_meal_plan_category` (
-  `mpc_id` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `master_meal_plan_category` (
+  `mpc_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
@@ -213,9 +202,8 @@ CREATE TABLE IF NOT EXISTS `master_meal_plan_category` (
   `status` int(11) DEFAULT NULL,
   `language_id` bigint(20) DEFAULT NULL,
   `mpc_name` varchar(255) DEFAULT NULL,
-  `parent_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`mpc_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `parent_id` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `master_meal_plan_category`
@@ -231,9 +219,8 @@ INSERT INTO `master_meal_plan_category` (`mpc_id`, `created_by`, `created_date`,
 -- Table structure for table `master_offer`
 --
 
-DROP TABLE IF EXISTS `master_offer`;
-CREATE TABLE IF NOT EXISTS `master_offer` (
-  `offer_id` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `master_offer` (
+  `offer_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
@@ -247,21 +234,21 @@ CREATE TABLE IF NOT EXISTS `master_offer` (
   `percentage` varchar(255) DEFAULT NULL,
   `start_date_range` varchar(255) DEFAULT NULL,
   `img_url` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`offer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+  `offer_desc` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `master_offer`
 --
 
-INSERT INTO `master_offer` (`offer_id`, `created_by`, `created_date`, `modified_by`, `modified_date`, `status`, `amount`, `end_date_range`, `max_amount`, `offer_name`, `online`, `percentage`, `start_date_range`, `img_url`) VALUES
-(1, 1, '2018-09-06 01:27:34', NULL, NULL, 1, '2', NULL, NULL, 'Flat 500 OFF', NULL, NULL, NULL, 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg'),
-(2, 1, '2018-09-06 01:27:34    ', NULL, NULL, 1, NULL, NULL, NULL, '10%', NULL, '1', NULL, 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg'),
-(3, 1, '2018-09-06 01:27:34', NULL, '', 1, '4', NULL, NULL, '1000 off for online', 'Y', NULL, NULL, 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg'),
-(4, 1, '2018-09-06 01:27:34', NULL, NULL, 1, NULL, NULL, '1000', '25% off above 10000', NULL, '5', NULL, 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg'),
-(5, 1, '2018-09-06 01:27:34', NULL, NULL, 1, '5', NULL, '1200', '1200 off above 12000', NULL, '', NULL, 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg'),
-(6, 1, '2018-09-06 01:27:34', NULL, NULL, 1, '9', '2019-02-10 23:59:59', NULL, '800 off for date range', NULL, '', '2018-12-10 00:00:01', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg'),
-(7, 1, '2018-09-06 01:27:34', NULL, NULL, 1, '', '2019-02-10 23:59:59', NULL, '18% off for date range', NULL, '1.8', '2018-12-10 00:00:01', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg');
+INSERT INTO `master_offer` (`offer_id`, `created_by`, `created_date`, `modified_by`, `modified_date`, `status`, `amount`, `end_date_range`, `max_amount`, `offer_name`, `online`, `percentage`, `start_date_range`, `img_url`, `offer_desc`) VALUES
+(1, 1, '2018-09-06 01:27:34', NULL, NULL, 1, '2', NULL, NULL, 'Flat 500 OFF', NULL, NULL, NULL, 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', NULL),
+(2, 1, '2018-09-06 01:27:34', NULL, NULL, 1, NULL, NULL, NULL, '10%', NULL, '1', NULL, 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', NULL),
+(3, 1, '2018-09-06 01:27:34', NULL, '', 1, '4', NULL, NULL, '1000 off for online', 'Y', NULL, NULL, 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', NULL),
+(4, 1, '2018-09-06 01:27:34', NULL, NULL, 1, NULL, NULL, '1000', '25% off above 10000', NULL, '5', NULL, 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', NULL),
+(5, 1, '2018-09-06 01:27:34', NULL, NULL, 1, '5', NULL, '1200', '1200 off above 12000', NULL, '', NULL, 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', NULL),
+(6, 1, '2018-09-06 01:27:34', NULL, NULL, 1, '9', '2019-02-10 23:59:59', NULL, '800 off for date range', NULL, '', '2018-12-10 00:00:01', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', NULL),
+(7, 1, '2018-09-06 01:27:34', NULL, NULL, 1, '', '2019-02-10 23:59:59', NULL, '18% off for date range', NULL, '1.8', '2018-12-10 00:00:01', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', NULL);
 
 -- --------------------------------------------------------
 
@@ -269,17 +256,15 @@ INSERT INTO `master_offer` (`offer_id`, `created_by`, `created_date`, `modified_
 -- Table structure for table `master_price_drop`
 --
 
-DROP TABLE IF EXISTS `master_price_drop`;
-CREATE TABLE IF NOT EXISTS `master_price_drop` (
-  `price_drop_id` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `master_price_drop` (
+  `price_drop_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
   `modified_date` varchar(255) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
-  `after_time` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`price_drop_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `after_time` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `master_price_drop`
@@ -295,9 +280,8 @@ INSERT INTO `master_price_drop` (`price_drop_id`, `created_by`, `created_date`, 
 -- Table structure for table `master_property`
 --
 
-DROP TABLE IF EXISTS `master_property`;
-CREATE TABLE IF NOT EXISTS `master_property` (
-  `property_id` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `master_property` (
+  `property_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
@@ -327,12 +311,8 @@ CREATE TABLE IF NOT EXISTS `master_property` (
   `property_type_id` bigint(20) NOT NULL,
   `stay_type_id` bigint(20) NOT NULL,
   `host_vs_account_id` bigint(20) NOT NULL,
-  `advance_percentage` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`property_id`),
-  KEY `FKtb8mxoehi4doi7200iynq5k3i` (`host_vs_account_id`),
-  KEY `FK5a00uodiowpit4s2fbuqgbm09` (`property_type_id`),
-  KEY `FK156vy9s4sl5mh6nxjo74bg2rv` (`stay_type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
+  `advance_percentage` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `master_property`
@@ -373,9 +353,8 @@ INSERT INTO `master_property` (`property_id`, `created_by`, `created_date`, `mod
 -- Table structure for table `master_property_type`
 --
 
-DROP TABLE IF EXISTS `master_property_type`;
-CREATE TABLE IF NOT EXISTS `master_property_type` (
-  `property_type_id` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `master_property_type` (
+  `property_type_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
@@ -384,9 +363,8 @@ CREATE TABLE IF NOT EXISTS `master_property_type` (
   `language_id` bigint(20) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `img_url` varchar(255) DEFAULT NULL,
-  `parent_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`property_type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+  `parent_id` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `master_property_type`
@@ -405,9 +383,8 @@ INSERT INTO `master_property_type` (`property_type_id`, `created_by`, `created_d
 -- Table structure for table `master_room`
 --
 
-DROP TABLE IF EXISTS `master_room`;
-CREATE TABLE IF NOT EXISTS `master_room` (
-  `room_id` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `master_room` (
+  `room_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
@@ -435,178 +412,175 @@ CREATE TABLE IF NOT EXISTS `master_room` (
   `ora_percentage` varchar(255) DEFAULT NULL,
   `ora_discount_percentage` varchar(255) DEFAULT NULL,
   `num_of_bed` varchar(255) DEFAULT NULL,
-  `ora_room_name` varchar(255) NOT NULL,
-  PRIMARY KEY (`room_id`),
-  KEY `FK44tv0dyh1xvs2elrr7yr3tr1x` (`property_id`),
-  KEY `FKjw1vho56i8n32d1tyt64yh8ey` (`room_cat_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=162 DEFAULT CHARSET=latin1;
+  `ora_room_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `master_room`
 --
 
 INSERT INTO `master_room` (`room_id`, `created_by`, `created_date`, `modified_by`, `modified_date`, `status`, `cot_available`, `no_of_child`, `no_of_guest`, `num_of_cot`, `room_current_status`, `shared_space`, `property_id`, `room_cat_id`, `room_standard`, `accomodation_name`, `room_price_per_night`, `room_price_per_month`, `shared_bed_price_per_night`, `shared_bed_price_per_month`, `cot_price`, `shared_bed_price`, `commission`, `host_discount_weekly`, `host_discount_monthly`, `ora_percentage`, `ora_discount_percentage`, `num_of_bed`, `ora_room_name`) VALUES
-(1, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', NULL, '2', NULL, NULL, 'N', 1, 1, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'Ora1231'),
+(1, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', ' ', '2', ' ', NULL, 'N', 1, 1, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'Ora1231'),
 (2, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'Y', '2', '2', '1', NULL, 'N', 1, 1, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'Ora1232'),
-(3, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '1', NULL, NULL, 'N', 1, 1, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'Ora1233'),
+(3, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '1', ' ', NULL, 'N', 1, 1, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'Ora1233'),
 (4, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'Y', '2', '3', '1', NULL, 'N', 1, 1, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'Ora1234'),
-(5, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '1', NULL, NULL, 'N', 1, 1, 'NORMAL', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'Ora1235'),
-(6, 1, '2018-12-18 16:39:05', NULL, NULL, 2, 'N', '1', '1', NULL, NULL, 'N', 2, 1, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR00000000006'),
+(5, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '1', ' ', NULL, 'N', 1, 1, 'NORMAL', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'Ora1235'),
+(6, 1, '2018-12-18 16:39:05', NULL, NULL, 2, 'N', '1', '1', ' ', NULL, 'N', 2, 1, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR00000000006'),
 (7, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'Y', '2', '2', '1', NULL, 'N', 2, 1, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR00000000007'),
-(8, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '3', NULL, NULL, 'N', 2, 1, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR00000000008'),
+(8, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '3', ' ', NULL, 'N', 2, 1, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR00000000008'),
 (9, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'Y', '2', '4', '1', NULL, 'N', 2, 2, 'PREMIUM', 'PRIVATE', '2400', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR00000000006'),
-(10, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '4', NULL, NULL, 'N', 2, 2, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000009'),
-(11, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '2', NULL, NULL, 'N', 3, 2, 'EXPRESS', 'PRIVATE', '1100', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000011'),
+(10, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '4', ' ', NULL, 'N', 2, 2, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000009'),
+(11, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '2', ' ', NULL, 'N', 3, 2, 'EXPRESS', 'PRIVATE', '1100', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000011'),
 (12, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'Y', '2', '3', '1', NULL, 'N', 3, 2, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000012'),
 (13, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'Y', '2', '1', '1', NULL, 'N', 3, 2, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000013'),
-(14, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '2', NULL, NULL, 'N', 3, 1, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000014'),
-(15, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '4', NULL, NULL, 'N', 4, 1, 'NORMAL', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000015'),
+(14, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '2', ' ', NULL, 'N', 3, 1, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000014'),
+(15, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '4', ' ', NULL, 'N', 4, 1, 'NORMAL', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000015'),
 (16, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'Y', '2', '2', '1', NULL, 'N', 4, 1, 'NORMAL', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000016'),
-(17, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '4', NULL, NULL, 'N', 4, 2, 'NORMAL', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000017'),
-(18, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '1', NULL, NULL, 'N', 5, 2, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000018'),
+(17, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '4', ' ', NULL, 'N', 4, 2, 'NORMAL', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000017'),
+(18, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '1', ' ', NULL, 'N', 5, 2, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000018'),
 (19, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'Y', '2', '2', '1', NULL, 'N', 5, 2, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000019'),
-(20, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '3', NULL, NULL, 'N', 5, 2, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000020'),
+(20, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '3', ' ', NULL, 'N', 5, 2, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000020'),
 (21, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'Y', '2', '4', '1', NULL, 'N', 5, 2, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000021'),
-(22, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '2', NULL, NULL, 'N', 5, 2, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000022'),
-(23, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '4', NULL, NULL, 'N', 5, 1, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000023'),
+(22, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '2', ' ', NULL, 'N', 5, 2, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000022'),
+(23, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '4', ' ', NULL, 'N', 5, 1, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000023'),
 (24, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'Y', '2', '2', '1', NULL, 'N', 5, 1, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000024'),
-(25, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '2', NULL, NULL, 'N', 5, 1, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000025'),
+(25, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '2', ' ', NULL, 'N', 5, 1, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000025'),
 (26, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'Y', '2', '2', '1', NULL, 'N', 5, 1, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000026'),
-(27, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '1', NULL, NULL, 'N', 5, 1, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000027'),
-(28, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '1', NULL, NULL, 'N', 6, 1, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000028'),
+(27, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '1', ' ', NULL, 'N', 5, 1, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000027'),
+(28, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '1', ' ', NULL, 'N', 6, 1, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000028'),
 (29, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'Y', '2', '2', '1', NULL, 'N', 6, 1, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000028'),
-(30, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '3', NULL, NULL, 'N', 6, 1, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000029'),
+(30, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '3', ' ', NULL, 'N', 6, 1, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000029'),
 (31, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'Y', '2', '4', '1', NULL, 'N', 6, 1, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000030'),
-(32, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '2', NULL, NULL, 'N', 6, 1, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000031'),
-(33, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', NULL, '1', NULL, NULL, 'N', 7, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000032'),
+(32, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '2', ' ', NULL, 'N', 6, 1, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000031'),
+(33, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', ' ', '1', ' ', NULL, 'N', 7, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000032'),
 (34, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'Y', '2', '2', '1', NULL, 'N', 7, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000033'),
-(35, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '1', NULL, NULL, 'N', 7, 3, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000034'),
+(35, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '1', ' ', NULL, 'N', 7, 3, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000034'),
 (36, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'Y', '2', '3', '1', NULL, 'N', 7, 3, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000035'),
 (37, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'Y', '2', '2', '1', NULL, 'N', 7, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000036'),
-(38, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '3', NULL, NULL, 'N', 7, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000037'),
+(38, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '3', ' ', NULL, 'N', 7, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000037'),
 (39, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'Y', '2', '4', '1', NULL, 'N', 7, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000038'),
-(40, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '2', NULL, NULL, 'N', 8, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000039'),
-(41, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '4', NULL, NULL, 'N', 8, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000040'),
+(40, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '2', ' ', NULL, 'N', 8, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000039'),
+(41, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '4', ' ', NULL, 'N', 8, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000040'),
 (42, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'Y', '2', '2', '1', NULL, 'N', 8, 3, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000041'),
-(43, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '2', NULL, NULL, 'N', 8, 3, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000042'),
+(43, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '2', ' ', NULL, 'N', 8, 3, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000042'),
 (44, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'Y', '2', '2', '1', NULL, 'N', 8, 3, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000043'),
-(45, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '1', NULL, NULL, 'N', 8, 3, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000044'),
-(46, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '1', NULL, NULL, 'N', 8, 3, 'EXPRESS', 'PRIVATE', '400', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000045'),
-(47, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '1', NULL, NULL, 'N', 9, 3, 'NORMAL', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000046'),
-(48, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '1', NULL, NULL, 'N', 9, 3, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000047'),
+(45, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '1', ' ', NULL, 'N', 8, 3, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000044'),
+(46, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '1', ' ', NULL, 'N', 8, 3, 'EXPRESS', 'PRIVATE', '400', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000045'),
+(47, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '1', ' ', NULL, 'N', 9, 3, 'NORMAL', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000046'),
+(48, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '1', ' ', NULL, 'N', 9, 3, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000047'),
 (49, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'Y', '2', '2', '1', NULL, 'N', 9, 3, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000048'),
-(50, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '3', NULL, NULL, 'N', 9, 3, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000049'),
+(50, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '3', ' ', NULL, 'N', 9, 3, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000049'),
 (51, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'Y', '2', '4', '1', NULL, 'N', 9, 3, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000050'),
-(52, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '4', NULL, NULL, 'N', 9, 3, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000051'),
-(53, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '2', NULL, NULL, 'N', 9, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000052'),
+(52, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '4', ' ', NULL, 'N', 9, 3, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000051'),
+(53, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '2', ' ', NULL, 'N', 9, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000052'),
 (54, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'Y', '2', '3', '1', NULL, 'N', 9, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000053'),
 (55, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'Y', '2', '1', '1', NULL, 'N', 9, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000054'),
-(56, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '4', NULL, NULL, 'N', 10, 3, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000055'),
-(57, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '2', NULL, NULL, 'N', 10, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000056'),
+(56, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '4', ' ', NULL, 'N', 10, 3, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000055'),
+(57, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '2', ' ', NULL, 'N', 10, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000056'),
 (58, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'Y', '2', '3', '1', NULL, 'N', 10, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000057'),
 (59, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'Y', '2', '2', '1', NULL, 'N', 10, 3, 'NORMAL', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000058'),
-(60, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '4', NULL, NULL, 'N', 10, 3, 'NORMAL', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000059'),
-(61, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '1', NULL, NULL, 'N', 10, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000060'),
+(60, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '4', ' ', NULL, 'N', 10, 3, 'NORMAL', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000059'),
+(61, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '1', ' ', NULL, 'N', 10, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000060'),
 (62, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'Y', '2', '2', '1', NULL, 'N', 10, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000061'),
-(63, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '3', NULL, NULL, 'N', 10, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000062'),
-(64, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '2', NULL, NULL, 'N', 10, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000063'),
-(65, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '4', NULL, NULL, 'N', 10, 3, 'NORMAL', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000064'),
-(66, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '1', NULL, NULL, 'N', 10, 3, 'NORMAL', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000065'),
-(67, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '1', NULL, NULL, 'N', 11, 3, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000066'),
+(63, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '3', ' ', NULL, 'N', 10, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000062'),
+(64, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '2', ' ', NULL, 'N', 10, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000063'),
+(65, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '4', ' ', NULL, 'N', 10, 3, 'NORMAL', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000064'),
+(66, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '1', ' ', NULL, 'N', 10, 3, 'NORMAL', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000065'),
+(67, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '1', ' ', NULL, 'N', 11, 3, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000066'),
 (68, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'Y', '2', '2', '1', NULL, 'N', 11, 3, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000067'),
-(69, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '3', NULL, NULL, 'N', 11, 3, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000068'),
+(69, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '3', ' ', NULL, 'N', 11, 3, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000068'),
 (70, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'Y', '2', '4', '1', NULL, 'N', 11, 3, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000069'),
-(71, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '4', NULL, NULL, 'N', 11, 3, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000070'),
-(72, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '2', NULL, NULL, 'N', 11, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000071'),
+(71, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '4', ' ', NULL, 'N', 11, 3, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000070'),
+(72, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '2', ' ', NULL, 'N', 11, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000071'),
 (73, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'Y', '2', '3', '1', NULL, 'N', 11, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000072'),
 (74, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'Y', '2', '2', '1', NULL, 'N', 11, 3, 'NORMAL', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000073'),
-(75, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '4', NULL, NULL, 'N', 11, 3, 'NORMAL', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000074'),
-(76, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '1', NULL, NULL, 'N', 11, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000075'),
+(75, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '4', ' ', NULL, 'N', 11, 3, 'NORMAL', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000074'),
+(76, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '1', ' ', NULL, 'N', 11, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000075'),
 (77, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'Y', '2', '2', '1', NULL, 'N', 11, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000076'),
-(78, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '3', NULL, NULL, 'N', 11, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000077'),
+(78, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '3', ' ', NULL, 'N', 11, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000077'),
 (79, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'Y', '2', '4', '1', NULL, 'N', 11, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000078'),
-(80, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '2', NULL, NULL, 'N', 11, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000079'),
+(80, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '2', ' ', NULL, 'N', 11, 3, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000079'),
 (81, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'Y', '2', '3', '1', NULL, 'N', 12, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000080'),
 (82, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'Y', '2', '1', '1', NULL, 'N', 12, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000081'),
-(83, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '4', NULL, NULL, 'N', 12, 4, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000082'),
-(84, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '2', NULL, NULL, 'N', 12, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000083'),
+(83, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '4', ' ', NULL, 'N', 12, 4, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000082'),
+(84, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '2', ' ', NULL, 'N', 12, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000083'),
 (85, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'Y', '2', '3', '1', NULL, 'N', 12, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000084'),
 (86, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'Y', '2', '2', '1', NULL, 'N', 12, 4, 'NORMAL', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000085'),
-(87, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '4', NULL, NULL, 'N', 12, 4, 'NORMAL', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000086'),
-(88, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '1', NULL, NULL, 'N', 12, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000087'),
+(87, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '4', ' ', NULL, 'N', 12, 4, 'NORMAL', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000086'),
+(88, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '1', ' ', NULL, 'N', 12, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000087'),
 (89, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'Y', '2', '2', '1', NULL, 'N', 12, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000088'),
-(90, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '3', NULL, NULL, 'N', 12, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000089'),
-(91, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '2', NULL, NULL, 'N', 12, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000090'),
-(92, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '4', NULL, NULL, 'N', 12, 4, 'NORMAL', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000091'),
-(93, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '1', NULL, NULL, 'N', 12, 4, 'NORMAL', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000092'),
-(94, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '1', NULL, NULL, 'N', 12, 4, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000093'),
-(95, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '3', NULL, NULL, 'N', 13, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000094'),
+(90, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '3', ' ', NULL, 'N', 12, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000089'),
+(91, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '2', ' ', NULL, 'N', 12, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000090'),
+(92, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '4', ' ', NULL, 'N', 12, 4, 'NORMAL', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000091'),
+(93, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '1', ' ', NULL, 'N', 12, 4, 'NORMAL', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000092'),
+(94, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '1', ' ', NULL, 'N', 12, 4, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000093'),
+(95, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '3', ' ', NULL, 'N', 13, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000094'),
 (96, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'Y', '2', '4', '1', NULL, 'N', 13, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000095'),
-(97, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', NULL, '1', NULL, NULL, 'N', 13, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000096'),
+(97, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', ' ', '1', ' ', NULL, 'N', 13, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000096'),
 (98, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'Y', '2', '2', '1', NULL, 'N', 13, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000097'),
-(99, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '1', NULL, NULL, 'N', 13, 4, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000098'),
+(99, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '1', ' ', NULL, 'N', 13, 4, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000098'),
 (100, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'Y', '2', '3', '1', NULL, 'N', 13, 4, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR000000000099'),
 (101, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'Y', '2', '2', '1', NULL, 'N', 13, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000100'),
-(102, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '1', NULL, NULL, 'N', 13, 4, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000101'),
+(102, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '1', ' ', NULL, 'N', 13, 4, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000101'),
 (103, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'Y', '2', '2', '1', NULL, 'N', 13, 4, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000102'),
-(104, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '3', NULL, NULL, 'N', 13, 4, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000103'),
+(104, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '3', ' ', NULL, 'N', 13, 4, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000103'),
 (105, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'Y', '2', '4', '1', NULL, 'N', 13, 4, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000104'),
-(106, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '1', NULL, NULL, 'N', 13, 4, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000105'),
-(107, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '1', NULL, NULL, 'N', 13, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000106'),
-(108, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '1', NULL, NULL, 'N', 13, 4, 'NORMAL', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000107'),
+(106, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '1', ' ', NULL, 'N', 13, 4, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000105'),
+(107, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '1', ' ', NULL, 'N', 13, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000106'),
+(108, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '1', ' ', NULL, 'N', 13, 4, 'NORMAL', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000107'),
 (109, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'Y', '2', '2', '1', NULL, 'N', 14, 4, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000108'),
-(110, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '3', NULL, NULL, 'N', 14, 4, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000109'),
+(110, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '3', ' ', NULL, 'N', 14, 4, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000109'),
 (111, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'Y', '2', '4', '1', NULL, 'N', 14, 4, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000110'),
-(112, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '4', NULL, NULL, 'N', 14, 4, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000111'),
-(113, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '2', NULL, NULL, 'N', 14, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000112'),
+(112, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '4', ' ', NULL, 'N', 14, 4, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000111'),
+(113, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '2', ' ', NULL, 'N', 14, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000112'),
 (114, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'Y', '2', '3', '1', NULL, 'N', 15, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000113'),
 (115, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'Y', '2', '2', '1', NULL, 'N', 15, 4, 'NORMAL', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000114'),
-(116, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '4', NULL, NULL, 'N', 15, 4, 'NORMAL', 'PRIVATE', '800', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000115'),
-(117, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '1', NULL, NULL, 'N', 15, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000116'),
+(116, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '4', ' ', NULL, 'N', 15, 4, 'NORMAL', 'PRIVATE', '800', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000115'),
+(117, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '1', ' ', NULL, 'N', 15, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000116'),
 (118, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'Y', '2', '2', '1', NULL, 'N', 15, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000117'),
-(119, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '3', NULL, NULL, 'N', 15, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000118'),
+(119, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '3', ' ', NULL, 'N', 15, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000118'),
 (120, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'Y', '2', '4', '1', NULL, 'N', 15, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000119'),
-(121, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '2', NULL, NULL, 'N', 15, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000120'),
-(122, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '4', NULL, NULL, 'N', 15, 4, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000121'),
-(123, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '2', NULL, NULL, 'N', 15, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000122'),
-(124, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '2', NULL, NULL, 'N', 15, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000123'),
-(125, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '4', NULL, NULL, 'N', 15, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000124'),
+(121, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '2', ' ', NULL, 'N', 15, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000120'),
+(122, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '4', ' ', NULL, 'N', 15, 4, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000121'),
+(123, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '2', ' ', NULL, 'N', 15, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000122'),
+(124, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', '1', '2', ' ', NULL, 'N', 15, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000123'),
+(125, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', '1', '4', ' ', NULL, 'N', 15, 4, 'EXPRESS', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000124'),
 (126, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'Y', '2', '2', '1', NULL, 'N', 15, 4, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000125'),
-(127, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '2', NULL, NULL, 'N', 16, 4, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000126'),
+(127, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', '1', '2', ' ', NULL, 'N', 16, 4, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000126'),
 (128, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'Y', '2', '2', '1', NULL, 'N', 16, 4, 'PREMIUM', 'PRIVATE', '2500', NULL, NULL, NULL, '500', NULL, '10', '7', NULL, '15', '10', NULL, 'ORAR0000000000127'),
-(129, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', NULL, NULL, '2', NULL, 'Y', 17, 5, 'EXPRESS', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000128'),
-(130, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', NULL, NULL, '1', NULL, 'Y', 17, 5, 'EXPRESS', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '5', 'ORAR0000000000129'),
-(131, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', NULL, NULL, NULL, NULL, 'N', 17, 5, 'PREMIUM', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000130'),
-(132, 1, '2018-12-18 16:39:05', NULL, NULL, 2, 'N', NULL, NULL, '1', NULL, 'Y', 18, 5, 'EXPRESS', 'SHARED', NULL, NULL, NULL, '8000', NULL, '150', '10', '7', '5', '15', '10', '3', 'ORAR00000000132'),
-(133, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', NULL, NULL, '3', NULL, 'Y', 18, 5, 'EXPRESS', 'SHARED', NULL, NULL, NULL, '11000', NULL, '200', '10', '7', '5', '15', '10', '4', 'ORAR00000000133'),
-(134, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', NULL, NULL, '1', NULL, 'Y', 18, 5, 'NORMAL', 'SHARED', NULL, NULL, NULL, '5500', NULL, '180', '10', '7', '5', '15', '10', '4', 'ORAR00000000134'),
-(135, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', NULL, NULL, '1', NULL, 'Y', 18, 5, 'NORMAL', 'SHARED', NULL, NULL, NULL, '11000', NULL, '180', '10', '7', '5', '15', '10', '9', 'ORAR00000000132'),
-(136, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', NULL, NULL, '2', NULL, 'Y', 19, 5, 'EXPRESS', 'SHARED', NULL, NULL, '100', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000135'),
-(137, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', NULL, NULL, '1', NULL, 'Y', 19, 5, 'EXPRESS', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '2', 'ORAR0000000000136'),
-(138, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', NULL, NULL, '3', NULL, 'Y', 19, 5, 'EXPRESS', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000137'),
-(139, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', NULL, NULL, '1', NULL, 'Y', 20, 5, 'EXPRESS', 'SHARED', NULL, NULL, '300', '9000', NULL, '150', '10', '7', '5', '15', '10', '8', 'ORAR0000000000138'),
-(140, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', NULL, NULL, NULL, NULL, 'N', 20, 5, 'NORMAL', 'SHARED', NULL, NULL, '300', '9000', NULL, '150', '10', '7', '5', '15', '10', '8', 'ORAR0000000000139'),
-(141, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', NULL, NULL, '1', NULL, 'Y', 20, 5, 'NORMAL', 'SHARED', NULL, NULL, '300', '9000', NULL, '150', '10', '7', '5', '15', '10', '4', 'ORAR0000000000140'),
-(142, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', NULL, NULL, '2', NULL, 'Y', 21, 5, 'PREMIUM', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '3', 'ORAR0000000000141'),
-(143, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', NULL, NULL, '2', NULL, 'Y', 22, 6, 'EXPRESS', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '3', 'ORAR0000000000142'),
-(144, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', NULL, NULL, '1', NULL, 'Y', 22, 6, 'EXPRESS', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000143'),
-(145, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', NULL, NULL, '3', NULL, 'Y', 22, 6, 'EXPRESS', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '2', 'ORAR0000000000144'),
-(146, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', NULL, NULL, '1', NULL, 'Y', 22, 6, 'NORMAL', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000145'),
-(147, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', NULL, NULL, '1', NULL, 'Y', 23, 6, 'NORMAL', 'SHARED', NULL, NULL, NULL, '9000', NULL, '150', '10', '7', '5', '15', '10', '8', 'ORAR0000000000146'),
-(148, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', NULL, NULL, '2', NULL, 'Y', 23, 6, 'EXPRESS', 'SHARED', NULL, NULL, NULL, '9000', NULL, '150', '10', '7', '5', '15', '10', '5', 'ORAR0000000000147'),
-(149, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', NULL, NULL, NULL, NULL, 'N', 23, 6, 'NORMAL', 'SHARED', NULL, NULL, NULL, '9000', NULL, '150', '10', '7', '5', '15', '10', '8', 'ORAR0000000000148'),
-(150, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', NULL, NULL, '1', NULL, 'Y', 24, 6, 'NORMAL', 'SHARED', NULL, NULL, NULL, '9000', NULL, '150', '10', '7', '5', '15', '10', '10', 'ORAR0000000000149'),
-(151, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', NULL, NULL, '2', NULL, 'Y', 24, 6, 'PREMIUM', 'SHARED', NULL, NULL, NULL, '9000', NULL, '150', '10', '7', '5', '15', '10', '8', 'ORAR0000000000150'),
-(152, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', NULL, NULL, '1', NULL, 'Y', 25, 6, 'EXPRESS', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '6', 'ORAR0000000000151'),
-(153, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', NULL, NULL, '1', NULL, 'Y', 25, 6, 'EXPRESS', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '6', 'ORAR0000000000152'),
-(154, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', NULL, NULL, '1', NULL, 'Y', 25, 6, 'EXPRESS', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000153'),
-(155, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', NULL, NULL, NULL, NULL, 'N', 25, 6, 'NORMAL', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000154'),
-(156, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', NULL, NULL, '1', NULL, 'Y', 25, 6, 'NORMAL', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000155'),
-(157, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', NULL, NULL, '2', NULL, 'Y', 25, 6, 'PREMIUM', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000156'),
-(158, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', NULL, NULL, '3', NULL, 'Y', 25, 6, 'EXPRESS', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000157'),
-(159, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', NULL, NULL, '1', NULL, 'Y', 25, 6, 'EXPRESS', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000158'),
-(160, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', NULL, NULL, '1', NULL, 'Y', 25, 6, 'EXPRESS', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000159'),
-(161, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', NULL, NULL, NULL, NULL, 'Y', 26, 6, 'EXPRESS', 'SHARED', NULL, NULL, '50', '1400', NULL, '150', '10', '7', '5', '15', '10', '8', 'ORAR0000000000160');
+(129, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', ' ', ' ', '2', NULL, 'Y', 17, 5, 'EXPRESS', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000128'),
+(130, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', ' ', ' ', '1', NULL, 'Y', 17, 5, 'EXPRESS', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000129'),
+(131, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', ' ', ' ', ' ', NULL, 'N', 17, 5, 'PREMIUM', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000130'),
+(132, 1, '2018-12-18 16:39:05', NULL, NULL, 2, 'N', ' ', ' ', '1', NULL, 'Y', 18, 5, 'EXPRESS', 'SHARED', NULL, NULL, NULL, '8000', NULL, '150', '10', '7', '5', '15', '10', '8', 'ORAR00000000132'),
+(133, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', ' ', ' ', '3', NULL, 'Y', 18, 5, 'EXPRESS', 'SHARED', NULL, NULL, NULL, '11000', NULL, '200', '10', '7', '5', '15', '10', '4', 'ORAR00000000133'),
+(134, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', ' ', ' ', '1', NULL, 'Y', 18, 5, 'NORMAL', 'SHARED', NULL, NULL, NULL, '5500', NULL, '180', '10', '7', '5', '15', '10', '4', 'ORAR00000000134'),
+(135, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', ' ', ' ', '1', NULL, 'Y', 18, 5, 'NORMAL', 'SHARED', NULL, NULL, NULL, '11000', NULL, '180', '10', '7', '5', '15', '10', '9', 'ORAR00000000132'),
+(136, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', ' ', ' ', '2', NULL, 'Y', 19, 5, 'EXPRESS', 'SHARED', NULL, NULL, '100', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000135'),
+(137, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', ' ', ' ', '1', NULL, 'Y', 19, 5, 'EXPRESS', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000136'),
+(138, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', ' ', ' ', '3', NULL, 'Y', 19, 5, 'EXPRESS', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000137'),
+(139, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', ' ', ' ', '1', NULL, 'Y', 20, 5, 'EXPRESS', 'SHARED', NULL, NULL, '300', '9000', NULL, '150', '10', '7', '5', '15', '10', '8', 'ORAR0000000000138'),
+(140, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', ' ', ' ', ' ', NULL, 'N', 20, 5, 'NORMAL', 'SHARED', NULL, NULL, '300', '9000', NULL, '150', '10', '7', '5', '15', '10', '8', 'ORAR0000000000139'),
+(141, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', ' ', ' ', '1', NULL, 'Y', 20, 5, 'NORMAL', 'SHARED', NULL, NULL, '300', '9000', NULL, '150', '10', '7', '5', '15', '10', '8', 'ORAR0000000000140'),
+(142, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', ' ', ' ', '2', NULL, 'Y', 21, 5, 'PREMIUM', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000141'),
+(143, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', ' ', ' ', '2', NULL, 'Y', 22, 6, 'EXPRESS', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000142'),
+(144, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', ' ', ' ', '1', NULL, 'Y', 22, 6, 'EXPRESS', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000143'),
+(145, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', ' ', ' ', '3', NULL, 'Y', 22, 6, 'EXPRESS', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000144'),
+(146, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', ' ', ' ', '1', NULL, 'Y', 22, 6, 'NORMAL', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000145'),
+(147, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', ' ', ' ', '1', NULL, 'Y', 23, 6, 'NORMAL', 'SHARED', NULL, NULL, NULL, '9000', NULL, '150', '10', '7', '5', '15', '10', '8', 'ORAR0000000000146'),
+(148, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', ' ', ' ', '2', NULL, 'Y', 23, 6, 'EXPRESS', 'SHARED', NULL, NULL, NULL, '9000', NULL, '150', '10', '7', '5', '15', '10', '8', 'ORAR0000000000147'),
+(149, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', ' ', ' ', ' ', NULL, 'N', 23, 6, 'NORMAL', 'SHARED', NULL, NULL, NULL, '9000', NULL, '150', '10', '7', '5', '15', '10', '8', 'ORAR0000000000148'),
+(150, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', ' ', ' ', '1', NULL, 'Y', 24, 6, 'NORMAL', 'SHARED', NULL, NULL, NULL, '9000', NULL, '150', '10', '7', '5', '15', '10', '8', 'ORAR0000000000149'),
+(151, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', ' ', ' ', '2', NULL, 'Y', 24, 6, 'PREMIUM', 'SHARED', NULL, NULL, NULL, '9000', NULL, '150', '10', '7', '5', '15', '10', '8', 'ORAR0000000000150'),
+(152, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', ' ', ' ', '1', NULL, 'Y', 25, 6, 'EXPRESS', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000151'),
+(153, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', ' ', ' ', '1', NULL, 'Y', 25, 6, 'EXPRESS', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000152'),
+(154, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', ' ', ' ', '1', NULL, 'Y', 25, 6, 'EXPRESS', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000153'),
+(155, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', ' ', ' ', ' ', NULL, 'N', 25, 6, 'NORMAL', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000154'),
+(156, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', ' ', ' ', '1', NULL, 'Y', 25, 6, 'NORMAL', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000155'),
+(157, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', ' ', ' ', '2', NULL, 'Y', 25, 6, 'PREMIUM', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000156'),
+(158, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', ' ', ' ', '3', NULL, 'Y', 25, 6, 'EXPRESS', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000157'),
+(159, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', ' ', ' ', '1', NULL, 'Y', 25, 6, 'EXPRESS', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000158'),
+(160, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', ' ', ' ', '1', NULL, 'Y', 25, 6, 'EXPRESS', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000159'),
+(161, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', ' ', ' ', ' ', NULL, 'Y', 26, 6, 'EXPRESS', 'SHARED', NULL, NULL, '50', '1400', NULL, '150', '10', '7', '5', '15', '10', '8', 'ORAR0000000000160');
 
 -- --------------------------------------------------------
 
@@ -614,9 +588,8 @@ INSERT INTO `master_room` (`room_id`, `created_by`, `created_date`, `modified_by
 -- Table structure for table `master_room_category`
 --
 
-DROP TABLE IF EXISTS `master_room_category`;
-CREATE TABLE IF NOT EXISTS `master_room_category` (
-  `room_cat_id` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `master_room_category` (
+  `room_cat_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
@@ -625,10 +598,8 @@ CREATE TABLE IF NOT EXISTS `master_room_category` (
   `language_id` bigint(20) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `parent_id` bigint(20) DEFAULT NULL,
-  `property_type_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`room_cat_id`),
-  KEY `FKljipnikicv5k5pfpao2dflhpj` (`property_type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+  `property_type_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `master_room_category`
@@ -648,9 +619,8 @@ INSERT INTO `master_room_category` (`room_cat_id`, `created_by`, `created_date`,
 -- Table structure for table `master_space_rule`
 --
 
-DROP TABLE IF EXISTS `master_space_rule`;
-CREATE TABLE IF NOT EXISTS `master_space_rule` (
-  `sprule_id` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `master_space_rule` (
+  `sprule_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
@@ -661,9 +631,8 @@ CREATE TABLE IF NOT EXISTS `master_space_rule` (
   `rule_name` varchar(255) DEFAULT NULL,
   `img_url` varchar(255) DEFAULT NULL,
   `smimg_url` varchar(255) DEFAULT NULL,
-  `listing_flag` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`sprule_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+  `listing_flag` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `master_space_rule`
@@ -680,9 +649,8 @@ INSERT INTO `master_space_rule` (`sprule_id`, `created_by`, `created_date`, `mod
 -- Table structure for table `master_specialties`
 --
 
-DROP TABLE IF EXISTS `master_specialties`;
-CREATE TABLE IF NOT EXISTS `master_specialties` (
-  `specialties_id` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `master_specialties` (
+  `specialties_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
@@ -690,9 +658,8 @@ CREATE TABLE IF NOT EXISTS `master_specialties` (
   `status` int(11) DEFAULT NULL,
   `language_id` bigint(20) DEFAULT NULL,
   `parent_id` bigint(20) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`specialties_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `name` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `master_specialties`
@@ -708,9 +675,8 @@ INSERT INTO `master_specialties` (`specialties_id`, `created_by`, `created_date`
 -- Table structure for table `master_special_experience`
 --
 
-DROP TABLE IF EXISTS `master_special_experience`;
-CREATE TABLE IF NOT EXISTS `master_special_experience` (
-  `experience_id` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `master_special_experience` (
+  `experience_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
@@ -718,9 +684,8 @@ CREATE TABLE IF NOT EXISTS `master_special_experience` (
   `status` int(11) DEFAULT NULL,
   `experience_name` varchar(255) DEFAULT NULL,
   `language_id` bigint(20) DEFAULT NULL,
-  `parent_id` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`experience_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+  `parent_id` bigint(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `master_special_experience`
@@ -737,9 +702,8 @@ INSERT INTO `master_special_experience` (`experience_id`, `created_by`, `created
 -- Table structure for table `master_stay_type`
 --
 
-DROP TABLE IF EXISTS `master_stay_type`;
-CREATE TABLE IF NOT EXISTS `master_stay_type` (
-  `stay_type_id` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `master_stay_type` (
+  `stay_type_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
@@ -747,9 +711,8 @@ CREATE TABLE IF NOT EXISTS `master_stay_type` (
   `status` int(11) DEFAULT NULL,
   `language_id` bigint(20) DEFAULT NULL,
   `parent_id` bigint(20) DEFAULT NULL,
-  `stay_type_name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`stay_type_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+  `stay_type_name` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `master_stay_type`
@@ -766,19 +729,16 @@ INSERT INTO `master_stay_type` (`stay_type_id`, `created_by`, `created_date`, `m
 -- Table structure for table `master_wishlist`
 --
 
-DROP TABLE IF EXISTS `master_wishlist`;
-CREATE TABLE IF NOT EXISTS `master_wishlist` (
-  `wishlist_id` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `master_wishlist` (
+  `wishlist_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
   `modified_date` varchar(255) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   `user_id` bigint(20) DEFAULT NULL,
-  `property_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`wishlist_id`),
-  KEY `FKqp3nmgc19tiysytctn29jkypy` (`property_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `property_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `master_wishlist`
@@ -794,20 +754,16 @@ INSERT INTO `master_wishlist` (`wishlist_id`, `created_by`, `created_date`, `mod
 -- Table structure for table `meal_plan_cat_vs_meal_plan`
 --
 
-DROP TABLE IF EXISTS `meal_plan_cat_vs_meal_plan`;
-CREATE TABLE IF NOT EXISTS `meal_plan_cat_vs_meal_plan` (
-  `mpcmp_id` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `meal_plan_cat_vs_meal_plan` (
+  `mpcmp_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
   `modified_date` varchar(255) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   `mpc_id` bigint(20) NOT NULL,
-  `meal_plan_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`mpcmp_id`),
-  KEY `FKiqhjoqkinxg3b872k7m68xq13` (`mpc_id`),
-  KEY `FKeuyapssqoidbnljl9l9lbq78u` (`meal_plan_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `meal_plan_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `meal_plan_cat_vs_meal_plan`
@@ -823,9 +779,8 @@ INSERT INTO `meal_plan_cat_vs_meal_plan` (`mpcmp_id`, `created_by`, `created_dat
 -- Table structure for table `property_vs_description`
 --
 
-DROP TABLE IF EXISTS `property_vs_description`;
-CREATE TABLE IF NOT EXISTS `property_vs_description` (
-  `property_desc_id` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `property_vs_description` (
+  `property_desc_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
@@ -833,10 +788,8 @@ CREATE TABLE IF NOT EXISTS `property_vs_description` (
   `status` int(11) DEFAULT NULL,
   `description` text,
   `language_id` bigint(20) DEFAULT NULL,
-  `property_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`property_desc_id`),
-  KEY `FK53h3qarlglrohvb624pf128m2` (`property_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+  `property_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `property_vs_description`
@@ -876,9 +829,8 @@ INSERT INTO `property_vs_description` (`property_desc_id`, `created_by`, `create
 -- Table structure for table `property_vs_document`
 --
 
-DROP TABLE IF EXISTS `property_vs_document`;
-CREATE TABLE IF NOT EXISTS `property_vs_document` (
-  `property_vs_document_id` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `property_vs_document` (
+  `property_vs_document_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
@@ -887,11 +839,8 @@ CREATE TABLE IF NOT EXISTS `property_vs_document` (
   `document_number` varchar(255) DEFAULT NULL,
   `file_url` varchar(255) DEFAULT NULL,
   `document_id` bigint(20) NOT NULL,
-  `property_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`property_vs_document_id`),
-  KEY `FKfgbbjwhbs884wescouui8b3gk` (`document_id`),
-  KEY `FKep8ggv1h9e7p36dim56nm6e2a` (`property_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=latin1;
+  `property_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `property_vs_document`
@@ -957,8 +906,7 @@ INSERT INTO `property_vs_document` (`property_vs_document_id`, `created_by`, `cr
 -- Table structure for table `property_vs_experience`
 --
 
-DROP TABLE IF EXISTS `property_vs_experience`;
-CREATE TABLE IF NOT EXISTS `property_vs_experience` (
+CREATE TABLE `property_vs_experience` (
   `property_exp_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
@@ -966,10 +914,7 @@ CREATE TABLE IF NOT EXISTS `property_vs_experience` (
   `modified_date` varchar(255) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   `property_id` bigint(20) NOT NULL,
-  `experience_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`property_exp_id`),
-  KEY `FK92o376xk6r7gls0he1aaugt7x` (`property_id`),
-  KEY `FKn1s82f6oy0l1qh4mtmrdvjpx4` (`experience_id`)
+  `experience_id` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1036,8 +981,7 @@ INSERT INTO `property_vs_experience` (`property_exp_id`, `created_by`, `created_
 -- Table structure for table `property_vs_guest_access`
 --
 
-DROP TABLE IF EXISTS `property_vs_guest_access`;
-CREATE TABLE IF NOT EXISTS `property_vs_guest_access` (
+CREATE TABLE `property_vs_guest_access` (
   `property_gaccess_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
@@ -1046,9 +990,7 @@ CREATE TABLE IF NOT EXISTS `property_vs_guest_access` (
   `status` int(11) DEFAULT NULL,
   `guest_access` varchar(255) DEFAULT NULL,
   `language_id` bigint(20) DEFAULT NULL,
-  `property_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`property_gaccess_id`),
-  KEY `FKg443u2hdb4sbrrnjwsrsxh7rk` (`property_id`)
+  `property_id` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1089,8 +1031,7 @@ INSERT INTO `property_vs_guest_access` (`property_gaccess_id`, `created_by`, `cr
 -- Table structure for table `property_vs_image`
 --
 
-DROP TABLE IF EXISTS `property_vs_image`;
-CREATE TABLE IF NOT EXISTS `property_vs_image` (
+CREATE TABLE `property_vs_image` (
   `property_image_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
@@ -1098,9 +1039,7 @@ CREATE TABLE IF NOT EXISTS `property_vs_image` (
   `modified_date` varchar(255) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   `image_url` varchar(255) DEFAULT NULL,
-  `property_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`property_image_id`),
-  KEY `FKdrv8bc11h2o2m8uumykk4cu57` (`property_id`)
+  `property_id` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1193,8 +1132,7 @@ INSERT INTO `property_vs_image` (`property_image_id`, `created_by`, `created_dat
 -- Table structure for table `property_vs_nearby`
 --
 
-DROP TABLE IF EXISTS `property_vs_nearby`;
-CREATE TABLE IF NOT EXISTS `property_vs_nearby` (
+CREATE TABLE `property_vs_nearby` (
   `property_nearby_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
@@ -1205,9 +1143,7 @@ CREATE TABLE IF NOT EXISTS `property_vs_nearby` (
   `latitude` varchar(255) DEFAULT NULL,
   `longitude` varchar(255) DEFAULT NULL,
   `places` varchar(255) DEFAULT NULL,
-  `property_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`property_nearby_id`),
-  KEY `FKru2h6pp77q418s5973c7125de` (`property_id`)
+  `property_id` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1300,8 +1236,7 @@ INSERT INTO `property_vs_nearby` (`property_nearby_id`, `created_by`, `created_d
 -- Table structure for table `property_vs_pricedrop`
 --
 
-DROP TABLE IF EXISTS `property_vs_pricedrop`;
-CREATE TABLE IF NOT EXISTS `property_vs_pricedrop` (
+CREATE TABLE `property_vs_pricedrop` (
   `property_pricedrop_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
@@ -1310,10 +1245,7 @@ CREATE TABLE IF NOT EXISTS `property_vs_pricedrop` (
   `status` int(11) DEFAULT NULL,
   `percentage` varchar(255) DEFAULT NULL,
   `price_drop_id` bigint(20) NOT NULL,
-  `property_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`property_pricedrop_id`),
-  KEY `FKnna1ewhlvt6hf3dmqx3rwd91k` (`price_drop_id`),
-  KEY `FKgwycvdturw8svnhj0pveb83bg` (`property_id`)
+  `property_id` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1380,8 +1312,7 @@ INSERT INTO `property_vs_pricedrop` (`property_pricedrop_id`, `created_by`, `cre
 -- Table structure for table `property_vs_space`
 --
 
-DROP TABLE IF EXISTS `property_vs_space`;
-CREATE TABLE IF NOT EXISTS `property_vs_space` (
+CREATE TABLE `property_vs_space` (
   `property_space_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
@@ -1390,10 +1321,7 @@ CREATE TABLE IF NOT EXISTS `property_vs_space` (
   `status` int(11) DEFAULT NULL,
   `answer` varchar(255) DEFAULT NULL,
   `property_id` bigint(20) NOT NULL,
-  `sprule_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`property_space_id`),
-  KEY `FKklkdybjqkwqcsydd52tcjt4g0` (`property_id`),
-  KEY `FKhd1vunghcip4rtk0511i53tf7` (`sprule_id`)
+  `sprule_id` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1489,8 +1417,7 @@ INSERT INTO `property_vs_space` (`property_space_id`, `created_by`, `created_dat
 -- Table structure for table `room_vs_amenities`
 --
 
-DROP TABLE IF EXISTS `room_vs_amenities`;
-CREATE TABLE IF NOT EXISTS `room_vs_amenities` (
+CREATE TABLE `room_vs_amenities` (
   `room_vs_aminities_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
@@ -1498,10 +1425,7 @@ CREATE TABLE IF NOT EXISTS `room_vs_amenities` (
   `modified_date` varchar(255) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   `aminities_id` bigint(20) NOT NULL,
-  `room_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`room_vs_aminities_id`),
-  KEY `FKm50c7up4jp1m0vl36325pktvw` (`aminities_id`),
-  KEY `FKblve2wd06ghlbt72q1onnu1ib` (`room_id`)
+  `room_id` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1901,8 +1825,7 @@ INSERT INTO `room_vs_amenities` (`room_vs_aminities_id`, `created_by`, `created_
 -- Table structure for table `room_vs_cancellation`
 --
 
-DROP TABLE IF EXISTS `room_vs_cancellation`;
-CREATE TABLE IF NOT EXISTS `room_vs_cancellation` (
+CREATE TABLE `room_vs_cancellation` (
   `rc_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
@@ -1911,10 +1834,7 @@ CREATE TABLE IF NOT EXISTS `room_vs_cancellation` (
   `status` int(11) DEFAULT NULL,
   `percentage` varchar(255) DEFAULT NULL,
   `cancellation_slab_id` bigint(20) NOT NULL,
-  `room_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`rc_id`),
-  KEY `FKr3pyo2gqwl71s8k5sm32rbjha` (`cancellation_slab_id`),
-  KEY `FKemhbtji1nvg41xa261axnd7vr` (`room_id`)
+  `room_id` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -2251,8 +2171,7 @@ INSERT INTO `room_vs_cancellation` (`rc_id`, `created_by`, `created_date`, `modi
 -- Table structure for table `room_vs_image`
 --
 
-DROP TABLE IF EXISTS `room_vs_image`;
-CREATE TABLE IF NOT EXISTS `room_vs_image` (
+CREATE TABLE `room_vs_image` (
   `room_vs_image_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
@@ -2260,9 +2179,7 @@ CREATE TABLE IF NOT EXISTS `room_vs_image` (
   `modified_date` varchar(255) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   `image_url` varchar(255) DEFAULT NULL,
-  `room_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`room_vs_image_id`),
-  KEY `FKpamxay6j07bxeh97i0753dh6t` (`room_id`)
+  `room_id` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -2760,8 +2677,7 @@ INSERT INTO `room_vs_image` (`room_vs_image_id`, `created_by`, `created_date`, `
 -- Table structure for table `room_vs_meal`
 --
 
-DROP TABLE IF EXISTS `room_vs_meal`;
-CREATE TABLE IF NOT EXISTS `room_vs_meal` (
+CREATE TABLE `room_vs_meal` (
   `room_vs_meal_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
@@ -2790,10 +2706,7 @@ CREATE TABLE IF NOT EXISTS `room_vs_meal` (
   `meal_type_friday` varchar(255) DEFAULT NULL,
   `meal_type_saturday` varchar(255) DEFAULT NULL,
   `meal_plan_id` bigint(20) NOT NULL,
-  `room_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`room_vs_meal_id`),
-  KEY `FKfxh94m8ds7jaej9udbouh2alf` (`meal_plan_id`),
-  KEY `FKbv9gqnudk5swt4bpm37f5p28b` (`room_id`)
+  `room_id` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -3455,20 +3368,16 @@ INSERT INTO `room_vs_meal` (`room_vs_meal_id`, `created_by`, `created_date`, `mo
 -- Table structure for table `room_vs_offer`
 --
 
-DROP TABLE IF EXISTS `room_vs_offer`;
-CREATE TABLE IF NOT EXISTS `room_vs_offer` (
-  `room_vs_offer_id` bigint(20) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `room_vs_offer` (
+  `room_vs_offer_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
   `modified_by` bigint(20) DEFAULT NULL,
   `modified_date` varchar(255) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   `offer_id` bigint(20) NOT NULL,
-  `room_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`room_vs_offer_id`),
-  KEY `FKfqux8yyo3blnp4xga6oa9ur78` (`offer_id`),
-  KEY `FKeyvqqee0hpcmg61dl00kbqvt5` (`room_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+  `room_id` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `room_vs_offer`
@@ -3496,8 +3405,7 @@ INSERT INTO `room_vs_offer` (`room_vs_offer_id`, `created_by`, `created_date`, `
 -- Table structure for table `room_vs_specialties`
 --
 
-DROP TABLE IF EXISTS `room_vs_specialties`;
-CREATE TABLE IF NOT EXISTS `room_vs_specialties` (
+CREATE TABLE `room_vs_specialties` (
   `roomspec_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
@@ -3505,10 +3413,7 @@ CREATE TABLE IF NOT EXISTS `room_vs_specialties` (
   `modified_date` varchar(255) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   `room_id` bigint(20) NOT NULL,
-  `specialties_id` bigint(20) NOT NULL,
-  PRIMARY KEY (`roomspec_id`),
-  KEY `FKmjiqftc5rdrthmteghtchnkav` (`room_id`),
-  KEY `FKoe11vqm2reg89jso2t6d4mm7d` (`specialties_id`)
+  `specialties_id` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -3764,8 +3669,7 @@ INSERT INTO `room_vs_specialties` (`roomspec_id`, `created_by`, `created_date`, 
 -- Table structure for table `user_vs_account`
 --
 
-DROP TABLE IF EXISTS `user_vs_account`;
-CREATE TABLE IF NOT EXISTS `user_vs_account` (
+CREATE TABLE `user_vs_account` (
   `host_vs_account_id` bigint(20) NOT NULL,
   `created_by` bigint(20) DEFAULT NULL,
   `created_date` varchar(255) DEFAULT NULL,
@@ -3778,8 +3682,7 @@ CREATE TABLE IF NOT EXISTS `user_vs_account` (
   `bank_name` varchar(255) DEFAULT NULL,
   `branch_name` varchar(255) DEFAULT NULL,
   `ifsc_code` varchar(255) DEFAULT NULL,
-  `user_id` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`host_vs_account_id`)
+  `user_id` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -3813,6 +3716,383 @@ INSERT INTO `user_vs_account` (`host_vs_account_id`, `created_by`, `created_date
 (24, 1, '2018-12-18 15:19:01', NULL, NULL, 1, 'Sudeep Chhetri24', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1'),
 (25, 1, '2018-12-18 16:05:15', NULL, NULL, 1, 'Sudeep Chhetri25', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1'),
 (26, 1, '2018-12-18 16:09:47', NULL, NULL, 1, 'Sudeep Chhetri26', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `master_amenities`
+--
+ALTER TABLE `master_amenities`
+  ADD PRIMARY KEY (`aminities_id`);
+
+--
+-- Indexes for table `master_cancellation_slab`
+--
+ALTER TABLE `master_cancellation_slab`
+  ADD PRIMARY KEY (`cancellation_slab_id`);
+
+--
+-- Indexes for table `master_convenience`
+--
+ALTER TABLE `master_convenience`
+  ADD PRIMARY KEY (`convenience_id`);
+
+--
+-- Indexes for table `master_document`
+--
+ALTER TABLE `master_document`
+  ADD PRIMARY KEY (`document_id`);
+
+--
+-- Indexes for table `master_gst_slab`
+--
+ALTER TABLE `master_gst_slab`
+  ADD PRIMARY KEY (`gst_slab_id`);
+
+--
+-- Indexes for table `master_meal_plan`
+--
+ALTER TABLE `master_meal_plan`
+  ADD PRIMARY KEY (`meal_plan_id`);
+
+--
+-- Indexes for table `master_meal_plan_category`
+--
+ALTER TABLE `master_meal_plan_category`
+  ADD PRIMARY KEY (`mpc_id`);
+
+--
+-- Indexes for table `master_offer`
+--
+ALTER TABLE `master_offer`
+  ADD PRIMARY KEY (`offer_id`);
+
+--
+-- Indexes for table `master_price_drop`
+--
+ALTER TABLE `master_price_drop`
+  ADD PRIMARY KEY (`price_drop_id`);
+
+--
+-- Indexes for table `master_property`
+--
+ALTER TABLE `master_property`
+  ADD PRIMARY KEY (`property_id`),
+  ADD KEY `FKtb8mxoehi4doi7200iynq5k3i` (`host_vs_account_id`),
+  ADD KEY `FK5a00uodiowpit4s2fbuqgbm09` (`property_type_id`),
+  ADD KEY `FK156vy9s4sl5mh6nxjo74bg2rv` (`stay_type_id`);
+
+--
+-- Indexes for table `master_property_type`
+--
+ALTER TABLE `master_property_type`
+  ADD PRIMARY KEY (`property_type_id`);
+
+--
+-- Indexes for table `master_room`
+--
+ALTER TABLE `master_room`
+  ADD PRIMARY KEY (`room_id`),
+  ADD KEY `FK44tv0dyh1xvs2elrr7yr3tr1x` (`property_id`),
+  ADD KEY `FKjw1vho56i8n32d1tyt64yh8ey` (`room_cat_id`);
+
+--
+-- Indexes for table `master_room_category`
+--
+ALTER TABLE `master_room_category`
+  ADD PRIMARY KEY (`room_cat_id`),
+  ADD KEY `FKljipnikicv5k5pfpao2dflhpj` (`property_type_id`);
+
+--
+-- Indexes for table `master_space_rule`
+--
+ALTER TABLE `master_space_rule`
+  ADD PRIMARY KEY (`sprule_id`);
+
+--
+-- Indexes for table `master_specialties`
+--
+ALTER TABLE `master_specialties`
+  ADD PRIMARY KEY (`specialties_id`);
+
+--
+-- Indexes for table `master_special_experience`
+--
+ALTER TABLE `master_special_experience`
+  ADD PRIMARY KEY (`experience_id`);
+
+--
+-- Indexes for table `master_stay_type`
+--
+ALTER TABLE `master_stay_type`
+  ADD PRIMARY KEY (`stay_type_id`);
+
+--
+-- Indexes for table `master_wishlist`
+--
+ALTER TABLE `master_wishlist`
+  ADD PRIMARY KEY (`wishlist_id`),
+  ADD KEY `FKqp3nmgc19tiysytctn29jkypy` (`property_id`);
+
+--
+-- Indexes for table `meal_plan_cat_vs_meal_plan`
+--
+ALTER TABLE `meal_plan_cat_vs_meal_plan`
+  ADD PRIMARY KEY (`mpcmp_id`),
+  ADD KEY `FKiqhjoqkinxg3b872k7m68xq13` (`mpc_id`),
+  ADD KEY `FKeuyapssqoidbnljl9l9lbq78u` (`meal_plan_id`);
+
+--
+-- Indexes for table `property_vs_description`
+--
+ALTER TABLE `property_vs_description`
+  ADD PRIMARY KEY (`property_desc_id`),
+  ADD KEY `FK53h3qarlglrohvb624pf128m2` (`property_id`);
+
+--
+-- Indexes for table `property_vs_document`
+--
+ALTER TABLE `property_vs_document`
+  ADD PRIMARY KEY (`property_vs_document_id`),
+  ADD KEY `FKfgbbjwhbs884wescouui8b3gk` (`document_id`),
+  ADD KEY `FKep8ggv1h9e7p36dim56nm6e2a` (`property_id`);
+
+--
+-- Indexes for table `property_vs_experience`
+--
+ALTER TABLE `property_vs_experience`
+  ADD PRIMARY KEY (`property_exp_id`),
+  ADD KEY `FK92o376xk6r7gls0he1aaugt7x` (`property_id`),
+  ADD KEY `FKn1s82f6oy0l1qh4mtmrdvjpx4` (`experience_id`);
+
+--
+-- Indexes for table `property_vs_guest_access`
+--
+ALTER TABLE `property_vs_guest_access`
+  ADD PRIMARY KEY (`property_gaccess_id`),
+  ADD KEY `FKg443u2hdb4sbrrnjwsrsxh7rk` (`property_id`);
+
+--
+-- Indexes for table `property_vs_image`
+--
+ALTER TABLE `property_vs_image`
+  ADD PRIMARY KEY (`property_image_id`),
+  ADD KEY `FKdrv8bc11h2o2m8uumykk4cu57` (`property_id`);
+
+--
+-- Indexes for table `property_vs_nearby`
+--
+ALTER TABLE `property_vs_nearby`
+  ADD PRIMARY KEY (`property_nearby_id`),
+  ADD KEY `FKru2h6pp77q418s5973c7125de` (`property_id`);
+
+--
+-- Indexes for table `property_vs_pricedrop`
+--
+ALTER TABLE `property_vs_pricedrop`
+  ADD PRIMARY KEY (`property_pricedrop_id`),
+  ADD KEY `FKnna1ewhlvt6hf3dmqx3rwd91k` (`price_drop_id`),
+  ADD KEY `FKgwycvdturw8svnhj0pveb83bg` (`property_id`);
+
+--
+-- Indexes for table `property_vs_space`
+--
+ALTER TABLE `property_vs_space`
+  ADD PRIMARY KEY (`property_space_id`),
+  ADD KEY `FKklkdybjqkwqcsydd52tcjt4g0` (`property_id`),
+  ADD KEY `FKhd1vunghcip4rtk0511i53tf7` (`sprule_id`);
+
+--
+-- Indexes for table `room_vs_amenities`
+--
+ALTER TABLE `room_vs_amenities`
+  ADD PRIMARY KEY (`room_vs_aminities_id`),
+  ADD KEY `FKm50c7up4jp1m0vl36325pktvw` (`aminities_id`),
+  ADD KEY `FKblve2wd06ghlbt72q1onnu1ib` (`room_id`);
+
+--
+-- Indexes for table `room_vs_cancellation`
+--
+ALTER TABLE `room_vs_cancellation`
+  ADD PRIMARY KEY (`rc_id`),
+  ADD KEY `FKr3pyo2gqwl71s8k5sm32rbjha` (`cancellation_slab_id`),
+  ADD KEY `FKemhbtji1nvg41xa261axnd7vr` (`room_id`);
+
+--
+-- Indexes for table `room_vs_image`
+--
+ALTER TABLE `room_vs_image`
+  ADD PRIMARY KEY (`room_vs_image_id`),
+  ADD KEY `FKpamxay6j07bxeh97i0753dh6t` (`room_id`);
+
+--
+-- Indexes for table `room_vs_meal`
+--
+ALTER TABLE `room_vs_meal`
+  ADD PRIMARY KEY (`room_vs_meal_id`),
+  ADD KEY `FKfxh94m8ds7jaej9udbouh2alf` (`meal_plan_id`),
+  ADD KEY `FKbv9gqnudk5swt4bpm37f5p28b` (`room_id`);
+
+--
+-- Indexes for table `room_vs_offer`
+--
+ALTER TABLE `room_vs_offer`
+  ADD PRIMARY KEY (`room_vs_offer_id`),
+  ADD KEY `FKfqux8yyo3blnp4xga6oa9ur78` (`offer_id`),
+  ADD KEY `FKeyvqqee0hpcmg61dl00kbqvt5` (`room_id`);
+
+--
+-- Indexes for table `room_vs_specialties`
+--
+ALTER TABLE `room_vs_specialties`
+  ADD PRIMARY KEY (`roomspec_id`),
+  ADD KEY `FKmjiqftc5rdrthmteghtchnkav` (`room_id`),
+  ADD KEY `FKoe11vqm2reg89jso2t6d4mm7d` (`specialties_id`);
+
+--
+-- Indexes for table `user_vs_account`
+--
+ALTER TABLE `user_vs_account`
+  ADD PRIMARY KEY (`host_vs_account_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `master_amenities`
+--
+ALTER TABLE `master_amenities`
+  MODIFY `aminities_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `master_cancellation_slab`
+--
+ALTER TABLE `master_cancellation_slab`
+  MODIFY `cancellation_slab_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `master_convenience`
+--
+ALTER TABLE `master_convenience`
+  MODIFY `convenience_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `master_document`
+--
+ALTER TABLE `master_document`
+  MODIFY `document_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `master_gst_slab`
+--
+ALTER TABLE `master_gst_slab`
+  MODIFY `gst_slab_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `master_meal_plan`
+--
+ALTER TABLE `master_meal_plan`
+  MODIFY `meal_plan_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `master_meal_plan_category`
+--
+ALTER TABLE `master_meal_plan_category`
+  MODIFY `mpc_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `master_offer`
+--
+ALTER TABLE `master_offer`
+  MODIFY `offer_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `master_price_drop`
+--
+ALTER TABLE `master_price_drop`
+  MODIFY `price_drop_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `master_property`
+--
+ALTER TABLE `master_property`
+  MODIFY `property_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+
+--
+-- AUTO_INCREMENT for table `master_property_type`
+--
+ALTER TABLE `master_property_type`
+  MODIFY `property_type_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `master_room`
+--
+ALTER TABLE `master_room`
+  MODIFY `room_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=162;
+
+--
+-- AUTO_INCREMENT for table `master_room_category`
+--
+ALTER TABLE `master_room_category`
+  MODIFY `room_cat_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `master_space_rule`
+--
+ALTER TABLE `master_space_rule`
+  MODIFY `sprule_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `master_specialties`
+--
+ALTER TABLE `master_specialties`
+  MODIFY `specialties_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `master_special_experience`
+--
+ALTER TABLE `master_special_experience`
+  MODIFY `experience_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `master_stay_type`
+--
+ALTER TABLE `master_stay_type`
+  MODIFY `stay_type_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `master_wishlist`
+--
+ALTER TABLE `master_wishlist`
+  MODIFY `wishlist_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `meal_plan_cat_vs_meal_plan`
+--
+ALTER TABLE `meal_plan_cat_vs_meal_plan`
+  MODIFY `mpcmp_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `property_vs_description`
+--
+ALTER TABLE `property_vs_description`
+  MODIFY `property_desc_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+
+--
+-- AUTO_INCREMENT for table `property_vs_document`
+--
+ALTER TABLE `property_vs_document`
+  MODIFY `property_vs_document_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+
+--
+-- AUTO_INCREMENT for table `room_vs_offer`
+--
+ALTER TABLE `room_vs_offer`
+  MODIFY `room_vs_offer_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
