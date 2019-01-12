@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.orastays.property.propertylist.controller.DatabaseController;
 import com.orastays.property.propertylist.dao.DatabaseDAO;
 import com.orastays.property.propertylist.service.DatabaseService;
 
@@ -13,7 +14,7 @@ import com.orastays.property.propertylist.service.DatabaseService;
 @Service
 public class DatabaseServiceImpl implements DatabaseService {
 
-	private static final Logger logger = LogManager.getLogger(DatabaseServiceImpl.class);
+	private static final Logger logger = LogManager.getLogger(DatabaseController.class);
 
 	@Autowired
 	private DatabaseDAO databaseDao;

@@ -1150,38 +1150,33 @@ public class Util {
 		return flag;
 	}
 
-//	public static Double roundOff(Double amount) {
-//
-//		String value = String.valueOf(amount);
-//		String[] expArr = value.split("\\.");
-//		Double amt = 0.0;
-//		if (expArr != null && expArr.length > 0) {
-//			String exp = expArr[1];
-//			int counterFlag = 0;
-//
-//			if (!exp.equalsIgnoreCase("") || (exp != null)) {
-//				for (int i = 0; i < exp.length(); i++) {
-//
-//					if (exp.charAt(i) == '9') {
-//						counterFlag++;
-//						if (counterFlag == 3) {
-//							amt = Double.valueOf(Math.round(amount));
-//							break;
-//						}
-//					}
-//				}
-//			}
-//		}
-//		if (amt == 0) {
-//			amt = amount;
-//		}
-//
-//		return amt;
-//	}
-	
 	public static Double roundOff(Double amount) {
 
-		return (Math.round(amount* 100D) / 100D);
+		String value = String.valueOf(amount);
+		String[] expArr = value.split("\\.");
+		Double amt = 0.0;
+		if (expArr != null && expArr.length > 0) {
+			String exp = expArr[1];
+			int counterFlag = 0;
+
+			if (!exp.equalsIgnoreCase("") || (exp != null)) {
+				for (int i = 0; i < exp.length(); i++) {
+
+					if (exp.charAt(i) == '9') {
+						counterFlag++;
+						if (counterFlag == 3) {
+							amt = Double.valueOf(Math.round(amount));
+							break;
+						}
+					}
+				}
+			}
+		}
+		if (amt == 0) {
+			amt = amount;
+		}
+
+		return amt;
 	}
 
 	public static boolean checkAlphabet(String text) {

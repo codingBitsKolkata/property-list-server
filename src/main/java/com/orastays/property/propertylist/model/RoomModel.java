@@ -108,6 +108,9 @@ public class RoomModel extends CommonModel {
 	@JsonProperty("roomVsOffers")
 	private List<RoomVsOfferModel> roomVsOfferModels;
 	
+	@JsonProperty("isSelected")
+	private String isSelected;
+	
 	@JsonProperty("bedRequired")
 	private String bedRequired;
 	
@@ -134,9 +137,6 @@ public class RoomModel extends CommonModel {
 	
 	@JsonProperty("gstPercentage")
 	private String gstPercentage;
-	
-	@JsonProperty("gstAmount")
-	private String gstAmount;
 	
 	@JsonProperty("amountWithGST")
 	private String amountWithGST;

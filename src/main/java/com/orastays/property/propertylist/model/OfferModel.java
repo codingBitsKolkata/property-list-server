@@ -38,6 +38,9 @@ public class OfferModel extends CommonModel {
 
 	@JsonProperty("online")
 	private String online;
+	
+	@JsonProperty("offerDesc")
+	private String offerDesc;
 
 	@JsonProperty("maxAmount")
 	private String maxAmount;

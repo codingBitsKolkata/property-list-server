@@ -51,7 +51,8 @@ public class PropertyDAO extends GenericDAO<PropertyEntity, Long>{
 				 propertyEntities = new ArrayList<>();
 				 for (Object[] object : output) {
 					 
-					 PropertyEntity propertyEntity = find(Long.valueOf(String.valueOf(object[0])));
+					 PropertyEntity propertyEntity = new PropertyEntity();
+					 propertyEntity.setPropertyId(Long.valueOf(String.valueOf(object[0])));
 					 propertyEntities.add(propertyEntity);
 				 }
 			 }
@@ -60,17 +61,11 @@ public class PropertyDAO extends GenericDAO<PropertyEntity, Long>{
 		 } catch (HibernateException e) {
 			 if (logger.isInfoEnabled()) {
 					logger.info("Exception in selectByRadius -- "+Util.errorToString(e));
-			 }
-		 } finally {
-			 try {
-				if(Objects.nonNull(session)) {
-					session.close();
 				}
-			 } catch (Exception e) {
-				 if (logger.isInfoEnabled()) {
-						logger.info("Exception in selectByRadius finally -- "+Util.errorToString(e));
-				 }
-			 }
+		 } finally {
+			if(Objects.nonNull(session)) {
+				session.close();
+			}
 		}
 		 
 		 if (logger.isInfoEnabled()) {

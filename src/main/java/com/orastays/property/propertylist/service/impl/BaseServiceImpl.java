@@ -6,6 +6,8 @@ import org.springframework.web.client.RestTemplate;
 
 import com.orastays.property.propertylist.converter.AmenitiesConverter;
 import com.orastays.property.propertylist.converter.CancellationSlabConverter;
+import com.orastays.property.propertylist.converter.ConvenienceConverter;
+import com.orastays.property.propertylist.converter.GstSlabConverter;
 import com.orastays.property.propertylist.converter.OfferConverter;
 import com.orastays.property.propertylist.converter.PriceDropConverter;
 import com.orastays.property.propertylist.converter.PropertyConverter;
@@ -31,6 +33,8 @@ import com.orastays.property.propertylist.converter.SpecialtiesConverter;
 import com.orastays.property.propertylist.converter.StayTypeConverter;
 import com.orastays.property.propertylist.dao.AmenitiesDAO;
 import com.orastays.property.propertylist.dao.CancellationSlabDAO;
+import com.orastays.property.propertylist.dao.ConvenienceDAO;
+import com.orastays.property.propertylist.dao.GstSlabDAO;
 import com.orastays.property.propertylist.dao.OfferDAO;
 import com.orastays.property.propertylist.dao.PriceDropDAO;
 import com.orastays.property.propertylist.dao.PropertyDAO;
@@ -55,6 +59,8 @@ import com.orastays.property.propertylist.dao.SpecialExperienceDAO;
 import com.orastays.property.propertylist.dao.SpecialtiesDAO;
 import com.orastays.property.propertylist.dao.StayTypeDAO;
 import com.orastays.property.propertylist.helper.MessageUtil;
+import com.orastays.property.propertylist.service.ConvenienceService;
+import com.orastays.property.propertylist.service.GstSlabService;
 import com.orastays.property.propertylist.service.PropertyListService;
 import com.orastays.property.propertylist.utils.FilterRoomsUtil;
 import com.orastays.property.propertylist.validation.BookingValidation;
@@ -71,13 +77,13 @@ public abstract class BaseServiceImpl {
 
 	@Autowired
 	protected MessageUtil messageUtil;
-	
+
 	@Autowired
 	protected PropertyListValidation propertyListValidation;
 
 	@Autowired
 	protected HomeValidation homeValidation;
-	
+
 	@Autowired
 	protected BookingValidation bookingValidation;
 
@@ -215,10 +221,10 @@ public abstract class BaseServiceImpl {
 
 	@Autowired
 	protected RoomVsMealConverter roomVsMealConverter;
-	
+
 	@Autowired
 	protected OfferConverter offerConverter;
-	
+
 	@Autowired
 	protected OfferDAO offerDAO;
 
@@ -230,11 +236,29 @@ public abstract class BaseServiceImpl {
 
 	@Autowired
 	protected RoomVsCancellationDAO roomVsCancellationDAO;
-	
+
 	@Autowired
 	protected PropertyListService propertyListService;
-	
+
 	@Autowired
 	protected FilterRoomsUtil filterRoomsUtil;
+
+	@Autowired
+	protected ConvenienceService convenienceService;
+
+	@Autowired
+	protected GstSlabService gstSlabService;
+
+	@Autowired
+	protected GstSlabDAO gstSlabDAO;
+
+	@Autowired
+	protected GstSlabConverter gstSlabConverter;
+
+	@Autowired
+	protected ConvenienceDAO convenienceDAO;
+
+	@Autowired
+	protected ConvenienceConverter convenienceConverter;
 
 }

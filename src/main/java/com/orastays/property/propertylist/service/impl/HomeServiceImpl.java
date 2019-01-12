@@ -172,7 +172,7 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
             }
         }
         
-        propertyListViewModel = propertyListService.setPropertyListView(propertyEntity, null);
+        propertyListViewModel = propertyListService.setPropertyListView(propertyEntity, null, null);
         List<String> prices = priceCalculation(propertyEntity, roomEntity);
         propertyListViewModel.setTotalPrice(prices.get(0));
 		propertyListViewModel.setDiscountedPrice(prices.get(1));
@@ -239,7 +239,7 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
             }
         }
 		
-        propertyListViewModel = propertyListService.setPropertyListView(propertyEntity, null);
+        propertyListViewModel = propertyListService.setPropertyListView(propertyEntity, null, null);
         List<String> prices = priceCalculation(propertyEntity, roomEntity);
         propertyListViewModel.setTotalPrice(prices.get(0));
 		//propertyListViewModel.setDiscountedPrice(prices.get(1));
@@ -282,7 +282,7 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
             }
         }
         
-        propertyListViewModel = propertyListService.setPropertyListView(propertyEntity, null);
+        propertyListViewModel = propertyListService.setPropertyListView(propertyEntity, null, null);
         List<String> prices = priceCalculation(propertyEntity, roomEntity);
         propertyListViewModel.setTotalPrice(prices.get(0));
 		//propertyListViewModel.setDiscountedPrice(prices.get(1));
@@ -352,7 +352,7 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
             }
         }
 		
-        propertyListViewModel = propertyListService.setPropertyListView(propertyEntity, null);
+        propertyListViewModel = propertyListService.setPropertyListView(propertyEntity, null, null);
         List<String> prices = priceCalculation(propertyEntity, roomEntity);
         propertyListViewModel.setTotalPrice(prices.get(0));
 		propertyListViewModel.setDiscountedPrice(prices.get(1));

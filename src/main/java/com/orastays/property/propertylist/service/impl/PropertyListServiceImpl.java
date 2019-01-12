@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.transaction.Transactional;
@@ -45,11 +44,14 @@ import com.orastays.property.propertylist.model.PropertyModel;
 import com.orastays.property.propertylist.model.ResponseModel;
 import com.orastays.property.propertylist.model.RoomModel;
 import com.orastays.property.propertylist.model.SpaceRuleModel;
-import com.orastays.property.propertylist.model.booking.BookingModel;
 import com.orastays.property.propertylist.model.booking.BookingVsRoomModel;
+import com.orastays.property.propertylist.model.booking.ConvenienceModel;
+import com.orastays.property.propertylist.model.booking.GstSlabModel;
 import com.orastays.property.propertylist.model.review.BookingVsRatingModel;
 import com.orastays.property.propertylist.model.review.UserReviewModel;
+import com.orastays.property.propertylist.model.utils.RoomFilter;
 import com.orastays.property.propertylist.service.PropertyListService;
+import com.orastays.property.propertylist.utils.RoomSelector;
 
 @Service
 @Transactional
@@ -98,7 +100,8 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 								// Filter by checkInDate // Mandatory
 								// Filter by checkOutDate // Mandatory
 								// Filter by roomModels // Mandatory
-								if(filterBycheckInDate(propertyEntity, filterCiteriaModel)) {
+								Map<Integer, RoomSelector> filteredRooms = filterBycheckInDate(propertyEntity, filterCiteriaModel);
+								if (!CollectionUtils.isEmpty(filteredRooms)) {
 									
 									// Filter By Rating
 									if (!CollectionUtils.isEmpty(filterCiteriaModel.getRatings())) {
@@ -117,7 +120,7 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 									
 									// Filter by budgets
 									if(!CollectionUtils.isEmpty(filterCiteriaModel.getBudgets())) {
-										if (!filterByBudget(propertyEntity, filterCiteriaModel)) {
+										if (!filterByBudget(propertyEntity, filterCiteriaModel, filteredRooms)) {
 											isContinueRating.set(true);
 										}
 									}
@@ -147,7 +150,7 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 									}
 									
 									if(!isContinueRating.get())
-										propertyListViewModels.add(setPropertyListView(propertyEntity, filterCiteriaModel));
+										propertyListViewModels.add(setPropertyListView(propertyEntity, filterCiteriaModel, filteredRooms));
 									
 								} 
 							} 
@@ -172,7 +175,7 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 	}
 	
 	@Override
-	public PropertyListViewModel setPropertyListView(PropertyEntity propertyEntity, FilterCiteriaModel filterCiteriaModel) {
+	public PropertyListViewModel setPropertyListView(PropertyEntity propertyEntity, FilterCiteriaModel filterCiteriaModel, Map<Integer, RoomSelector> filteredRooms) {
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("setPropertyListView -- START");
@@ -228,8 +231,8 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		propertyListViewModel.setPgCategorySex(propertyEntity.getSexCategory());
 		
 		// Price Section
-		if(Objects.nonNull(filterCiteriaModel)) {
-			List<String> prices = priceCalculation(propertyEntity, filterCiteriaModel);
+		if(Objects.nonNull(filterCiteriaModel) && Objects.nonNull(filteredRooms) && !CollectionUtils.isEmpty(filteredRooms)) {
+			List<String> prices = priceCalculation(propertyEntity, filterCiteriaModel, filteredRooms);
 			propertyListViewModel.setTotalPrice(prices.get(0));
 			propertyListViewModel.setDiscountedPrice(prices.get(1));
 		}
@@ -279,12 +282,29 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		return propertyListViewModel;
 	}
 	
-	private List<String> priceCalculation(PropertyEntity propertyEntity, FilterCiteriaModel filterCiteriaModel) {
+	private List<String> priceCalculation(PropertyEntity propertyEntity, FilterCiteriaModel filterCiteriaModel, Map<Integer, RoomSelector> filteredRooms) {
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("priceCalculation -- START");
 		}
 		
+		List<RoomEntity> roomEntities = new ArrayList<RoomEntity>();
+		List<RoomFilter> roomFilters = null;
+		for(Map.Entry<Integer, RoomSelector> filteredRoom : filteredRooms.entrySet()) {
+			//check if shared or private
+			if(StringUtils.equals(filteredRoom.getValue().getAvailableRooms().get(0).getRoomEntity().getAccomodationName(), Accommodation.PRIVATE.name())) { //private
+				roomEntities.add(filteredRoom.getValue().getSelectedRoom().getRoomEntity());
+			} else {
+				roomFilters = filteredRoom.getValue().getAvailableRooms();
+				for(RoomFilter roomFilter : roomFilters) {
+					roomEntities.add(roomFilter.getRoomEntity());
+				}
+			}
+		}
+		
+		propertyEntity.setRoomEntities(null);
+		propertyEntity.setRoomEntities(roomEntities);
+		System.out.println("roomEntities ==>> "+roomEntities);
 		List<String> prices = new ArrayList<>();
 		int numOfDays = Util.getDayDiff(filterCiteriaModel.getCheckInDate(), filterCiteriaModel.getCheckOutDate());
 		Double price = 0.0D;
@@ -294,6 +314,7 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		Set<OfferEntity> offerEntities = new HashSet<>();
 		if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
 			System.err.println("propertyEntity.getRoomEntities().size() ==>> "+propertyEntity.getRoomEntities().size());
+			int count = 0;
 			for(RoomEntity roomEntity :propertyEntity.getRoomEntities()) {
 				System.err.println("roomEntity ==>> "+roomEntity);
 				if(Objects.nonNull(roomEntity) && roomEntity.getStatus() == Status.ACTIVE.ordinal()) {
@@ -306,7 +327,9 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 							if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.SHARED.name())) { //shared
 								
 								//Shared night price 
-								price = Double.parseDouble(roomEntity.getSharedBedPricePerNight());
+								RoomFilter roomFilter = roomFilters.get(count);
+								System.out.println("roomFilter ==>> "+roomFilter);
+								price = Double.parseDouble(roomEntity.getSharedBedPricePerNight()) * roomFilter.getSelectedNumberOfBeds();
 							} else { //private
 								 //Private night Price
 								price = Double.parseDouble(roomEntity.getRoomPricePerNight());
@@ -316,7 +339,9 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 							
 							if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.SHARED.name())) { //shared
 								//Shared Month price 
-								price = (Double.parseDouble(roomEntity.getSharedBedPricePerMonth())/30);
+								RoomFilter roomFilter = roomFilters.get(count);
+								System.out.println("roomFilter ==>> "+roomFilter);
+								price = (Double.parseDouble(roomEntity.getSharedBedPricePerMonth())/30  * roomFilter.getSelectedNumberOfBeds());
 							} else {   //private
 								 //Private Month Price
 								price = (Double.parseDouble(roomEntity.getRoomPricePerMonth())/30);
@@ -328,7 +353,9 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 							
 							if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.SHARED.name())) { //shared
 								//Shared Month price 
-								price = (Double.parseDouble(roomEntity.getSharedBedPricePerMonth())/30);
+								RoomFilter roomFilter = roomFilters.get(count);
+								System.out.println("roomFilter ==>> "+roomFilter);
+								price = (Double.parseDouble(roomEntity.getSharedBedPricePerMonth())/30  * roomFilter.getSelectedNumberOfBeds());
 							} else { //private
 								 //Private Month Price
 								price = (Double.parseDouble(roomEntity.getRoomPricePerMonth())/30);
@@ -338,7 +365,9 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 							
 							if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.SHARED.name())) { //shared
 								//Shared Night price 
-								price = Double.parseDouble(roomEntity.getSharedBedPricePerNight());
+								RoomFilter roomFilter = roomFilters.get(count);
+								System.out.println("roomFilter ==>> "+roomFilter);
+								price = Double.parseDouble(roomEntity.getSharedBedPricePerNight()) * roomFilter.getSelectedNumberOfBeds();
 							} else {   //private
 								 //Private Night Price
 								price = Double.parseDouble(roomEntity.getRoomPricePerNight());
@@ -416,6 +445,7 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 					discountedPrice = discountedPrice + hostDiscount + oraDiscount + priceDropDiscount;
 					System.out.println("discountedPrice after deduction from totalPrice ==>> "+discountedPrice);
 				}
+				count++;
 			}
 		}
 		
@@ -603,217 +633,17 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		return flag;
 	}
 	
-	private Boolean filterBycheckInDate(PropertyEntity propertyEntity, FilterCiteriaModel filterCiteriaModel) {
+	private Map<Integer, RoomSelector> filterBycheckInDate(PropertyEntity propertyEntity, FilterCiteriaModel filterCiteriaModel) {
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("filterBycheckInDate -- START");
 		}
 		
-		boolean flag = false;
-		
+		Map<Integer, RoomSelector> filteredRooms = null;
 		try {
-			filterRoomsUtil.getRoomsByPropertyWithCheckinDateFilter(propertyEntity, filterCiteriaModel);
-			/*
-			 * BookingModel bookingModel = new BookingModel();
-			 * bookingModel.setPropertyId(String.valueOf(propertyEntity.getPropertyId()));
-			 * bookingModel.setCheckinDate(filterCiteriaModel.getCheckInDate());
-			 * ResponseModel responseModel =
-			 * restTemplate.postForObject(messageUtil.getBundle("booking.server.url")
-			 * +"get-bookings", bookingModel, ResponseModel.class); Gson gson = new Gson();
-			 * String jsonString = gson.toJson(responseModel.getResponseBody()); gson = new
-			 * Gson(); Type listType = new TypeToken<List<BookingModel>>() {}.getType();
-			 * List<BookingModel> bookingModels = gson.fromJson(jsonString, listType);
-			 * 
-			 * if (logger.isInfoEnabled()) {
-			 * logger.info("bookingModels ==>> "+bookingModels); }
-			 * 
-			 * System.err.println("bookingModels ==>> "+bookingModels);
-			 * 
-			 * Map<String, List<BookingVsRoomModel>> roomByOraName = new LinkedHashMap<>();
-			 * if (!CollectionUtils.isEmpty(bookingModels)) {
-			 * 
-			 * List<BookingVsRoomModel> bookingVsRoomModels = new ArrayList<>();
-			 * for(BookingModel bookingModel2 : bookingModels) {
-			 * if(Objects.nonNull(bookingModel2) &&
-			 * !CollectionUtils.isEmpty(bookingModel2.getBookingVsRooms())) {
-			 * bookingVsRoomModels.addAll(bookingModel2.getBookingVsRooms()); } }
-			 * 
-			 * if(!CollectionUtils.isEmpty(bookingVsRoomModels)) { for(BookingVsRoomModel
-			 * bookingVsRoomModel : bookingVsRoomModels) { if(roomByOraName.isEmpty()) { //
-			 * First Time List<BookingVsRoomModel> mapBookingVsRoomModels = new
-			 * ArrayList<>(); mapBookingVsRoomModels.add(bookingVsRoomModel);
-			 * roomByOraName.put(bookingVsRoomModel.getOraRoomName(),
-			 * mapBookingVsRoomModels); } else {
-			 * if(roomByOraName.containsKey(bookingVsRoomModel.getOraRoomName())) { // KEY
-			 * Present List<BookingVsRoomModel> mapBookingVsRoomModels =
-			 * roomByOraName.get(bookingVsRoomModel.getOraRoomName());
-			 * mapBookingVsRoomModels.add(bookingVsRoomModel);
-			 * roomByOraName.put(bookingVsRoomModel.getOraRoomName(),
-			 * mapBookingVsRoomModels); } else { // KEY not present List<BookingVsRoomModel>
-			 * mapBookingVsRoomModels = new ArrayList<>();
-			 * mapBookingVsRoomModels.add(bookingVsRoomModel);
-			 * roomByOraName.put(bookingVsRoomModel.getOraRoomName(),
-			 * mapBookingVsRoomModels); } } } } }
-			 * 
-			 * //new logic
-			 * implemented------------------------------------------------------------------
-			 * 
-			 * //populate a map where all available rooms will be present
-			 * 
-			 * //PropertyListRoomUtil.populateAvailableRoomMap(bookingModels, roomMap,
-			 * propertyEntity.getRoomEntities());
-			 * 
-			 * 
-			 * 
-			 * //---------------------------------------------------------------------------
-			 * ------------
-			 * 
-			 * Set<RoomEntity> filteredRoomEntities = new HashSet<>();
-			 * System.out.println("propertyEntity ==>> "+propertyEntity);
-			 * if(CollectionUtils.isEmpty(roomByOraName)) { // No Rooms Are Booked
-			 * 
-			 * List<Boolean> countFlag = new ArrayList<>(); List<RoomEntity>
-			 * deletableRoomEntities = new CopyOnWriteArrayList<>(); deletableRoomEntities =
-			 * propertyEntity.getRoomEntities();
-			 * System.out.println("deletableRoomEntities ==>> "+deletableRoomEntities);
-			 * for(RoomModel roomModel : filterCiteriaModel.getRoomModels()) {
-			 * 
-			 * int bedRequired = Integer.parseInt(roomModel.getNoOfGuest());
-			 * System.err.println("bedRequired ==>> "+bedRequired);
-			 * 
-			 * for(int i = 0; i < deletableRoomEntities.size(); i++) {
-			 * 
-			 * RoomEntity roomEntity = deletableRoomEntities.get(i);
-			 * System.err.println("First Loop roomEntity ==>> "+roomEntity);
-			 * 
-			 * if(StringUtils.equals(roomEntity.getAccomodationName(),
-			 * Accommodation.SHARED.name())) { //shared
-			 * 
-			 * int totalBed = 0; if(StringUtils.isBlank(roomEntity.getNumOfCot())) {
-			 * totalBed = Integer.parseInt(roomEntity.getNumOfBed()); } else { totalBed =
-			 * (Integer.parseInt(roomEntity.getNumOfBed()) +
-			 * (Integer.parseInt(roomEntity.getNumOfCot()))); }
-			 * 
-			 * System.err.println("totalBed ==>> "+totalBed);
-			 * 
-			 * if(bedRequired <= totalBed) { // Bed + Cot
-			 * 
-			 * System.err.println("Less than Bed + Cot");
-			 * filteredRoomEntities.add(roomEntity); deletableRoomEntities.remove(i); } else
-			 * { bedRequired = bedRequired - totalBed; filteredRoomEntities.add(roomEntity);
-			 * deletableRoomEntities.remove(i); } } else { //private
-			 * 
-			 * int totalBed = 0; if(StringUtils.isBlank(roomEntity.getNumOfCot())) {
-			 * totalBed = Integer.parseInt(roomEntity.getNoOfGuest()); } else { totalBed =
-			 * (Integer.parseInt(roomEntity.getNoOfGuest()) +
-			 * (Integer.parseInt(roomEntity.getNumOfCot()))); }
-			 * 
-			 * System.err.println("totalBed ==>> "+totalBed);
-			 * 
-			 * int userChild = 0; if(!StringUtils.isBlank(roomModel.getNoOfChild())) {
-			 * userChild = Integer.parseInt(roomModel.getNoOfChild()); }
-			 * 
-			 * int dbChild = 0; if(!StringUtils.isBlank(roomEntity.getNoOfChild())) {
-			 * dbChild = Integer.parseInt(roomEntity.getNoOfChild()); }
-			 * 
-			 * if(bedRequired <= totalBed && (userChild <= dbChild)) { // Bed + Cot
-			 * 
-			 * System.err.println("Less than Bed + Cot");
-			 * filteredRoomEntities.add(roomEntity); deletableRoomEntities.remove(i); } } }
-			 * 
-			 * System.out.println("filteredRoomEntities ==>> "+filteredRoomEntities);
-			 * if(!CollectionUtils.isEmpty(filteredRoomEntities)) { // Contains MIN 1 ROOM
-			 * propertyEntity.setRoomEntities(null); // Delete All Rooms List<RoomEntity>
-			 * listRoomEntities = new ArrayList<>(filteredRoomEntities); // SET to LIST
-			 * propertyEntity.setRoomEntities(listRoomEntities); // Insert Available Rooms
-			 * countFlag.add(true); } else { countFlag.add(false); } }
-			 * 
-			 * if(!countFlag.contains(false)) { flag = true; } } else { // Property Is
-			 * Booked
-			 * 
-			 * List<Boolean> countFlag = new ArrayList<>(); List<RoomEntity>
-			 * deletableRoomEntities = new CopyOnWriteArrayList<>(); deletableRoomEntities =
-			 * propertyEntity.getRoomEntities(); for(RoomModel roomModel :
-			 * filterCiteriaModel.getRoomModels()) {
-			 * 
-			 * int bedRequired = Integer.parseInt(roomModel.getNoOfGuest());
-			 * System.err.println("bedRequired ==>> "+bedRequired);
-			 * 
-			 * for(int i = 0; i < deletableRoomEntities.size(); i++) {
-			 * 
-			 * RoomEntity roomEntity = deletableRoomEntities.get(i);
-			 * System.err.println("First Loop roomEntity ==>> "+roomEntity);
-			 * if(roomByOraName.containsKey(roomEntity.getOraRoomName())) { // KEY Present
-			 * 
-			 * if(StringUtils.equals(roomEntity.getAccomodationName(),
-			 * Accommodation.SHARED.name())) { //shared
-			 * 
-			 * int maxBedBooked = 0; List<BookingVsRoomModel> roomBooked =
-			 * roomByOraName.get(roomEntity.getOraRoomName()); for(BookingVsRoomModel
-			 * bookingVsRoomModel : roomBooked) { maxBedBooked = maxBedBooked +
-			 * Integer.parseInt(bookingVsRoomModel.getNumOfSharedBed()); }
-			 * 
-			 * System.out.println("maxBedBooked ==>> "+maxBedBooked);
-			 * 
-			 * int totalBed = 0; if(StringUtils.isBlank(roomEntity.getNumOfCot())) {
-			 * totalBed = Integer.parseInt(roomEntity.getNumOfBed()); } else { totalBed =
-			 * (Integer.parseInt(roomEntity.getNumOfBed()) +
-			 * (Integer.parseInt(roomEntity.getNumOfCot()))); }
-			 * 
-			 * totalBed = totalBed - maxBedBooked;
-			 * System.err.println("totalBed ==>> "+totalBed);
-			 * 
-			 * if(bedRequired <= totalBed) { // Bed + Cot
-			 * 
-			 * System.err.println("Less than Bed + Cot");
-			 * filteredRoomEntities.add(roomEntity); deletableRoomEntities.remove(i); } else
-			 * { bedRequired = bedRequired - totalBed; filteredRoomEntities.add(roomEntity);
-			 * deletableRoomEntities.remove(i); } } } else { // ROOM Not Booked
-			 * 
-			 * if(StringUtils.equals(roomEntity.getAccomodationName(),
-			 * Accommodation.SHARED.name())) { //shared
-			 * 
-			 * int totalBed = 0; if(!StringUtils.isBlank(roomEntity.getNumOfCot())) {
-			 * totalBed = Integer.parseInt(roomEntity.getNumOfBed()); } else { totalBed =
-			 * (Integer.parseInt(roomEntity.getNumOfBed()) +
-			 * (Integer.parseInt(roomEntity.getNumOfCot()))); }
-			 * System.err.println("totalBed ==>> "+totalBed);
-			 * 
-			 * if(bedRequired <= totalBed) { // Bed + Cot
-			 * 
-			 * System.err.println("Less than Bed + Cot");
-			 * filteredRoomEntities.add(roomEntity); deletableRoomEntities.remove(i); } else
-			 * { bedRequired = bedRequired - totalBed; filteredRoomEntities.add(roomEntity);
-			 * deletableRoomEntities.remove(i); } } else { //private
-			 * 
-			 * int totalBed = 0; if(!StringUtils.isBlank(roomEntity.getNumOfCot())) {
-			 * totalBed = Integer.parseInt(roomEntity.getNoOfGuest()); } else { totalBed =
-			 * (Integer.parseInt(roomEntity.getNoOfGuest()) +
-			 * (Integer.parseInt(roomEntity.getNumOfCot()))); }
-			 * 
-			 * System.err.println("totalBed ==>> "+totalBed);
-			 * 
-			 * int userChild = 0; if(!StringUtils.isBlank(roomModel.getNoOfChild())) {
-			 * userChild = Integer.parseInt(roomModel.getNoOfChild()); }
-			 * 
-			 * int dbChild = 0; if(!StringUtils.isBlank(roomEntity.getNoOfChild())) {
-			 * dbChild = Integer.parseInt(roomEntity.getNoOfChild()); }
-			 * 
-			 * if(bedRequired <= totalBed && (userChild <= dbChild)) { // Bed + Cot
-			 * 
-			 * System.err.println("Less than Bed + Cot");
-			 * filteredRoomEntities.add(roomEntity); deletableRoomEntities.remove(i); } } }
-			 * }
-			 * 
-			 * if(!CollectionUtils.isEmpty(filteredRoomEntities)) { // Contains MIN 1 ROOM
-			 * propertyEntity.setRoomEntities(null); // Delete All Rooms List<RoomEntity>
-			 * listRoomEntities = new ArrayList<>(filteredRoomEntities); // SET to LIST
-			 * propertyEntity.setRoomEntities(listRoomEntities); // Insert Available Rooms
-			 * countFlag.add(true); } else { countFlag.add(false); } }
-			 * 
-			 * if(!countFlag.contains(false)) { flag = true; } }
-			 * 
-			 */} catch (Exception e) {
+			filteredRooms = filterRoomsUtil.getRoomsByPropertyWithCheckinDateFilter(propertyEntity, filterCiteriaModel);
+			
+		} catch (Exception e) {
 			e.printStackTrace();
 			if (logger.isInfoEnabled()) {
 				logger.info("Exception in filterBycheckInDate -- "+Util.errorToString(e));
@@ -824,7 +654,7 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 			logger.info("filterBycheckInDate -- END");
 		}
 		
-		return flag;
+		return filteredRooms;
 	}
 	
 	private Boolean filterByRating(PropertyEntity propertyEntity, FilterCiteriaModel filterCiteriaModel) {
@@ -945,14 +775,14 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 	}
 	
 	
-	private Boolean filterByBudget(PropertyEntity propertyEntity, FilterCiteriaModel filterCiteriaModel) {
+	private Boolean filterByBudget(PropertyEntity propertyEntity, FilterCiteriaModel filterCiteriaModel, Map<Integer, RoomSelector> filteredRooms) {
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("filterByBudget -- START");
 		}
 		
 		boolean flag = false;
-		List<String> prices = priceCalculation(propertyEntity, filterCiteriaModel);
+		List<String> prices = priceCalculation(propertyEntity, filterCiteriaModel, filteredRooms);
 		Double price = Double.parseDouble(prices.get(0));
 		for(String budget : filterCiteriaModel.getBudgets()) {
 			Double start = Double.parseDouble(budget.split("-")[0]);
@@ -1147,157 +977,161 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		}
 		
 		PropertyModel propertyModel = null;
-//		PropertyEntity propertyEntity = propertyListValidation.validateFetchPropertyDetails(filterCiteriaModel);
-//		
-//		// Filter By Property Start Date and End Date
-//		if(filterByPropertyDate(propertyEntity, filterCiteriaModel)) {
-//			
-//			// Filter by propertyTypeId // Mandatory
-//			if (StringUtils.equals(filterCiteriaModel.getPropertyTypeId(), String.valueOf(propertyEntity.getPropertyTypeEntity().getPropertyTypeId()))) {
-//				
-//				// Filter by location // Mandatory
-//				if(filterByLocation(propertyEntity, filterCiteriaModel)) {
-//					boolean flag = true;
-//					// Filter by checkInDate // Mandatory
-//					// Filter by checkOutDate // Mandatory
-//					// Filter by roomModels // Mandatory
-//					if(filterBycheckInDate(propertyEntity, filterCiteriaModel)) {
-//						
-//						// Filter By Rating
-//						if (!CollectionUtils.isEmpty(filterCiteriaModel.getRatings())) {
-//							if (!filterByRating(propertyEntity, filterCiteriaModel)) {
-//								flag = false;
-//							}
-//						}
-//						
-//						// Filter by amenitiesModels
-//						if (!CollectionUtils.isEmpty(filterCiteriaModel.getAmenitiesModels()) && flag) {
-//							if (!filterByAmmenities(propertyEntity, filterCiteriaModel)) {
-//								flag = false;
-//							}
-//						}
-//						
-//						
-//						// Filter by budgets
-//						if(!CollectionUtils.isEmpty(filterCiteriaModel.getBudgets()) && flag) {
-//							if (!filterByBudget(propertyEntity, filterCiteriaModel)) {
-//								flag = false;
-//							}
-//						}
-//						
-//						
-//						// Filter by popularLocations
-//						if(!CollectionUtils.isEmpty(filterCiteriaModel.getPopularLocations()) && flag) {
-//							if (!filterByPopularLocation(propertyEntity, filterCiteriaModel)) {
-//								flag = false;
-//							}
-//						}
-//						
-//						
-//						// Filter by spaceRuleModels // Couple Friendly, Pet Friendly
-//						if(!CollectionUtils.isEmpty(filterCiteriaModel.getSpaceRuleModels()) && flag) {
-//							if (!filterBySpaceRule(propertyEntity, filterCiteriaModel)) {
-//								flag = false;
-//							}
-//						}
-//						
-//						
-//						// Filter by pgCategorySexModels // Male/Female
-//						if(!StringUtils.isBlank(filterCiteriaModel.getPgCategorySex()) && flag) {
-//							if (!filterBySex(propertyEntity, filterCiteriaModel)) {
-//								flag = false;
-//							}
-//						}
-//						
-//						if(flag) {
-//							propertyModel = propertyConverter.entityToModel(propertyEntity);
-//							List<String> prices = priceCalculation(propertyEntity, filterCiteriaModel);
-//							propertyModel.setTotalPrice(prices.get(0));
-//							propertyModel.setDiscountedPrice(prices.get(1));
-//							
-//							// Calculate Convenience
-//							try {
-//								ResponseModel responseModel = restTemplate.getForObject(messageUtil.getBundle("booking.server.url") +"get-convenience", ResponseModel.class);
-//								Gson gson = new Gson();
-//								String jsonString = gson.toJson(responseModel.getResponseBody());
-//								ConvenienceModel convenienceModel = gson.fromJson(jsonString, ConvenienceModel.class);
-//								
-//								if (logger.isInfoEnabled()) {
-//									logger.info("convenienceModel ==>> "+convenienceModel);
-//								}
-//								System.err.println("convenienceModel ==>> "+convenienceModel);
-//								
-//								if (Objects.nonNull(convenienceModel)) {
-//									propertyModel.setConvenienceFee(convenienceModel.getAmount());
-//									propertyModel.setConvenienceGSTPercentage(convenienceModel.getGstPercentage());
-//									propertyModel.setConvenienceGSTAmount(String.valueOf(Math.round(Double.parseDouble(convenienceModel.getAmount()) * Double.parseDouble(convenienceModel.getGstPercentage()) / 100 * 100D) / 100D));
-//								}
-//							} catch (Exception e) {
-//								if (logger.isInfoEnabled()) {
-//									logger.info("Exception in getConvenience -- "+Util.errorToString(e));
-//								}
-//								propertyModel.setConvenienceFee("0");
-//								propertyModel.setConvenienceGSTPercentage("0");
-//								propertyModel.setConvenienceGSTAmount("0");
-//							}
-//							
-//							// Calculate GST
-//							try {
-//								String amount = String.valueOf(Math.round(Double.parseDouble(propertyModel.getTotalPrice()) - Double.parseDouble(propertyModel.getDiscountedPrice()))* 100D / 100D);
-//								System.err.println("amount ==>> "+amount);
-//								propertyModel.setAmountPayable(amount);
-//								ResponseModel responseModel = restTemplate.getForObject(messageUtil.getBundle("booking.server.url") +"get-gst-price?amount="+amount, ResponseModel.class);
-//								Gson gson = new Gson();
-//								String jsonString = gson.toJson(responseModel.getResponseBody());
-//								GstSlabModel gstSlabModel = gson.fromJson(jsonString, GstSlabModel.class);
-//								
-//								if (logger.isInfoEnabled()) {
-//									logger.info("gstSlabModel ==>> "+gstSlabModel);
-//								}
-//								System.err.println("gstSlabModel ==>> "+gstSlabModel);
-//								
-//								if (Objects.nonNull(gstSlabModel)) {
-//									propertyModel.setGstPercentage(gstSlabModel.getPercentage());
-//									propertyModel.setAmountWithGST(String.valueOf(Math.round(Double.parseDouble(amount) * Double.parseDouble(gstSlabModel.getPercentage()) / 100 * 100D) / 100D));
-//								}
-//							} catch (Exception e) {
-//								if (logger.isInfoEnabled()) {
-//									logger.info("Exception in getGSTPrice -- "+Util.errorToString(e));
-//								}
-//								propertyModel.setGstPercentage("0");
-//								propertyModel.setAmountWithGST("0");
-//							}
-//							
-//							if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
-//								for(RoomEntity roomEntity : propertyEntity.getRoomEntities()) {
-//									if(Objects.nonNull(roomEntity) && roomEntity.getStatus() == Status.ACTIVE.ordinal()) {
-//										if(!CollectionUtils.isEmpty(propertyModel.getRoomModels())) {
-//											for(RoomModel roomModel : propertyModel.getRoomModels()) {
-//												if(Objects.nonNull(roomModel) && roomModel.getStatus() == Status.ACTIVE.ordinal()) {
-//													if(StringUtils.equals(roomModel.getRoomId(), String.valueOf(roomEntity.getRoomId()))) {
-//														roomModel.setOraPrice(priceCalculationForRoom(propertyEntity, roomEntity, filterCiteriaModel).get(0));
-//														roomModel.setOraDiscount(priceCalculationForRoom(propertyEntity, roomEntity, filterCiteriaModel).get(1));
-//														roomModel.setOffer(priceCalculationForRoom(propertyEntity, roomEntity, filterCiteriaModel).get(2));
-//														roomModel.setPriceDrop(priceCalculationForRoom(propertyEntity, roomEntity, filterCiteriaModel).get(3));
-//														break;
-//													}
-//												}
-//											}
-//										}
-//									}
-//								}
-//							}
-//						}
-//					} 
-//				} 
-//			} 
-//		}
+		PropertyEntity propertyEntity = propertyListValidation.validateFetchPropertyDetails(filterCiteriaModel);
+		
+		// Filter By Property Start Date and End Date
+		if(filterByPropertyDate(propertyEntity, filterCiteriaModel)) {
+			
+			// Filter by propertyTypeId // Mandatory
+			if (StringUtils.equals(filterCiteriaModel.getPropertyTypeId(), String.valueOf(propertyEntity.getPropertyTypeEntity().getPropertyTypeId()))) {
+				
+				// Filter by location // Mandatory
+				if(filterByLocation(propertyEntity, filterCiteriaModel)) {
+					boolean flag = true;
+					// Filter by checkInDate // Mandatory
+					// Filter by checkOutDate // Mandatory
+					// Filter by roomModels // Mandatory
+					Map<Integer, RoomSelector> filteredRooms = filterBycheckInDate(propertyEntity, filterCiteriaModel);
+					if (!CollectionUtils.isEmpty(filteredRooms)) {
+						
+						// Filter By Rating
+						if (!CollectionUtils.isEmpty(filterCiteriaModel.getRatings())) {
+							if (!filterByRating(propertyEntity, filterCiteriaModel)) {
+								flag = false;
+							}
+						}
+						
+						// Filter by amenitiesModels
+						if (!CollectionUtils.isEmpty(filterCiteriaModel.getAmenitiesModels()) && flag) {
+							if (!filterByAmmenities(propertyEntity, filterCiteriaModel)) {
+								flag = false;
+							}
+						}
+						
+						
+						// Filter by budgets
+						if(!CollectionUtils.isEmpty(filterCiteriaModel.getBudgets()) && flag) {
+							if (!filterByBudget(propertyEntity, filterCiteriaModel, filteredRooms)) {
+								flag = false;
+							}
+						}
+						
+						
+						// Filter by popularLocations
+						if(!CollectionUtils.isEmpty(filterCiteriaModel.getPopularLocations()) && flag) {
+							if (!filterByPopularLocation(propertyEntity, filterCiteriaModel)) {
+								flag = false;
+							}
+						}
+						
+						
+						// Filter by spaceRuleModels // Couple Friendly, Pet Friendly
+						if(!CollectionUtils.isEmpty(filterCiteriaModel.getSpaceRuleModels()) && flag) {
+							if (!filterBySpaceRule(propertyEntity, filterCiteriaModel)) {
+								flag = false;
+							}
+						}
+						
+						
+						// Filter by pgCategorySexModels // Male/Female
+						if(!StringUtils.isBlank(filterCiteriaModel.getPgCategorySex()) && flag) {
+							if (!filterBySex(propertyEntity, filterCiteriaModel)) {
+								flag = false;
+							}
+						}
+						
+						if(flag) {
+							
+							propertyModel = propertyConverter.entityToModel(propertyEntity);
+							List<String> prices = priceCalculation(propertyEntity, filterCiteriaModel, filteredRooms);
+							propertyModel.setTotalAmount(prices.get(0));
+							propertyModel.setPropertyOffer(prices.get(1));
+							
+							
+							// Calculate Convenience
+							ConvenienceModel convenienceModel = convenienceService.getActiveConvenienceModel();
+							if (logger.isInfoEnabled()) {
+								logger.info("convenienceModel ==>> "+convenienceModel);
+							}
+							System.err.println("convenienceModel ==>> "+convenienceModel);
+							
+							if (Objects.nonNull(convenienceModel)) {
+								propertyModel.setConvenienceFee(convenienceModel.getAmount());
+								propertyModel.setConvenienceGSTPercentage(convenienceModel.getGstPercentage());
+								propertyModel.setConvenienceGSTAmount(String.valueOf(Math.round(Double.parseDouble(convenienceModel.getAmount()) * Double.parseDouble(convenienceModel.getGstPercentage()) / 100 * 100D) / 100D));
+							} else {
+								
+								propertyModel.setConvenienceFee("0");
+								propertyModel.setConvenienceGSTPercentage("0");
+								propertyModel.setConvenienceGSTAmount("0");
+							}
+							
+							propertyModel.setAmountPayable(String.valueOf(Util.roundOff(Double.parseDouble(prices.get(0)) - Double.parseDouble(prices.get(1)) 
+									+ Double.parseDouble(propertyModel.getConvenienceFee()) + Double.parseDouble(propertyModel.getConvenienceGSTAmount())) ));
+							
+							List<RoomEntity> roomEntities = new ArrayList<RoomEntity>();
+							for(Map.Entry<Integer, RoomSelector> filteredRoom : filteredRooms.entrySet()) {
+								List<RoomFilter> availableRooms = filteredRoom.getValue().getAvailableRooms();
+								for(RoomFilter roomFilter : availableRooms) {
+									RoomEntity roomEntity = roomFilter.getRoomEntity();
+									roomEntities.add(roomEntity);
+								}
+							}
+							
+							propertyEntity.setRoomEntities(null);
+							propertyEntity.setRoomEntities(roomEntities);
+							System.out.println("roomEntities ==>> "+roomEntities);
+							
+							if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
+								for(RoomEntity roomEntity : propertyEntity.getRoomEntities()) {
+									if(Objects.nonNull(roomEntity) && roomEntity.getStatus() == Status.ACTIVE.ordinal()) {
+										if(!CollectionUtils.isEmpty(propertyModel.getRoomModels())) {
+											for(RoomModel roomModel : propertyModel.getRoomModels()) {
+												if(Objects.nonNull(roomModel) && roomModel.getStatus() == Status.ACTIVE.ordinal()) {
+													if(StringUtils.equals(roomModel.getRoomId(), String.valueOf(roomEntity.getRoomId()))) {
+														roomModel.setOraPrice(priceCalculationForRoom(propertyEntity, roomEntity, filterCiteriaModel).get(0));
+														roomModel.setOraDiscount(priceCalculationForRoom(propertyEntity, roomEntity, filterCiteriaModel).get(1));
+														roomModel.setRoomOffer(priceCalculationForRoom(propertyEntity, roomEntity, filterCiteriaModel).get(2));
+														roomModel.setPriceDrop(priceCalculationForRoom(propertyEntity, roomEntity, filterCiteriaModel).get(3));
+														roomModel.setHostDiscount(priceCalculationForRoom(propertyEntity, roomEntity, filterCiteriaModel).get(4));
+														
+														// Calculate GST
+														Double amount = Math.round(Double.parseDouble(roomModel.getOraPrice()) - Double.parseDouble(roomModel.getOraDiscount()) - Double.parseDouble(roomModel.getRoomOffer())
+																- Double.parseDouble(roomModel.getHostDiscount()))* 100D / 100D;
+														System.err.println("amount ==>> "+amount);
+														GstSlabModel gstSlabModel = gstSlabService.getActiveGstModel(amount);
+														
+														if (logger.isInfoEnabled()) {
+															logger.info("gstSlabModel ==>> "+gstSlabModel);
+														}
+														System.err.println("gstSlabModel ==>> "+gstSlabModel);
+														
+														if (Objects.nonNull(gstSlabModel)) {
+															roomModel.setGstPercentage(gstSlabModel.getPercentage());
+															roomModel.setAmountWithGST(String.valueOf(Math.round(amount * Double.parseDouble(gstSlabModel.getPercentage()) / 100 * 100D) / 100D));
+														} else {
+															
+															roomModel.setGstPercentage("0");
+															roomModel.setAmountWithGST("0");
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					} 
+				} 
+			} 
+		}
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("fetchPropertyDetails -- END");
 		}
 		
-		return propertyModel;
+ 	    return propertyModel;
 	}
 	
 	public List<String> priceCalculationForRoom(PropertyEntity propertyEntity, RoomEntity roomEntity, FilterCiteriaModel filterCiteriaModel) {
@@ -1364,8 +1198,7 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		
 		System.out.println("price ==>> "+price);
 		System.err.println("roomEntity.getOraPercentage() ==>> "+roomEntity.getOraPercentage());
-		System.out.println("totalPrice before ==>> "+totalPrice);
-		totalPrice = totalPrice + price + (Double.parseDouble(roomEntity.getOraPercentage()) * price / 100);
+		totalPrice = price + (Double.parseDouble(roomEntity.getOraPercentage()) * price / 100);
 		System.err.println("totalPrice after including OraPercentage ==>> "+totalPrice); 
 		
 		// Discount Section
@@ -1429,7 +1262,8 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		System.err.println("hostDiscount ==>> "+hostDiscount);
 		System.out.println("oraDiscount ==>> "+oraDiscount);
 		System.err.println("discountedPrice before ==>> "+discountedPrice);
-		discountedPrice = discountedPrice + hostDiscount + oraDiscount + priceDropDiscount;
+		//discountedPrice = discountedPrice + hostDiscount + oraDiscount + priceDropDiscount;
+		discountedPrice = oraDiscount + priceDropDiscount;
 		System.out.println("discountedPrice after deduction from totalPrice ==>> "+discountedPrice);
 		
 		Double calculatedPrice = totalPrice - discountedPrice;
@@ -1482,14 +1316,15 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		}
 		
 		System.out.println("offerPrice ==>> "+offerPrice);
-		discountedPrice = discountedPrice + offerPrice;
-		System.out.println("Final discountedPrice ==>> "+discountedPrice);
+		//discountedPrice = discountedPrice + offerPrice;
+		//System.out.println("Final discountedPrice ==>> "+discountedPrice);
 		//totalPrice = totalPrice * numOfDays;
 		//discountedPrice = discountedPrice * numOfDays;
 		prices.add(String.valueOf(Math.round(totalPrice * 100D) / 100D));
 		prices.add(String.valueOf(Math.round(discountedPrice * 100D) / 100D));
 		prices.add(String.valueOf(Math.round(offerPrice * 100D) / 100D));
 		prices.add(String.valueOf(Math.round(priceDropDiscount * 100D) / 100D));
+		prices.add(String.valueOf(Math.round(hostDiscount * 100D) / 100D));
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("priceCalculationForRoom -- END");

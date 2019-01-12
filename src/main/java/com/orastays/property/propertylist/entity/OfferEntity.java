@@ -56,6 +56,10 @@ public class OfferEntity extends CommonEntity {
 	@Column(name = "online")
 	@JsonProperty("online")
 	private String online;
+	
+	@Column(name = "offer_desc")
+	@JsonProperty("offerDesc")
+	private String offerDesc;
 
 	@Column(name = "max_amount")
 	@JsonProperty("maxAmount")

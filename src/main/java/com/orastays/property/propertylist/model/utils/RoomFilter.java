@@ -10,10 +10,12 @@ import lombok.ToString;
 @Setter
 @ToString
 public class RoomFilter {
+	
 	private boolean isConsidered;
 	private boolean isMatchingSearchCriteria;
 	private RoomEntity roomEntity;
 	
 	//for shared room
 	private int availableBeds;
+	private int selectedNumberOfBeds;
 }

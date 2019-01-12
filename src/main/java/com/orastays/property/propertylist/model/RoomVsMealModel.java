@@ -1,7 +1,5 @@
 package com.orastays.property.propertylist.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.EqualsAndHashCode;
@@ -13,32 +11,13 @@ import lombok.ToString;
 @Setter
 @EqualsAndHashCode(callSuper = false)
 @ToString
-@JsonInclude(Include.NON_NULL)
 public class RoomVsMealModel extends CommonModel {
 
 	@JsonProperty("roomVsMealId")
 	private String roomVsMealId;
 
-	@JsonProperty("mealTypeSunday")
-	private String mealTypeSunday;
-
-	@JsonProperty("mealTypeMonday")
-	private String mealTypeMonday;
-
-	@JsonProperty("mealTypeTuesday")
-	private String mealTypeTuesday;
-
-	@JsonProperty("mealTypeWednesday")
-	private String mealTypeWednesday;
-
-	@JsonProperty("mealTypeThursday")
-	private String mealTypeThursday;
-
-	@JsonProperty("mealTypeFriday")
-	private String mealTypeFriday;
-
-	@JsonProperty("mealTypeSaturday")
-	private String mealTypeSaturday;
+	@JsonProperty("mealType")
+	private String mealType;
 
 	@JsonProperty("mealDaysSunday")
 	private String mealDaysSunday;
@@ -61,26 +40,8 @@ public class RoomVsMealModel extends CommonModel {
 	@JsonProperty("mealDaysSaturday")
 	private String mealDaysSaturday;
 
-	@JsonProperty("mealPriceCategorySunday")
-	private String mealPriceCategorySunday;
-
-	@JsonProperty("mealPriceCategoryMonday")
-	private String mealPriceCategoryMonday;
-
-	@JsonProperty("mealPriceCategoryTuesday")
-	private String mealPriceCategoryTuesday;
-
-	@JsonProperty("mealPriceCategoryWednesday")
-	private String mealPriceCategoryWednesday;
-
-	@JsonProperty("mealPriceCategoryThursday")
-	private String mealPriceCategoryThursday;
-
-	@JsonProperty("mealPriceCategoryFriday")
-	private String mealPriceCategoryFriday;
-
-	@JsonProperty("mealPriceCategorySaturday")
-	private String mealPriceCategorySaturday;
+	@JsonProperty("mealPriceCategory")
+	private String mealPriceCategory;
 
 	@JsonProperty("room")
 	private RoomModel roomModel;

@@ -2,11 +2,14 @@ package com.orastays.property.propertylist.utils;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -27,6 +30,8 @@ import com.orastays.property.propertylist.model.utils.RoomFilter;
 @Component
 public class FilterRoomsUtil {
 
+	private static final Logger logger = LogManager.getLogger(FilterRoomsUtil.class);
+	
 	@Autowired
 	protected RestTemplate restTemplate;
 
@@ -36,8 +41,13 @@ public class FilterRoomsUtil {
 	@Autowired
 	protected PropertyListRoomUtil propertyListRoomUtil;
 
-	public void getRoomsByPropertyWithCheckinDateFilter(PropertyEntity propertyEntity,
-			FilterCiteriaModel filterCiteriaModel) {
+	public Map<Integer, RoomSelector> getRoomsByPropertyWithCheckinDateFilter(PropertyEntity propertyEntity, FilterCiteriaModel filterCiteriaModel) {
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("getRoomsByPropertyWithCheckinDateFilter -- START");
+		}
+		
+		Map<Integer, RoomSelector> filteredRooms = new HashMap<>();
 		BookingModel bookingModel = new BookingModel();
 		bookingModel.setPropertyId(String.valueOf(propertyEntity.getPropertyId()));
 		bookingModel.setCheckinDate(filterCiteriaModel.getCheckInDate());
@@ -46,8 +56,7 @@ public class FilterRoomsUtil {
 		Gson gson = new Gson();
 		String jsonString = gson.toJson(responseModel.getResponseBody());
 		gson = new Gson();
-		Type listType = new TypeToken<List<BookingModel>>() {
-		}.getType();
+		Type listType = new TypeToken<List<BookingModel>>() {}.getType();
 		List<BookingModel> bookingModels = gson.fromJson(jsonString, listType);
 
 		Map<String, List<BookingVsRoomModel>> roomByOraName = new LinkedHashMap<>();
@@ -83,15 +92,14 @@ public class FilterRoomsUtil {
 
 		}
 
+		System.err.println("roomByOraName ==>> "+roomByOraName);
 		// if hotel homestay guest house then go with private rooms
 
 		if (filterCiteriaModel.getPropertyTypeId().equalsIgnoreCase(String.valueOf(PropertyType.HOTEL.ordinal()))
-				|| filterCiteriaModel.getPropertyTypeId()
-						.equalsIgnoreCase(String.valueOf(PropertyType.HOMESTAY.ordinal()))
-				|| filterCiteriaModel.getPropertyTypeId()
-						.equalsIgnoreCase(String.valueOf(PropertyType.GUEST_HOUSE.ordinal()))) {
-			Map<Integer, List<RoomFilter>> propertyPrivateAvailableRooms = propertyListRoomUtil
-					.populatePrivateRoomsForProperty(roomByOraName, propertyEntity);
+				|| filterCiteriaModel.getPropertyTypeId().equalsIgnoreCase(String.valueOf(PropertyType.HOMESTAY.ordinal()))
+				|| filterCiteriaModel.getPropertyTypeId().equalsIgnoreCase(String.valueOf(PropertyType.GUEST_HOUSE.ordinal()))) {
+			
+			Map<Integer, RoomSelector> propertyPrivateAvailableRooms = propertyListRoomUtil.populatePrivateRoomsForProperty(roomByOraName, propertyEntity);
 
 			// check if the key is present if not then checked for shared rooms
 
@@ -100,10 +108,10 @@ public class FilterRoomsUtil {
 				int childs = roomModel.getNoOfChild() == null ? 0 : Integer.parseInt(roomModel.getNoOfChild());
 
 				if (!propertyPrivateAvailableRooms.containsKey(guests)) {
-					return;
+					return filteredRooms;
 
 				} else {
-					List<RoomFilter> roomFilters = propertyPrivateAvailableRooms.get(guests);
+					List<RoomFilter> roomFilters = propertyPrivateAvailableRooms.get(guests).getAvailableRooms();
 					boolean flag = false;
 					for (RoomFilter roomFilter : roomFilters) {
 						// check if condition is matching
@@ -111,20 +119,72 @@ public class FilterRoomsUtil {
 								&& !roomFilter.isConsidered()) { // criteria matching
 							roomFilter.setConsidered(true);
 							flag = true;
+							propertyPrivateAvailableRooms.get(guests).setSelectedRoom(roomFilter);
 							break;
 						}
 					}
 					System.err.println(roomFilters);
 					if (!flag) {
-						return; // room not allocated
+						filteredRooms = new HashMap<Integer, RoomSelector>();
+						return filteredRooms; // room not allocated
+					} else {
+						filteredRooms.put(guests, propertyPrivateAvailableRooms.get(guests));
 					}
 				}
 			}
-
+			
+			System.out.println("propertyPrivateAvailableRooms ==>> "+filteredRooms);
+			
+			return filteredRooms;
 		} else { // search for shared rooms
-			Map<Integer, List<RoomFilter>> propertySharedAvailableRooms = propertyListRoomUtil
-					.populateSharedRoomsForProperty(roomByOraName, propertyEntity);
+			//count total guest + child in case of shared. allocated seperate beds for them
+			int totalGuest = 0;
+			int totalChild = 0;
+			
+			for(RoomModel roomModel : filterCiteriaModel.getRoomModels()) {
+				totalGuest += roomModel.getNoOfGuest() == null ? 0 : Integer.parseInt(roomModel.getNoOfGuest());
+				totalChild += roomModel.getNoOfChild() == null ? 0 : Integer.parseInt(roomModel.getNoOfChild());
+				
+			}
+			int bedRequired = totalGuest + totalChild;
+			Map<Integer, RoomSelector> propertySharedAvailableRooms = propertyListRoomUtil.populateSharedRoomsForProperty(roomByOraName, propertyEntity, bedRequired);
+			List<RoomFilter> filteredSharedRooms = propertySharedAvailableRooms.get(bedRequired).getAvailableRooms();
+			if(Objects.isNull(filteredSharedRooms) && filteredSharedRooms.isEmpty()) {
+				return filteredRooms;
+			} else { //check if criteria is matching
+				int remaining = bedRequired;
+				boolean flag = false;
+				for(RoomFilter roomFilter : filteredSharedRooms) {
+					int availableBeds = roomFilter.getAvailableBeds();
+					if(availableBeds >= remaining) {
+						roomFilter.setConsidered(true);
+						roomFilter.setSelectedNumberOfBeds(remaining);
+						flag = true;
+						break;
+					} else {
+						roomFilter.setConsidered(true);
+						roomFilter.setSelectedNumberOfBeds(availableBeds);
+						remaining -= availableBeds;
+						if(remaining == 0) {
+							flag = true;
+							break;
+						}
+					}
+				}
+				if(!flag) {
+					return filteredRooms; // beds not allocated
+				} else {
+					filteredRooms.put(bedRequired, propertySharedAvailableRooms.get(bedRequired));
+				}
+			}
+			
+			System.out.println("propertySharedAvailableRooms ==>> "+filteredRooms);
+		}
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("getRoomsByPropertyWithCheckinDateFilter -- END");
 		}
 
+		return filteredRooms;
 	}
 }
