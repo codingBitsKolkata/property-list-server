@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import com.orastays.property.propertylist.entity.WishlistEntity;
+import com.orastays.property.propertylist.helper.Status;
 import com.orastays.property.propertylist.helper.Util;
 import com.orastays.property.propertylist.model.WishlistModel;
 
@@ -20,8 +21,24 @@ public class WishlistConverter extends CommonConverter implements BaseConverter<
 
 	@Override
 	public WishlistEntity modelToEntity(WishlistModel m) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("modelToEntity -- START");
+		}
+		
+		WishlistEntity wishlistEntity = new WishlistEntity();
+		wishlistEntity = (WishlistEntity) Util.transform(modelMapper, m, wishlistEntity);
+		wishlistEntity.setStatus(Status.ACTIVE.ordinal());
+		wishlistEntity.setUserId(Long.parseLong(m.getUserId()));
+		wishlistEntity.setPropertyEntity(propertyDAO.find(Long.parseLong(m.getPropertyModel().getPropertyId())));
+		wishlistEntity.setCreatedBy(Long.parseLong(m.getUserId()));
+		wishlistEntity.setCreatedDate(Util.getCurrentDateTime());
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("modelToEntity -- END");
+		}
+		
+		return wishlistEntity;
 	}
 
 	@Override

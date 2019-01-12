@@ -568,11 +568,10 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 				}
 				
 				if (!CollectionUtils.isEmpty(ratingTypes)) {
-					ratings.add(0, String.valueOf(Util.roundOff(totalRating / ratingTypes.size() / userReviewModels.size()))); // Rating
+					ratings.add(0, String.valueOf(Math.round(totalRating / ratingTypes.size() / userReviewModels.size()) * 100D / 100D)); // Rating
 				} else {
 					ratings.add("0"); // Rating
 				}
-				
 				
 				// Calculate Review Count
 				ratings.add(1, String.valueOf(userReviewModels.size())); // Review Count
@@ -711,7 +710,8 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 				for (Map.Entry<String,String> entry : ratingTypes.entrySet()) { 
 					totalRating = totalRating + Long.parseLong(entry.getValue());
 				}
-				ratings.add(0, String.valueOf(totalRating / ratingTypes.size())); // Rating
+				
+				ratings.add(0, String.valueOf(Math.round(totalRating / ratingTypes.size() / userReviewModels.size()) * 100D / 100D)); // Rating
 				for(String input : ratingsInput) {
 					if(Long.parseLong(input) >= Long.parseLong(ratings.get(0))) {
 						flag = true;
@@ -1066,8 +1066,8 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 								propertyModel.setConvenienceGSTAmount("0");
 							}
 							
-							propertyModel.setAmountPayable(String.valueOf(Util.roundOff(Double.parseDouble(prices.get(0)) - Double.parseDouble(prices.get(1)) 
-									+ Double.parseDouble(propertyModel.getConvenienceFee()) + Double.parseDouble(propertyModel.getConvenienceGSTAmount())) ));
+							propertyModel.setAmountPayable(String.valueOf(Math.round(Double.parseDouble(prices.get(0)) - Double.parseDouble(prices.get(1)) 
+									+ Double.parseDouble(propertyModel.getConvenienceFee()) + Double.parseDouble(propertyModel.getConvenienceGSTAmount()))* 100D / 100D ));
 							
 							List<RoomEntity> roomEntities = new ArrayList<RoomEntity>();
 							for(Map.Entry<Integer, RoomSelector> filteredRoom : filteredRooms.entrySet()) {

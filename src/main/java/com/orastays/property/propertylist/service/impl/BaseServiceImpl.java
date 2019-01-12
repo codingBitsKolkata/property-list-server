@@ -31,6 +31,7 @@ import com.orastays.property.propertylist.converter.SpaceRuleConverter;
 import com.orastays.property.propertylist.converter.SpecialExperienceConverter;
 import com.orastays.property.propertylist.converter.SpecialtiesConverter;
 import com.orastays.property.propertylist.converter.StayTypeConverter;
+import com.orastays.property.propertylist.converter.WishlistConverter;
 import com.orastays.property.propertylist.dao.AmenitiesDAO;
 import com.orastays.property.propertylist.dao.CancellationSlabDAO;
 import com.orastays.property.propertylist.dao.ConvenienceDAO;
@@ -58,6 +59,7 @@ import com.orastays.property.propertylist.dao.SpaceRuleDAO;
 import com.orastays.property.propertylist.dao.SpecialExperienceDAO;
 import com.orastays.property.propertylist.dao.SpecialtiesDAO;
 import com.orastays.property.propertylist.dao.StayTypeDAO;
+import com.orastays.property.propertylist.dao.WishlistDAO;
 import com.orastays.property.propertylist.helper.MessageUtil;
 import com.orastays.property.propertylist.service.ConvenienceService;
 import com.orastays.property.propertylist.service.GstSlabService;
@@ -66,6 +68,7 @@ import com.orastays.property.propertylist.utils.FilterRoomsUtil;
 import com.orastays.property.propertylist.validation.BookingValidation;
 import com.orastays.property.propertylist.validation.HomeValidation;
 import com.orastays.property.propertylist.validation.PropertyListValidation;
+import com.orastays.property.propertylist.validation.WishlistValidation;
 
 public abstract class BaseServiceImpl {
 
@@ -260,5 +263,14 @@ public abstract class BaseServiceImpl {
 
 	@Autowired
 	protected ConvenienceConverter convenienceConverter;
+	
+	@Autowired
+	protected WishlistDAO wishlistDAO;
+	
+	@Autowired
+	protected WishlistConverter wishlistConverter;
+	
+	@Autowired
+	protected WishlistValidation wishlistValidation;
 
 }

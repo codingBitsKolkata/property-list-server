@@ -193,7 +193,7 @@ public class PropertyListValidation extends AuthorizeUserValidation {
 			if (!Util.checkOnlyDate(filterCiteriaModel.getCheckInDate())) {
 				exceptions.put(messageUtil.getBundle("checkin.date.invalid.code"), new Exception(messageUtil.getBundle("checkin.date.invalid.message")));
 			} else {
-				if (Util.getMinuteDiff(filterCiteriaModel.getCheckInDate() + " 00:00:01") > 0) {
+				if (Util.getMinuteDiff(filterCiteriaModel.getCheckInDate() + " 00:00:01") < 0) {
 					exceptions.put(messageUtil.getBundle("checkin.date.invalid.code"), new Exception(messageUtil.getBundle("checkin.date.invalid.message")));
 				}
 			}

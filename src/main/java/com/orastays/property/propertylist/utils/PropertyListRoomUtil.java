@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import com.orastays.property.propertylist.entity.PropertyEntity;
 import com.orastays.property.propertylist.entity.RoomEntity;
 import com.orastays.property.propertylist.helper.Accommodation;
+import com.orastays.property.propertylist.helper.Status;
 import com.orastays.property.propertylist.model.booking.BookingVsRoomModel;
 import com.orastays.property.propertylist.model.utils.RoomFilter;
 
@@ -95,36 +96,38 @@ public class PropertyListRoomUtil {
 		Map<Integer, RoomSelector> roomMap = new HashMap<>();
 		if (!Objects.isNull(propertyRooms)) {
 			propertyRooms.stream().forEach(room -> {
-				if (room.getAccomodationName().equalsIgnoreCase(Accommodation.PRIVATE.name())) {
-					// room is private. check whether booking exists or not
-					if (bookedRooms.containsKey(room.getOraRoomName())) {
-						return;
-					} else {
-						// check if key is present. key will be number of beds + number of cots
-						int numberOfGuest = room.getNoOfGuest() == null ? 0 : Integer.parseInt(room.getNoOfGuest());
-						int numberOfCot = room.getNumOfCot() == null ? 0 : Integer.parseInt(room.getNumOfCot());
-						int noOfChild = room.getNoOfChild() == null ? 0 : Integer.parseInt(room.getNoOfChild());
-						room.setNoOfChild(String.valueOf(noOfChild));
-						RoomFilter roomFilter = new RoomFilter();
-						roomFilter.setConsidered(false);
-						roomFilter.setRoomEntity(room);
-						if (!roomMap.containsKey(numberOfGuest)) {
-							RoomSelector roomSelector = new RoomSelector();
-
-							List<RoomFilter> roomFilters = new LinkedList<>();
-							roomSelector.setAvailableRooms(roomFilters);
-							roomMap.put(numberOfGuest, roomSelector);
+				if(Objects.nonNull(room) && room.getStatus() == Status.ACTIVE.ordinal()) {
+					if (room.getAccomodationName().equalsIgnoreCase(Accommodation.PRIVATE.name())) {
+						// room is private. check whether booking exists or not
+						if (bookedRooms.containsKey(room.getOraRoomName())) {
+							return;
+						} else {
+							// check if key is present. key will be number of beds + number of cots
+							int numberOfGuest = room.getNoOfGuest() == null ? 0 : Integer.parseInt(room.getNoOfGuest());
+							int numberOfCot = room.getNumOfCot() == null ? 0 : Integer.parseInt(room.getNumOfCot());
+							int noOfChild = room.getNoOfChild() == null ? 0 : Integer.parseInt(room.getNoOfChild());
+							room.setNoOfChild(String.valueOf(noOfChild));
+							RoomFilter roomFilter = new RoomFilter();
+							roomFilter.setConsidered(false);
+							roomFilter.setRoomEntity(room);
+							if (!roomMap.containsKey(numberOfGuest)) {
+								RoomSelector roomSelector = new RoomSelector();
+	
+								List<RoomFilter> roomFilters = new LinkedList<>();
+								roomSelector.setAvailableRooms(roomFilters);
+								roomMap.put(numberOfGuest, roomSelector);
+							}
+							if (!roomMap.containsKey(numberOfGuest + numberOfCot)) {
+								RoomSelector roomSelector = new RoomSelector();
+	
+								List<RoomFilter> roomFilters = new LinkedList<>();
+								roomSelector.setAvailableRooms(roomFilters);
+								roomMap.put(numberOfGuest + numberOfCot, roomSelector);
+							}
+							roomMap.get(numberOfGuest).getAvailableRooms().add(roomFilter);
+							if (numberOfCot > 0)
+								roomMap.get(numberOfGuest + numberOfCot).getAvailableRooms().add(roomFilter);
 						}
-						if (!roomMap.containsKey(numberOfGuest + numberOfCot)) {
-							RoomSelector roomSelector = new RoomSelector();
-
-							List<RoomFilter> roomFilters = new LinkedList<>();
-							roomSelector.setAvailableRooms(roomFilters);
-							roomMap.put(numberOfGuest + numberOfCot, roomSelector);
-						}
-						roomMap.get(numberOfGuest).getAvailableRooms().add(roomFilter);
-						if (numberOfCot > 0)
-							roomMap.get(numberOfGuest + numberOfCot).getAvailableRooms().add(roomFilter);
 					}
 				}
 			});
@@ -153,34 +156,36 @@ public class PropertyListRoomUtil {
 		List<RoomFilter> filteredRooms = new ArrayList<>();
 		if (!Objects.isNull(propertyRooms)) {
 			propertyRooms.stream().forEach(room -> {
-				if (room.getAccomodationName().equalsIgnoreCase(Accommodation.SHARED.name())) {
-					int numberOfBed = room.getNumOfBed() == null ? 0 : Integer.parseInt(room.getNumOfBed());
-					int numberOfCot = room.getNumOfCot() == null ? 0 : Integer.parseInt(room.getNumOfCot());
-					if (bookedRooms.containsKey(room.getOraRoomName())) {
-						// check whether any bed is available
-						int bookedBeds = 0;
-						for (BookingVsRoomModel bookingVsRoomModel : bookedRooms.get(room.getOraRoomName())) {
-							bookedBeds += Integer.parseInt(bookingVsRoomModel.getNumOfSharedBed())
-									+ Integer.parseInt(bookingVsRoomModel.getNumOfSharedCot());
-						}
-
-						if (numberOfBed + numberOfCot <= bookedBeds) {
-							return;
+				if(Objects.nonNull(room) && room.getStatus() == Status.ACTIVE.ordinal()) {
+					if (room.getAccomodationName().equalsIgnoreCase(Accommodation.SHARED.name())) {
+						int numberOfBed = room.getNumOfBed() == null ? 0 : Integer.parseInt(room.getNumOfBed());
+						int numberOfCot = room.getNumOfCot() == null ? 0 : Integer.parseInt(room.getNumOfCot());
+						if (bookedRooms.containsKey(room.getOraRoomName())) {
+							// check whether any bed is available
+							int bookedBeds = 0;
+							for (BookingVsRoomModel bookingVsRoomModel : bookedRooms.get(room.getOraRoomName())) {
+								bookedBeds += Integer.parseInt(bookingVsRoomModel.getNumOfSharedBed())
+										+ Integer.parseInt(bookingVsRoomModel.getNumOfSharedCot());
+							}
+	
+							if (numberOfBed + numberOfCot <= bookedBeds) {
+								return;
+							} else {
+								RoomFilter roomFilter = new RoomFilter();
+								roomFilter.setConsidered(false);
+								roomFilter.setMatchingSearchCriteria(true);
+								roomFilter.setAvailableBeds(numberOfCot + numberOfBed - bookedBeds);
+								roomFilter.setRoomEntity(room);
+								filteredRooms.add(roomFilter);
+							}
 						} else {
 							RoomFilter roomFilter = new RoomFilter();
 							roomFilter.setConsidered(false);
 							roomFilter.setMatchingSearchCriteria(true);
-							roomFilter.setAvailableBeds(numberOfCot + numberOfBed - bookedBeds);
+							roomFilter.setAvailableBeds(numberOfCot + numberOfBed);
 							roomFilter.setRoomEntity(room);
 							filteredRooms.add(roomFilter);
 						}
-					} else {
-						RoomFilter roomFilter = new RoomFilter();
-						roomFilter.setConsidered(false);
-						roomFilter.setMatchingSearchCriteria(true);
-						roomFilter.setAvailableBeds(numberOfCot + numberOfBed);
-						roomFilter.setRoomEntity(room);
-						filteredRooms.add(roomFilter);
 					}
 				}
 			});

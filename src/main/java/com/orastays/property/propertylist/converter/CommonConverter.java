@@ -10,6 +10,7 @@ import com.orastays.property.propertylist.dao.DocumentDAO;
 import com.orastays.property.propertylist.dao.HostVsAccountDAO;
 import com.orastays.property.propertylist.dao.MealPlanCatVsMealPlanDAO;
 import com.orastays.property.propertylist.dao.PriceDropDAO;
+import com.orastays.property.propertylist.dao.PropertyDAO;
 import com.orastays.property.propertylist.dao.PropertyTypeDAO;
 import com.orastays.property.propertylist.dao.RoomCategoryDAO;
 import com.orastays.property.propertylist.dao.SpaceRuleDAO;
@@ -31,6 +32,9 @@ public class CommonConverter {
 
 	@Autowired
 	protected PropertyTypeDAO propertyTypeDAO;
+	
+	@Autowired
+	protected PropertyDAO propertyDAO;
 
 	@Autowired
 	protected SpecialExperienceDAO specialExperienceDAO;
