@@ -1,10 +1,13 @@
 package com.orastays.property.propertylist.model;
 
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.orastays.property.propertylist.model.review.UserReviewModel;
+import com.orastays.property.propertylist.model.user.UserModel;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -143,4 +146,28 @@ public class PropertyModel extends CommonModel {
 
 	@JsonProperty("amountPayable")
 	private String amountPayable;
+	
+	@JsonProperty("rating")
+	private String rating;
+	
+	@JsonProperty("reviewCount")
+	private String reviewCount;
+	
+	@JsonProperty("ratingText")
+	private String ratingText;
+	
+	@JsonProperty("analyticsText")
+	private String analyticsText;
+	
+	@JsonProperty("isBookmark")
+	private Boolean isBookmark;
+	
+	@JsonProperty("reviews")
+	private List<UserReviewModel> userReviewModels;
+	
+	@JsonProperty("hostDetails")
+	private UserModel userModel;
+	
+	@JsonProperty("priceDetails")
+	private Map<String, String> priceDetails;
 }

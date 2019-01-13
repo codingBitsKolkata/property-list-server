@@ -69,4 +69,7 @@ public class PropertyListViewModel {
 	
 	@JsonProperty("amenities")
 	private Set<AmenitiesModel> amenitiesModels;
+	
+	@JsonProperty("isBookmark")
+	private Boolean isBookmark;
 }

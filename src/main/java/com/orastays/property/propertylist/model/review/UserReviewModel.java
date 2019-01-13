@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.orastays.property.propertylist.model.user.UserModel;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.EqualsAndHashCode;
@@ -44,4 +45,7 @@ public class UserReviewModel {
 	
 	@JsonProperty("bookingVsRatings")
 	private List<BookingVsRatingModel> bookingVsRatings;
+	
+	@JsonProperty("user")
+	private UserModel userModel;
 }

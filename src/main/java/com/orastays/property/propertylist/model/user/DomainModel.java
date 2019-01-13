@@ -1,11 +1,14 @@
 /**
  * @author Abhideep
  */
-package com.orastays.property.propertylist.model;
+package com.orastays.property.propertylist.model.user;
+
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.orastays.property.propertylist.model.CommonModel;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -17,18 +20,15 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false)
 @ToString
 @JsonInclude(Include.NON_NULL)
-public class UserModel extends CommonModel {
+public class DomainModel extends CommonModel {
 
-	@JsonProperty("userId")
-	private String userId;
+	@JsonProperty("domainId")
+	private String domainId;
 	
-	@JsonProperty("name")
-	private String name;
+	@JsonProperty("domainName")
+	private String domainName;
 	
-	@JsonProperty("mobileNumber")
-	private String mobileNumber;
-	
-	@JsonProperty("emailId")
-	private String emailId;
-	
+	@JsonProperty("hostVsDomains")
+	private List<HostVsDomainModel> hostVsDomainModels;
+
 }

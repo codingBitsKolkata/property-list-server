@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import com.orastays.property.propertylist.entity.PropertyEntity;
 import com.orastays.property.propertylist.exceptions.FormExceptions;
 import com.orastays.property.propertylist.model.FilterCiteriaModel;
-import com.orastays.property.propertylist.model.UserModel;
+import com.orastays.property.propertylist.model.user.UserModel;
 
 @Component
 public class BookingValidation extends AuthorizeUserValidation {

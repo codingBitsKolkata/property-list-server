@@ -9,6 +9,7 @@ import com.orastays.property.propertylist.model.FilterCiteriaModel;
 import com.orastays.property.propertylist.model.PropertyListViewModel;
 import com.orastays.property.propertylist.model.PropertyModel;
 import com.orastays.property.propertylist.model.booking.BookingVsRoomModel;
+import com.orastays.property.propertylist.model.user.UserModel;
 import com.orastays.property.propertylist.utils.RoomSelector;
 
 public interface PropertyListService {
@@ -29,5 +30,7 @@ public interface PropertyListService {
 
 	PropertyListViewModel setPropertyListView(PropertyEntity propertyEntity, FilterCiteriaModel filterCiteriaModel,
 			Map<Integer, RoomSelector> filteredRooms);
+
+	UserModel getUserDetails(String userId) throws FormExceptions;
 
 }

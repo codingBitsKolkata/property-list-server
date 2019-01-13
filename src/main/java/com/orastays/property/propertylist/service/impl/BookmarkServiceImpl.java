@@ -7,8 +7,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.orastays.property.propertylist.exceptions.FormExceptions;
-import com.orastays.property.propertylist.model.UserModel;
 import com.orastays.property.propertylist.model.WishlistModel;
+import com.orastays.property.propertylist.model.user.UserModel;
 import com.orastays.property.propertylist.service.BookmarkService;
 
 @Service

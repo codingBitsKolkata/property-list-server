@@ -12,7 +12,6 @@ import org.springframework.boot.context.embedded.tomcat.TomcatConnectorCustomize
 import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.netflix.hystrix.EnableHystrix;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -70,7 +69,7 @@ public class PropertyListApplication extends WebMvcConfigurerAdapter {
 	}
 
 	@Bean
-	@LoadBalanced
+	//@LoadBalanced
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
 	}

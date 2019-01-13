@@ -19,9 +19,9 @@ import com.orastays.property.propertylist.helper.Util;
 import com.orastays.property.propertylist.model.FilterCiteriaModel;
 import com.orastays.property.propertylist.model.PropertyModel;
 import com.orastays.property.propertylist.model.ResponseModel;
-import com.orastays.property.propertylist.model.UserModel;
 import com.orastays.property.propertylist.model.booking.BookingModel;
 import com.orastays.property.propertylist.model.booking.PaymentModel;
+import com.orastays.property.propertylist.model.user.UserModel;
 import com.orastays.property.propertylist.service.BookingService;
 
 @Service

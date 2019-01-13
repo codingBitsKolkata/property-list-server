@@ -29,7 +29,7 @@ import com.orastays.property.propertylist.exceptions.FormExceptions;
 import com.orastays.property.propertylist.helper.MessageUtil;
 import com.orastays.property.propertylist.model.CommonModel;
 import com.orastays.property.propertylist.model.ResponseModel;
-import com.orastays.property.propertylist.model.UserModel;
+import com.orastays.property.propertylist.model.user.UserModel;
 
 @Component
 public class AuthorizeUserValidation {

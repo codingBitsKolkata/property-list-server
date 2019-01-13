@@ -49,6 +49,7 @@ import com.orastays.property.propertylist.model.booking.ConvenienceModel;
 import com.orastays.property.propertylist.model.booking.GstSlabModel;
 import com.orastays.property.propertylist.model.review.BookingVsRatingModel;
 import com.orastays.property.propertylist.model.review.UserReviewModel;
+import com.orastays.property.propertylist.model.user.UserModel;
 import com.orastays.property.propertylist.model.utils.RoomFilter;
 import com.orastays.property.propertylist.service.PropertyListService;
 import com.orastays.property.propertylist.utils.RoomSelector;
@@ -274,6 +275,12 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		}
 		
 		propertyListViewModel.setAmenitiesModels(amenitiesModels);
+		
+		// TODO Bookmark
+		propertyListViewModel.setIsBookmark(false);
+		
+		// TODO Analysis Text
+		propertyListViewModel.setAnalyticsText("Booked "+propertyEntity.getRoomEntities().size()+ " times in the last 24 hours");
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("setPropertyListView -- END");
@@ -1069,7 +1076,31 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 							propertyModel.setAmountPayable(String.valueOf(Math.round(Double.parseDouble(prices.get(0)) - Double.parseDouble(prices.get(1)) 
 									+ Double.parseDouble(propertyModel.getConvenienceFee()) + Double.parseDouble(propertyModel.getConvenienceGSTAmount()))* 100D / 100D ));
 							
-							List<RoomEntity> roomEntities = new ArrayList<RoomEntity>();
+							// Setting Price Details in Key Value Pair
+							setPriceDetails(propertyModel);
+							
+							// Setting Reviews for the property
+							propertyModel.setUserReviewModels(fetchPropertyReviews(propertyModel.getPropertyId()));
+							
+							// Set Rating, Rating Text And Review Count
+							propertyModel.setRating(getRatingAndReview(propertyEntity).get(0));
+							propertyModel.setReviewCount(getRatingAndReview(propertyEntity).get(1));
+							
+							if(Double.parseDouble(propertyModel.getRating()) >= Double.parseDouble(messageUtil.getBundle("rating.key1"))) {
+								propertyModel.setRatingText(messageUtil.getBundle("rating.value1"));
+							} else if(Double.parseDouble(propertyModel.getRating()) >= Double.parseDouble(messageUtil.getBundle("rating.key2"))) {
+								propertyModel.setRatingText(messageUtil.getBundle("rating.value2"));
+							} else {
+								propertyModel.setRatingText(messageUtil.getBundle("rating.value3"));
+							}
+							
+							// Setting Host Details
+							propertyModel.setUserModel(getUserDetails(propertyEntity.getHostVsAccountEntity().getUserId()));
+							
+							// TODO Bookmark
+							propertyModel.setIsBookmark(false);
+							
+							List<RoomEntity> roomEntities = new ArrayList<>();
 							for(Map.Entry<Integer, RoomSelector> filteredRoom : filteredRooms.entrySet()) {
 								List<RoomFilter> availableRooms = filteredRoom.getValue().getAvailableRooms();
 								for(RoomFilter roomFilter : availableRooms) {
@@ -1077,6 +1108,9 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 									roomEntities.add(roomEntity);
 								}
 							}
+							
+							// TODO Analysis Text
+							propertyModel.setAnalyticsText("Booked "+roomEntities.size()+ " times in the last 24 hours");
 							
 							propertyEntity.setRoomEntities(null);
 							propertyEntity.setRoomEntities(roomEntities);
@@ -1132,6 +1166,69 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		}
 		
  	    return propertyModel;
+	}
+	
+	private void setPriceDetails(PropertyModel propertyModel) {
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("setPriceDetails -- START");
+		}
+		
+		Map<String, String> priceDetails = new LinkedHashMap<>();
+		priceDetails.put("totalAmount", propertyModel.getTotalAmount());
+		priceDetails.put("propertyOffer", propertyModel.getPropertyOffer());
+		priceDetails.put("convenienceFee", propertyModel.getConvenienceFee());
+		priceDetails.put("convenienceGSTPercentage", propertyModel.getConvenienceGSTPercentage());
+		priceDetails.put("convenienceGSTAmount", propertyModel.getConvenienceGSTAmount());
+		priceDetails.put("amountPayable", propertyModel.getAmountPayable());
+		propertyModel.setPriceDetails(priceDetails);
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("setPriceDetails -- END");
+		}
+	}
+	
+	private List<UserReviewModel> fetchPropertyReviews(String propertyId) {
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("fetchPropertyReviews -- START");
+		}
+		
+		List<UserReviewModel> userReviewModels = null;
+		try {
+			UserReviewModel userReviewModel = new UserReviewModel();
+			userReviewModel.setPropertyId(propertyId);
+			userReviewModel.setUserTypeId(String.valueOf(Status.INACTIVE.ordinal()));
+			ResponseModel responseModel = restTemplate.postForObject(messageUtil.getBundle("review.server.url") +"fetch-review", userReviewModel, ResponseModel.class);
+			Gson gson = new Gson();
+			String jsonString = gson.toJson(responseModel.getResponseBody());
+			gson = new Gson();
+			Type listType = new TypeToken<List<UserReviewModel>>() {}.getType();
+			userReviewModels = gson.fromJson(jsonString, listType);
+			
+			if (logger.isInfoEnabled()) {
+				logger.info("userReviewModels ==>> "+userReviewModels);
+			}
+			
+			System.err.println("userReviewModels ==>> "+userReviewModels);
+			
+			if(!CollectionUtils.isEmpty(userReviewModels)) {
+				for(UserReviewModel userReviewModel2 : userReviewModels) {
+					userReviewModel2.setUserModel(getUserDetails(userReviewModel2.getUserId()));
+				}
+			}
+			
+		} catch (Exception e) {
+			if (logger.isInfoEnabled()) {
+				logger.info("Exception in fetchPropertyReviews -- "+Util.errorToString(e));
+			}
+		}
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("fetchPropertyReviews -- END");
+		}
+		
+		return userReviewModels;
 	}
 	
 	public List<String> priceCalculationForRoom(PropertyEntity propertyEntity, RoomEntity roomEntity, FilterCiteriaModel filterCiteriaModel) {
@@ -1331,6 +1428,46 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		}
 		
 		return prices;
+	}
+	
+	@Override
+	public UserModel getUserDetails(String userId) throws FormExceptions {
+
+		if (logger.isInfoEnabled()) {
+			logger.info("getUserDetails -- START");
+		}
+
+		Map<String, Exception> exceptions = new LinkedHashMap<>();
+		UserModel userModel = null;
+		try {
+			ResponseModel responseModel = restTemplate.getForObject(messageUtil.getBundle("auth.server.url") + "fetch-user-by-id?userId=" + userId, ResponseModel.class);
+			Gson gson = new Gson();
+			String jsonString = gson.toJson(responseModel.getResponseBody());
+			userModel = gson.fromJson(jsonString, UserModel.class);
+			if (Objects.isNull(userModel)) {
+				exceptions.put(messageUtil.getBundle("user.invalid.code"), new Exception(messageUtil.getBundle("user.invalid.message")));
+			}
+
+			if (logger.isInfoEnabled()) {
+				logger.info("userModel ==>> " + userModel);
+			}
+			
+			System.out.println("userModel ==>> " + userModel);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			// Disabled the below line to pass the Token Validation
+			exceptions.put(messageUtil.getBundle("user.invalid.code"), new Exception(messageUtil.getBundle("user.invalid.message")));
+		}
+
+		if (exceptions.size() > 0)
+			throw new FormExceptions(exceptions);
+
+		if (logger.isInfoEnabled()) {
+			logger.info("getUserDetails -- END");
+		}
+
+		return userModel;
 	}
 
 }

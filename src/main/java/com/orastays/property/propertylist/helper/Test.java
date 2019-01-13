@@ -10,7 +10,7 @@ public class Test {
 
 		try {
 			Test test = new Test();
-			System.out.println(test.getMinuteDiff("2019-01-12 00:00:01"));
+			System.out.println(test.getMinuteDiff("2019-04-13"));
 		} catch (Exception e) {
 
 		}
@@ -21,7 +21,7 @@ public class Test {
 
 		try {
 
-			DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			Date date1 = format.parse(firstDate);
 			String currentDate = format.format(new Date());
 			Date date2 = format.parse(currentDate);

@@ -799,6 +799,24 @@ public class Util {
 			return 0;
 		}
 	}
+	
+	public static int getMinuteDiffWithDate(String firstDate) {
+
+		try {
+
+			DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			Date date1 = format.parse(firstDate);
+			String currentDate = format.format(new Date());
+			Date date2 = format.parse(currentDate);
+			Double diffInMillies = (date2.getTime() - date1.getTime()) / (1000.0 * 60);
+
+			return diffInMillies.intValue();
+
+		} catch (Exception e) {
+
+			return 0;
+		}
+	}
 
 	public static boolean passwordCheck(String password) {
 		int count = 0;
