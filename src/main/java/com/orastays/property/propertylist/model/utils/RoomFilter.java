@@ -18,4 +18,5 @@ public class RoomFilter {
 	//for shared room
 	private int availableBeds;
 	private int selectedNumberOfBeds;
+	private int selectedNumberOfCots;
 }

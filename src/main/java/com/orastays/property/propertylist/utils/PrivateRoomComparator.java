@@ -8,12 +8,17 @@ public class PrivateRoomComparator implements Comparator<RoomFilter> {
 
 	@Override
 	public int compare(RoomFilter o1, RoomFilter o2) {
-		
-		Double firstObjectBedPrice = Double.parseDouble(o1.getRoomEntity().getRoomPricePerNight());
-		Double secondObjectBedPrice = Double.parseDouble(o2.getRoomEntity().getRoomPricePerNight());
-		if (firstObjectBedPrice < secondObjectBedPrice) {
+
+		double firstObjectBedPrice = Double.parseDouble(o1.getRoomEntity().getRoomPricePerNight());
+		double secondObjectBedPrice = Double.parseDouble(o2.getRoomEntity().getRoomPricePerNight());
+		double firstObjectCotPrice = o1.getRoomEntity().getCotPrice() == null ? 0
+				: Double.parseDouble(o1.getRoomEntity().getCotPrice());
+		double secondObjectCotPrice = o2.getRoomEntity().getCotPrice() == null ? 0
+				: Double.parseDouble(o2.getRoomEntity().getCotPrice());
+
+		if ((firstObjectBedPrice + firstObjectCotPrice) < (secondObjectBedPrice + secondObjectCotPrice)) {
 			return -1;
-		} else if (firstObjectBedPrice > secondObjectBedPrice) {
+		} else if ((firstObjectBedPrice + firstObjectCotPrice) > (secondObjectBedPrice + secondObjectCotPrice)) {
 			return 1;
 		} else
 			return 0;

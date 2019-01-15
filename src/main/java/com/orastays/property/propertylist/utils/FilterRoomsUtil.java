@@ -112,6 +112,11 @@ public class FilterRoomsUtil {
 
 				} else {
 					List<RoomFilter> roomFilters = propertyPrivateAvailableRooms.get(guests).getAvailableRooms();
+					//set selected rooms to a new arraylist
+					List<RoomFilter> selectedRooms = propertyPrivateAvailableRooms.get(guests).getSelectedRooms();
+					if(selectedRooms == null) {
+						selectedRooms = new ArrayList<>();
+					}
 					boolean flag = false;
 					for (RoomFilter roomFilter : roomFilters) {
 						// check if condition is matching
@@ -119,7 +124,7 @@ public class FilterRoomsUtil {
 								&& !roomFilter.isConsidered()) { // criteria matching
 							roomFilter.setConsidered(true);
 							flag = true;
-							propertyPrivateAvailableRooms.get(guests).setSelectedRoom(roomFilter);
+							propertyPrivateAvailableRooms.get(guests).getSelectedRooms().add(roomFilter);
 							break;
 						}
 					}

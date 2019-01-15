@@ -300,7 +300,11 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		for(Map.Entry<Integer, RoomSelector> filteredRoom : filteredRooms.entrySet()) {
 			//check if shared or private
 			if(StringUtils.equals(filteredRoom.getValue().getAvailableRooms().get(0).getRoomEntity().getAccomodationName(), Accommodation.PRIVATE.name())) { //private
-				roomEntities.add(filteredRoom.getValue().getSelectedRoom().getRoomEntity());
+				//roomEntities.add(filteredRoom.getValue().getSelectedRooms().getRoomEntity());
+				//add each room to roomEntities
+				filteredRoom.getValue().getSelectedRooms().forEach(selectedRoom -> {
+					roomEntities.add(selectedRoom.getRoomEntity());
+				});
 			} else {
 				roomFilters = filteredRoom.getValue().getAvailableRooms();
 				for(RoomFilter roomFilter : roomFilters) {

@@ -13,6 +13,6 @@ import lombok.ToString;
 @ToString
 public class RoomSelector {
 	
-	private RoomFilter selectedRoom;
+	private List<RoomFilter> selectedRooms;
 	private List<RoomFilter> availableRooms;
 }
