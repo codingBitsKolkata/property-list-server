@@ -42,7 +42,8 @@ public class HomeController extends BaseController {
 			@ApiResponse(code = 201, message = "Please Try after Sometime!!!"),
 			@ApiResponse(code = 1908, message = "Please select property type id"),
 			@ApiResponse(code = 1909, message = "Invalid property type id") })
-	public ResponseEntity<ResponseModel> fetchPropertyByType(@RequestParam(value = "propertyTypeId", required = true) String propertyTypeId) {
+	public ResponseEntity<ResponseModel> fetchPropertyByType(@RequestParam(value = "propertyTypeId", required = true) String propertyTypeId,
+			@RequestParam(value = "userToken", required = false) String userToken) {
 
 		if (logger.isInfoEnabled()) {
 			logger.info("fetchPropertyByType -- START");
@@ -52,7 +53,7 @@ public class HomeController extends BaseController {
 		Util.printLog(propertyTypeId, PropertyListConstant.INCOMING, "Fetch Properties By Type", request);
 		try {
 			long startTime = System.currentTimeMillis();
-			List<PropertyListViewModel> propertyListViewModels = homeService.fetchPropertyByType(propertyTypeId);
+			List<PropertyListViewModel> propertyListViewModels = homeService.fetchPropertyByType(propertyTypeId, userToken);
 			long elapsedTimeNs = System.currentTimeMillis() - startTime;
 			System.err.println("Total Time Taken ==>> "+(elapsedTimeNs/1000));
 			responseModel.setResponseBody(propertyListViewModels);
@@ -175,10 +176,10 @@ public class HomeController extends BaseController {
 			responseModel.setResponseMessage(messageUtil.getBundle(PropertyListConstant.COMMON_ERROR_MESSAGE));
 		}
 		
-		Util.printLog(responseModel, PropertyListConstant.OUTGOING, "Fetch Property Types", request);
+		Util.printLog(responseModel, PropertyListConstant.OUTGOING, "Fetch Offer", request);
 		
 		if (logger.isInfoEnabled()) {
-			logger.info("fetchPropertyTypes -- END");
+			logger.info("fetchOffer -- END");
 		}
 		
 		if (responseModel.getResponseCode().equals(messageUtil.getBundle(PropertyListConstant.COMMON_SUCCESS_CODE))) {
@@ -187,6 +188,4 @@ public class HomeController extends BaseController {
 			return new ResponseEntity<>(responseModel, HttpStatus.BAD_REQUEST);
 		}
 	}
-	
-	
 }

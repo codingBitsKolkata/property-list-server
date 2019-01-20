@@ -14,7 +14,7 @@ import com.orastays.property.propertylist.entity.GstSlabEntity;
 import com.orastays.property.propertylist.exceptions.FormExceptions;
 import com.orastays.property.propertylist.helper.Status;
 import com.orastays.property.propertylist.helper.Util;
-import com.orastays.property.propertylist.model.booking.GstSlabModel;
+import com.orastays.property.propertylist.model.GstSlabModel;
 import com.orastays.property.propertylist.service.GstSlabService;
 
 @Service

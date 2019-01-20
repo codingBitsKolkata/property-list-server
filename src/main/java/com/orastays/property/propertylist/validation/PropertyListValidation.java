@@ -13,23 +13,29 @@ import org.springframework.util.CollectionUtils;
 import com.orastays.property.propertylist.entity.PropertyEntity;
 import com.orastays.property.propertylist.entity.PropertyTypeEntity;
 import com.orastays.property.propertylist.exceptions.FormExceptions;
+import com.orastays.property.propertylist.helper.PropertyListConstant;
 import com.orastays.property.propertylist.helper.Status;
 import com.orastays.property.propertylist.helper.Util;
 import com.orastays.property.propertylist.model.FilterCiteriaModel;
 import com.orastays.property.propertylist.model.RoomModel;
+import com.orastays.property.propertylist.model.user.UserModel;
 
 @Component
 public class PropertyListValidation extends AuthorizeUserValidation {
 
 	private static final Logger logger = LogManager.getLogger(PropertyListValidation.class);
 	
-	public void validateFetchProperties(FilterCiteriaModel filterCiteriaModel) throws FormExceptions {
+	public UserModel validateFetchProperties(FilterCiteriaModel filterCiteriaModel) throws FormExceptions {
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("validateFetchProperties -- Start");
 		}
 
-		//UserModel userModel = getUserDetails(filterCiteriaModel.getUserToken());
+		UserModel userModel = null;
+		if (!StringUtils.isBlank(filterCiteriaModel.getUserToken())) {
+			userModel = getUserDetails(filterCiteriaModel.getUserToken());
+		}
+		
 		Map<String, Exception> exceptions = new LinkedHashMap<>();
 		
 		// Validate Property Type
@@ -90,29 +96,54 @@ public class PropertyListValidation extends AuthorizeUserValidation {
 			}
 		}
 		
-		// Validate Room Details
-		if(CollectionUtils.isEmpty(filterCiteriaModel.getRoomModels())) {
-			exceptions.put(messageUtil.getBundle("room.details.null.code"), new Exception(messageUtil.getBundle("room.details.null.message")));
+		// Validate Stay Type
+		if (StringUtils.isBlank(filterCiteriaModel.getStayType())) {
+			exceptions.put(messageUtil.getBundle("staytype.null.code"), new Exception(messageUtil.getBundle("staytype.null.message")));
 		} else {
-			for(RoomModel roomModel : filterCiteriaModel.getRoomModels()) {
-				if(Objects.isNull(roomModel)) {
-					exceptions.put(messageUtil.getBundle("room.details.null.code"), new Exception(messageUtil.getBundle("room.details.null.message")));
-				} else {
+			if (StringUtils.equals(filterCiteriaModel.getStayType(), PropertyListConstant.SHARED) || StringUtils.equals(filterCiteriaModel.getStayType(), PropertyListConstant.PRIVATE)) {
+				if (StringUtils.equals(filterCiteriaModel.getStayType(), PropertyListConstant.SHARED)) { // Customer Wants SHARED Rooms
 					
-					if(StringUtils.isBlank(roomModel.getNoOfChild())) {
-						if(StringUtils.isBlank(roomModel.getNoOfGuest())) {
-							exceptions.put(messageUtil.getBundle("noofguest.null.code"), new Exception(messageUtil.getBundle("noofguest.null.message")));
-						} else {
-							if ((!Util.isNumeric(roomModel.getNoOfGuest())) && (Integer.parseInt(roomModel.getNoOfGuest()) > 0)) {
-								exceptions.put(messageUtil.getBundle("noofguest.invalid.code"), new Exception(messageUtil.getBundle("noofguest.invalid.message")));
-							}
-						}
+					if(StringUtils.isBlank(filterCiteriaModel.getNoOfGuest())) {
+						exceptions.put(messageUtil.getBundle("noofguest.null.code"), new Exception(messageUtil.getBundle("noofguest.null.message")));
 					} else {
-						if ((!Util.isNumeric(roomModel.getNoOfChild())) && (Integer.parseInt(roomModel.getNoOfChild()) > 0)) {
-							exceptions.put(messageUtil.getBundle("noofchild.invalid.code"), new Exception(messageUtil.getBundle("noofchild.invalid.message")));
+						if ((!Util.isNumeric(filterCiteriaModel.getNoOfGuest())) && (Integer.parseInt(filterCiteriaModel.getNoOfGuest()) > 0)) {
+							exceptions.put(messageUtil.getBundle("noofguest.invalid.code"), new Exception(messageUtil.getBundle("noofguest.invalid.message")));
 						}
 					}
+				} else { // Customer Wants PRIVATE Rooms
+					
+					// Validate Room Details
+					if(CollectionUtils.isEmpty(filterCiteriaModel.getRoomModels())) {
+						exceptions.put(messageUtil.getBundle("room.details.null.code"), new Exception(messageUtil.getBundle("room.details.null.message")));
+					} else {
+						int noOfGuest = 0;
+						for(RoomModel roomModel : filterCiteriaModel.getRoomModels()) {
+							if(Objects.isNull(roomModel)) {
+								exceptions.put(messageUtil.getBundle("room.details.null.code"), new Exception(messageUtil.getBundle("room.details.null.message")));
+							} else {
+								
+								if(StringUtils.isBlank(roomModel.getNoOfGuest())) {
+									exceptions.put(messageUtil.getBundle("noofguest.null.code"), new Exception(messageUtil.getBundle("noofguest.null.message")));
+								} else {
+									if ((!Util.isNumeric(roomModel.getNoOfGuest())) || (Integer.parseInt(roomModel.getNoOfGuest()) < 0)) {
+										exceptions.put(messageUtil.getBundle("noofguest.invalid.code"), new Exception(messageUtil.getBundle("noofguest.invalid.message")));
+									} else {
+										noOfGuest = noOfGuest + Integer.parseInt(roomModel.getNoOfGuest());
+									}
+								}
+								
+								if(!StringUtils.isBlank(roomModel.getNoOfChild())) {
+									if ((!Util.isNumeric(roomModel.getNoOfChild())) || (Integer.parseInt(roomModel.getNoOfChild()) < 0)) {
+										exceptions.put(messageUtil.getBundle("noofchild.invalid.code"), new Exception(messageUtil.getBundle("noofchild.invalid.message")));
+									}
+								}
+							}
+						}
+						filterCiteriaModel.setNoOfGuest(String.valueOf(noOfGuest));
+					}
 				}
+			} else {
+				exceptions.put(messageUtil.getBundle("staytype.invalid.code"), new Exception(messageUtil.getBundle("staytype.invalid.message")));
 			}
 		}
 		
@@ -128,6 +159,8 @@ public class PropertyListValidation extends AuthorizeUserValidation {
 		if (logger.isDebugEnabled()) {
 			logger.debug("validateFetchProperties -- End");
 		}
+		
+		return userModel;
 	}
 	
 	public PropertyEntity validateFetchPropertyDetails(FilterCiteriaModel filterCiteriaModel) throws FormExceptions {

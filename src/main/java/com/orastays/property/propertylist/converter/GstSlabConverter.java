@@ -10,7 +10,7 @@ import org.springframework.util.CollectionUtils;
 
 import com.orastays.property.propertylist.entity.GstSlabEntity;
 import com.orastays.property.propertylist.helper.Util;
-import com.orastays.property.propertylist.model.booking.GstSlabModel;
+import com.orastays.property.propertylist.model.GstSlabModel;
 
 @Component
 public class GstSlabConverter extends CommonConverter implements BaseConverter<GstSlabEntity, GstSlabModel> {

@@ -34,6 +34,12 @@ public class FilterCiteriaModel {
 	@JsonProperty("propertyTypeId")
 	private String propertyTypeId; // Mandatory
 	
+	@JsonProperty("stayType")
+	private String stayType; // Mandatory
+	
+	@JsonProperty("noOfGuest")
+	private String noOfGuest;
+	
 	@JsonProperty("latitude")
 	private String latitude; // Mandatory
 	

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 12, 2019 at 11:55 AM
+-- Generation Time: Jan 14, 2019 at 03:23 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.2.12
 
@@ -327,10 +327,10 @@ INSERT INTO `master_property` (`property_id`, `created_by`, `created_date`, `mod
 (9, 1, '2018-12-18 16:24:18', NULL, NULL, 1, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'Homestay3', 'ORA000009', 'Y', '2019-01-01 00:00:01', 'N', 'BOTH', 2, 2, 9, '100'),
 (10, 1, '2018-12-18 16:25:18', NULL, NULL, 1, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'Homestay4', 'ORA000010', 'Y', '2019-01-01 00:00:01', 'N', 'BOTH', 2, 2, 10, '100'),
 (11, 1, '2018-12-18 16:25:18', NULL, NULL, 1, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'Homestay4', 'ORA000010', 'Y', '2019-01-01 00:00:01', 'N', 'BOTH', 2, 2, 10, '100'),
-(12, 1, '2018-12-18 16:36:56', NULL, NULL, 1, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'Homestay5', 'ORA000011', 'Y', '2019-01-01 00:00:01', 'N', 'BOTH', 2, 2, 11, '100'),
-(13, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'GuestHouse1', 'ORA000012', 'Y', '2019-01-01 00:00:01', 'N', 'BOTH', 3, 2, 12, '100'),
-(14, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'GuestHouse2', 'ORA000013', 'Y', '2019-01-01 00:00:01', 'N', 'BOTH', 3, 2, 13, '100'),
-(15, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'GuestHouse3', 'ORA000014', 'Y', '2019-01-01 00:00:01', 'N', 'BOTH', 3, 2, 14, '100'),
+(12, 1, '2018-12-18 16:36:56', NULL, NULL, 1, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.592490', '88.476787', 'Homestay5', 'ORA000011', 'Y', '2019-01-01 00:00:01', 'N', 'BOTH', 2, 2, 11, '100'),
+(13, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.569465', '88.366591', 'GuestHouse1', 'ORA000012', 'Y', '2019-01-01 00:00:01', 'N', 'BOTH', 3, 2, 12, '100'),
+(14, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.502490', '88.456787', 'GuestHouse2', 'ORA000013', 'Y', '2019-01-01 00:00:01', 'N', 'BOTH', 3, 2, 13, '100'),
+(15, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.57143', '88.367712', 'GuestHouse3', 'ORA000014', 'Y', '2019-01-01 00:00:01', 'N', 'BOTH', 3, 2, 14, '100'),
 (16, 1, '2018-12-18 17:13:04', NULL, NULL, 1, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'GuestHouse4', 'ORA000015', 'Y', '2019-01-01 00:00:01', 'Y', 'BOTH', 3, 2, 15, '100'),
 (17, 1, '2018-12-18 18:10:07', NULL, NULL, 1, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', '', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'GuestHouse5', 'ORA000016', 'Y', '2019-01-01 00:00:01', 'N', 'FEMALE', 3, 2, 16, '100'),
 (18, 1, '2018-12-18 16:10:02', NULL, NULL, 1, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'PayingGuest1', 'ORA000017', 'Y', '2019-01-01 00:00:01', 'N', 'MALE', 4, 1, 17, '100'),
@@ -342,7 +342,28 @@ INSERT INTO `master_property` (`property_id`, `created_by`, `created_date`, `mod
 (24, 1, '2018-12-18 16:15:08', NULL, NULL, 1, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'Dormitory2', 'ORA000023', 'Y', '2019-01-01 00:00:01', 'N', 'MALE', 5, 1, 23, '100'),
 (25, 1, '2018-12-18 16:24:18', NULL, NULL, 1, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'Dormitory3', 'ORA000024', 'Y', '2019-01-01 00:00:01', 'N', 'FEMALE', 5, 2, 24, '100'),
 (26, 1, '2018-12-18 16:25:18', NULL, NULL, 1, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'Dormitory4', 'ORA000025', 'Y', '2019-01-01 00:00:01', 'N', 'FEMALE', 5, 3, 25, '100'),
-(27, 1, '2018-12-18 16:36:56', NULL, NULL, 1, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'Dormitory5', 'ORA000026', 'Y', '2019-01-01 00:00:01', 'N', 'BOTH', 5, 3, 26, '100');
+(27, 1, '2018-12-18 16:36:56', NULL, NULL, 1, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'Dormitory5', 'ORA000026', 'Y', '2019-01-01 00:00:01', 'N', 'BOTH', 5, 3, 26, '100'),
+(30, 1, '2019-01-13 01:50:44', NULL, NULL, 2, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/earnextra_1547322794025.png', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'HOTELOrastaysTest', 'ORA1547324443849', 'Y', '2019-02-01 00:00:01', 'N', 'BOTH', 1, 2, 29, '100'),
+(31, 1, '2019-01-13 02:00:08', NULL, NULL, 2, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/earnextra_1547322794025.png', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'HOTELOrastaysTest', 'ORA1547324795317', 'Y', '2019-02-01 00:00:01', 'N', 'BOTH', 1, 2, 30, '100'),
+(32, 1, '2019-01-13 02:02:02', NULL, NULL, 2, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/earnextra_1547322794025.png', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'HOTELOrastaysTest', 'ORA1547325088029', 'Y', '2019-02-01 00:00:01', 'N', 'BOTH', 1, 2, 31, '100'),
+(33, 1, '2019-01-13 02:17:11', NULL, NULL, 2, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/earnextra_1547322794025.png', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'HOTELOrastaysTest', 'ORA1547326030391', 'Y', '2019-02-01 00:00:01', 'N', 'BOTH', 1, 2, 32, '100'),
+(34, 1, '2019-01-13 12:08:42', NULL, NULL, 2, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Desert_1547359682289.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'HOTELOrastaysTest', 'ORA1547361521162', 'Y', '2019-02-01 00:00:01', 'N', 'BOTH', 1, 2, 33, '100'),
+(35, 1, '2019-01-13 12:29:54', 1, '2019-01-13 18:09:25', 3, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Desert_1547362524704.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'HOTELOrastaysTest', 'ORA1547362793878', 'Y', '2019-02-01 00:00:01', 'N', 'BOTH', 1, 2, 34, '100'),
+(36, 1, '2019-01-13 17:05:16', NULL, NULL, 1, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/dealsforyou_1547376642606.JPG', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'HOTELOrastaysTest arvind', 'ORA1547379315516', 'Y', '2019-02-01 00:00:01', 'N', 'BOTH', 1, 2, 35, '100'),
+(37, 1, '2019-01-13 17:08:50', NULL, NULL, 2, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/dealsforyou_1547376642606.JPG', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'HOTELOrastaysTest arvind', 'ORA1547379530010', 'Y', '2019-02-01 00:00:01', 'N', 'BOTH', 1, 2, 36, '100'),
+(38, 1, '2019-01-13 17:43:23', NULL, NULL, 2, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Chrysanthemum_1547381002339.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'HOTELOrastaysTest arvind', 'ORA1547381602954', 'Y', '2019-02-01 00:00:01', 'N', 'BOTH', 1, 2, 37, '100'),
+(39, 1, '2019-01-13 17:44:59', NULL, NULL, 2, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Chrysanthemum_1547381002339.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'HOTELOrastaysTest arvind', 'ORA1547381698765', 'Y', '2019-02-01 00:00:01', 'N', 'BOTH', 1, 2, 38, '100'),
+(40, 1, '2019-01-13 18:02:50', NULL, NULL, 2, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Koala_1547382428507.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'HOTELOrastaysTest arvind', 'ORA1547382746656', 'Y', '2019-02-01 00:00:01', 'N', 'BOTH', 1, 2, 39, '100'),
+(41, 1, '2019-01-13 18:09:25', NULL, NULL, 1, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Desert_1547362524704.jpg', '2019-12-31 23:59:59 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'HOTELOrastaysTest', 'ORA1547362793878', 'Y', '2019-02-01 00:00:01 00:00:01', 'N', 'BOTH', 1, 2, 40, '100'),
+(42, 1, '2019-01-13 18:18:53', NULL, NULL, 2, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Desert_1547383589511.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'HOTELOrastaysTest arvind', 'ORA1547383733165', 'Y', '2019-02-01 00:00:01', 'N', 'BOTH', 1, 2, 41, '100'),
+(43, 1, '2019-01-13 18:19:37', NULL, NULL, 2, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Desert_1547383589511.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'HOTELOrastaysTest arvind', 'ORA1547383777360', 'Y', '2019-02-01 00:00:01', 'N', 'BOTH', 1, 2, 42, '100'),
+(44, 1, '2019-01-13 18:19:42', NULL, NULL, 2, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Desert_1547383589511.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'HOTELOrastaysTest arvind', 'ORA1547383782701', 'Y', '2019-02-01 00:00:01', 'N', 'BOTH', 1, 2, 43, '100'),
+(45, 1, '2019-01-13 18:19:46', NULL, NULL, 2, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Desert_1547383589511.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'HOTELOrastaysTest arvind', 'ORA1547383786873', 'Y', '2019-02-01 00:00:01', 'N', 'BOTH', 1, 2, 44, '100'),
+(46, 1, '2019-01-13 18:19:51', NULL, NULL, 2, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Desert_1547383589511.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'HOTELOrastaysTest arvind', 'ORA1547383791114', 'Y', '2019-02-01 00:00:01', 'N', 'BOTH', 1, 2, 45, '100'),
+(47, 1, '2019-01-13 19:44:02', NULL, NULL, 2, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Desert_1547388716694.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'HOTELOrastaysTest', 'ORA1547388842053', 'Y', '2019-02-01 00:00:01', 'N', 'BOTH', 1, 2, 46, '100'),
+(48, 1, '2019-01-13 19:44:15', NULL, NULL, 2, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Desert_1547388716694.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'HOTELOrastaysTest', 'ORA1547388855598', 'Y', '2019-02-01 00:00:01', 'N', 'BOTH', 1, 2, 47, '100'),
+(49, 1, '2019-01-13 19:49:33', NULL, NULL, 2, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Desert_1547388716694.jpg', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'HOTELOrastaysTest', 'ORA1547389173496', 'Y', '2019-02-01 00:00:01', 'N', 'BOTH', 1, 2, 48, '100'),
+(50, 1, '2019-01-13 21:25:00', NULL, NULL, 2, 'Merlin Infinite, Unit No 501, DN 51, DN Block, Sector 5, Salt Lake, DN Block, Sector V, Salt Lake City, Kolkata, West Bengal 700091', 'sudeep@orastays.com', '9883741610', '', '', '11:00:00', '10:00:00', 'Sudeep Chhetri', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/dealsforyou_1547387506547.JPG', '2019-12-31 23:59:59', 'Y', 'Y', '033-25478451', '22.582490', '88.426787', 'HOTELOrastaysTest arvind 1133', 'ORA1547394899937', 'Y', '2019-02-01 00:00:01', 'N', 'BOTH', 1, 2, 49, '100');
 
 -- --------------------------------------------------------
 
@@ -577,7 +598,28 @@ INSERT INTO `master_room` (`room_id`, `created_by`, `created_date`, `modified_by
 (158, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', NULL, ' ', '3', NULL, 'Y', 25, 6, 'EXPRESS', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000157'),
 (159, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'N', NULL, ' ', '1', NULL, 'Y', 25, 6, 'EXPRESS', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000158'),
 (160, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 'N', NULL, ' ', '1', NULL, 'Y', 25, 6, 'EXPRESS', 'SHARED', NULL, NULL, '300', NULL, NULL, '150', '10', '7', NULL, '15', '10', '8', 'ORAR0000000000159'),
-(161, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', NULL, ' ', NULL, NULL, 'Y', 26, 6, 'EXPRESS', 'SHARED', NULL, NULL, '50', '1400', NULL, '150', '10', '7', '5', '15', '10', '8', 'ORAR0000000000160');
+(161, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'N', NULL, ' ', NULL, NULL, 'Y', 26, 6, 'EXPRESS', 'SHARED', NULL, NULL, '50', '1400', NULL, '150', '10', '7', '5', '15', '10', '8', 'ORAR0000000000160'),
+(162, 1, '2019-01-13 01:50:44', NULL, NULL, 1, 'Y', '1', '2', '1', NULL, 'N', 30, 1, 'NORMAL', NULL, '1500', '', '', '', '200', '', '5', '2', '', '0', '0', NULL, 'ORA1547324444263'),
+(163, 1, '2019-01-13 02:00:08', NULL, NULL, 1, 'Y', '1', '2', '1', NULL, 'N', 31, 1, 'NORMAL', NULL, '1500', '', '', '', '200', '', '5', '2', '', '0', '0', NULL, 'ORA1547325008502'),
+(164, 1, '2019-01-13 02:02:02', NULL, NULL, 1, 'Y', '1', '2', '1', NULL, 'N', 32, 1, 'NORMAL', NULL, '1500', '', '', '', '200', '', '5', '2', '', '0', '0', NULL, 'ORA1547325122916'),
+(165, 1, '2019-01-13 02:17:11', NULL, NULL, 1, 'Y', '1', '2', '1', NULL, 'N', 33, 1, 'NORMAL', 'PRIVATE', '1500', '', '', '', '200', '', '5', '2', '', '0', '0', NULL, 'ORA1547326031423'),
+(166, 1, '2019-01-13 12:08:42', NULL, NULL, 1, 'Y', '1', '2', '1', NULL, 'N', 34, 1, 'NORMAL', 'PRIVATE', '1500', '', '', '', '200', '', '5', '2', '', '0', '0', NULL, 'ORA1547361522280'),
+(167, 1, '2019-01-13 12:29:55', 1, '2019-01-13 18:09:25', 3, 'Y', '1', '2', '1', NULL, 'N', 35, 1, 'NORMAL', 'PRIVATE', '1500', '', '', '', '200', '', '5', '2', '', '0', '0', NULL, 'ORA1547362795034'),
+(168, 1, '2019-01-13 17:05:16', NULL, NULL, 1, 'Y', '1', '2', '1', NULL, 'N', 36, 1, 'NORMAL', 'PRIVATE', '1500', '', '', '', '200', '', '5', '2', '', '0', '0', NULL, 'ORA1547379316666'),
+(169, 1, '2019-01-13 17:08:50', NULL, NULL, 1, 'Y', '1', '2', '1', NULL, 'N', 37, 1, 'NORMAL', 'PRIVATE', '1500', '', '', '', '200', '', '5', '2', '', '0', '0', NULL, 'ORA1547379530336'),
+(170, 1, '2019-01-13 17:43:23', NULL, NULL, 1, 'Y', '1', '2', '1', NULL, 'N', 38, 1, 'NORMAL', 'PRIVATE', '1500', '', '', '', '200', '', '5', '2', '', '0', '0', NULL, 'ORA1547381603915'),
+(171, 1, '2019-01-13 17:44:59', NULL, NULL, 1, 'Y', '1', '2', '1', NULL, 'N', 39, 1, 'NORMAL', 'PRIVATE', '1500', '', '', '', '200', '', '5', '2', '', '0', '0', NULL, 'ORA1547381699045'),
+(172, 1, '2019-01-13 18:02:51', NULL, NULL, 1, 'Y', '1', '2', '1', NULL, 'N', 40, 1, 'NORMAL', 'PRIVATE', '1500', '', '', '', '200', '', '5', '2', '', '0', '0', NULL, 'ORA1547382771080'),
+(173, 1, '2019-01-13 18:09:25', NULL, NULL, 1, 'Y', '1', '2', '1', NULL, 'N', 41, 1, 'NORMAL', 'PRIVATE', '1500', '', '', '', '200', '', '5', '2', '', '0', '0', NULL, 'ORA1547362795034'),
+(174, 1, '2019-01-13 18:18:54', NULL, NULL, 1, 'Y', '1', '2', '1', NULL, 'N', 42, 1, 'NORMAL', 'PRIVATE', '1500', '', '', '', '200', '', '5', '2', '', '0', '0', NULL, 'ORA1547383734175'),
+(175, 1, '2019-01-13 18:19:37', NULL, NULL, 1, 'Y', '1', '2', '1', NULL, 'N', 43, 1, 'NORMAL', 'PRIVATE', '1500', '', '', '', '200', '', '5', '2', '', '0', '0', NULL, 'ORA1547383777550'),
+(176, 1, '2019-01-13 18:19:42', NULL, NULL, 1, 'Y', '1', '2', '1', NULL, 'N', 44, 1, 'NORMAL', 'PRIVATE', '1500', '', '', '', '200', '', '5', '2', '', '0', '0', NULL, 'ORA1547383782888'),
+(177, 1, '2019-01-13 18:19:47', NULL, NULL, 1, 'Y', '1', '2', '1', NULL, 'N', 45, 1, 'NORMAL', 'PRIVATE', '1500', '', '', '', '200', '', '5', '2', '', '0', '0', NULL, 'ORA1547383787030'),
+(178, 1, '2019-01-13 18:19:51', NULL, NULL, 1, 'Y', '1', '2', '1', NULL, 'N', 46, 1, 'NORMAL', 'PRIVATE', '1500', '', '', '', '200', '', '5', '2', '', '0', '0', NULL, 'ORA1547383791262'),
+(179, 1, '2019-01-13 19:44:02', NULL, NULL, 1, 'Y', '1', '2', '1', NULL, 'N', 47, 1, 'NORMAL', 'PRIVATE', '1500', '', '', '', '200', '', '5', '2', '', '0', '0', NULL, 'ORA1547388842382'),
+(180, 1, '2019-01-13 19:44:15', NULL, NULL, 1, 'Y', '1', '2', '1', NULL, 'N', 48, 1, 'NORMAL', 'PRIVATE', '1500', '', '', '', '200', '', '5', '2', '', '0', '0', NULL, 'ORA1547388855817'),
+(181, 1, '2019-01-13 19:49:33', NULL, NULL, 1, 'Y', '1', '2', '1', NULL, 'N', 49, 1, 'NORMAL', 'PRIVATE', '1500', '', '', '', '200', '', '5', '2', '', '0', '0', NULL, 'ORA1547389173824'),
+(182, 1, '2019-01-13 21:25:00', NULL, NULL, 1, 'Y', '1', '2', '1', NULL, 'N', 50, 1, 'NORMAL', 'PRIVATE', '1500', '', '', '', '200', '', '5', '2', '', '0', '0', NULL, 'ORA1547394900803');
 
 -- --------------------------------------------------------
 
@@ -818,7 +860,28 @@ INSERT INTO `property_vs_description` (`property_desc_id`, `created_by`, `create
 (23, 0, '2018-12-18 16:43:25', NULL, NULL, 1, 'Where does it come from', 1, 23),
 (24, 0, '2018-12-18 17:01:24', NULL, NULL, 1, 'Where does it come from', 1, 24),
 (25, 0, '2018-12-18 17:13:04', NULL, NULL, 1, 'Where does it come from', 1, 25),
-(26, 0, '2018-12-18 18:10:07', NULL, NULL, 1, 'Where does it come from', 1, 26);
+(26, 0, '2018-12-18 18:10:07', NULL, NULL, 1, 'Where does it come from', 1, 26),
+(29, 1, '2019-01-13 01:50:44', NULL, NULL, 1, 'Where does it come from', 1, 30),
+(30, 1, '2019-01-13 02:00:08', NULL, NULL, 1, 'Where does it come from', 1, 31),
+(31, 1, '2019-01-13 02:02:02', NULL, NULL, 1, 'Where does it come from', 1, 32),
+(32, 1, '2019-01-13 02:17:11', NULL, NULL, 1, 'Where does it come from', 1, 33),
+(33, 1, '2019-01-13 12:08:42', NULL, NULL, 1, 'Where does it come from', 1, 34),
+(34, 1, '2019-01-13 12:29:54', 1, '2019-01-13 18:09:25', 3, 'Where does it come from', 1, 35),
+(35, 1, '2019-01-13 17:05:16', NULL, NULL, 1, 'Where does it come from', 1, 36),
+(36, 1, '2019-01-13 17:08:50', NULL, NULL, 1, 'Where does it come from', 1, 37),
+(37, 1, '2019-01-13 17:43:23', NULL, NULL, 1, 'Where does it come from', 1, 38),
+(38, 1, '2019-01-13 17:44:59', NULL, NULL, 1, 'Where does it come from', 1, 39),
+(39, 1, '2019-01-13 18:02:50', NULL, NULL, 1, 'Where does it come from', 1, 40),
+(40, 1, '2019-01-13 18:09:25', NULL, NULL, 1, 'Where does it come from', 1, 41),
+(41, 1, '2019-01-13 18:18:53', NULL, NULL, 1, 'Where does it come from', 1, 42),
+(42, 1, '2019-01-13 18:19:37', NULL, NULL, 1, 'Where does it come from', 1, 43),
+(43, 1, '2019-01-13 18:19:42', NULL, NULL, 1, 'Where does it come from', 1, 44),
+(44, 1, '2019-01-13 18:19:46', NULL, NULL, 1, 'Where does it come from', 1, 45),
+(45, 1, '2019-01-13 18:19:51', NULL, NULL, 1, 'Where does it come from', 1, 46),
+(46, 1, '2019-01-13 19:44:02', NULL, NULL, 1, 'Where does it come from', 1, 47),
+(47, 1, '2019-01-13 19:44:15', NULL, NULL, 1, 'Where does it come from', 1, 48),
+(48, 1, '2019-01-13 19:49:33', NULL, NULL, 1, 'Where does it come from', 1, 49),
+(49, 1, '2019-01-13 21:25:00', NULL, NULL, 1, 'Where does it come from', 1, 50);
 
 -- --------------------------------------------------------
 
@@ -895,7 +958,38 @@ INSERT INTO `property_vs_document` (`property_vs_document_id`, `created_by`, `cr
 (49, 1, '2018-12-18 17:13:04', NULL, NULL, 1, 'AKBHP6784S', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', 1, 25),
 (50, 1, '2018-12-18 17:13:04', NULL, NULL, 1, '', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', 2, 25),
 (51, 1, '2018-12-18 18:10:07', NULL, NULL, 1, 'AKBHP6784S', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', 1, 26),
-(52, 1, '2018-12-18 18:10:07', NULL, NULL, 1, '', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', 2, 26);
+(52, 1, '2018-12-18 18:10:07', NULL, NULL, 1, '', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', 2, 26),
+(57, 1, '2019-01-13 01:50:44', NULL, NULL, 1, 'AKBHP6784S', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', 1, 30),
+(58, 1, '2019-01-13 01:50:44', NULL, NULL, 1, '', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', 2, 30),
+(59, 1, '2019-01-13 02:00:08', NULL, NULL, 1, 'AKBHP6784S', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', 1, 31),
+(60, 1, '2019-01-13 02:00:08', NULL, NULL, 1, '', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', 2, 31),
+(61, 1, '2019-01-13 02:02:02', NULL, NULL, 1, 'AKBHP6784S', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', 1, 32),
+(62, 1, '2019-01-13 02:02:02', NULL, NULL, 1, '', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', 2, 32),
+(63, 1, '2019-01-13 02:17:11', NULL, NULL, 1, 'AKBHP6784S', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', 1, 33),
+(64, 1, '2019-01-13 02:17:11', NULL, NULL, 1, '', 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', 2, 33),
+(65, 1, '2019-01-13 12:08:42', NULL, NULL, 1, 'AKBHP6784S', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Hydrangeas_1547359682359.jpg', 1, 34),
+(66, 1, '2019-01-13 12:08:42', NULL, NULL, 1, '', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Jellyfish_1547359682424.jpg', 2, 34),
+(67, 1, '2019-01-13 12:29:54', 1, '2019-01-13 18:09:25', 3, 'AKBHP6784S', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Hydrangeas_1547362525045.jpg', 1, 35),
+(68, 1, '2019-01-13 12:29:54', 1, '2019-01-13 18:09:25', 3, '', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Jellyfish_1547362525124.jpg', 2, 35),
+(69, 1, '2019-01-13 17:05:16', NULL, NULL, 1, 'AKBHP6784S', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/dealsforyou_1547376706856.JPG', 1, 36),
+(70, 1, '2019-01-13 17:08:50', NULL, NULL, 1, 'AKBHP6784S', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/dealsforyou_1547376706856.JPG', 1, 37),
+(71, 1, '2019-01-13 17:43:23', NULL, NULL, 1, 'AKBHP6784S', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Tulips_1547381002256.jpg', 1, 38),
+(72, 1, '2019-01-13 17:44:59', NULL, NULL, 1, 'AKBHP6784S', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Tulips_1547381002256.jpg', 1, 39),
+(73, 1, '2019-01-13 18:02:50', NULL, NULL, 1, 'AKBHP6784S', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Jellyfish_1547382428430.jpg', 1, 40),
+(74, 1, '2019-01-13 18:09:25', NULL, NULL, 1, 'AKBHP6784S', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Hydrangeas_1547362525045.jpg', 1, 41),
+(75, 1, '2019-01-13 18:09:25', NULL, NULL, 1, '', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Jellyfish_1547362525124.jpg', 2, 41),
+(76, 1, '2019-01-13 18:18:53', NULL, NULL, 1, 'AKBHP6784S', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Hydrangeas_1547383589870.jpg', 1, 42),
+(77, 1, '2019-01-13 18:19:37', NULL, NULL, 1, 'AKBHP6784S', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Hydrangeas_1547383589870.jpg', 1, 43),
+(78, 1, '2019-01-13 18:19:42', NULL, NULL, 1, 'AKBHP6784S', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Hydrangeas_1547383589870.jpg', 1, 44),
+(79, 1, '2019-01-13 18:19:46', NULL, NULL, 1, 'AKBHP6784S', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Hydrangeas_1547383589870.jpg', 1, 45),
+(80, 1, '2019-01-13 18:19:51', NULL, NULL, 1, 'AKBHP6784S', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Hydrangeas_1547383589870.jpg', 1, 46),
+(81, 1, '2019-01-13 19:44:02', NULL, NULL, 1, 'AKBHP6784S', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Hydrangeas_1547388716772.jpg', 1, 47),
+(82, 1, '2019-01-13 19:44:02', NULL, NULL, 1, '', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Jellyfish_1547388716835.jpg', 2, 47),
+(83, 1, '2019-01-13 19:44:15', NULL, NULL, 1, 'AKBHP6784S', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Hydrangeas_1547388716772.jpg', 1, 48),
+(84, 1, '2019-01-13 19:44:15', NULL, NULL, 1, '', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Jellyfish_1547388716835.jpg', 2, 48),
+(85, 1, '2019-01-13 19:49:33', NULL, NULL, 1, 'AKBHP6784S', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Hydrangeas_1547388716772.jpg', 1, 49),
+(86, 1, '2019-01-13 19:49:33', NULL, NULL, 1, '', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Jellyfish_1547388716835.jpg', 2, 49),
+(87, 1, '2019-01-13 21:25:00', NULL, NULL, 1, 'AKBHP6784S', 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/dealsforyou_1547387531372.JPG', 1, 50);
 
 -- --------------------------------------------------------
 
@@ -970,7 +1064,49 @@ INSERT INTO `property_vs_experience` (`property_exp_id`, `created_by`, `created_
 (49, 1, '2018-12-18 17:13:04', NULL, NULL, 1, 25, 1),
 (50, 1, '2018-12-18 17:13:04', NULL, NULL, 1, 25, 3),
 (51, 1, '2018-12-18 18:10:07', NULL, NULL, 1, 26, 1),
-(52, 1, '2018-12-18 18:10:07', NULL, NULL, 1, 16, 3);
+(52, 1, '2018-12-18 18:10:07', NULL, NULL, 1, 16, 3),
+(55, 1, '2019-01-13 01:50:44', NULL, NULL, 1, 30, 1),
+(56, 1, '2019-01-13 01:50:44', NULL, NULL, 1, 30, 3),
+(57, 1, '2019-01-13 02:00:08', NULL, NULL, 1, 31, 1),
+(58, 1, '2019-01-13 02:00:08', NULL, NULL, 1, 31, 3),
+(59, 1, '2019-01-13 02:02:02', NULL, NULL, 1, 32, 1),
+(60, 1, '2019-01-13 02:02:02', NULL, NULL, 1, 32, 3),
+(61, 1, '2019-01-13 02:17:11', NULL, NULL, 1, 33, 1),
+(62, 1, '2019-01-13 02:17:11', NULL, NULL, 1, 33, 3),
+(63, 1, '2019-01-13 12:08:42', NULL, NULL, 1, 34, 1),
+(64, 1, '2019-01-13 12:08:42', NULL, NULL, 1, 34, 3),
+(65, 1, '2019-01-13 12:29:54', 1, '2019-01-13 18:09:25', 3, 35, 1),
+(66, 1, '2019-01-13 12:29:54', 1, '2019-01-13 18:09:25', 3, 35, 3),
+(67, 1, '2019-01-13 17:05:16', NULL, NULL, 1, 36, 1),
+(68, 1, '2019-01-13 17:05:16', NULL, NULL, 1, 36, 3),
+(69, 1, '2019-01-13 17:08:50', NULL, NULL, 1, 37, 1),
+(70, 1, '2019-01-13 17:08:50', NULL, NULL, 1, 37, 3),
+(71, 1, '2019-01-13 17:43:23', NULL, NULL, 1, 38, 1),
+(72, 1, '2019-01-13 17:43:23', NULL, NULL, 1, 38, 3),
+(73, 1, '2019-01-13 17:44:59', NULL, NULL, 1, 39, 1),
+(74, 1, '2019-01-13 17:44:59', NULL, NULL, 1, 39, 3),
+(75, 1, '2019-01-13 18:02:50', NULL, NULL, 1, 40, 1),
+(76, 1, '2019-01-13 18:02:50', NULL, NULL, 1, 40, 3),
+(77, 1, '2019-01-13 18:09:25', NULL, NULL, 1, 41, 1),
+(78, 1, '2019-01-13 18:09:25', NULL, NULL, 1, 41, 3),
+(79, 1, '2019-01-13 18:18:53', NULL, NULL, 1, 42, 1),
+(80, 1, '2019-01-13 18:18:53', NULL, NULL, 1, 42, 3),
+(81, 1, '2019-01-13 18:19:37', NULL, NULL, 1, 43, 1),
+(82, 1, '2019-01-13 18:19:37', NULL, NULL, 1, 43, 3),
+(83, 1, '2019-01-13 18:19:42', NULL, NULL, 1, 44, 1),
+(84, 1, '2019-01-13 18:19:42', NULL, NULL, 1, 44, 3),
+(85, 1, '2019-01-13 18:19:47', NULL, NULL, 1, 45, 1),
+(86, 1, '2019-01-13 18:19:47', NULL, NULL, 1, 45, 3),
+(87, 1, '2019-01-13 18:19:51', NULL, NULL, 1, 46, 1),
+(88, 1, '2019-01-13 18:19:51', NULL, NULL, 1, 46, 3),
+(89, 1, '2019-01-13 19:44:02', NULL, NULL, 1, 47, 1),
+(90, 1, '2019-01-13 19:44:02', NULL, NULL, 1, 47, 3),
+(91, 1, '2019-01-13 19:44:15', NULL, NULL, 1, 48, 1),
+(92, 1, '2019-01-13 19:44:15', NULL, NULL, 1, 48, 3),
+(93, 1, '2019-01-13 19:49:33', NULL, NULL, 1, 49, 1),
+(94, 1, '2019-01-13 19:49:33', NULL, NULL, 1, 49, 3),
+(95, 1, '2019-01-13 21:25:00', NULL, NULL, 1, 50, 1),
+(96, 1, '2019-01-13 21:25:00', NULL, NULL, 1, 50, 3);
 
 -- --------------------------------------------------------
 
@@ -1020,7 +1156,49 @@ INSERT INTO `property_vs_guest_access` (`property_gaccess_id`, `created_by`, `cr
 (23, 1, '2018-12-18 16:43:25', NULL, NULL, 1, 'Guest Can Access Terrace', 1, 23),
 (24, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'Guest Can Access Terrace', 1, 24),
 (25, 1, '2018-12-18 17:13:04', NULL, NULL, 1, 'Guest Can Access Terrace', 1, 25),
-(26, 1, '2018-12-18 18:10:07', NULL, NULL, 1, 'Guest Can Access Terrace', 1, 26);
+(26, 1, '2018-12-18 18:10:07', NULL, NULL, 1, 'Guest Can Access Terrace', 1, 26),
+(27, 1, '2019-01-13 01:50:44', NULL, NULL, 1, 'Guest Can Access Terrace', 1, 30),
+(28, 1, '2019-01-13 01:50:44', NULL, NULL, 1, 'Access To Lawn', 1, 30),
+(29, 1, '2019-01-13 02:00:08', NULL, NULL, 1, 'Guest Can Access Terrace', 1, 31),
+(30, 1, '2019-01-13 02:00:08', NULL, NULL, 1, 'Access To Lawn', 1, 31),
+(31, 1, '2019-01-13 02:02:02', NULL, NULL, 1, 'Guest Can Access Terrace', 1, 32),
+(32, 1, '2019-01-13 02:02:02', NULL, NULL, 1, 'Access To Lawn', 1, 32),
+(33, 1, '2019-01-13 02:17:11', NULL, NULL, 1, 'Guest Can Access Terrace', 1, 33),
+(34, 1, '2019-01-13 02:17:11', NULL, NULL, 1, 'Access To Lawn', 1, 33),
+(35, 1, '2019-01-13 12:08:42', NULL, NULL, 1, 'Guest Can Access Terrace', 1, 34),
+(36, 1, '2019-01-13 12:08:42', NULL, NULL, 1, 'Access To Lawn', 1, 34),
+(37, 1, '2019-01-13 12:29:54', 1, '2019-01-13 18:09:25', 3, 'Guest Can Access Terrace', 1, 35),
+(38, 1, '2019-01-13 12:29:54', 1, '2019-01-13 18:09:25', 3, 'Access To Lawn', 1, 35),
+(39, 1, '2019-01-13 17:05:16', NULL, NULL, 1, 'Guest Can Access Terrace', 1, 36),
+(40, 1, '2019-01-13 17:05:16', NULL, NULL, 1, 'Access To Lawn', 1, 36),
+(41, 1, '2019-01-13 17:08:50', NULL, NULL, 1, 'Guest Can Access Terrace', 1, 37),
+(42, 1, '2019-01-13 17:08:50', NULL, NULL, 1, 'Access To Lawn', 1, 37),
+(43, 1, '2019-01-13 17:43:23', NULL, NULL, 1, 'Guest Can Access Terrace', 1, 38),
+(44, 1, '2019-01-13 17:43:23', NULL, NULL, 1, 'Access To Lawn', 1, 38),
+(45, 1, '2019-01-13 17:44:59', NULL, NULL, 1, 'Guest Can Access Terrace', 1, 39),
+(46, 1, '2019-01-13 17:44:59', NULL, NULL, 1, 'Access To Lawn', 1, 39),
+(47, 1, '2019-01-13 18:02:50', NULL, NULL, 1, 'Guest Can Access Terrace', 1, 40),
+(48, 1, '2019-01-13 18:02:50', NULL, NULL, 1, 'Access To Lawn', 1, 40),
+(49, 1, '2019-01-13 18:09:25', NULL, NULL, 1, 'Guest Can Access Terrace', 1, 41),
+(50, 1, '2019-01-13 18:09:25', NULL, NULL, 1, 'Access To Lawn', 1, 41),
+(51, 1, '2019-01-13 18:18:54', NULL, NULL, 1, 'Guest Can Access Terrace', 1, 42),
+(52, 1, '2019-01-13 18:18:54', NULL, NULL, 1, 'Access To Lawn', 1, 42),
+(53, 1, '2019-01-13 18:19:37', NULL, NULL, 1, 'Guest Can Access Terrace', 1, 43),
+(54, 1, '2019-01-13 18:19:37', NULL, NULL, 1, 'Access To Lawn', 1, 43),
+(55, 1, '2019-01-13 18:19:42', NULL, NULL, 1, 'Guest Can Access Terrace', 1, 44),
+(56, 1, '2019-01-13 18:19:42', NULL, NULL, 1, 'Access To Lawn', 1, 44),
+(57, 1, '2019-01-13 18:19:47', NULL, NULL, 1, 'Guest Can Access Terrace', 1, 45),
+(58, 1, '2019-01-13 18:19:47', NULL, NULL, 1, 'Access To Lawn', 1, 45),
+(59, 1, '2019-01-13 18:19:51', NULL, NULL, 1, 'Guest Can Access Terrace', 1, 46),
+(60, 1, '2019-01-13 18:19:51', NULL, NULL, 1, 'Access To Lawn', 1, 46),
+(61, 1, '2019-01-13 19:44:02', NULL, NULL, 1, 'Guest Can Access Terrace', 1, 47),
+(62, 1, '2019-01-13 19:44:02', NULL, NULL, 1, 'Access To Lawn', 1, 47),
+(63, 1, '2019-01-13 19:44:15', NULL, NULL, 1, 'Guest Can Access Terrace', 1, 48),
+(64, 1, '2019-01-13 19:44:15', NULL, NULL, 1, 'Access To Lawn', 1, 48),
+(65, 1, '2019-01-13 19:49:33', NULL, NULL, 1, 'Guest Can Access Terrace', 1, 49),
+(66, 1, '2019-01-13 19:49:33', NULL, NULL, 1, 'Access To Lawn', 1, 49),
+(67, 1, '2019-01-13 21:25:00', NULL, NULL, 1, 'Guest Can Access Terrace', 1, 50),
+(68, 1, '2019-01-13 21:25:00', NULL, NULL, 1, 'Access To Lawn', 1, 50);
 
 -- --------------------------------------------------------
 
@@ -1121,7 +1299,48 @@ INSERT INTO `property_vs_image` (`property_image_id`, `created_by`, `created_dat
 (75, 1, '2018-12-18 17:13:04', NULL, NULL, 1, 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', 25),
 (76, 1, '2018-12-18 18:10:07', NULL, NULL, 1, 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', 26),
 (77, 1, '2018-12-18 18:10:07', NULL, NULL, 1, 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', 26),
-(78, 1, '2018-12-18 18:10:07', NULL, NULL, 1, 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', 26);
+(78, 1, '2018-12-18 18:10:07', NULL, NULL, 1, 'https://s-ec.bstatic.com/images/hotel/max1024x768/141/141830278.jpg', 26),
+(79, 1, '2019-01-13 01:50:44', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/lastminutedeal_1547322794163.png', 30),
+(80, 1, '2019-01-13 01:50:44', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/about_1547322794210.png', 30),
+(81, 1, '2019-01-13 01:50:44', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/banner1_1547322794319.jpg', 30),
+(82, 1, '2019-01-13 02:00:08', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/lastminutedeal_1547322794163.png', 31),
+(83, 1, '2019-01-13 02:00:08', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/about_1547322794210.png', 31),
+(84, 1, '2019-01-13 02:00:08', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/banner1_1547322794319.jpg', 31),
+(85, 1, '2019-01-13 02:02:02', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/lastminutedeal_1547322794163.png', 32),
+(86, 1, '2019-01-13 02:02:02', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/about_1547322794210.png', 32),
+(87, 1, '2019-01-13 02:02:02', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/banner1_1547322794319.jpg', 32),
+(88, 1, '2019-01-13 02:17:11', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/lastminutedeal_1547322794163.png', 33),
+(89, 1, '2019-01-13 02:17:11', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/about_1547322794210.png', 33),
+(90, 1, '2019-01-13 02:17:11', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/banner1_1547322794319.jpg', 33),
+(91, 1, '2019-01-13 12:08:42', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Koala_1547359682482.jpg', 34),
+(92, 1, '2019-01-13 12:08:42', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Lighthouse_1547359682560.jpg', 34),
+(93, 1, '2019-01-13 12:08:42', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Penguins_1547359682623.jpg', 34),
+(94, 1, '2019-01-13 12:29:54', 1, '2019-01-13 18:09:25', 3, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Koala_1547362525186.jpg', 35),
+(95, 1, '2019-01-13 12:29:54', 1, '2019-01-13 18:09:25', 3, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Lighthouse_1547362525260.jpg', 35),
+(96, 1, '2019-01-13 12:29:54', 1, '2019-01-13 18:09:25', 3, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Penguins_1547362525327.jpg', 35),
+(97, 1, '2019-01-13 17:05:16', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/dealsforyou_1547376731378.JPG', 36),
+(98, 1, '2019-01-13 17:08:50', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/dealsforyou_1547376731378.JPG', 37),
+(99, 1, '2019-01-13 17:43:23', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Penguins_1547381002158.jpg', 38),
+(100, 1, '2019-01-13 17:44:59', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Penguins_1547381002158.jpg', 39),
+(101, 1, '2019-01-13 18:02:50', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Hydrangeas_1547382428356.jpg', 40),
+(102, 1, '2019-01-13 18:09:25', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Koala_1547362525186.jpg', 41),
+(103, 1, '2019-01-13 18:09:25', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Lighthouse_1547362525260.jpg', 41),
+(104, 1, '2019-01-13 18:09:25', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Penguins_1547362525327.jpg', 41),
+(105, 1, '2019-01-13 18:18:54', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Jellyfish_1547383589964.jpg', 42),
+(106, 1, '2019-01-13 18:19:37', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Jellyfish_1547383589964.jpg', 43),
+(107, 1, '2019-01-13 18:19:42', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Jellyfish_1547383589964.jpg', 44),
+(108, 1, '2019-01-13 18:19:47', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Jellyfish_1547383589964.jpg', 45),
+(109, 1, '2019-01-13 18:19:51', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Jellyfish_1547383589964.jpg', 46),
+(110, 1, '2019-01-13 19:44:02', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Koala_1547388716897.jpg', 47),
+(111, 1, '2019-01-13 19:44:02', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Lighthouse_1547388716976.jpg', 47),
+(112, 1, '2019-01-13 19:44:02', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Penguins_1547388717038.jpg', 47),
+(113, 1, '2019-01-13 19:44:15', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Koala_1547388716897.jpg', 48),
+(114, 1, '2019-01-13 19:44:15', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Lighthouse_1547388716976.jpg', 48),
+(115, 1, '2019-01-13 19:44:15', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Penguins_1547388717038.jpg', 48),
+(116, 1, '2019-01-13 19:49:33', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Koala_1547388716897.jpg', 49),
+(117, 1, '2019-01-13 19:49:33', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Lighthouse_1547388716976.jpg', 49),
+(118, 1, '2019-01-13 19:49:33', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Penguins_1547388717038.jpg', 49),
+(119, 1, '2019-01-13 21:25:00', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/dealsforyou_1547387552813.JPG', 50);
 
 -- --------------------------------------------------------
 
@@ -1225,7 +1444,70 @@ INSERT INTO `property_vs_nearby` (`property_nearby_id`, `created_by`, `created_d
 (75, 1, '2018-12-18 17:13:04', NULL, NULL, 1, NULL, NULL, NULL, 'Nicco Parks', 25),
 (76, 1, '2018-12-18 18:10:07', NULL, NULL, 1, NULL, NULL, NULL, 'RS Software', 26),
 (77, 1, '2018-12-18 18:10:07', NULL, NULL, 1, NULL, NULL, NULL, 'SasdasdadDF', 26),
-(78, 1, '2018-12-18 18:10:07', NULL, NULL, 1, NULL, NULL, NULL, 'Nicco Parks', 26);
+(78, 1, '2018-12-18 18:10:07', NULL, NULL, 1, NULL, NULL, NULL, 'Nicco Parks', 26),
+(79, 1, '2019-01-13 01:50:44', NULL, NULL, 1, NULL, NULL, NULL, 'RS Software', 30),
+(80, 1, '2019-01-13 01:50:44', NULL, NULL, 1, NULL, NULL, NULL, 'SDF', 30),
+(81, 1, '2019-01-13 01:50:44', NULL, NULL, 1, NULL, NULL, NULL, 'Nicco Park', 30),
+(82, 1, '2019-01-13 02:00:08', NULL, NULL, 1, NULL, NULL, NULL, 'RS Software', 31),
+(83, 1, '2019-01-13 02:00:08', NULL, NULL, 1, NULL, NULL, NULL, 'SDF', 31),
+(84, 1, '2019-01-13 02:00:08', NULL, NULL, 1, NULL, NULL, NULL, 'Nicco Park', 31),
+(85, 1, '2019-01-13 02:02:02', NULL, NULL, 1, NULL, NULL, NULL, 'RS Software', 32),
+(86, 1, '2019-01-13 02:02:02', NULL, NULL, 1, NULL, NULL, NULL, 'SDF', 32),
+(87, 1, '2019-01-13 02:02:02', NULL, NULL, 1, NULL, NULL, NULL, 'Nicco Park', 32),
+(88, 1, '2019-01-13 02:17:11', NULL, NULL, 1, NULL, NULL, NULL, 'RS Software', 33),
+(89, 1, '2019-01-13 02:17:11', NULL, NULL, 1, NULL, NULL, NULL, 'SDF', 33),
+(90, 1, '2019-01-13 02:17:11', NULL, NULL, 1, NULL, NULL, NULL, 'Nicco Park', 33),
+(91, 1, '2019-01-13 12:08:42', NULL, NULL, 1, NULL, NULL, NULL, 'RS Software', 34),
+(92, 1, '2019-01-13 12:08:42', NULL, NULL, 1, NULL, NULL, NULL, 'SDF', 34),
+(93, 1, '2019-01-13 12:08:42', NULL, NULL, 1, NULL, NULL, NULL, 'Nicco Park', 34),
+(94, 1, '2019-01-13 12:29:54', 1, '2019-01-13 18:09:25', 3, NULL, NULL, NULL, 'RS Software', 35),
+(95, 1, '2019-01-13 12:29:54', 1, '2019-01-13 18:09:25', 3, NULL, NULL, NULL, 'SDF', 35),
+(96, 1, '2019-01-13 12:29:54', 1, '2019-01-13 18:09:25', 3, NULL, NULL, NULL, 'Nicco Park', 35),
+(97, 1, '2019-01-13 17:05:16', NULL, NULL, 1, NULL, NULL, NULL, 'RS Software', 36),
+(98, 1, '2019-01-13 17:05:16', NULL, NULL, 1, NULL, NULL, NULL, 'SDF', 36),
+(99, 1, '2019-01-13 17:05:16', NULL, NULL, 1, NULL, NULL, NULL, 'Nicco Park', 36),
+(100, 1, '2019-01-13 17:08:50', NULL, NULL, 1, NULL, NULL, NULL, 'RS Software', 37),
+(101, 1, '2019-01-13 17:08:50', NULL, NULL, 1, NULL, NULL, NULL, 'SDF', 37),
+(102, 1, '2019-01-13 17:08:50', NULL, NULL, 1, NULL, NULL, NULL, 'Nicco Park', 37),
+(103, 1, '2019-01-13 17:43:23', NULL, NULL, 1, NULL, NULL, NULL, 'RS Software', 38),
+(104, 1, '2019-01-13 17:43:23', NULL, NULL, 1, NULL, NULL, NULL, 'SDF', 38),
+(105, 1, '2019-01-13 17:43:23', NULL, NULL, 1, NULL, NULL, NULL, 'Nicco Park', 38),
+(106, 1, '2019-01-13 17:44:59', NULL, NULL, 1, NULL, NULL, NULL, 'RS Software', 39),
+(107, 1, '2019-01-13 17:44:59', NULL, NULL, 1, NULL, NULL, NULL, 'SDF', 39),
+(108, 1, '2019-01-13 17:44:59', NULL, NULL, 1, NULL, NULL, NULL, 'Nicco Park', 39),
+(109, 1, '2019-01-13 18:02:50', NULL, NULL, 1, NULL, NULL, NULL, 'RS Software', 40),
+(110, 1, '2019-01-13 18:02:50', NULL, NULL, 1, NULL, NULL, NULL, 'SDF', 40),
+(111, 1, '2019-01-13 18:02:50', NULL, NULL, 1, NULL, NULL, NULL, 'Nicco Park', 40),
+(112, 1, '2019-01-13 18:09:25', NULL, NULL, 1, NULL, NULL, NULL, 'RS Software', 41),
+(113, 1, '2019-01-13 18:09:25', NULL, NULL, 1, NULL, NULL, NULL, 'SDF', 41),
+(114, 1, '2019-01-13 18:09:25', NULL, NULL, 1, NULL, NULL, NULL, 'Nicco Park', 41),
+(115, 1, '2019-01-13 18:18:54', NULL, NULL, 1, NULL, NULL, NULL, 'RS Software', 42),
+(116, 1, '2019-01-13 18:18:54', NULL, NULL, 1, NULL, NULL, NULL, 'SDF', 42),
+(117, 1, '2019-01-13 18:18:54', NULL, NULL, 1, NULL, NULL, NULL, 'Nicco Park', 42),
+(118, 1, '2019-01-13 18:19:37', NULL, NULL, 1, NULL, NULL, NULL, 'RS Software', 43),
+(119, 1, '2019-01-13 18:19:37', NULL, NULL, 1, NULL, NULL, NULL, 'SDF', 43),
+(120, 1, '2019-01-13 18:19:37', NULL, NULL, 1, NULL, NULL, NULL, 'Nicco Park', 43),
+(121, 1, '2019-01-13 18:19:42', NULL, NULL, 1, NULL, NULL, NULL, 'RS Software', 44),
+(122, 1, '2019-01-13 18:19:42', NULL, NULL, 1, NULL, NULL, NULL, 'SDF', 44),
+(123, 1, '2019-01-13 18:19:42', NULL, NULL, 1, NULL, NULL, NULL, 'Nicco Park', 44),
+(124, 1, '2019-01-13 18:19:47', NULL, NULL, 1, NULL, NULL, NULL, 'RS Software', 45),
+(125, 1, '2019-01-13 18:19:47', NULL, NULL, 1, NULL, NULL, NULL, 'SDF', 45),
+(126, 1, '2019-01-13 18:19:47', NULL, NULL, 1, NULL, NULL, NULL, 'Nicco Park', 45),
+(127, 1, '2019-01-13 18:19:51', NULL, NULL, 1, NULL, NULL, NULL, 'RS Software', 46),
+(128, 1, '2019-01-13 18:19:51', NULL, NULL, 1, NULL, NULL, NULL, 'SDF', 46),
+(129, 1, '2019-01-13 18:19:51', NULL, NULL, 1, NULL, NULL, NULL, 'Nicco Park', 46),
+(130, 1, '2019-01-13 19:44:02', NULL, NULL, 1, NULL, NULL, NULL, 'RS Software', 47),
+(131, 1, '2019-01-13 19:44:02', NULL, NULL, 1, NULL, NULL, NULL, 'SDF', 47),
+(132, 1, '2019-01-13 19:44:02', NULL, NULL, 1, NULL, NULL, NULL, 'Nicco Park', 47),
+(133, 1, '2019-01-13 19:44:15', NULL, NULL, 1, NULL, NULL, NULL, 'RS Software', 48),
+(134, 1, '2019-01-13 19:44:15', NULL, NULL, 1, NULL, NULL, NULL, 'SDF', 48),
+(135, 1, '2019-01-13 19:44:15', NULL, NULL, 1, NULL, NULL, NULL, 'Nicco Park', 48),
+(136, 1, '2019-01-13 19:49:33', NULL, NULL, 1, NULL, NULL, NULL, 'RS Software', 49),
+(137, 1, '2019-01-13 19:49:33', NULL, NULL, 1, NULL, NULL, NULL, 'SDF', 49),
+(138, 1, '2019-01-13 19:49:33', NULL, NULL, 1, NULL, NULL, NULL, 'Nicco Park', 49),
+(139, 1, '2019-01-13 21:25:00', NULL, NULL, 1, NULL, NULL, NULL, 'RS Software', 50),
+(140, 1, '2019-01-13 21:25:00', NULL, NULL, 1, NULL, NULL, NULL, 'SDF', 50),
+(141, 1, '2019-01-13 21:25:00', NULL, NULL, 1, NULL, NULL, NULL, 'Nicco Park', 50);
 
 -- --------------------------------------------------------
 
@@ -1301,7 +1583,49 @@ INSERT INTO `property_vs_pricedrop` (`property_pricedrop_id`, `created_by`, `cre
 (49, 1, '2018-12-18 17:13:04', NULL, NULL, 1, '0', 1, 25),
 (50, 1, '2018-12-18 17:13:04', NULL, NULL, 1, '0', 2, 25),
 (51, 1, '2018-12-18 18:10:07', NULL, NULL, 1, '0', 1, 26),
-(52, 1, '2018-12-18 18:10:07', NULL, NULL, 1, '0', 2, 26);
+(52, 1, '2018-12-18 18:10:07', NULL, NULL, 1, '0', 2, 26),
+(53, 1, '2019-01-13 01:50:44', NULL, NULL, 1, '0', 1, 30),
+(54, 1, '2019-01-13 01:50:44', NULL, NULL, 1, '0', 2, 30),
+(55, 1, '2019-01-13 02:00:08', NULL, NULL, 1, '0', 1, 31),
+(56, 1, '2019-01-13 02:00:08', NULL, NULL, 1, '0', 2, 31),
+(57, 1, '2019-01-13 02:02:02', NULL, NULL, 1, '0', 1, 32),
+(58, 1, '2019-01-13 02:02:02', NULL, NULL, 1, '0', 2, 32),
+(59, 1, '2019-01-13 02:17:11', NULL, NULL, 1, '0', 1, 33),
+(60, 1, '2019-01-13 02:17:11', NULL, NULL, 1, '0', 2, 33),
+(61, 1, '2019-01-13 12:08:42', NULL, NULL, 1, '0', 1, 34),
+(62, 1, '2019-01-13 12:08:42', NULL, NULL, 1, '0', 2, 34),
+(63, 1, '2019-01-13 12:29:54', 1, '2019-01-13 18:09:25', 3, '0', 1, 35),
+(64, 1, '2019-01-13 12:29:54', 1, '2019-01-13 18:09:25', 3, '0', 2, 35),
+(65, 1, '2019-01-13 17:05:16', NULL, NULL, 1, '0', 1, 36),
+(66, 1, '2019-01-13 17:05:16', NULL, NULL, 1, '0', 2, 36),
+(67, 1, '2019-01-13 17:08:50', NULL, NULL, 1, '0', 1, 37),
+(68, 1, '2019-01-13 17:08:50', NULL, NULL, 1, '0', 2, 37),
+(69, 1, '2019-01-13 17:43:23', NULL, NULL, 1, '0', 1, 38),
+(70, 1, '2019-01-13 17:43:23', NULL, NULL, 1, '0', 2, 38),
+(71, 1, '2019-01-13 17:44:59', NULL, NULL, 1, '0', 1, 39),
+(72, 1, '2019-01-13 17:44:59', NULL, NULL, 1, '0', 2, 39),
+(73, 1, '2019-01-13 18:02:51', NULL, NULL, 1, '0', 1, 40),
+(74, 1, '2019-01-13 18:02:51', NULL, NULL, 1, '0', 2, 40),
+(75, 1, '2019-01-13 18:09:25', NULL, NULL, 1, '0', 1, 41),
+(76, 1, '2019-01-13 18:09:25', NULL, NULL, 1, '0', 2, 41),
+(77, 1, '2019-01-13 18:18:54', NULL, NULL, 1, '0', 1, 42),
+(78, 1, '2019-01-13 18:18:54', NULL, NULL, 1, '0', 2, 42),
+(79, 1, '2019-01-13 18:19:37', NULL, NULL, 1, '0', 1, 43),
+(80, 1, '2019-01-13 18:19:37', NULL, NULL, 1, '0', 2, 43),
+(81, 1, '2019-01-13 18:19:42', NULL, NULL, 1, '0', 1, 44),
+(82, 1, '2019-01-13 18:19:42', NULL, NULL, 1, '0', 2, 44),
+(83, 1, '2019-01-13 18:19:47', NULL, NULL, 1, '0', 1, 45),
+(84, 1, '2019-01-13 18:19:47', NULL, NULL, 1, '0', 2, 45),
+(85, 1, '2019-01-13 18:19:51', NULL, NULL, 1, '0', 1, 46),
+(86, 1, '2019-01-13 18:19:51', NULL, NULL, 1, '0', 2, 46),
+(87, 1, '2019-01-13 19:44:02', NULL, NULL, 1, '0', 1, 47),
+(88, 1, '2019-01-13 19:44:02', NULL, NULL, 1, '0', 2, 47),
+(89, 1, '2019-01-13 19:44:15', NULL, NULL, 1, '0', 1, 48),
+(90, 1, '2019-01-13 19:44:15', NULL, NULL, 1, '0', 2, 48),
+(91, 1, '2019-01-13 19:49:33', NULL, NULL, 1, '0', 1, 49),
+(92, 1, '2019-01-13 19:49:33', NULL, NULL, 1, '0', 2, 49),
+(93, 1, '2019-01-13 21:25:00', NULL, NULL, 1, '0', 1, 50),
+(94, 1, '2019-01-13 21:25:00', NULL, NULL, 1, '0', 2, 50);
 
 -- --------------------------------------------------------
 
@@ -1406,7 +1730,49 @@ INSERT INTO `property_vs_space` (`property_space_id`, `created_by`, `created_dat
 (78, 1, '2018-12-18 17:13:04', NULL, NULL, 1, 'Y', 25, 3),
 (79, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'Y', 26, 1),
 (80, 1, '2018-12-18 17:01:24', NULL, NULL, 1, 'Y', 26, 2),
-(81, 1, '2018-12-18 17:13:04', NULL, NULL, 1, 'Y', 26, 3);
+(81, 1, '2018-12-18 17:13:04', NULL, NULL, 1, 'Y', 26, 3),
+(82, 1, '2019-01-13 01:50:44', NULL, NULL, 1, 'Y', 30, 1),
+(83, 1, '2019-01-13 01:50:44', NULL, NULL, 1, 'N', 30, 2),
+(84, 1, '2019-01-13 02:00:08', NULL, NULL, 1, 'Y', 31, 1),
+(85, 1, '2019-01-13 02:00:08', NULL, NULL, 1, 'N', 31, 2),
+(86, 1, '2019-01-13 02:02:02', NULL, NULL, 1, 'Y', 32, 1),
+(87, 1, '2019-01-13 02:02:02', NULL, NULL, 1, 'N', 32, 2),
+(88, 1, '2019-01-13 02:17:11', NULL, NULL, 1, 'Y', 33, 1),
+(89, 1, '2019-01-13 02:17:11', NULL, NULL, 1, 'N', 33, 2),
+(90, 1, '2019-01-13 12:08:42', NULL, NULL, 1, 'Y', 34, 1),
+(91, 1, '2019-01-13 12:08:42', NULL, NULL, 1, 'N', 34, 2),
+(92, 1, '2019-01-13 12:29:55', 1, '2019-01-13 18:09:25', 3, 'Y', 35, 1),
+(93, 1, '2019-01-13 12:29:55', 1, '2019-01-13 18:09:25', 3, 'N', 35, 2),
+(94, 1, '2019-01-13 17:05:16', NULL, NULL, 1, 'Y', 36, 1),
+(95, 1, '2019-01-13 17:05:16', NULL, NULL, 1, 'N', 36, 2),
+(96, 1, '2019-01-13 17:08:50', NULL, NULL, 1, 'Y', 37, 1),
+(97, 1, '2019-01-13 17:08:50', NULL, NULL, 1, 'N', 37, 2),
+(98, 1, '2019-01-13 17:43:23', NULL, NULL, 1, 'Y', 38, 1),
+(99, 1, '2019-01-13 17:43:23', NULL, NULL, 1, 'N', 38, 2),
+(100, 1, '2019-01-13 17:44:59', NULL, NULL, 1, 'Y', 39, 1),
+(101, 1, '2019-01-13 17:44:59', NULL, NULL, 1, 'N', 39, 2),
+(102, 1, '2019-01-13 18:02:51', NULL, NULL, 1, 'Y', 40, 1),
+(103, 1, '2019-01-13 18:02:51', NULL, NULL, 1, 'N', 40, 2),
+(104, 1, '2019-01-13 18:09:25', NULL, NULL, 1, 'Y', 41, 1),
+(105, 1, '2019-01-13 18:09:25', NULL, NULL, 1, 'N', 41, 2),
+(106, 1, '2019-01-13 18:18:54', NULL, NULL, 1, 'Y', 42, 1),
+(107, 1, '2019-01-13 18:18:54', NULL, NULL, 1, 'N', 42, 2),
+(108, 1, '2019-01-13 18:19:37', NULL, NULL, 1, 'Y', 43, 1),
+(109, 1, '2019-01-13 18:19:37', NULL, NULL, 1, 'N', 43, 2),
+(110, 1, '2019-01-13 18:19:42', NULL, NULL, 1, 'Y', 44, 1),
+(111, 1, '2019-01-13 18:19:42', NULL, NULL, 1, 'N', 44, 2),
+(112, 1, '2019-01-13 18:19:47', NULL, NULL, 1, 'Y', 45, 1),
+(113, 1, '2019-01-13 18:19:47', NULL, NULL, 1, 'N', 45, 2),
+(114, 1, '2019-01-13 18:19:51', NULL, NULL, 1, 'Y', 46, 1),
+(115, 1, '2019-01-13 18:19:51', NULL, NULL, 1, 'N', 46, 2),
+(116, 1, '2019-01-13 19:44:02', NULL, NULL, 1, 'Y', 47, 1),
+(117, 1, '2019-01-13 19:44:02', NULL, NULL, 1, 'N', 47, 2),
+(118, 1, '2019-01-13 19:44:15', NULL, NULL, 1, 'Y', 48, 1),
+(119, 1, '2019-01-13 19:44:15', NULL, NULL, 1, 'N', 48, 2),
+(120, 1, '2019-01-13 19:49:33', NULL, NULL, 1, 'Y', 49, 1),
+(121, 1, '2019-01-13 19:49:33', NULL, NULL, 1, 'N', 49, 2),
+(122, 1, '2019-01-13 21:25:00', NULL, NULL, 1, 'Y', 50, 1),
+(123, 1, '2019-01-13 21:25:00', NULL, NULL, 1, 'N', 50, 2);
 
 -- --------------------------------------------------------
 
@@ -1814,7 +2180,28 @@ INSERT INTO `room_vs_amenities` (`room_vs_aminities_id`, `created_by`, `created_
 (382, 1, '2018-12-18 16:39:05', NULL, NULL, 1, 3, 160),
 (383, 1, '2018-12-18 14:54:26', NULL, NULL, 1, 1, 161),
 (384, 1, '2018-12-18 14:54:26', NULL, NULL, 1, 2, 161),
-(385, 1, '2018-12-18 15:01:12', NULL, NULL, 1, 3, 161);
+(385, 1, '2018-12-18 15:01:12', NULL, NULL, 1, 3, 161),
+(386, 1, '2019-01-13 01:50:44', NULL, NULL, 1, 1, 162),
+(387, 1, '2019-01-13 02:00:08', NULL, NULL, 1, 1, 163),
+(388, 1, '2019-01-13 02:02:02', NULL, NULL, 1, 1, 164),
+(389, 1, '2019-01-13 02:17:11', NULL, NULL, 1, 1, 165),
+(390, 1, '2019-01-13 12:08:42', NULL, NULL, 1, 1, 166),
+(391, 1, '2019-01-13 12:29:55', 1, '2019-01-13 18:09:25', 3, 1, 167),
+(392, 1, '2019-01-13 17:05:16', NULL, NULL, 1, 1, 168),
+(393, 1, '2019-01-13 17:08:50', NULL, NULL, 1, 1, 169),
+(394, 1, '2019-01-13 17:43:24', NULL, NULL, 1, 1, 170),
+(395, 1, '2019-01-13 17:44:59', NULL, NULL, 1, 1, 171),
+(396, 1, '2019-01-13 18:02:51', NULL, NULL, 1, 1, 172),
+(397, 1, '2019-01-13 18:09:25', NULL, NULL, 1, 1, 173),
+(398, 1, '2019-01-13 18:18:54', NULL, NULL, 1, 1, 174),
+(399, 1, '2019-01-13 18:19:37', NULL, NULL, 1, 1, 175),
+(400, 1, '2019-01-13 18:19:42', NULL, NULL, 1, 1, 176),
+(401, 1, '2019-01-13 18:19:47', NULL, NULL, 1, 1, 177),
+(402, 1, '2019-01-13 18:19:51', NULL, NULL, 1, 1, 178),
+(403, 1, '2019-01-13 19:44:02', NULL, NULL, 1, 1, 179),
+(404, 1, '2019-01-13 19:44:15', NULL, NULL, 1, 1, 180),
+(405, 1, '2019-01-13 19:49:33', NULL, NULL, 1, 1, 181),
+(406, 1, '2019-01-13 21:25:00', NULL, NULL, 1, 1, 182);
 
 -- --------------------------------------------------------
 
@@ -2160,7 +2547,49 @@ INSERT INTO `room_vs_cancellation` (`rc_id`, `created_by`, `created_date`, `modi
 (319, 1, '2018-12-18 16:25:19', NULL, NULL, 1, '50', 1, 160),
 (320, 1, '2018-12-18 16:25:19', NULL, NULL, 1, '40', 2, 160),
 (321, 1, '2018-12-18 16:36:57', NULL, NULL, 1, '50', 1, 161),
-(322, 1, '2018-12-18 16:36:57', NULL, NULL, 1, '40', 2, 161);
+(322, 1, '2018-12-18 16:36:57', NULL, NULL, 1, '40', 2, 161),
+(323, 1, '2019-01-13 01:50:44', NULL, NULL, 1, '50', 1, 162),
+(324, 1, '2019-01-13 01:50:44', NULL, NULL, 1, '40', 2, 162),
+(325, 1, '2019-01-13 02:00:08', NULL, NULL, 1, '50', 1, 163),
+(326, 1, '2019-01-13 02:00:08', NULL, NULL, 1, '40', 2, 163),
+(327, 1, '2019-01-13 02:02:02', NULL, NULL, 1, '50', 1, 164),
+(328, 1, '2019-01-13 02:02:02', NULL, NULL, 1, '40', 2, 164),
+(329, 1, '2019-01-13 02:17:11', NULL, NULL, 1, '50', 1, 165),
+(330, 1, '2019-01-13 02:17:11', NULL, NULL, 1, '40', 2, 165),
+(331, 1, '2019-01-13 12:08:42', NULL, NULL, 1, '50', 1, 166),
+(332, 1, '2019-01-13 12:08:42', NULL, NULL, 1, '40', 2, 166),
+(333, 1, '2019-01-13 12:29:55', 1, '2019-01-13 18:09:25', 3, '50', 1, 167),
+(334, 1, '2019-01-13 12:29:55', 1, '2019-01-13 18:09:25', 3, '40', 2, 167),
+(335, 1, '2019-01-13 17:05:16', NULL, NULL, 1, '50', 1, 168),
+(336, 1, '2019-01-13 17:05:16', NULL, NULL, 1, '40', 2, 168),
+(337, 1, '2019-01-13 17:08:50', NULL, NULL, 1, '50', 1, 169),
+(338, 1, '2019-01-13 17:08:50', NULL, NULL, 1, '40', 2, 169),
+(339, 1, '2019-01-13 17:43:24', NULL, NULL, 1, '50', 1, 170),
+(340, 1, '2019-01-13 17:43:24', NULL, NULL, 1, '40', 2, 170),
+(341, 1, '2019-01-13 17:44:59', NULL, NULL, 1, '50', 1, 171),
+(342, 1, '2019-01-13 17:44:59', NULL, NULL, 1, '40', 2, 171),
+(343, 1, '2019-01-13 18:02:51', NULL, NULL, 1, '50', 1, 172),
+(344, 1, '2019-01-13 18:02:51', NULL, NULL, 1, '40', 2, 172),
+(345, 1, '2019-01-13 18:09:25', NULL, NULL, 1, '50', 1, 173),
+(346, 1, '2019-01-13 18:09:25', NULL, NULL, 1, '40', 2, 173),
+(347, 1, '2019-01-13 18:18:54', NULL, NULL, 1, '50', 1, 174),
+(348, 1, '2019-01-13 18:18:54', NULL, NULL, 1, '40', 2, 174),
+(349, 1, '2019-01-13 18:19:37', NULL, NULL, 1, '50', 1, 175),
+(350, 1, '2019-01-13 18:19:37', NULL, NULL, 1, '40', 2, 175),
+(351, 1, '2019-01-13 18:19:42', NULL, NULL, 1, '50', 1, 176),
+(352, 1, '2019-01-13 18:19:42', NULL, NULL, 1, '40', 2, 176),
+(353, 1, '2019-01-13 18:19:47', NULL, NULL, 1, '50', 1, 177),
+(354, 1, '2019-01-13 18:19:47', NULL, NULL, 1, '40', 2, 177),
+(355, 1, '2019-01-13 18:19:51', NULL, NULL, 1, '50', 1, 178),
+(356, 1, '2019-01-13 18:19:51', NULL, NULL, 1, '40', 2, 178),
+(357, 1, '2019-01-13 19:44:02', NULL, NULL, 1, '50', 1, 179),
+(358, 1, '2019-01-13 19:44:02', NULL, NULL, 1, '40', 2, 179),
+(359, 1, '2019-01-13 19:44:15', NULL, NULL, 1, '50', 1, 180),
+(360, 1, '2019-01-13 19:44:15', NULL, NULL, 1, '40', 2, 180),
+(361, 1, '2019-01-13 19:49:33', NULL, NULL, 1, '50', 1, 181),
+(362, 1, '2019-01-13 19:49:33', NULL, NULL, 1, '40', 2, 181),
+(363, 1, '2019-01-13 21:25:01', NULL, NULL, 1, '50', 1, 182),
+(364, 1, '2019-01-13 21:25:01', NULL, NULL, 1, '40', 2, 182);
 
 -- --------------------------------------------------------
 
@@ -2666,7 +3095,33 @@ INSERT INTO `room_vs_image` (`room_vs_image_id`, `created_by`, `created_date`, `
 (480, 1, '2018-12-18 17:13:04', NULL, NULL, 1, 'www.google.com', 160),
 (481, 1, '2018-12-18 18:10:07', NULL, NULL, 1, 'www.google.com', 161),
 (482, 1, '2018-12-18 18:10:07', NULL, NULL, 1, 'www.google.com', 161),
-(483, 1, '2018-12-18 18:10:07', NULL, NULL, 1, 'www.google.com', 161);
+(483, 1, '2018-12-18 18:10:07', NULL, NULL, 1, 'www.google.com', 161),
+(484, 1, '2019-01-13 02:02:02', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/propertylist_1547322794670.png', 164),
+(485, 1, '2019-01-13 02:02:02', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/couplefriendly_1547322794889.png', 164),
+(486, 1, '2019-01-13 02:17:11', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/propertylist_1547322794670.png', 165),
+(487, 1, '2019-01-13 02:17:11', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/couplefriendly_1547322794889.png', 165),
+(488, 1, '2019-01-13 12:08:42', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Tulips_1547359682685.jpg', 166),
+(489, 1, '2019-01-13 12:08:42', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Chrysanthemum_1547359682748.jpg', 166),
+(490, 1, '2019-01-13 12:29:55', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Tulips_1547362525400.jpg', 167),
+(491, 1, '2019-01-13 12:29:55', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Chrysanthemum_1547362525463.jpg', 167),
+(492, 1, '2019-01-13 17:05:16', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/dealsforyou_1547376766540.JPG', 168),
+(493, 1, '2019-01-13 17:08:50', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/dealsforyou_1547376766540.JPG', 169),
+(494, 1, '2019-01-13 17:43:24', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Lighthouse_1547381002094.jpg', 170),
+(495, 1, '2019-01-13 17:44:59', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Lighthouse_1547381002094.jpg', 171),
+(496, 1, '2019-01-13 18:02:51', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Desert_1547382428187.jpg', 172),
+(497, 1, '2019-01-13 18:09:25', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Lighthouse_1547382428580.jpg', 173),
+(498, 1, '2019-01-13 18:18:54', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Koala_1547383590027.jpg', 174),
+(499, 1, '2019-01-13 18:19:37', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Koala_1547383590027.jpg', 175),
+(500, 1, '2019-01-13 18:19:42', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Koala_1547383590027.jpg', 176),
+(501, 1, '2019-01-13 18:19:47', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Koala_1547383590027.jpg', 177),
+(502, 1, '2019-01-13 18:19:51', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Koala_1547383590027.jpg', 178),
+(503, 1, '2019-01-13 19:44:02', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Tulips_1547388717101.jpg', 179),
+(504, 1, '2019-01-13 19:44:02', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Chrysanthemum_1547388717171.jpg', 179),
+(505, 1, '2019-01-13 19:44:15', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Tulips_1547388717101.jpg', 180),
+(506, 1, '2019-01-13 19:44:15', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Chrysanthemum_1547388717171.jpg', 180),
+(507, 1, '2019-01-13 19:49:33', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Tulips_1547388717101.jpg', 181),
+(508, 1, '2019-01-13 19:49:33', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/Chrysanthemum_1547388717171.jpg', 181),
+(509, 1, '2019-01-13 21:25:01', NULL, NULL, 1, 'https://orastayswebblobstorage.blob.core.windows.net/webblobdev/dealsforyou_1547387573334.JPG', 182);
 
 -- --------------------------------------------------------
 
@@ -3357,7 +3812,28 @@ INSERT INTO `room_vs_meal` (`room_vs_meal_id`, `created_by`, `created_date`, `mo
 (641, 1, '2018-12-18 14:54:26', NULL, NULL, 1, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'BOTH', 'BOTH', 'VEG', 'VEG', 'BOTH', 'BOTH', 'BOTH', 1, 161),
 (642, 1, '2018-12-18 14:54:26', NULL, NULL, 1, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'BOTH', 'BOTH', 'VEG', 'VEG', 'BOTH', 'BOTH', 'BOTH', 2, 161),
 (643, 1, '2018-12-18 14:54:26', NULL, NULL, 1, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'BOTH', 'BOTH', 'VEG', 'VEG', 'BOTH', 'BOTH', 'BOTH', 3, 161),
-(644, 1, '2018-12-18 14:54:26', NULL, NULL, 1, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'BOTH', 'BOTH', 'VEG', 'VEG', 'BOTH', 'BOTH', 'BOTH', 4, 161);
+(644, 1, '2018-12-18 14:54:26', NULL, NULL, 1, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'BOTH', 'BOTH', 'VEG', 'VEG', 'BOTH', 'BOTH', 'BOTH', 4, 161),
+(645, 1, '2019-01-13 01:50:44', NULL, NULL, 1, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 1, 162),
+(646, 1, '2019-01-13 02:00:08', NULL, NULL, 1, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 1, 163),
+(647, 1, '2019-01-13 02:02:02', NULL, NULL, 1, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 1, 164),
+(648, 1, '2019-01-13 02:17:11', NULL, NULL, 1, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 1, 165),
+(649, 1, '2019-01-13 12:08:42', NULL, NULL, 1, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 1, 166),
+(650, 1, '2019-01-13 12:29:55', 1, '2019-01-13 18:09:25', 3, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 1, 167),
+(651, 1, '2019-01-13 17:05:16', NULL, NULL, 1, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 1, 168),
+(652, 1, '2019-01-13 17:08:50', NULL, NULL, 1, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 1, 169),
+(653, 1, '2019-01-13 17:43:24', NULL, NULL, 1, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 1, 170),
+(654, 1, '2019-01-13 17:44:59', NULL, NULL, 1, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 1, 171),
+(655, 1, '2019-01-13 18:02:51', NULL, NULL, 1, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 1, 172),
+(656, 1, '2019-01-13 18:09:25', NULL, NULL, 1, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 1, 173),
+(657, 1, '2019-01-13 18:18:54', NULL, NULL, 1, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 1, 174),
+(658, 1, '2019-01-13 18:19:37', NULL, NULL, 1, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 1, 175),
+(659, 1, '2019-01-13 18:19:42', NULL, NULL, 1, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 1, 176),
+(660, 1, '2019-01-13 18:19:47', NULL, NULL, 1, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 1, 177),
+(661, 1, '2019-01-13 18:19:51', NULL, NULL, 1, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 1, 178),
+(662, 1, '2019-01-13 19:44:02', NULL, NULL, 1, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 1, 179),
+(663, 1, '2019-01-13 19:44:15', NULL, NULL, 1, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 1, 180),
+(664, 1, '2019-01-13 19:49:33', NULL, NULL, 1, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 1, 181),
+(665, 1, '2019-01-13 21:25:01', NULL, NULL, 1, 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'COMPLIMENTARY', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 'BOTH', 1, 182);
 
 -- --------------------------------------------------------
 
@@ -3652,7 +4128,49 @@ INSERT INTO `room_vs_specialties` (`roomspec_id`, `created_by`, `created_date`, 
 (238, 1, '2018-12-18 16:25:19', NULL, NULL, 1, 159, 1),
 (239, 1, '2018-12-18 16:25:19', NULL, NULL, 1, 159, 2),
 (240, 1, '2018-12-18 16:05:16', NULL, NULL, 1, 160, 2),
-(241, 1, '2018-12-18 16:09:49', NULL, NULL, 1, 161, 1);
+(241, 1, '2018-12-18 16:09:49', NULL, NULL, 1, 161, 1),
+(242, 1, '2019-01-13 01:50:44', NULL, NULL, 1, 162, 1),
+(243, 1, '2019-01-13 01:50:44', NULL, NULL, 1, 162, 2),
+(244, 1, '2019-01-13 02:00:08', NULL, NULL, 1, 163, 1),
+(245, 1, '2019-01-13 02:00:08', NULL, NULL, 1, 163, 2),
+(246, 1, '2019-01-13 02:02:02', NULL, NULL, 1, 164, 1),
+(247, 1, '2019-01-13 02:02:02', NULL, NULL, 1, 164, 2),
+(248, 1, '2019-01-13 02:17:11', NULL, NULL, 1, 165, 1),
+(249, 1, '2019-01-13 02:17:11', NULL, NULL, 1, 165, 2),
+(250, 1, '2019-01-13 12:08:42', NULL, NULL, 1, 166, 1),
+(251, 1, '2019-01-13 12:08:42', NULL, NULL, 1, 166, 2),
+(252, 1, '2019-01-13 12:29:55', 1, '2019-01-13 18:09:25', 3, 167, 1),
+(253, 1, '2019-01-13 12:29:55', 1, '2019-01-13 18:09:25', 3, 167, 2),
+(254, 1, '2019-01-13 17:05:16', NULL, NULL, 1, 168, 1),
+(255, 1, '2019-01-13 17:05:16', NULL, NULL, 1, 168, 2),
+(256, 1, '2019-01-13 17:08:50', NULL, NULL, 1, 169, 1),
+(257, 1, '2019-01-13 17:08:50', NULL, NULL, 1, 169, 2),
+(258, 1, '2019-01-13 17:43:24', NULL, NULL, 1, 170, 1),
+(259, 1, '2019-01-13 17:43:24', NULL, NULL, 1, 170, 2),
+(260, 1, '2019-01-13 17:44:59', NULL, NULL, 1, 171, 1),
+(261, 1, '2019-01-13 17:44:59', NULL, NULL, 1, 171, 2),
+(262, 1, '2019-01-13 18:02:51', NULL, NULL, 1, 172, 1),
+(263, 1, '2019-01-13 18:02:51', NULL, NULL, 1, 172, 2),
+(264, 1, '2019-01-13 18:09:25', NULL, NULL, 1, 173, 1),
+(265, 1, '2019-01-13 18:09:25', NULL, NULL, 1, 173, 2),
+(266, 1, '2019-01-13 18:18:54', NULL, NULL, 1, 174, 1),
+(267, 1, '2019-01-13 18:18:54', NULL, NULL, 1, 174, 2),
+(268, 1, '2019-01-13 18:19:37', NULL, NULL, 1, 175, 1),
+(269, 1, '2019-01-13 18:19:37', NULL, NULL, 1, 175, 2),
+(270, 1, '2019-01-13 18:19:42', NULL, NULL, 1, 176, 1),
+(271, 1, '2019-01-13 18:19:42', NULL, NULL, 1, 176, 2),
+(272, 1, '2019-01-13 18:19:47', NULL, NULL, 1, 177, 1),
+(273, 1, '2019-01-13 18:19:47', NULL, NULL, 1, 177, 2),
+(274, 1, '2019-01-13 18:19:51', NULL, NULL, 1, 178, 1),
+(275, 1, '2019-01-13 18:19:51', NULL, NULL, 1, 178, 2),
+(276, 1, '2019-01-13 19:44:02', NULL, NULL, 1, 179, 1),
+(277, 1, '2019-01-13 19:44:02', NULL, NULL, 1, 179, 2),
+(278, 1, '2019-01-13 19:44:15', NULL, NULL, 1, 180, 1),
+(279, 1, '2019-01-13 19:44:15', NULL, NULL, 1, 180, 2),
+(280, 1, '2019-01-13 19:49:33', NULL, NULL, 1, 181, 1),
+(281, 1, '2019-01-13 19:49:33', NULL, NULL, 1, 181, 2),
+(282, 1, '2019-01-13 21:25:01', NULL, NULL, 1, 182, 1),
+(283, 1, '2019-01-13 21:25:01', NULL, NULL, 1, 182, 2);
 
 -- --------------------------------------------------------
 
@@ -3706,7 +4224,28 @@ INSERT INTO `user_vs_account` (`host_vs_account_id`, `created_by`, `created_date
 (23, 1, '2018-12-18 15:02:05', NULL, NULL, 1, 'Sudeep Chhetri23', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1'),
 (24, 1, '2018-12-18 15:19:01', NULL, NULL, 1, 'Sudeep Chhetri24', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1'),
 (25, 1, '2018-12-18 16:05:15', NULL, NULL, 1, 'Sudeep Chhetri25', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1'),
-(26, 1, '2018-12-18 16:09:47', NULL, NULL, 1, 'Sudeep Chhetri26', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1');
+(26, 1, '2018-12-18 16:09:47', NULL, NULL, 1, 'Sudeep Chhetri26', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1'),
+(29, 1, '2019-01-13 01:50:44', NULL, NULL, 1, 'Sudeep Chhetri', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1'),
+(30, 1, '2019-01-13 02:00:08', NULL, NULL, 1, 'Sudeep Chhetri', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1'),
+(31, 1, '2019-01-13 02:02:02', NULL, NULL, 1, 'Sudeep Chhetri', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1'),
+(32, 1, '2019-01-13 02:17:11', NULL, NULL, 1, 'Sudeep Chhetri', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1'),
+(33, 1, '2019-01-13 12:08:41', NULL, NULL, 1, 'Sudeep Chhetri', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1'),
+(34, 1, '2019-01-13 12:29:54', 1, '2019-01-13 18:09:25', 3, 'Sudeep Chhetri', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1'),
+(35, 1, '2019-01-13 17:05:16', NULL, NULL, 1, 'Sudeep Chhetri', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1'),
+(36, 1, '2019-01-13 17:08:50', NULL, NULL, 1, 'Sudeep Chhetri', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1'),
+(37, 1, '2019-01-13 17:43:23', NULL, NULL, 1, 'Sudeep Chhetri', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1'),
+(38, 1, '2019-01-13 17:44:59', NULL, NULL, 1, 'Sudeep Chhetri', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1'),
+(39, 1, '2019-01-13 18:02:50', NULL, NULL, 1, 'Sudeep Chhetri', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1'),
+(40, 1, '2019-01-13 18:09:25', NULL, NULL, 1, 'Sudeep Chhetri', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1'),
+(41, 1, '2019-01-13 18:18:53', NULL, NULL, 1, 'Sudeep Chhetri', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1'),
+(42, 1, '2019-01-13 18:19:37', NULL, NULL, 1, 'Sudeep Chhetri', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1'),
+(43, 1, '2019-01-13 18:19:42', NULL, NULL, 1, 'Sudeep Chhetri', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1'),
+(44, 1, '2019-01-13 18:19:46', NULL, NULL, 1, 'Sudeep Chhetri', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1'),
+(45, 1, '2019-01-13 18:19:51', NULL, NULL, 1, 'Sudeep Chhetri', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1'),
+(46, 1, '2019-01-13 19:44:02', NULL, NULL, 1, 'Sudeep Chhetri', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1'),
+(47, 1, '2019-01-13 19:44:15', NULL, NULL, 1, 'Sudeep Chhetri', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1'),
+(48, 1, '2019-01-13 19:49:33', NULL, NULL, 1, 'Sudeep Chhetri', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1'),
+(49, 1, '2019-01-13 21:25:00', NULL, NULL, 1, 'Sudeep Chhetri', '159883741610', 'Saving', 'IndusInd Bank', 'Sector V', 'IND0015478', '1');
 
 --
 -- Indexes for dumped tables
@@ -4010,7 +4549,7 @@ ALTER TABLE `master_price_drop`
 -- AUTO_INCREMENT for table `master_property`
 --
 ALTER TABLE `master_property`
-  MODIFY `property_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `property_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `master_property_type`
@@ -4022,7 +4561,7 @@ ALTER TABLE `master_property_type`
 -- AUTO_INCREMENT for table `master_room`
 --
 ALTER TABLE `master_room`
-  MODIFY `room_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=162;
+  MODIFY `room_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=183;
 
 --
 -- AUTO_INCREMENT for table `master_room_category`
@@ -4070,19 +4609,91 @@ ALTER TABLE `meal_plan_cat_vs_meal_plan`
 -- AUTO_INCREMENT for table `property_vs_description`
 --
 ALTER TABLE `property_vs_description`
-  MODIFY `property_desc_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `property_desc_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- AUTO_INCREMENT for table `property_vs_document`
 --
 ALTER TABLE `property_vs_document`
-  MODIFY `property_vs_document_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `property_vs_document_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=88;
+
+--
+-- AUTO_INCREMENT for table `property_vs_experience`
+--
+ALTER TABLE `property_vs_experience`
+  MODIFY `property_exp_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+
+--
+-- AUTO_INCREMENT for table `property_vs_guest_access`
+--
+ALTER TABLE `property_vs_guest_access`
+  MODIFY `property_gaccess_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+
+--
+-- AUTO_INCREMENT for table `property_vs_image`
+--
+ALTER TABLE `property_vs_image`
+  MODIFY `property_image_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=120;
+
+--
+-- AUTO_INCREMENT for table `property_vs_nearby`
+--
+ALTER TABLE `property_vs_nearby`
+  MODIFY `property_nearby_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=142;
+
+--
+-- AUTO_INCREMENT for table `property_vs_pricedrop`
+--
+ALTER TABLE `property_vs_pricedrop`
+  MODIFY `property_pricedrop_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+
+--
+-- AUTO_INCREMENT for table `property_vs_space`
+--
+ALTER TABLE `property_vs_space`
+  MODIFY `property_space_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=124;
+
+--
+-- AUTO_INCREMENT for table `room_vs_amenities`
+--
+ALTER TABLE `room_vs_amenities`
+  MODIFY `room_vs_aminities_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=407;
+
+--
+-- AUTO_INCREMENT for table `room_vs_cancellation`
+--
+ALTER TABLE `room_vs_cancellation`
+  MODIFY `rc_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=365;
+
+--
+-- AUTO_INCREMENT for table `room_vs_image`
+--
+ALTER TABLE `room_vs_image`
+  MODIFY `room_vs_image_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=510;
+
+--
+-- AUTO_INCREMENT for table `room_vs_meal`
+--
+ALTER TABLE `room_vs_meal`
+  MODIFY `room_vs_meal_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=666;
 
 --
 -- AUTO_INCREMENT for table `room_vs_offer`
 --
 ALTER TABLE `room_vs_offer`
   MODIFY `room_vs_offer_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `room_vs_specialties`
+--
+ALTER TABLE `room_vs_specialties`
+  MODIFY `roomspec_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=284;
+
+--
+-- AUTO_INCREMENT for table `user_vs_account`
+--
+ALTER TABLE `user_vs_account`
+  MODIFY `host_vs_account_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

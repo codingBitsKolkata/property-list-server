@@ -10,7 +10,7 @@ import org.springframework.util.CollectionUtils;
 
 import com.orastays.property.propertylist.entity.ConvenienceEntity;
 import com.orastays.property.propertylist.helper.Util;
-import com.orastays.property.propertylist.model.booking.ConvenienceModel;
+import com.orastays.property.propertylist.model.ConvenienceModel;
 
 @Component
 public class ConvenienceConverter extends CommonConverter

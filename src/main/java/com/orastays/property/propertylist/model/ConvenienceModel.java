@@ -1,9 +1,8 @@
-package com.orastays.property.propertylist.model.booking;
+package com.orastays.property.propertylist.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.orastays.property.propertylist.model.CommonModel;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -15,14 +14,14 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false)
 @ToString
 @JsonInclude(Include.NON_NULL)
-public class UserInfo extends CommonModel {
+public class ConvenienceModel extends CommonModel {
 
-	@JsonProperty("customerName")
-	private String customerName;
+	@JsonProperty("convenienceId")
+	private Long convenienceId;
 
-	@JsonProperty("customerEmail")
-	private String customerEmail;
-
-	@JsonProperty("customerPhone")
-	private String customerPhone;
+	@JsonProperty("amount")
+	private String amount;
+	
+	@JsonProperty("gstPercentage")
+	private String gstPercentage;
 }

@@ -9,7 +9,7 @@ import com.orastays.property.propertylist.model.PropertyListViewModel;
 
 public interface HomeService {
 
-	List<PropertyListViewModel> fetchPropertyByType(String propertyTypeId) throws FormExceptions;
+	List<PropertyListViewModel> fetchPropertyByType(String propertyTypeId, String userToken) throws FormExceptions;
 
 	Object priceCalculator(PriceCalculatorModel priceCalculatorModel) throws FormExceptions;
 	

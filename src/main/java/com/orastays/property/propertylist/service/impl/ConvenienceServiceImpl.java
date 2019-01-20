@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.orastays.property.propertylist.entity.ConvenienceEntity;
 import com.orastays.property.propertylist.helper.Status;
 import com.orastays.property.propertylist.helper.Util;
-import com.orastays.property.propertylist.model.booking.ConvenienceModel;
+import com.orastays.property.propertylist.model.ConvenienceModel;
 import com.orastays.property.propertylist.service.ConvenienceService;
 
 @Service

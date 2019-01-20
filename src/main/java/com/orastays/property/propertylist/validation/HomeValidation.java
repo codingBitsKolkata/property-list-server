@@ -15,19 +15,24 @@ import com.orastays.property.propertylist.helper.Status;
 import com.orastays.property.propertylist.helper.Util;
 import com.orastays.property.propertylist.model.FilterCiteriaModel;
 import com.orastays.property.propertylist.model.PriceCalculatorModel;
+import com.orastays.property.propertylist.model.user.UserModel;
 
 @Component
 public class HomeValidation extends AuthorizeUserValidation {
 
 	private static final Logger logger = LogManager.getLogger(HomeValidation.class);
 	
-	public void validatePropertyType(String propertyTypeId) throws FormExceptions {
+	public UserModel validatePropertyType(String propertyTypeId, String userToken) throws FormExceptions {
 
 		if (logger.isDebugEnabled()) {
 			logger.debug("validatePropertyType -- Start");
 		}
 
 		Map<String, Exception> exceptions = new LinkedHashMap<>();
+		UserModel userModel = null;
+		if (!StringUtils.isBlank(userToken)) {
+			userModel = getUserDetails(userToken);
+		}
 		
 		// Validate Property Type
 		if (StringUtils.isBlank(propertyTypeId)) {
@@ -49,6 +54,8 @@ public class HomeValidation extends AuthorizeUserValidation {
 		if (logger.isDebugEnabled()) {
 			logger.debug("validatePropertyType -- End");
 		}
+		
+		return userModel;
 	}
 	
 	public FilterCiteriaModel validatePriceCalculator(PriceCalculatorModel priceCalculatorModel) throws FormExceptions {

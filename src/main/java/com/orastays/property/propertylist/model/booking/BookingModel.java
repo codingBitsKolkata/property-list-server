@@ -42,19 +42,28 @@ public class BookingModel extends CommonModel {
 
 	@JsonProperty("numOfDays")
 	private String numOfDays;
-
-	@JsonProperty("totalPaybleWithoutGST")
-	private String totalPaybleWithoutGST;
-
-	@JsonProperty("totalPaybleWithGST")
-	private String totalPaybleWithGST;
-
-	@JsonProperty("grandTotal")
-	private String grandTotal;
-
-	@JsonProperty("conveniences")
-	private ConvenienceModel convenienceModel;
 	
+	@JsonProperty("userFinalPrice")
+	private String userFinalPrice;
+
+	@JsonProperty("oraSpecialOfferPerc")
+	private String oraSpecialOfferPerc;
+	
+	@JsonProperty("oraSpecialOfferAmt")
+	private String oraSpecialOfferAmt;
+
+	@JsonProperty("convenienceFeePerc")
+	private String convenienceFeePerc;
+
+	@JsonProperty("convenienceFeeAmt")
+	private String convenienceFeeAmt;
+	
+	@JsonProperty("convenienceGstAmt")
+	private String convenienceGstAmt;
+
+	@JsonProperty("totalPrice")
+	private String totalPrice;
+
 	@JsonProperty("bookingInfos")
 	private BookingInfoModel bookingInfoModel;
 
@@ -73,11 +82,12 @@ public class BookingModel extends CommonModel {
 	@JsonProperty("formOfPayment")
 	private FormOfPayment formOfPayment;
 	
-	@JsonProperty("userInfo")
-	private UserInfo userInfo;
-	
 	@JsonProperty("cancellations")
 	private CancellationModel cancellationModel;
+	
+	// Use to Call Booking Server Internally
+	@JsonProperty("accomodationType")
+	private String accomodationType;
 }
 
 

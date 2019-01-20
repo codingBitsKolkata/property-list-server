@@ -1,11 +1,8 @@
-package com.orastays.property.propertylist.model.booking;
-
-import java.util.List;
+package com.orastays.property.propertylist.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.orastays.property.propertylist.model.CommonModel;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -30,8 +27,5 @@ public class GstSlabModel extends CommonModel {
 
 	@JsonProperty("percentage")
 	private String percentage;
-
-	@JsonProperty("bookingVsRooms")
-	private List<BookingVsRoomModel> bookingVsRoomModels;
 
 }
