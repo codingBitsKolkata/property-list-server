@@ -2,6 +2,7 @@ package com.orastays.property.propertylist.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.orastays.property.propertylist.entity.RoomEntity;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -21,4 +22,5 @@ public class FilterRoomModel {
 	private Double perBedCost;
 	private Integer numOfAdult;
 	private Integer numOfChild;
+	private RoomEntity roomEntity;
 }

@@ -54,7 +54,9 @@ public abstract class GenericDAO<E, PK extends Serializable> implements Serializ
 	
 	public void saveOrUpdate(E entity) {
 
-		sessionFactory.getCurrentSession().saveOrUpdate(entity);
+		synchronized (sessionFactory.getCurrentSession()){
+			sessionFactory.getCurrentSession().saveOrUpdate(entity);
+		}
 	}
 	
 

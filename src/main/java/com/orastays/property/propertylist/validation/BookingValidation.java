@@ -24,10 +24,10 @@ public class BookingValidation extends AuthorizeUserValidation {
 		}
 
 		List<Object> obj = new ArrayList<>();
-		UserModel userModel = getUserDetails(filterCiteriaModel.getUserToken());
-		PropertyEntity propertyEntity = propertyListValidation.validateFetchPropertyDetails(filterCiteriaModel);
-		obj.set(0, userModel);
-		obj.set(1, propertyEntity);
+//		UserModel userModel = getUserDetails(filterCiteriaModel.getUserToken());
+//		PropertyEntity propertyEntity = propertyListValidation.validateFetchPropertyDetails(filterCiteriaModel);
+//		obj.set(0, userModel);
+//		obj.set(1, propertyEntity);
 		
 		if (logger.isDebugEnabled()) {
 			logger.debug("validatePropertyBooking -- End");

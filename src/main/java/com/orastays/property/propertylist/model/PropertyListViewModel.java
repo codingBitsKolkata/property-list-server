@@ -72,4 +72,7 @@ public class PropertyListViewModel {
 	
 	@JsonProperty("isBookmark")
 	private Boolean isBookmark;
+	
+	@JsonProperty("stayType")
+	private String stayType;
 }

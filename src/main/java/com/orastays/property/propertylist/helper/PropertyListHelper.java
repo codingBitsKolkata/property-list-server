@@ -2,12 +2,14 @@ package com.orastays.property.propertylist.helper;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -303,7 +305,7 @@ public class PropertyListHelper {
 		
 		boolean flag = false;
 		List<String> prices = priceCalculation(propertyEntity, filterCiteriaModel, filteredRooms);
-		Double price = Double.parseDouble(prices.get(0));
+		Double price = Double.parseDouble(prices.get(1));
 		for(String budget : filterCiteriaModel.getBudgets()) {
 			Double start = Double.parseDouble(budget.split("-")[0]);
 			Double end = Double.parseDouble(budget.split("-")[1]);
@@ -348,7 +350,7 @@ public class PropertyListHelper {
 								
 								FilterRoomModel filterRoomModel = new FilterRoomModel();
 								filterRoomModel.setRoomId(roomEntity.getRoomId());
-								
+								filterRoomModel.setRoomEntity(roomEntity);
 								if(Integer.parseInt(roomEntity.getNumOfBed()) >= noOfGuest) {
 									filterRoomModel.setBedAvailable(Integer.parseInt(roomEntity.getNumOfBed()));
 									filterRoomModel.setBedAllocated(noOfGuest);
@@ -412,6 +414,7 @@ public class PropertyListHelper {
 									guestCanHave.addAndGet(Integer.parseInt(roomEntity.getNoOfGuest()));
 									FilterRoomModel filterRoomModel = new FilterRoomModel();
 									filterRoomModel.setRoomId(roomEntity.getRoomId());
+									filterRoomModel.setRoomEntity(roomEntity);
 									filterRoomModel.setNumOfAdult(Integer.parseInt(roomEntity.getNoOfGuest()));
 									filterRoomModel.setNumOfChild(Integer.parseInt(roomEntity.getNoOfGuest()));
 									filteredRooms.put(roomEntity.getOraRoomName(), filterRoomModel);
@@ -420,6 +423,7 @@ public class PropertyListHelper {
 										guestCanHave.addAndGet(Integer.parseInt(roomEntity.getNoOfGuest()));
 										FilterRoomModel filterRoomModel = new FilterRoomModel();
 										filterRoomModel.setRoomId(roomEntity.getRoomId());
+										filterRoomModel.setRoomEntity(roomEntity);
 										filterRoomModel.setNumOfAdult(Integer.parseInt(roomEntity.getNoOfGuest()));
 										filterRoomModel.setNumOfChild(Integer.parseInt(roomEntity.getNoOfGuest()));
 										filteredRooms.put(roomEntity.getOraRoomName(), filterRoomModel);
@@ -525,197 +529,157 @@ public class PropertyListHelper {
 		
 		List<String> prices = new ArrayList<>();
 		int numOfDays = Util.getDayDiff(filterCiteriaModel.getCheckInDate(), filterCiteriaModel.getCheckOutDate());
-		Double price = 0.0D;
-		Double totalPrice = 0.0D;
-		Double discountedPrice = 0.0D;
+		Double hostBasePrice = 0.0D;
+		Double hostDiscount = 0.0D;
+		Double hostPrice = 0.0D;
+		Double oraMarkUp = 0.0D;
+		Double oraPrice = 0.0D;
+		Double oraDiscount = 0.0D;
+		Double oraFinalPrice = 0.0D;
 		Double offerPrice = 0.0D;
 		Set<OfferEntity> offerEntities = new HashSet<>();
-		if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
-			for(RoomEntity roomEntity :propertyEntity.getRoomEntities()) {
-				if(filteredRooms.containsKey(roomEntity.getOraRoomName())) { // Room Taken into Consideration
+		
+		Map<RoomEntity, Double> oraPriceCount = new LinkedHashMap<>();
+		Map<RoomEntity, Double> oraFinalPriceCount = new LinkedHashMap<>();
+		for (Map.Entry<String, FilterRoomModel> entry : filteredRooms.entrySet()) {
+			
+			if (StringUtils.equals(filterCiteriaModel.getStayType(), PropertyListConstant.SHARED)) { // Customer Wants SHARED Rooms
+				
+					if (numOfDays >= 30 ) {
+						if(propertyEntity.getStayTypeEntity().getStayTypeId() == Status.INACTIVE.ordinal()) {   //short term (ID = 2)
+							//Shared night price 
+							hostBasePrice = Double.parseDouble(entry.getValue().getRoomEntity().getSharedBedPricePerNight());
+							
+						} else {   //both & long term
+							//Shared Month price 
+							hostBasePrice = (Double.parseDouble(entry.getValue().getRoomEntity().getSharedBedPricePerMonth())/30);
+						}
+					} else {
+						
+						if(propertyEntity.getStayTypeEntity().getStayTypeId() == Status.ACTIVE.ordinal()){   //Long term
+							//Shared Month price 
+							hostBasePrice = (Double.parseDouble(entry.getValue().getRoomEntity().getSharedBedPricePerMonth())/30);
+						} else {   //both & Short term
+							//Shared Night price 
+							hostBasePrice = Double.parseDouble(entry.getValue().getRoomEntity().getSharedBedPricePerNight());
+						}
+					}
+			} else { // Customer Wants PRIVATE Rooms
+				
+				if (numOfDays >= 30 ) {
+					if(propertyEntity.getStayTypeEntity().getStayTypeId() == Status.INACTIVE.ordinal()) {   //short term (ID = 2)
+						//Private night Price
+						hostBasePrice = Double.parseDouble(entry.getValue().getRoomEntity().getRoomPricePerNight());
+						
+					} else {   //both & long term
+						//Private Month Price
+						hostBasePrice = (Double.parseDouble(entry.getValue().getRoomEntity().getRoomPricePerMonth())/30);
+					}
+				} else {
 					
-					System.err.println("priceCalculation roomEntity ==>> "+roomEntity);
-					if(Objects.nonNull(roomEntity)) {
-						
-						// Price calculation
-						if (numOfDays >= 30 ) {
-								
-							if(propertyEntity.getStayTypeEntity().getStayTypeId() == Status.INACTIVE.ordinal()) {   //short term (ID = 2)
-						
-								if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.SHARED.name())) { //shared
-									
-									//Shared night price 
-									price = Double.parseDouble(roomEntity.getSharedBedPricePerNight());
-								} else { //private
-									 //Private night Price
-									price = Double.parseDouble(roomEntity.getRoomPricePerNight());
-								}
-						
-							} else {   //both & long term
-								
-								if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.SHARED.name())) { //shared
-									//Shared Month price 
-									price = (Double.parseDouble(roomEntity.getSharedBedPricePerMonth())/30);
-								} else {   //private
-									 //Private Month Price
-									price = (Double.parseDouble(roomEntity.getRoomPricePerMonth())/30);
-								}
-							}
-						} else {
-							
-							if(propertyEntity.getStayTypeEntity().getStayTypeId() == Status.ACTIVE.ordinal()){   //Long term
-								
-								if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.SHARED.name())) { //shared
-									//Shared Month price 
-									price = (Double.parseDouble(roomEntity.getSharedBedPricePerMonth())/30);
-								} else { //private
-									 //Private Month Price
-									price = (Double.parseDouble(roomEntity.getRoomPricePerMonth())/30);
-								}
-						
-							} else {   //both & Short term
-								
-								if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.SHARED.name())) { //shared
-									//Shared Night price 
-									price = Double.parseDouble(roomEntity.getSharedBedPricePerNight());
-								} else {   //private
-									 //Private Night Price
-									price = Double.parseDouble(roomEntity.getRoomPricePerNight());
-								}
-							}				
-						}
-						
-						System.out.println("price ==>> "+price);
-						System.err.println("roomEntity.getOraPercentage() ==>> "+roomEntity.getOraPercentage());
-						System.out.println("totalPrice before ==>> "+totalPrice);
-						totalPrice = totalPrice + price + (Double.parseDouble(roomEntity.getOraPercentage()) * price / 100);
-						System.err.println("totalPrice after including OraPercentage ==>> "+totalPrice); 
-						
-						// Discount Section
-						Double hostDiscount = 0.0D;
-						Double oraDiscount = 0.0D;
-						Double priceDropDiscount = 0.0D;
-						
-						// Check Pricedrop if any
-						if(Util.getDateDiff1(filterCiteriaModel.getCheckInDate()) == 0) { // Current Date
-							if(!CollectionUtils.isEmpty(propertyEntity.getPropertyVsPriceDropEntities())) { // Price Drop Present
-								int hourDifference = Util.getMinuteDiff(Util.getCurrentDate() + " " +propertyEntity.getCheckinTime()) / 60;
-								for(int i = 0; i< propertyEntity.getPropertyVsPriceDropEntities().size(); i++) {
-									PropertyVsPriceDropEntity propertyVsPriceDropEntity = propertyEntity.getPropertyVsPriceDropEntities().get(i);
-									if(hourDifference <= Integer.parseInt(propertyVsPriceDropEntity.getPriceDropEntity().getAfterTime())) {
-										if(i == 0) { // First Condition
-											priceDropDiscount = Double.parseDouble(propertyVsPriceDropEntity.getPercentage()) * price / 100;
-											break;
-										} else {
-											propertyVsPriceDropEntity = propertyEntity.getPropertyVsPriceDropEntities().get(i -1);
-											priceDropDiscount = Double.parseDouble(propertyVsPriceDropEntity.getPercentage()) * price / 100;
-											break;
-										}
-									}
-								}
-							}
-						} else {
-							// Host Discount if any
-							if (numOfDays >= 7 && numOfDays < 30) { // Weekly
-								
-								hostDiscount = Double.parseDouble(roomEntity.getHostDiscountWeekly()) * price / 100;
-								
-							} else if(numOfDays >= 30) { // Monthly
-								
-								if (!StringUtils.isBlank(roomEntity.getHostDiscountMonthly())) { // Check if monthly present
-									hostDiscount = Double.parseDouble(roomEntity.getHostDiscountMonthly()) * price / 100;
-								} else if (!StringUtils.isBlank(roomEntity.getHostDiscountWeekly())) { // otherwise calculate with weekly
-									hostDiscount = Double.parseDouble(roomEntity.getHostDiscountWeekly()) * price / 100;
-								}
-							}
-							
-							// Room Vs ORA Discount
-							// Percentage
-							if (!StringUtils.isBlank(roomEntity.getOraDiscountPercentage())) {
-								oraDiscount = Double.parseDouble(roomEntity.getOraDiscountPercentage()) * price / 100;
-							}
-							
-							// Offer
-							if(!CollectionUtils.isEmpty(roomEntity.getRoomVsOfferEntities())) {
-								for(RoomVsOfferEntity roomVsOfferEntity : roomEntity.getRoomVsOfferEntities()) {
-									if(Objects.nonNull(roomVsOfferEntity)) {
-										if(Objects.nonNull(roomVsOfferEntity.getOfferEntity())) {
-											offerEntities.add(roomVsOfferEntity.getOfferEntity());
-										}
-									}
-								}
-							}
-							
-						}
-						
-						System.out.println("priceDropDiscount ==>> "+priceDropDiscount);
-						System.err.println("hostDiscount ==>> "+hostDiscount);
-						System.out.println("oraDiscount ==>> "+oraDiscount);
-						System.err.println("discountedPrice before ==>> "+discountedPrice);
-						discountedPrice = discountedPrice + hostDiscount + oraDiscount + priceDropDiscount;
-						System.out.println("discountedPrice after deduction from totalPrice ==>> "+discountedPrice);
+					if(propertyEntity.getStayTypeEntity().getStayTypeId() == Status.ACTIVE.ordinal()){   //Long term
+						//Private Month Price
+						hostBasePrice = (Double.parseDouble(entry.getValue().getRoomEntity().getRoomPricePerMonth())/30);
+					} else {   //both & Short term
+						//Private Night Price
+						hostBasePrice = Double.parseDouble(entry.getValue().getRoomEntity().getRoomPricePerNight());
 					}
 				}
 			}
-		}
-		
-		Double calculatedPrice = totalPrice - discountedPrice;
-		System.err.println("calculatedPrice ==>> "+calculatedPrice);
-		// Offer Calculation
-		if(!CollectionUtils.isEmpty(offerEntities)) {
-			for(OfferEntity offerEntity : offerEntities) {
-				System.out.println("offerEntity ==>> "+offerEntity);
-				if(Objects.nonNull(offerEntity)) {
-					
-					System.out.println("offerEntity.getMaxAmount() ==>> "+offerEntity.getMaxAmount());
-					if (!StringUtils.isBlank(offerEntity.getMaxAmount())) { // Calculate with Max Amount
-						
-						if (Double.parseDouble(offerEntity.getMaxAmount()) <= calculatedPrice) {
-							if (!StringUtils.isBlank(offerEntity.getAmount())) { // Amount Check
-								offerPrice = offerPrice + Double.parseDouble(offerEntity.getAmount());
-								System.out.println("Calculate with Max Amount offerPrice ==>> "+offerPrice);
-							} else if (!StringUtils.isBlank(offerEntity.getPercentage())) { // Percentage Check
-								offerPrice = offerPrice + (Double.parseDouble(offerEntity.getPercentage()) * calculatedPrice / 100);
-								System.out.println("Calculate with Max Amount offerPrice ==>> "+offerPrice);
+			
+			System.out.println("hostBasePrice ==>> "+hostBasePrice);
+			oraMarkUp = Double.parseDouble(entry.getValue().getRoomEntity().getOraPercentage());
+			System.err.println("oraMarkUp ==>> "+oraMarkUp);
+			oraPrice = hostBasePrice + (hostBasePrice * oraMarkUp / 100);
+			System.out.println("oraPrice ==>> "+oraPrice);
+			// Room Vs ORA Discount Percentage
+			if (!StringUtils.isBlank(entry.getValue().getRoomEntity().getOraDiscountPercentage())) {
+				oraDiscount = Double.parseDouble(entry.getValue().getRoomEntity().getOraDiscountPercentage()) * hostBasePrice / 100;
+			}
+			System.err.println("oraDiscount ==>> "+oraDiscount);
+			
+			Double priceDropDiscount = 0.0D;
+			
+			// Check Pricedrop if any
+			if(Util.getDateDiff1(filterCiteriaModel.getCheckInDate()) == 0) { // Current Date
+				if(!CollectionUtils.isEmpty(propertyEntity.getPropertyVsPriceDropEntities())) { // Price Drop Present
+					int hourDifference = Util.getMinuteDiff(Util.getCurrentDate() + " " +propertyEntity.getCheckinTime()) / 60;
+					for(int i = 0; i< propertyEntity.getPropertyVsPriceDropEntities().size(); i++) {
+						PropertyVsPriceDropEntity propertyVsPriceDropEntity = propertyEntity.getPropertyVsPriceDropEntities().get(i);
+						if(hourDifference <= Integer.parseInt(propertyVsPriceDropEntity.getPriceDropEntity().getAfterTime())) {
+							if(i == 0) { // First Condition
+								priceDropDiscount = Double.parseDouble(propertyVsPriceDropEntity.getPercentage()) * hostBasePrice / 100;
+								break;
+							} else {
+								propertyVsPriceDropEntity = propertyEntity.getPropertyVsPriceDropEntities().get(i -1);
+								priceDropDiscount = Double.parseDouble(propertyVsPriceDropEntity.getPercentage()) * hostBasePrice / 100;
+								break;
 							}
 						}
 					}
-					
-					System.out.println("offerEntity.getStartDateRange() ==>> "+offerEntity.getStartDateRange());
-					if (!StringUtils.isBlank(offerEntity.getStartDateRange()) && !StringUtils.isBlank(offerEntity.getEndDateRange())) { // Calculate with Date Range
-						if (Util.getDateDiff(offerEntity.getStartDateRange()) >= 0 && Util.getDateDiff(offerEntity.getEndDateRange()) <= 0) {
-							if (!StringUtils.isBlank(offerEntity.getAmount())) { // Amount Check
-								offerPrice = offerPrice + Double.parseDouble(offerEntity.getAmount());
-								System.out.println("Calculate with Date Range offerPrice ==>> "+offerPrice);
-							} else if (!StringUtils.isBlank(offerEntity.getPercentage())) { // Percentage Check
-								offerPrice = offerPrice + (Double.parseDouble(offerEntity.getPercentage()) * calculatedPrice / 100);
-								System.out.println("Calculate with Date Range offerPrice ==>> "+offerPrice);
+				}
+			} else {
+				// Host Discount if any
+				if (numOfDays >= 7 && numOfDays < 30) { // Weekly
+					hostDiscount = Double.parseDouble(entry.getValue().getRoomEntity().getHostDiscountWeekly()) * hostBasePrice / 100;
+				} else if(numOfDays >= 30) { // Monthly
+					if (!StringUtils.isBlank(entry.getValue().getRoomEntity().getHostDiscountMonthly())) { // Check if monthly present
+						hostDiscount = Double.parseDouble(entry.getValue().getRoomEntity().getHostDiscountMonthly()) * hostBasePrice / 100;
+					} else if (!StringUtils.isBlank(entry.getValue().getRoomEntity().getHostDiscountWeekly())) { // otherwise calculate with weekly
+						hostDiscount = Double.parseDouble(entry.getValue().getRoomEntity().getHostDiscountWeekly()) * hostBasePrice / 100;
+					}
+				}
+				
+				System.err.println("hostDiscount ==>> "+hostDiscount);
+				if(hostDiscount > 0.0) {
+					hostPrice = hostBasePrice - hostDiscount;
+				}
+				System.err.println("hostPrice ==>> "+hostPrice);
+				
+				// Offer
+				if(!CollectionUtils.isEmpty(entry.getValue().getRoomEntity().getRoomVsOfferEntities())) {
+					for(RoomVsOfferEntity roomVsOfferEntity : entry.getValue().getRoomEntity().getRoomVsOfferEntities()) {
+						if(Objects.nonNull(roomVsOfferEntity)) {
+							if(Objects.nonNull(roomVsOfferEntity.getOfferEntity())) {
+								offerEntities.add(roomVsOfferEntity.getOfferEntity());
 							}
 						}
 					}
-					
-					if (StringUtils.isBlank(offerEntity.getMaxAmount()) && StringUtils.isBlank(offerEntity.getStartDateRange()) && StringUtils.isBlank(offerEntity.getOnline())) { // Calculate other than Date Range & Max Amount
-						if (!StringUtils.isBlank(offerEntity.getAmount())) { // Amount Check
-							offerPrice = offerPrice + Double.parseDouble(offerEntity.getAmount());
-							System.out.println("Calculate other than Date Range & Max Amount offerPrice ==>> "+offerPrice);
-						} else if (!StringUtils.isBlank(offerEntity.getPercentage())) { // Percentage Check
-							offerPrice = offerPrice + (Double.parseDouble(offerEntity.getPercentage()) * calculatedPrice / 100);
-							System.out.println("Calculate other than Date Range & Max Amount offerPrice ==>> "+offerPrice);
-						}
-					}
-					
 				}
 			}
+			
+			System.err.println("priceDropDiscount ==>> "+priceDropDiscount);
+			if(priceDropDiscount > 0.0) {
+				oraDiscount = priceDropDiscount;
+				System.err.println("oraDiscount = priceDropDiscount ==>> "+oraDiscount);
+			}
+			
+			oraFinalPrice = oraPrice - oraDiscount;
+			System.err.println("oraFinalPrice(oraPrice - oraDiscount) ==>> "+oraFinalPrice);
+			offerPrice = calculateOffer(offerEntities, oraFinalPrice);
+			System.err.println("offerPrice ==>> "+offerPrice);
+			oraFinalPrice = oraFinalPrice - offerPrice;
+			System.err.println("oraFinalPrice(oraFinalPrice - offerPrice) ==>> "+oraFinalPrice);
+			oraPriceCount.put(entry.getValue().getRoomEntity(), oraPrice);
+			oraFinalPriceCount.put(entry.getValue().getRoomEntity(), oraFinalPrice);
 		}
 		
-		System.out.println("offerPrice ==>> "+offerPrice);
-		discountedPrice = discountedPrice + offerPrice;
-		System.out.println("Final discountedPrice ==>> "+discountedPrice);
-		//totalPrice = totalPrice * numOfDays;
-		//discountedPrice = discountedPrice * numOfDays;
-		prices.add(String.valueOf(Math.round(totalPrice * 100D) / 100D));
-		prices.add(String.valueOf(Math.round(discountedPrice * 100D) / 100D));
-		prices.add(String.valueOf(Math.round(offerPrice * 100D) / 100D));
+
+		
+		RoomEntity roomEntity = null;
+		Double minValueInMap = (Collections.min(oraFinalPriceCount.values()));
+        for (Entry<RoomEntity, Double> entry : oraFinalPriceCount.entrySet()) {
+            if (entry.getValue() == minValueInMap) {
+            	roomEntity = entry.getKey();
+            }
+        }
+        
+        prices.add(String.valueOf(Math.round(oraPriceCount.get(roomEntity) * 100D) / 100D)); // Ora Price
+		prices.add(String.valueOf(Math.round(minValueInMap * 100D) / 100D)); // Ora Discount
+		prices.add(String.valueOf(Math.round(oraDiscount * 100D) / 100D)); // Ora Discount (Alongwith Price Drop if any)
+		prices.add(String.valueOf(Math.round(offerPrice * 100D) / 100D)); // Offer Price
+		prices.add(String.valueOf(Math.round(hostDiscount * 100D) / 100D)); // Host Discount
+		System.err.println("prices ==>> "+prices);
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("priceCalculation -- END");
@@ -737,6 +701,7 @@ public class PropertyListHelper {
 		propertyListViewModel.setLatitude(propertyEntity.getLatitude());
 		propertyListViewModel.setLongitude(propertyEntity.getLongitude());
 		propertyListViewModel.setCoverImageURL(propertyEntity.getCoverImageUrl());
+		propertyListViewModel.setStayType(filterCiteriaModel.getStayType());
 		
 		if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
 			for(RoomEntity roomEntity : propertyEntity.getRoomEntities()) {
@@ -787,7 +752,9 @@ public class PropertyListHelper {
 		// Meal Section
 		propertyListViewModel.setMealFlag(false);
 		if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
-			for(RoomEntity roomEntity :propertyEntity.getRoomEntities()) {
+			List<RoomEntity> roomEntities2 = propertyEntity.getRoomEntities().stream().collect(Collectors.toList());
+			roomEntities2.parallelStream().forEach(roomEntity -> {
+			//for(RoomEntity roomEntity : propertyEntity.getRoomEntities()) {
 				if(Objects.nonNull(roomEntity)) {
 					if(!CollectionUtils.isEmpty(roomEntity.getRoomVsMealEntities())) {
 						for(RoomVsMealEntity roomVsMealEntity : roomEntity.getRoomVsMealEntities()) {
@@ -804,12 +771,14 @@ public class PropertyListHelper {
 						}
 					}
 				}
-			}
+			});
 		}
 		
 		Set<AmenitiesModel> amenitiesModels = new LinkedHashSet<>();
 		if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
-			for(RoomEntity roomEntity : propertyEntity.getRoomEntities()) {
+			List<RoomEntity> roomEntities2 = propertyEntity.getRoomEntities().stream().collect(Collectors.toList());
+			roomEntities2.parallelStream().forEach(roomEntity -> {
+			//for(RoomEntity roomEntity : propertyEntity.getRoomEntities()) {
 				if(Objects.nonNull(roomEntity)) {
 					if(!CollectionUtils.isEmpty(roomEntity.getRoomVsAmenitiesEntities())) {
 						for(RoomVsAmenitiesEntity roomVsAmenitiesEntity : roomEntity.getRoomVsAmenitiesEntities()) {
@@ -817,7 +786,7 @@ public class PropertyListHelper {
 						}
 					}
 				}
-			}
+			});
 		}
 		
 		propertyListViewModel.setAmenitiesModels(amenitiesModels);
@@ -835,7 +804,7 @@ public class PropertyListHelper {
 		return propertyListViewModel;
 	}
 	
-	private List<String> getRatingAndReview(PropertyEntity propertyEntity) {
+	public List<String> getRatingAndReview(PropertyEntity propertyEntity) {
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("getRatingAndReview -- START");
@@ -915,5 +884,69 @@ public class PropertyListHelper {
 		}
 		
 		return ratings;
+	}
+	
+	private Double calculateOffer(Set<OfferEntity> offerEntities, Double oraFinalPrice) {
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("calculateOffer -- END");
+		}
+		
+		Double offerPrice = 0.0D;
+		// Offer Calculation
+		if(!CollectionUtils.isEmpty(offerEntities)) {
+			for(OfferEntity offerEntity : offerEntities) {
+				System.out.println("offerEntity ==>> "+offerEntity);
+				if(Objects.nonNull(offerEntity)) {
+					
+					System.out.println("offerEntity.getMaxAmount() ==>> "+offerEntity.getMaxAmount());
+					if (!StringUtils.isBlank(offerEntity.getMaxAmount())) { // Calculate with Max Amount
+						
+						if (Double.parseDouble(offerEntity.getMaxAmount()) <= oraFinalPrice) {
+							if (!StringUtils.isBlank(offerEntity.getAmount())) { // Amount Check
+								offerPrice = offerPrice + Double.parseDouble(offerEntity.getAmount());
+								System.out.println("Calculate with Max Amount offerPrice ==>> "+offerPrice);
+							} else if (!StringUtils.isBlank(offerEntity.getPercentage())) { // Percentage Check
+								offerPrice = offerPrice + (Double.parseDouble(offerEntity.getPercentage()) * oraFinalPrice / 100);
+								System.out.println("Calculate with Max Amount offerPrice ==>> "+offerPrice);
+							}
+						}
+					}
+					
+					if(offerPrice == 0.0) {
+						System.out.println("offerEntity.getStartDateRange() ==>> "+offerEntity.getStartDateRange());
+						if (!StringUtils.isBlank(offerEntity.getStartDateRange()) && !StringUtils.isBlank(offerEntity.getEndDateRange())) { // Calculate with Date Range
+							if (Util.getDateDiff(offerEntity.getStartDateRange()) >= 0 && Util.getDateDiff(offerEntity.getEndDateRange()) <= 0) {
+								if (!StringUtils.isBlank(offerEntity.getAmount())) { // Amount Check
+									offerPrice = offerPrice + Double.parseDouble(offerEntity.getAmount());
+									System.out.println("Calculate with Date Range offerPrice ==>> "+offerPrice);
+								} else if (!StringUtils.isBlank(offerEntity.getPercentage())) { // Percentage Check
+									offerPrice = offerPrice + (Double.parseDouble(offerEntity.getPercentage()) * oraFinalPrice / 100);
+									System.out.println("Calculate with Date Range offerPrice ==>> "+offerPrice);
+								}
+							}
+						}
+					}
+					
+					if(offerPrice == 0.0) {
+						if (StringUtils.isBlank(offerEntity.getMaxAmount()) && StringUtils.isBlank(offerEntity.getStartDateRange()) && StringUtils.isBlank(offerEntity.getOnline())) { // Calculate other than Date Range & Max Amount
+							if (!StringUtils.isBlank(offerEntity.getAmount())) { // Amount Check
+								offerPrice = offerPrice + Double.parseDouble(offerEntity.getAmount());
+								System.out.println("Calculate other than Date Range & Max Amount offerPrice ==>> "+offerPrice);
+							} else if (!StringUtils.isBlank(offerEntity.getPercentage())) { // Percentage Check
+								offerPrice = offerPrice + (Double.parseDouble(offerEntity.getPercentage()) * oraFinalPrice / 100);
+								System.out.println("Calculate other than Date Range & Max Amount offerPrice ==>> "+offerPrice);
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("calculateOffer -- END");
+		}
+		
+		return offerPrice;
 	}
 }

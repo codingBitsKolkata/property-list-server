@@ -48,4 +48,7 @@ public class UserReviewModel {
 	
 	@JsonProperty("user")
 	private UserModel userModel;
+	
+	@JsonProperty("userRating")
+	private String userRating;
 }
