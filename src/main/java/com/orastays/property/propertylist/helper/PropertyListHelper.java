@@ -43,6 +43,7 @@ import com.orastays.property.propertylist.model.FilterRoomModel;
 import com.orastays.property.propertylist.model.PropertyListViewModel;
 import com.orastays.property.propertylist.model.PropertyModel;
 import com.orastays.property.propertylist.model.ResponseModel;
+import com.orastays.property.propertylist.model.RoomModel;
 import com.orastays.property.propertylist.model.SpaceRuleModel;
 import com.orastays.property.propertylist.model.booking.BookingModel;
 import com.orastays.property.propertylist.model.booking.BookingVsRoomModel;
@@ -191,8 +192,7 @@ public class PropertyListHelper {
 		boolean flag = false;
 		Set<String> amenitiesModels = new LinkedHashSet<>();
 		if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
-			List<RoomEntity> roomEntities2 = propertyEntity.getRoomEntities().stream().collect(Collectors.toList());
-			roomEntities2.parallelStream().forEach(roomEntity -> {
+			propertyEntity.getRoomEntities().parallelStream().forEach(roomEntity -> {
 			//for(RoomEntity roomEntity : propertyEntity.getRoomEntities()) {
 				if(Objects.nonNull(roomEntity)) {
 					if(!CollectionUtils.isEmpty(roomEntity.getRoomVsAmenitiesEntities())) {
@@ -339,9 +339,7 @@ public class PropertyListHelper {
 			if (StringUtils.equals(filterCiteriaModel.getStayType(), PropertyListConstant.SHARED)) { // Customer Wants SHARED Rooms
 				
 				if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
-					System.err.println("propertyEntity.getRoomEntities() ==>> "+propertyEntity.getRoomEntities());
-					List<RoomEntity> roomEntities2 = propertyEntity.getRoomEntities().stream().collect(Collectors.toList());
-					roomEntities2.parallelStream().forEach(roomEntity -> {
+					propertyEntity.getRoomEntities().parallelStream().forEach(roomEntity -> {
 					//for(RoomEntity roomEntity : propertyEntity.getRoomEntities()) {
 						
 						if(roomEntity.getStatus() == Status.ACTIVE.ordinal()) { // Fetching only ACTIVE Rooms
@@ -356,8 +354,22 @@ public class PropertyListHelper {
 									filterRoomModel.setBedAllocated(noOfGuest);
 								} else {
 									filterRoomModel.setBedAvailable(Integer.parseInt(roomEntity.getNumOfBed()));
-									filterRoomModel.setBedAllocated(Integer.parseInt(roomEntity.getNumOfBed()) - noOfGuest);
+									filterRoomModel.setBedAllocated(noOfGuest - Integer.parseInt(roomEntity.getNumOfBed()));
 								}
+								
+								Double hostBasePrice = calculateHostBasePrice(propertyEntity, filterCiteriaModel, roomEntity);
+								System.out.println("hostBasePrice ==>> "+hostBasePrice);
+								Double oraMarkUp = Double.parseDouble(roomEntity.getOraPercentage());
+								System.err.println("oraMarkUp ==>> "+oraMarkUp);
+								Double oraPrice = hostBasePrice + (hostBasePrice * oraMarkUp / 100);
+								System.out.println("oraPrice ==>> "+oraPrice);
+								// Room Vs ORA Discount Percentage
+								if (!StringUtils.isBlank(roomEntity.getOraDiscountPercentage())) {
+									Double oraDiscount = Double.parseDouble(roomEntity.getOraDiscountPercentage()) * hostBasePrice / 100;
+									System.err.println("oraDiscount ==>> "+oraDiscount);
+									oraPrice = oraPrice - oraDiscount;
+								}
+								filterRoomModel.setTotalPrice(oraPrice * filterRoomModel.getBedAllocated());
 								
 								filteredRooms.put(roomEntity.getOraRoomName(), filterRoomModel);
 							}
@@ -383,10 +395,18 @@ public class PropertyListHelper {
 							List<BookingVsRoomModel> roomBooked = roomByOraName.get(entry.getKey());
 							for(BookingVsRoomModel bookingVsRoomModel : roomBooked) {
 								if(maxBedBooked < Integer.parseInt(bookingVsRoomModel.getNumOfSharedBed())) {
-									maxBedBooked = Integer.parseInt(bookingVsRoomModel.getNumOfSharedBed());
+									maxBedBooked = Integer.parseInt(bookingVsRoomModel.getNumOfSharedBed()); // Getting Highest Number of bed booked for that room
 								}
 							}
-							guestCanHave = guestCanHave + entry.getValue().getBedAvailable() - maxBedBooked;
+							if((entry.getValue().getBedAvailable() - maxBedBooked) > 0) { // Min 1 Bed Available
+								entry.getValue().setBedAvailable(entry.getValue().getBedAvailable() - maxBedBooked);
+								entry.getValue().setBedAllocated(noOfGuest - entry.getValue().getBedAvailable() - maxBedBooked);
+								filteredRooms.replace(entry.getKey(), entry.getValue());
+								guestCanHave = guestCanHave + entry.getValue().getBedAvailable() - maxBedBooked;
+							} else {
+								filteredRooms.remove(entry.getKey());
+							}
+							
 						} else {
 							guestCanHave = guestCanHave + entry.getValue().getBedAvailable();
 						}
@@ -402,34 +422,36 @@ public class PropertyListHelper {
 				Map<String, List<BookingVsRoomModel>> roomByOraName = callBookingService(String.valueOf(propertyEntity.getPropertyId()), filterCiteriaModel.getCheckInDate(), Accommodation.PRIVATE.name());
 				AtomicInteger guestCanHave = new AtomicInteger(0);
 				if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
-					System.err.println("propertyEntity.getRoomEntities() ==>> "+propertyEntity.getRoomEntities());
-					List<RoomEntity> roomEntities2 = propertyEntity.getRoomEntities().stream().collect(Collectors.toList());
-					roomEntities2.parallelStream().forEach(roomEntity -> {
+					propertyEntity.getRoomEntities().parallelStream().forEach(roomEntity -> {
 					//for(RoomEntity roomEntity : propertyEntity.getRoomEntities()) {
 						
 						if(roomEntity.getStatus() == Status.ACTIVE.ordinal()) { // Fetching only ACTIVE Rooms
 							System.err.println("roomEntity ==>> "+roomEntity);
 							if(StringUtils.equals(roomEntity.getAccomodationName(), Accommodation.PRIVATE.name())) { //private
-								if(CollectionUtils.isEmpty(roomByOraName)) {
+								if(CollectionUtils.isEmpty(roomByOraName) && !roomByOraName.containsKey(roomEntity.getOraRoomName())) {
 									guestCanHave.addAndGet(Integer.parseInt(roomEntity.getNoOfGuest()));
 									FilterRoomModel filterRoomModel = new FilterRoomModel();
 									filterRoomModel.setRoomId(roomEntity.getRoomId());
 									filterRoomModel.setRoomEntity(roomEntity);
 									filterRoomModel.setNumOfAdult(Integer.parseInt(roomEntity.getNoOfGuest()));
-									filterRoomModel.setNumOfChild(Integer.parseInt(roomEntity.getNoOfGuest()));
-									filteredRooms.put(roomEntity.getOraRoomName(), filterRoomModel);
-								} else {
-									if(!roomByOraName.containsKey(roomEntity.getOraRoomName())) {
-										guestCanHave.addAndGet(Integer.parseInt(roomEntity.getNoOfGuest()));
-										FilterRoomModel filterRoomModel = new FilterRoomModel();
-										filterRoomModel.setRoomId(roomEntity.getRoomId());
-										filterRoomModel.setRoomEntity(roomEntity);
-										filterRoomModel.setNumOfAdult(Integer.parseInt(roomEntity.getNoOfGuest()));
-										filterRoomModel.setNumOfChild(Integer.parseInt(roomEntity.getNoOfGuest()));
-										filteredRooms.put(roomEntity.getOraRoomName(), filterRoomModel);
+									filterRoomModel.setNumOfChild(Integer.parseInt(roomEntity.getNoOfChild()));
+									
+									Double hostBasePrice = calculateHostBasePrice(propertyEntity, filterCiteriaModel, roomEntity);
+									System.out.println("hostBasePrice ==>> "+hostBasePrice);
+									Double oraMarkUp = Double.parseDouble(roomEntity.getOraPercentage());
+									System.err.println("oraMarkUp ==>> "+oraMarkUp);
+									Double oraPrice = hostBasePrice + (hostBasePrice * oraMarkUp / 100);
+									System.out.println("oraPrice ==>> "+oraPrice);
+									// Room Vs ORA Discount Percentage
+									if (!StringUtils.isBlank(roomEntity.getOraDiscountPercentage())) {
+										Double oraDiscount = Double.parseDouble(roomEntity.getOraDiscountPercentage()) * hostBasePrice / 100;
+										System.err.println("oraDiscount ==>> "+oraDiscount);
+										oraPrice = oraPrice - oraDiscount;
 									}
+									filterRoomModel.setTotalPrice(oraPrice);
+									
+									filteredRooms.put(roomEntity.getOraRoomName(), filterRoomModel);
 								}
-								
 							}
 						}
 					});
@@ -543,50 +565,7 @@ public class PropertyListHelper {
 		Map<RoomEntity, Double> oraFinalPriceCount = new LinkedHashMap<>();
 		for (Map.Entry<String, FilterRoomModel> entry : filteredRooms.entrySet()) {
 			
-			if (StringUtils.equals(filterCiteriaModel.getStayType(), PropertyListConstant.SHARED)) { // Customer Wants SHARED Rooms
-				
-					if (numOfDays >= 30 ) {
-						if(propertyEntity.getStayTypeEntity().getStayTypeId() == Status.INACTIVE.ordinal()) {   //short term (ID = 2)
-							//Shared night price 
-							hostBasePrice = Double.parseDouble(entry.getValue().getRoomEntity().getSharedBedPricePerNight());
-							
-						} else {   //both & long term
-							//Shared Month price 
-							hostBasePrice = (Double.parseDouble(entry.getValue().getRoomEntity().getSharedBedPricePerMonth())/30);
-						}
-					} else {
-						
-						if(propertyEntity.getStayTypeEntity().getStayTypeId() == Status.ACTIVE.ordinal()){   //Long term
-							//Shared Month price 
-							hostBasePrice = (Double.parseDouble(entry.getValue().getRoomEntity().getSharedBedPricePerMonth())/30);
-						} else {   //both & Short term
-							//Shared Night price 
-							hostBasePrice = Double.parseDouble(entry.getValue().getRoomEntity().getSharedBedPricePerNight());
-						}
-					}
-			} else { // Customer Wants PRIVATE Rooms
-				
-				if (numOfDays >= 30 ) {
-					if(propertyEntity.getStayTypeEntity().getStayTypeId() == Status.INACTIVE.ordinal()) {   //short term (ID = 2)
-						//Private night Price
-						hostBasePrice = Double.parseDouble(entry.getValue().getRoomEntity().getRoomPricePerNight());
-						
-					} else {   //both & long term
-						//Private Month Price
-						hostBasePrice = (Double.parseDouble(entry.getValue().getRoomEntity().getRoomPricePerMonth())/30);
-					}
-				} else {
-					
-					if(propertyEntity.getStayTypeEntity().getStayTypeId() == Status.ACTIVE.ordinal()){   //Long term
-						//Private Month Price
-						hostBasePrice = (Double.parseDouble(entry.getValue().getRoomEntity().getRoomPricePerMonth())/30);
-					} else {   //both & Short term
-						//Private Night Price
-						hostBasePrice = Double.parseDouble(entry.getValue().getRoomEntity().getRoomPricePerNight());
-					}
-				}
-			}
-			
+			hostBasePrice = calculateHostBasePrice(propertyEntity, filterCiteriaModel, entry.getValue().getRoomEntity());
 			System.out.println("hostBasePrice ==>> "+hostBasePrice);
 			oraMarkUp = Double.parseDouble(entry.getValue().getRoomEntity().getOraPercentage());
 			System.err.println("oraMarkUp ==>> "+oraMarkUp);
@@ -663,8 +642,6 @@ public class PropertyListHelper {
 			oraPriceCount.put(entry.getValue().getRoomEntity(), oraPrice);
 			oraFinalPriceCount.put(entry.getValue().getRoomEntity(), oraFinalPrice);
 		}
-		
-
 		
 		RoomEntity roomEntity = null;
 		Double minValueInMap = (Collections.min(oraFinalPriceCount.values()));
@@ -752,8 +729,7 @@ public class PropertyListHelper {
 		// Meal Section
 		propertyListViewModel.setMealFlag(false);
 		if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
-			List<RoomEntity> roomEntities2 = propertyEntity.getRoomEntities().stream().collect(Collectors.toList());
-			roomEntities2.parallelStream().forEach(roomEntity -> {
+			propertyEntity.getRoomEntities().parallelStream().forEach(roomEntity -> {
 			//for(RoomEntity roomEntity : propertyEntity.getRoomEntities()) {
 				if(Objects.nonNull(roomEntity)) {
 					if(!CollectionUtils.isEmpty(roomEntity.getRoomVsMealEntities())) {
@@ -776,8 +752,7 @@ public class PropertyListHelper {
 		
 		Set<AmenitiesModel> amenitiesModels = new LinkedHashSet<>();
 		if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
-			List<RoomEntity> roomEntities2 = propertyEntity.getRoomEntities().stream().collect(Collectors.toList());
-			roomEntities2.parallelStream().forEach(roomEntity -> {
+			propertyEntity.getRoomEntities().parallelStream().forEach(roomEntity -> {
 			//for(RoomEntity roomEntity : propertyEntity.getRoomEntities()) {
 				if(Objects.nonNull(roomEntity)) {
 					if(!CollectionUtils.isEmpty(roomEntity.getRoomVsAmenitiesEntities())) {
@@ -948,5 +923,226 @@ public class PropertyListHelper {
 		}
 		
 		return offerPrice;
+	}
+	
+	private Double calculateHostBasePrice(PropertyEntity propertyEntity, FilterCiteriaModel filterCiteriaModel, RoomEntity roomEntity) {
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("calculateHostBasePrice -- START");
+		}
+		
+		Double hostBasePrice = 0.0D;
+		int numOfDays = Util.getDayDiff(filterCiteriaModel.getCheckInDate(), filterCiteriaModel.getCheckOutDate());
+		if (StringUtils.equals(filterCiteriaModel.getStayType(), PropertyListConstant.SHARED)) { // Customer Wants SHARED Rooms
+			
+			if (numOfDays >= 30 ) {
+				if(propertyEntity.getStayTypeEntity().getStayTypeId() == Status.INACTIVE.ordinal()) {   //short term (ID = 2)
+					//Shared night price 
+					hostBasePrice = Double.parseDouble(roomEntity.getSharedBedPricePerNight());
+					
+				} else {   //both & long term
+					//Shared Month price 
+					hostBasePrice = (Double.parseDouble(roomEntity.getSharedBedPricePerMonth())/30);
+				}
+			} else {
+				
+				if(propertyEntity.getStayTypeEntity().getStayTypeId() == Status.ACTIVE.ordinal()){   //Long term
+					//Shared Month price 
+					hostBasePrice = (Double.parseDouble(roomEntity.getSharedBedPricePerMonth())/30);
+				} else {   //both & Short term
+					//Shared Night price 
+					hostBasePrice = Double.parseDouble(roomEntity.getSharedBedPricePerNight());
+				}
+			}
+		} else { // Customer Wants PRIVATE Rooms
+			
+			if (numOfDays >= 30 ) {
+				if(propertyEntity.getStayTypeEntity().getStayTypeId() == Status.INACTIVE.ordinal()) {   //short term (ID = 2)
+					//Private night Price
+					hostBasePrice = Double.parseDouble(roomEntity.getRoomPricePerNight());
+					
+				} else {   //both & long term
+					//Private Month Price
+					hostBasePrice = (Double.parseDouble(roomEntity.getRoomPricePerMonth())/30);
+				}
+			} else {
+				
+				if(propertyEntity.getStayTypeEntity().getStayTypeId() == Status.ACTIVE.ordinal()){   //Long term
+					//Private Month Price
+					hostBasePrice = (Double.parseDouble(roomEntity.getRoomPricePerMonth())/30);
+				} else {   //both & Short term
+					//Private Night Price
+					hostBasePrice = Double.parseDouble(roomEntity.getRoomPricePerNight());
+				}
+			}
+		}
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("calculateHostBasePrice -- END");
+		}
+		
+		return hostBasePrice;
+	}
+	
+	public void priceCalculationForRoomDetails(PropertyEntity propertyEntity, FilterCiteriaModel filterCiteriaModel, Map<String, FilterRoomModel> filteredRooms, PropertyModel propertyModel) {
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("priceCalculationForRoomDetails -- START");
+		}
+		
+		int noOfGuest = Integer.parseInt(filterCiteriaModel.getNoOfGuest());
+		System.err.println("noOfGuest ==>> "+noOfGuest);
+		Map<String, FilterRoomModel> sortedMap = new LinkedHashMap<>();
+		if (StringUtils.equals(filterCiteriaModel.getStayType(), PropertyListConstant.SHARED)) { // Customer Wants SHARED Rooms
+			
+			sortedMap = filteredRooms.entrySet().stream().sorted(Map.Entry.comparingByValue(new FilterRoomComparatorByPrice())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,(oldValue, newValue) -> oldValue, LinkedHashMap::new));
+			System.out.println("sortedMap SHARED ==>> "+sortedMap);
+			for (Map.Entry<String, FilterRoomModel> entry : sortedMap.entrySet()) {
+				if(noOfGuest <= entry.getValue().getBedAllocated()) {
+					entry.getValue().setIsSelected(true);
+					break;
+				} else if(noOfGuest >= 0) {
+					noOfGuest = noOfGuest - entry.getValue().getBedAllocated();
+					entry.getValue().setIsSelected(true);
+				} else {
+					break;
+				}
+			}
+			System.out.println("sortedMap SHARED After ==>> "+sortedMap);
+		} else { // Customer Wants PRIVATE Rooms
+			
+			sortedMap = filteredRooms.entrySet().stream().sorted(Map.Entry.comparingByValue(new FilterRoomComparatorByAdult().reversed())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,(oldValue, newValue) -> oldValue, LinkedHashMap::new));
+			System.out.println("sortedMap PRIVATE Before ==>> "+sortedMap);
+			for (Map.Entry<String, FilterRoomModel> entry : sortedMap.entrySet()) {
+				if(noOfGuest <= entry.getValue().getNumOfAdult()) {
+					entry.getValue().setIsSelected(true);
+					break;
+				} else if(noOfGuest >= 0) {
+					noOfGuest = noOfGuest - entry.getValue().getNumOfAdult();
+					entry.getValue().setIsSelected(true);
+				} else {
+					break;
+				}
+			}
+			System.out.println("sortedMap PRIVATE After ==>> "+sortedMap);
+		}
+		
+		
+		int numOfDays = Util.getDayDiff(filterCiteriaModel.getCheckInDate(), filterCiteriaModel.getCheckOutDate());
+		Double hostBasePrice = 0.0D;
+		Double hostDiscount = 0.0D;
+		Double hostPrice = 0.0D;
+		Double oraMarkUp = 0.0D;
+		Double oraPrice = 0.0D;
+		Double oraDiscount = 0.0D;
+		Double oraFinalPrice = 0.0D;
+		Double offerPrice = 0.0D;
+		Set<OfferEntity> offerEntities = new HashSet<>();
+		
+		Double totalPrice = 0.0D;
+		Double totalDiscountedPrice = 0.0D;
+		for (Map.Entry<String, FilterRoomModel> entry : sortedMap.entrySet()) {
+				
+			RoomEntity roomEntity = entry.getValue().getRoomEntity();
+			hostBasePrice = (calculateHostBasePrice(propertyEntity, filterCiteriaModel, roomEntity)) * numOfDays;
+			System.out.println("hostBasePrice ==>> "+hostBasePrice);
+			oraMarkUp = Double.parseDouble(roomEntity.getOraPercentage());
+			System.err.println("oraMarkUp ==>> "+oraMarkUp);
+			oraPrice = (hostBasePrice + (hostBasePrice * oraMarkUp / 100)) * numOfDays;
+			System.out.println("oraPrice ==>> "+oraPrice);
+			// Room Vs ORA Discount Percentage
+			if (!StringUtils.isBlank(roomEntity.getOraDiscountPercentage())) {
+				oraDiscount = Double.parseDouble(roomEntity.getOraDiscountPercentage()) * hostBasePrice / 100;
+			}
+			System.err.println("oraDiscount ==>> "+oraDiscount);
+			
+			Double priceDropDiscount = 0.0D;
+			
+			// Check Pricedrop if any
+			if(Util.getDateDiff1(filterCiteriaModel.getCheckInDate()) == 0) { // Current Date
+				if(!CollectionUtils.isEmpty(propertyEntity.getPropertyVsPriceDropEntities())) { // Price Drop Present
+					int hourDifference = Util.getMinuteDiff(Util.getCurrentDate() + " " +propertyEntity.getCheckinTime()) / 60;
+					for(int i = 0; i< propertyEntity.getPropertyVsPriceDropEntities().size(); i++) {
+						PropertyVsPriceDropEntity propertyVsPriceDropEntity = propertyEntity.getPropertyVsPriceDropEntities().get(i);
+						if(hourDifference <= Integer.parseInt(propertyVsPriceDropEntity.getPriceDropEntity().getAfterTime())) {
+							if(i == 0) { // First Condition
+								priceDropDiscount = Double.parseDouble(propertyVsPriceDropEntity.getPercentage()) * hostBasePrice / 100;
+								break;
+							} else {
+								propertyVsPriceDropEntity = propertyEntity.getPropertyVsPriceDropEntities().get(i -1);
+								priceDropDiscount = Double.parseDouble(propertyVsPriceDropEntity.getPercentage()) * hostBasePrice / 100;
+								break;
+							}
+						}
+					}
+				}
+			} else {
+				// Host Discount if any
+				if (numOfDays >= 7 && numOfDays < 30) { // Weekly
+					hostDiscount = Double.parseDouble(roomEntity.getHostDiscountWeekly()) * hostBasePrice / 100;
+				} else if(numOfDays >= 30) { // Monthly
+					if (!StringUtils.isBlank(roomEntity.getHostDiscountMonthly())) { // Check if monthly present
+						hostDiscount = Double.parseDouble(roomEntity.getHostDiscountMonthly()) * hostBasePrice / 100;
+					} else if (!StringUtils.isBlank(roomEntity.getHostDiscountWeekly())) { // otherwise calculate with weekly
+						hostDiscount = Double.parseDouble(roomEntity.getHostDiscountWeekly()) * hostBasePrice / 100;
+					}
+				}
+				
+				System.err.println("hostDiscount ==>> "+hostDiscount);
+				if(hostDiscount > 0.0) {
+					hostPrice = hostBasePrice - hostDiscount;
+				}
+				System.err.println("hostPrice ==>> "+hostPrice);
+				
+				// Offer
+				if(!CollectionUtils.isEmpty(roomEntity.getRoomVsOfferEntities())) {
+					for(RoomVsOfferEntity roomVsOfferEntity : roomEntity.getRoomVsOfferEntities()) {
+						if(Objects.nonNull(roomVsOfferEntity)) {
+							if(Objects.nonNull(roomVsOfferEntity.getOfferEntity())) {
+								offerEntities.add(roomVsOfferEntity.getOfferEntity());
+							}
+						}
+					}
+				}
+			}
+			
+			System.err.println("priceDropDiscount ==>> "+priceDropDiscount);
+			if(priceDropDiscount > 0.0) {
+				oraDiscount = priceDropDiscount;
+				System.err.println("oraDiscount = priceDropDiscount ==>> "+oraDiscount);
+			}
+			
+			oraFinalPrice = oraPrice - oraDiscount;
+			System.err.println("oraFinalPrice(oraPrice - oraDiscount) ==>> "+oraFinalPrice);
+			//offerPrice = calculateOffer(offerEntities, oraFinalPrice);
+			//System.err.println("offerPrice ==>> "+offerPrice);
+			//oraFinalPrice = oraFinalPrice - offerPrice;
+			//System.err.println("oraFinalPrice(oraFinalPrice - offerPrice) ==>> "+oraFinalPrice);
+			
+			for(RoomModel roomModel : propertyModel.getRoomModels()) {
+				if(StringUtils.equals(roomModel.getOraRoomName(), roomEntity.getOraRoomName())) {
+					roomModel.setPriceDrop(String.valueOf(priceDropDiscount));
+					roomModel.setOraPrice(String.valueOf(oraPrice));
+					roomModel.setOraDiscount(String.valueOf(oraDiscount));
+					roomModel.setOraFinalPrice(String.valueOf(oraFinalPrice));
+					roomModel.setIsSelected("false");
+					if(Objects.nonNull(entry.getValue().getIsSelected()) && entry.getValue().getIsSelected()) {
+						roomModel.setIsSelected("true");
+						totalPrice = totalPrice + oraPrice;
+						totalDiscountedPrice = totalDiscountedPrice + oraDiscount;
+					}
+					break;
+				}
+			}
+		}
+		
+		propertyModel.setTotalAmount(String.valueOf(totalPrice));
+		propertyModel.setTotalDiscount(String.valueOf(totalDiscountedPrice));
+		propertyModel.setAmountPayable(String.valueOf(totalPrice - totalDiscountedPrice));
+		
+        
+		if (logger.isInfoEnabled()) {
+			logger.info("priceCalculationForRoomDetails -- END");
+		}
 	}
 }

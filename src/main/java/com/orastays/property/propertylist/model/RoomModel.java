@@ -140,5 +140,8 @@ public class RoomModel extends CommonModel {
 	
 	@JsonProperty("amountWithGST")
 	private String amountWithGST;
+	
+	@JsonProperty("oraFinalPrice")
+	private String oraFinalPrice;
 
 }

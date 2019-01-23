@@ -23,4 +23,7 @@ public class FilterRoomModel {
 	private Integer numOfAdult;
 	private Integer numOfChild;
 	private RoomEntity roomEntity;
+	private Boolean isSelected;
+	private Double totalPrice;
+	
 }

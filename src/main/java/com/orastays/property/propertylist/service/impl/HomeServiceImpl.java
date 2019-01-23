@@ -49,7 +49,7 @@ import com.orastays.property.propertylist.model.user.UserModel;
 import com.orastays.property.propertylist.service.HomeService;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 
 	private static final Logger logger = LogManager.getLogger(HomeServiceImpl.class);
@@ -488,8 +488,7 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 		System.err.println("totalPrice after including OraPercentage ==>> "+totalPrice); 
 		
 		Double oraDiscount = 0.0D;
-		// Room Vs ORA Discount
-		// Percentage
+		// Room Vs ORA Discount Percentage
 		if (!StringUtils.isBlank(roomEntity.getOraDiscountPercentage())) {
 			oraDiscount = Double.parseDouble(roomEntity.getOraDiscountPercentage()) * price / 100;
 		}
@@ -517,10 +516,9 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 		Object price = 0;
 		if(Objects.nonNull(filterCiteriaModel)) {
 			List<PropertyEntity> propertyEntities = propertyDAO.selectByRadius(filterCiteriaModel);
-			List<PropertyEntity> propertyEntities2 = propertyEntities.stream().collect(Collectors.toList());
-			if(!CollectionUtils.isEmpty(propertyEntities2)) {
+			if(!CollectionUtils.isEmpty(propertyEntities)) {
 				List<PropertyEntity> filteredPropertyEntities = new ArrayList<>();
-				propertyEntities2.parallelStream().forEach(propertyEntity -> {
+				propertyEntities.parallelStream().forEach(propertyEntity -> {
 					//for(PropertyEntity propertyEntity : propertyEntities2) {
 					if(StringUtils.equals(String.valueOf(propertyEntity.getPropertyTypeEntity().getPropertyTypeId()) , priceCalculatorModel.getPropertyTypeId())) {
 						filteredPropertyEntities.add(propertyEntity);

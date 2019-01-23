@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -37,7 +36,7 @@ import com.orastays.property.propertylist.model.user.UserModel;
 import com.orastays.property.propertylist.service.PropertyListService;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 public class PropertyListServiceImpl extends BaseServiceImpl implements PropertyListService {
 
 	private static final Logger logger = LogManager.getLogger(PropertyListServiceImpl.class);
@@ -74,10 +73,8 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 			if(!CollectionUtils.isEmpty(propertyEntities)) {
 				
 				List<PropertyEntity> filteredPropertyEntitiesByRadius = propertyDAO.selectByRadius(filterCiteriaModel);
-				List<PropertyEntity> filteredPropertyEntitiesByRadius2 = filteredPropertyEntitiesByRadius.stream().collect(Collectors.toList());
-				List<PropertyEntity> propertyEntities2 = propertyEntities.stream().collect(Collectors.toList());
 				AtomicBoolean isContinueRating = new AtomicBoolean(false);
-				propertyEntities2.parallelStream().forEach(propertyEntity -> {
+				propertyEntities.parallelStream().forEach(propertyEntity -> {
 					//for(PropertyEntity propertyEntity : propertyEntities) {
 					isContinueRating.set(false);
 					
@@ -85,7 +82,7 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 					if(propertyListHelper.filterByPropertyDate(propertyEntity, filterCiteriaModel)) {
 						
 						// Filter by location // Mandatory
-						if(propertyListHelper.filterByLocation(propertyEntity, filteredPropertyEntitiesByRadius2)) {
+						if(propertyListHelper.filterByLocation(propertyEntity, filteredPropertyEntitiesByRadius)) {
 							// Filter by checkInDate // Mandatory
 							// Filter by checkOutDate // Mandatory
 							// Filter by roomModels // Mandatory
@@ -202,12 +199,11 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 				
 				boolean flag = true;
 				List<PropertyEntity> filteredPropertyEntitiesByRadius = propertyDAO.selectByRadius(filterCiteriaModel);
-				List<PropertyEntity> filteredPropertyEntitiesByRadius2 = filteredPropertyEntitiesByRadius.stream().collect(Collectors.toList());
 					// Filter By Property Start Date and End Date
 					if(propertyListHelper.filterByPropertyDate(propertyEntity, filterCiteriaModel)) {
 						
 						// Filter by location // Mandatory
-						if(propertyListHelper.filterByLocation(propertyEntity, filteredPropertyEntitiesByRadius2)) {
+						if(propertyListHelper.filterByLocation(propertyEntity, filteredPropertyEntitiesByRadius)) {
 							// Filter by checkInDate // Mandatory
 							// Filter by checkOutDate // Mandatory
 							// Filter by roomModels // Mandatory
@@ -264,9 +260,9 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 								
 								if(flag) {
 									propertyModel = propertyConverter.entityToModel(propertyEntity);
-									/*List<String> prices = priceCalculation(propertyEntity, filterCiteriaModel, filteredRooms);
-									propertyModel.setTotalAmount(prices.get(0));
-									propertyModel.setPropertyOffer(prices.get(1));*/
+									
+									//Calculate Price
+									propertyListHelper.priceCalculationForRoomDetails(propertyEntity, filterCiteriaModel, filteredRooms, propertyModel);
 									
 									// Calculate Convenience
 									ConvenienceModel convenienceModel = convenienceService.getActiveConvenienceModel();
@@ -286,11 +282,8 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 										propertyModel.setConvenienceGSTAmount("0");
 									}
 									
-//									propertyModel.setAmountPayable(String.valueOf(Math.round(Double.parseDouble(prices.get(0)) - Double.parseDouble(prices.get(1)) 
-//											+ Double.parseDouble(propertyModel.getConvenienceFee()) + Double.parseDouble(propertyModel.getConvenienceGSTAmount()))* 100D / 100D ));
-									
 									// Setting Price Details in Key Value Pair
-									//setPriceDetails(propertyModel);
+									setPriceDetails(propertyModel);
 									
 									// Setting Reviews for the property
 									propertyModel.setUserReviewModels(fetchPropertyReviews(propertyModel.getPropertyId()));
@@ -310,7 +303,6 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 									// Setting Host Details
 									propertyModel.setUserModel(getUserDetails(propertyEntity.getHostVsAccountEntity().getUserId()));
 									
-									// TODO Bookmark
 									if(Objects.nonNull(userModel)) {
 										setBookMark(propertyModel, userModel);
 									}
@@ -596,6 +588,26 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		}
 		
 		return userReviewModels;
+	}
+	
+	private void setPriceDetails(PropertyModel propertyModel) {
+	
+		if (logger.isInfoEnabled()) {
+			logger.info("setPriceDetails -- START");
+		}
+		
+		Map<String, String> priceDetails = new LinkedHashMap<>();
+		priceDetails.put("totalAmount", propertyModel.getTotalAmount());
+		priceDetails.put("propertyOffer", propertyModel.getPropertyOffer());
+		priceDetails.put("convenienceFee", propertyModel.getConvenienceFee());
+		priceDetails.put("convenienceGSTPercentage", propertyModel.getConvenienceGSTPercentage());
+		priceDetails.put("convenienceGSTAmount", propertyModel.getConvenienceGSTAmount());
+		priceDetails.put("amountPayable", propertyModel.getAmountPayable());
+		propertyModel.setPriceDetails(priceDetails);
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("setPriceDetails -- END");
+		}
 	}
 
 }
