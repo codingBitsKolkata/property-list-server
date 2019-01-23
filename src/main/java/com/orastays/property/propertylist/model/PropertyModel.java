@@ -143,6 +143,9 @@ public class PropertyModel extends CommonModel {
 	
 	@JsonProperty("totalAmount")
 	private String totalAmount;
+	
+	@JsonProperty("totalDiscount")
+	private String totalDiscount;
 
 	@JsonProperty("amountPayable")
 	private String amountPayable;
