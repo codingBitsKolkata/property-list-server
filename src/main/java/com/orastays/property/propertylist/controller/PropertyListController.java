@@ -299,4 +299,58 @@ public class PropertyListController extends BaseController {
 			return new ResponseEntity<>(responseModel, HttpStatus.BAD_REQUEST);
 		}
 	}
+	
+	@PostMapping(value = "/fetch-price-details", produces = "application/json")
+	@ApiOperation(value = "Fetch Price Details", response = ResponseModel.class)
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
+			@ApiResponse(code = 201, message = "Please Try after Sometime!!!"),
+			@ApiResponse(code = 320, message = "Session expires!!! Please Login to continue..."),
+			@ApiResponse(code = 321, message = "Please give User Token"),
+			@ApiResponse(code = 322, message = "Invalid user Token") })
+	public ResponseEntity<ResponseModel> fetchPriceDetails(@RequestBody FilterCiteriaModel filterCiteriaModel) {
+
+		if (logger.isInfoEnabled()) {
+			logger.info("fetchPriceDetails -- START");
+		}
+
+		ResponseModel responseModel = new ResponseModel();
+		Util.printLog(filterCiteriaModel, PropertyListConstant.INCOMING, "Fetch Price Details", request);
+		try {
+			long startTime = System.currentTimeMillis();
+			PropertyModel propertyModel = propertyService.fetchPriceDetails(filterCiteriaModel);
+			long elapsedTimeNs = System.currentTimeMillis() - startTime;
+			System.err.println("Total Time Taken ==>> "+(elapsedTimeNs/1000));
+			responseModel.setResponseBody(propertyModel);
+			responseModel.setResponseCode(messageUtil.getBundle(PropertyListConstant.COMMON_SUCCESS_CODE));
+			responseModel.setResponseMessage(messageUtil.getBundle(PropertyListConstant.COMMON_SUCCESS_MESSAGE));
+		} catch (FormExceptions fe) {
+
+			for (Entry<String, Exception> entry : fe.getExceptions().entrySet()) {
+				responseModel.setResponseCode(entry.getKey());
+				responseModel.setResponseMessage(entry.getValue().getMessage());
+				if (logger.isInfoEnabled()) {
+					logger.info("FormExceptions in Fetch Price Details -- "+Util.errorToString(fe));
+				}
+				break;
+			}
+		} catch (Exception e) {
+			if (logger.isInfoEnabled()) {
+				logger.info("Exception in fetchPriceDetails -- "+Util.errorToString(e));
+			}
+			responseModel.setResponseCode(messageUtil.getBundle(PropertyListConstant.COMMON_ERROR_CODE));
+			responseModel.setResponseMessage(messageUtil.getBundle(PropertyListConstant.COMMON_ERROR_MESSAGE));
+		}
+
+		Util.printLog(responseModel, PropertyListConstant.OUTGOING, "Fetch Price Details", request);
+
+		if (logger.isInfoEnabled()) {
+			logger.info("fetchPriceDetails -- END");
+		}
+		
+		if (responseModel.getResponseCode().equals(messageUtil.getBundle(PropertyListConstant.COMMON_SUCCESS_CODE))) {
+			return new ResponseEntity<>(responseModel, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(responseModel, HttpStatus.BAD_REQUEST);
+		}
+	}
 }

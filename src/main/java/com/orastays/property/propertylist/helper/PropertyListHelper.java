@@ -339,8 +339,8 @@ public class PropertyListHelper {
 			if (StringUtils.equals(filterCiteriaModel.getStayType(), PropertyListConstant.SHARED)) { // Customer Wants SHARED Rooms
 				
 				if(!CollectionUtils.isEmpty(propertyEntity.getRoomEntities())) {
-					propertyEntity.getRoomEntities().parallelStream().forEach(roomEntity -> {
-					//for(RoomEntity roomEntity : propertyEntity.getRoomEntities()) {
+					//propertyEntity.getRoomEntities().parallelStream().forEach(roomEntity -> {
+					for(RoomEntity roomEntity : propertyEntity.getRoomEntities()) {
 						
 						if(roomEntity.getStatus() == Status.ACTIVE.ordinal()) { // Fetching only ACTIVE Rooms
 							System.err.println("roomEntity ==>> "+roomEntity);
@@ -349,12 +349,17 @@ public class PropertyListHelper {
 								FilterRoomModel filterRoomModel = new FilterRoomModel();
 								filterRoomModel.setRoomId(roomEntity.getRoomId());
 								filterRoomModel.setRoomEntity(roomEntity);
-								if(Integer.parseInt(roomEntity.getNumOfBed()) >= noOfGuest) {
+								if(Integer.parseInt(roomEntity.getNumOfBed()) >= noOfGuest && noOfGuest > 0) {
 									filterRoomModel.setBedAvailable(Integer.parseInt(roomEntity.getNumOfBed()));
 									filterRoomModel.setBedAllocated(noOfGuest);
+									noOfGuest = 0;
+								} else if(Integer.parseInt(roomEntity.getNumOfBed()) < noOfGuest && noOfGuest > 0) {
+									filterRoomModel.setBedAvailable(Integer.parseInt(roomEntity.getNumOfBed()));
+									filterRoomModel.setBedAllocated(Integer.parseInt(roomEntity.getNumOfBed()));
+									noOfGuest = noOfGuest - Integer.parseInt(roomEntity.getNumOfBed());
 								} else {
 									filterRoomModel.setBedAvailable(Integer.parseInt(roomEntity.getNumOfBed()));
-									filterRoomModel.setBedAllocated(noOfGuest - Integer.parseInt(roomEntity.getNumOfBed()));
+									filterRoomModel.setBedAllocated(0);
 								}
 								
 								Double hostBasePrice = calculateHostBasePrice(propertyEntity, filterCiteriaModel, roomEntity);
@@ -374,7 +379,7 @@ public class PropertyListHelper {
 								filteredRooms.put(roomEntity.getOraRoomName(), filterRoomModel);
 							}
 						}
-					});
+					}
 				}
 				
 				Map<String, List<BookingVsRoomModel>> roomByOraName = callBookingService(String.valueOf(propertyEntity.getPropertyId()), filterCiteriaModel.getCheckInDate(), Accommodation.SHARED.name());
@@ -990,12 +995,13 @@ public class PropertyListHelper {
 			logger.info("priceCalculationForRoomDetails -- START");
 		}
 		
+		System.out.println("filteredRooms ==>> "+filteredRooms);
 		int noOfGuest = Integer.parseInt(filterCiteriaModel.getNoOfGuest());
 		System.err.println("noOfGuest ==>> "+noOfGuest);
 		Map<String, FilterRoomModel> sortedMap = new LinkedHashMap<>();
 		if (StringUtils.equals(filterCiteriaModel.getStayType(), PropertyListConstant.SHARED)) { // Customer Wants SHARED Rooms
 			
-			sortedMap = filteredRooms.entrySet().stream().sorted(Map.Entry.comparingByValue(new FilterRoomComparatorByPrice())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,(oldValue, newValue) -> oldValue, LinkedHashMap::new));
+			sortedMap = filteredRooms.entrySet().stream().sorted(Map.Entry.comparingByValue(new FilterRoomComparatorByPrice().reversed())).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,(oldValue, newValue) -> oldValue, LinkedHashMap::new));
 			System.out.println("sortedMap SHARED ==>> "+sortedMap);
 			for (Map.Entry<String, FilterRoomModel> entry : sortedMap.entrySet()) {
 				if(noOfGuest <= entry.getValue().getBedAllocated()) {
@@ -1045,10 +1051,13 @@ public class PropertyListHelper {
 				
 			RoomEntity roomEntity = entry.getValue().getRoomEntity();
 			hostBasePrice = (calculateHostBasePrice(propertyEntity, filterCiteriaModel, roomEntity)) * numOfDays;
+			if(!Util.isEmpty(entry.getValue().getBedAllocated()) && entry.getValue().getBedAllocated() != 0) {
+				hostBasePrice = hostBasePrice * entry.getValue().getBedAllocated();
+			}
 			System.out.println("hostBasePrice ==>> "+hostBasePrice);
 			oraMarkUp = Double.parseDouble(roomEntity.getOraPercentage());
 			System.err.println("oraMarkUp ==>> "+oraMarkUp);
-			oraPrice = (hostBasePrice + (hostBasePrice * oraMarkUp / 100)) * numOfDays;
+			oraPrice = hostBasePrice + (hostBasePrice * oraMarkUp / 100);
 			System.out.println("oraPrice ==>> "+oraPrice);
 			// Room Vs ORA Discount Percentage
 			if (!StringUtils.isBlank(roomEntity.getOraDiscountPercentage())) {
@@ -1114,10 +1123,6 @@ public class PropertyListHelper {
 			
 			oraFinalPrice = oraPrice - oraDiscount;
 			System.err.println("oraFinalPrice(oraPrice - oraDiscount) ==>> "+oraFinalPrice);
-			//offerPrice = calculateOffer(offerEntities, oraFinalPrice);
-			//System.err.println("offerPrice ==>> "+offerPrice);
-			//oraFinalPrice = oraFinalPrice - offerPrice;
-			//System.err.println("oraFinalPrice(oraFinalPrice - offerPrice) ==>> "+oraFinalPrice);
 			
 			for(RoomModel roomModel : propertyModel.getRoomModels()) {
 				if(StringUtils.equals(roomModel.getOraRoomName(), roomEntity.getOraRoomName())) {
@@ -1126,7 +1131,13 @@ public class PropertyListHelper {
 					roomModel.setOraDiscount(String.valueOf(oraDiscount));
 					roomModel.setOraFinalPrice(String.valueOf(oraFinalPrice));
 					roomModel.setIsSelected("false");
+					roomModel.setBedAllocated("0");
 					if(Objects.nonNull(entry.getValue().getIsSelected()) && entry.getValue().getIsSelected()) {
+						
+						if(!Util.isEmpty(entry.getValue().getBedAllocated()) && entry.getValue().getBedAllocated() != 0) {
+							roomModel.setBedAllocated(String.valueOf(entry.getValue().getBedAllocated()));
+						}
+						
 						roomModel.setIsSelected("true");
 						totalPrice = totalPrice + oraPrice;
 						totalDiscountedPrice = totalDiscountedPrice + oraDiscount;
@@ -1136,6 +1147,9 @@ public class PropertyListHelper {
 			}
 		}
 		
+		offerPrice = calculateOffer(offerEntities, totalPrice);
+		System.err.println("offerPrice ==>> "+offerPrice);
+		propertyModel.setPropertyOffer(String.valueOf(offerPrice));
 		propertyModel.setTotalAmount(String.valueOf(totalPrice));
 		propertyModel.setTotalDiscount(String.valueOf(totalDiscountedPrice));
 		propertyModel.setAmountPayable(String.valueOf(totalPrice - totalDiscountedPrice));

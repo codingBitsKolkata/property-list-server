@@ -21,10 +21,10 @@ public interface PropertyListService {
 
 	Object ratings();
 
-	//PropertyListViewModel setPropertyListView(PropertyEntity propertyEntity, FilterCiteriaModel filterCiteriaModel);
-
 	PropertyModel fetchPropertyDetails(FilterCiteriaModel filterCiteriaModel) throws FormExceptions;
 
 	UserModel getUserDetails(String userId) throws FormExceptions;
+
+	PropertyModel fetchPriceDetails(FilterCiteriaModel filterCiteriaModel) throws FormExceptions;
 
 }

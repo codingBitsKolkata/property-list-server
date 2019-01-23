@@ -144,4 +144,6 @@ public class RoomModel extends CommonModel {
 	@JsonProperty("oraFinalPrice")
 	private String oraFinalPrice;
 
+	@JsonProperty("bedAllocated")
+	private String bedAllocated;
 }
