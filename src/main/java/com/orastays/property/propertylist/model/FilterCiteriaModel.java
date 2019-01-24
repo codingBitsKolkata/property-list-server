@@ -72,4 +72,7 @@ public class FilterCiteriaModel {
 	
 	@JsonProperty("bookingInfos")
 	private BookingInfoModel bookingInfoModel;
+	
+	@JsonProperty("totalAmt")
+	private String totalAmt;
 }

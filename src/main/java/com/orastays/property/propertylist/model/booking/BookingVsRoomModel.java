@@ -95,8 +95,4 @@ public class BookingVsRoomModel extends CommonModel {
 	@JsonProperty("cancellationVsRooms")
 	private CancellationVsRoomModel cancellationVsRoomModel;
 	
-	@JsonProperty("roomVsOfferId")
-	private String roomVsOfferId;
-	
-	
 }

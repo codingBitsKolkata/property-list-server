@@ -3,6 +3,10 @@ package com.orastays.property.propertylist.helper;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.apache.commons.lang3.StringUtils;
 
 public class Test {
 
@@ -10,28 +14,15 @@ public class Test {
 
 		try {
 			Test test = new Test();
-			System.out.println(test.getMinuteDiff("2019-04-13"));
+			System.out.println(test.isDouble("2019.01"));
 		} catch (Exception e) {
 
 		}
 
 	}
 
-	public static int getMinuteDiff(String firstDate) {
-
-		try {
-
-			DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-			Date date1 = format.parse(firstDate);
-			String currentDate = format.format(new Date());
-			Date date2 = format.parse(currentDate);
-			Double diffInMillies = (date2.getTime() - date1.getTime()) / (1000.0 * 60);
-
-			return diffInMillies.intValue();
-
-		} catch (Exception e) {
-
-			return 0;
-		}
+	public static boolean isDouble(String value) {
+		
+		return value.matches("^\\d+\\.\\d{2}$");
 	}
 }

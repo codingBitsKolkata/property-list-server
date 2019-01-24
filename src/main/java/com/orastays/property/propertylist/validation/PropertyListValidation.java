@@ -1,8 +1,11 @@
 package com.orastays.property.propertylist.validation;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -12,6 +15,7 @@ import org.springframework.util.CollectionUtils;
 
 import com.orastays.property.propertylist.entity.PropertyEntity;
 import com.orastays.property.propertylist.entity.PropertyTypeEntity;
+import com.orastays.property.propertylist.entity.RoomEntity;
 import com.orastays.property.propertylist.exceptions.FormExceptions;
 import com.orastays.property.propertylist.helper.PropertyListConstant;
 import com.orastays.property.propertylist.helper.Status;
@@ -451,6 +455,11 @@ public class PropertyListValidation extends AuthorizeUserValidation {
 			if(Util.getDayDiff(filterCiteriaModel.getCheckInDate(), filterCiteriaModel.getCheckOutDate()) <= 0) {
 				exceptions.put(messageUtil.getBundle("checkout.date.lesser.code"), new Exception(messageUtil.getBundle("checkout.date.lesser.message")));
 				throw new FormExceptions(exceptions);
+			} else {
+				if(!checkRooms(filterCiteriaModel, propertyEntity)) {
+					exceptions.put(messageUtil.getBundle("property.notavailable.code"), new Exception(messageUtil.getBundle("property.notavailable.message")));
+					throw new FormExceptions(exceptions);
+				}
 			}
 		}
 
@@ -459,5 +468,38 @@ public class PropertyListValidation extends AuthorizeUserValidation {
 		}
 		
 		return userModel;
+	}
+	
+	private Boolean checkRooms(FilterCiteriaModel filterCiteriaModel, PropertyEntity propertyEntity) {
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("checkRooms -- END");
+		}
+		
+		boolean flag = true;
+		List<Boolean> count = new ArrayList<>();
+		Map<String, RoomEntity> totalRooms = new ConcurrentHashMap<>();
+		propertyEntity.getRoomEntities().parallelStream().forEach(roomEntity -> {
+			if(roomEntity.getStatus() == Status.ACTIVE.ordinal()) { // Fetching only ACTIVE Rooms
+				totalRooms.put(roomEntity.getOraRoomName(), roomEntity);
+			}
+		});
+		
+		for(RoomModel roomModel : filterCiteriaModel.getRoomModels()) {
+			if(!totalRooms.containsKey(roomModel.getOraRoomName())) {
+				count.add(false);
+				break;
+			}
+		}
+		
+		if(count.contains(false)) {
+			flag = false;
+		}
+		
+		if (logger.isInfoEnabled()) {
+			logger.info("checkRooms -- END");
+		}
+		
+		return flag;
 	}
 }

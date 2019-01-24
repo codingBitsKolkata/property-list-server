@@ -126,6 +126,12 @@ public class RoomModel extends CommonModel {
 	@JsonProperty("oraDiscount")
 	private String oraDiscount;
 	
+	@JsonProperty("hostBasePrice")
+	private String hostBasePrice;
+
+	@JsonProperty("hostPrice")
+	private String hostPrice;
+	
 	@JsonProperty("hostDiscount")
 	private String hostDiscount;
 	
@@ -146,4 +152,19 @@ public class RoomModel extends CommonModel {
 
 	@JsonProperty("bedAllocated")
 	private String bedAllocated;
+	
+	@JsonProperty("sgst")
+	private String sgst;
+
+	@JsonProperty("cgst")
+	private String cgst;
+
+	@JsonProperty("igst")
+	private String igst;
+	
+	@JsonProperty("gstAmt")
+	private String gstAmt;
+	
+	@JsonProperty("totalAmt")
+	private String totalAmt;
 }

@@ -283,6 +283,11 @@ public class Util {
 		Matcher matcher = pattern.matcher(value);
 		return matcher.matches();
 	}
+	
+	public static boolean isDouble(String value) {
+			
+		return value.matches("^\\d+\\.\\d{2}$");
+	}
 
 	public static String formatDateFromEntity(Date value) {
 
