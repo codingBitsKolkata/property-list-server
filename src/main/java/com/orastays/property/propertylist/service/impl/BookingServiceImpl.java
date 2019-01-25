@@ -61,6 +61,7 @@ public class BookingServiceImpl extends BaseServiceImpl implements BookingServic
 				bookingModel.setCheckinDate(filterCiteriaModel.getCheckInDate());
 				bookingModel.setCheckoutDate(filterCiteriaModel.getCheckOutDate());
 				bookingModel.setNumOfDays(String.valueOf(Util.getDayDiff(filterCiteriaModel.getCheckInDate(), filterCiteriaModel.getCheckOutDate())));
+				bookingModel.setReturnURL(filterCiteriaModel.getReturnURL());
 				
 				String finalPrice = propertyModel.getPriceDetails().get("finalPrice");
 				if(!StringUtils.equals(finalPrice, filterCiteriaModel.getTotalAmt())) {

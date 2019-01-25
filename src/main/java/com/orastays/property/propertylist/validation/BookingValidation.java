@@ -39,6 +39,11 @@ public class BookingValidation extends AuthorizeUserValidation {
 				exceptions.put(messageUtil.getBundle("totalAmt.invalid.code"), new Exception(messageUtil.getBundle("totalAmt.invalid.message")));
 			}
 		}
+		
+		// Validate Total Price
+		if (StringUtils.isBlank(filterCiteriaModel.getReturnURL())) {
+			exceptions.put(messageUtil.getBundle("returnURL.null.code"), new Exception(messageUtil.getBundle("returnURL.null.message")));
+		}
 				
 		if(Objects.isNull(filterCiteriaModel.getBookingInfoModel())) {
 			exceptions.put(messageUtil.getBundle("travellerinfo.null.code"), new Exception(messageUtil.getBundle("travellerinfo.null.message")));

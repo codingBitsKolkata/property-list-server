@@ -75,4 +75,7 @@ public class FilterCiteriaModel {
 	
 	@JsonProperty("totalAmt")
 	private String totalAmt;
+	
+	@JsonProperty("returnURL")
+	private String returnURL;
 }
