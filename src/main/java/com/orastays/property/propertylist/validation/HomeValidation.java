@@ -24,8 +24,8 @@ public class HomeValidation extends AuthorizeUserValidation {
 	
 	public UserModel validatePropertyType(String propertyTypeId, String userToken) throws FormExceptions {
 
-		if (logger.isDebugEnabled()) {
-			logger.debug("validatePropertyType -- Start");
+		if (logger.isInfoEnabled()) {
+			logger.info("validatePropertyType -- Start");
 		}
 
 		Map<String, Exception> exceptions = new LinkedHashMap<>();
@@ -51,8 +51,8 @@ public class HomeValidation extends AuthorizeUserValidation {
 		if (exceptions.size() > 0)
 			throw new FormExceptions(exceptions);
 
-		if (logger.isDebugEnabled()) {
-			logger.debug("validatePropertyType -- End");
+		if (logger.isInfoEnabled()) {
+			logger.info("validatePropertyType -- End");
 		}
 		
 		return userModel;
@@ -60,8 +60,8 @@ public class HomeValidation extends AuthorizeUserValidation {
 	
 	public FilterCiteriaModel validatePriceCalculator(PriceCalculatorModel priceCalculatorModel) throws FormExceptions {
 
-		if (logger.isDebugEnabled()) {
-			logger.debug("validatePriceCalculator -- Start");
+		if (logger.isInfoEnabled()) {
+			logger.info("validatePriceCalculator -- Start");
 		}
 
 		//UserModel userModel = getUserDetails(priceCalculatorModel.getUserToken());
@@ -116,8 +116,8 @@ public class HomeValidation extends AuthorizeUserValidation {
 			filterCiteriaModel.setLongitude(priceCalculatorModel.getLongitude());
 		}
 
-		if (logger.isDebugEnabled()) {
-			logger.debug("validatePriceCalculator -- End");
+		if (logger.isInfoEnabled()) {
+			logger.info("validatePriceCalculator -- End");
 		}
 		
 		return filterCiteriaModel;

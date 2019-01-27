@@ -598,7 +598,11 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		
 		Map<String, String> priceDetails = new LinkedHashMap<>();
 		priceDetails.put("totalAmount",  String.valueOf(Math.round(Double.parseDouble(propertyModel.getTotalAmount())) * 100D / 100D));
-		priceDetails.put("propertyOffer",  propertyModel.getPropertyOffer());
+		if(!StringUtils.isEmpty(propertyModel.getPropertyOffer())) {
+			priceDetails.put("propertyOffer",  String.valueOf(Math.round(Double.parseDouble(propertyModel.getPropertyOffer())) * 100D / 100D));;
+		} else {
+			priceDetails.put("propertyOffer", "0.0");
+		}
 		priceDetails.put("discount", String.valueOf(Math.round( Double.parseDouble(propertyModel.getTotalDiscount())) * 100D / 100D));
 		priceDetails.put("convenienceFee", propertyModel.getConvenienceFee());
 		priceDetails.put("convenienceGSTPercentage", propertyModel.getConvenienceGSTPercentage());

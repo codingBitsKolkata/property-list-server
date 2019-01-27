@@ -393,22 +393,34 @@ public class PropertyListHelper {
 					int guestCanHave = 0;
 					for (Map.Entry<String, FilterRoomModel> entry : filteredRooms.entrySet()) {
 						guestCanHave = guestCanHave + entry.getValue().getBedAvailable();
+						entry.getValue().setNumOfBedBooked("0");
+						entry.getValue().setNumOfCotBooked("0");
 				    }
 					
 					if(guestCanHave >= noOfGuest) {
 						flag = true;
 					}
+					
 				} else {
 					int guestCanHave = 0;
 					for (Map.Entry<String, FilterRoomModel> entry : filteredRooms.entrySet()) {
 						if(roomByOraName.containsKey(entry.getKey())) {
 							int maxBedBooked = 0;
+							int maxCotBooked = 0;
 							List<BookingVsRoomModel> roomBooked = roomByOraName.get(entry.getKey());
 							for(BookingVsRoomModel bookingVsRoomModel : roomBooked) {
 								if(maxBedBooked < Integer.parseInt(bookingVsRoomModel.getNumOfSharedBed())) {
 									maxBedBooked = Integer.parseInt(bookingVsRoomModel.getNumOfSharedBed()); // Getting Highest Number of bed booked for that room
 								}
+								
+								if(maxCotBooked < Integer.parseInt(bookingVsRoomModel.getNumOfSharedCot())) {
+									maxCotBooked = Integer.parseInt(bookingVsRoomModel.getNumOfSharedCot()); // Getting Highest Number of cot booked for that room
+								}
 							}
+							
+							entry.getValue().setNumOfBedBooked(String.valueOf(maxBedBooked));
+							entry.getValue().setNumOfCotBooked(String.valueOf(maxCotBooked));
+							
 							if((entry.getValue().getBedAvailable() - maxBedBooked) > 0) { // Min 1 Bed Available
 								entry.getValue().setBedAvailable(entry.getValue().getBedAvailable() - maxBedBooked);
 								entry.getValue().setBedAllocated(noOfGuest - entry.getValue().getBedAvailable() - maxBedBooked);
@@ -880,12 +892,16 @@ public class PropertyListHelper {
 		Double offerPrice = 0.0D;
 		// Offer Calculation
 		if(!CollectionUtils.isEmpty(offerEntities)) {
-			for(OfferEntity offerEntity : offerEntities) {
+			
+			List<OfferEntity> sortedList = new ArrayList<>(offerEntities);
+			Collections.sort(sortedList, new OfferEntityComparatorById());
+			System.out.println("sortedList ==>> "+sortedList);
+			for(OfferEntity offerEntity : sortedList) {
 				System.out.println("offerEntity ==>> "+offerEntity);
 				if(Objects.nonNull(offerEntity)) {
 					
 					System.out.println("offerEntity.getMaxAmount() ==>> "+offerEntity.getMaxAmount());
-					if (!StringUtils.isBlank(offerEntity.getMaxAmount())) { // Calculate with Max Amount
+					if (!StringUtils.isBlank(offerEntity.getMaxAmount()) && offerPrice == 0.0) { // Calculate with Max Amount
 						
 						if (Double.parseDouble(offerEntity.getMaxAmount()) <= oraFinalPrice) {
 							if (!StringUtils.isBlank(offerEntity.getAmount())) { // Amount Check
@@ -1141,6 +1157,8 @@ public class PropertyListHelper {
 						
 						if(!Util.isEmpty(entry.getValue().getBedAllocated()) && entry.getValue().getBedAllocated() != 0) {
 							roomModel.setBedAllocated(String.valueOf(entry.getValue().getBedAllocated()));
+							roomModel.setNumOfBedBooked(entry.getValue().getNumOfBedBooked());
+							roomModel.setNumOfCotBooked(entry.getValue().getNumOfCotBooked());
 						}
 						
 						roomModel.setIsSelected("true");
@@ -1186,6 +1204,9 @@ public class PropertyListHelper {
 						Map<String, List<BookingVsRoomModel>> roomByOraName = callBookingService(String.valueOf(propertyEntity.getPropertyId()), filterCiteriaModel.getCheckInDate(), Accommodation.SHARED.name());
 						if(CollectionUtils.isEmpty(roomByOraName)) { // No Booking Present
 							
+							roomModel.setNumOfBedBooked("0");
+							roomModel.setNumOfCotBooked("0");
+							
 							if(Integer.parseInt(roomModel.getNoOfGuest()) > Integer.parseInt(roomEntity.getNumOfBed())) {
 								count.add(false);
 								break;
@@ -1209,6 +1230,9 @@ public class PropertyListHelper {
 									}
 								}
 								
+								roomModel.setNumOfBedBooked(String.valueOf(maxBedBooked));
+								roomModel.setNumOfCotBooked(String.valueOf(maxCotBooked));
+								;
 								if(Integer.parseInt(roomModel.getNoOfGuest()) > (Integer.parseInt(roomEntity.getNumOfBed()) - maxBedBooked)) {
 									count.add(false);
 									break;

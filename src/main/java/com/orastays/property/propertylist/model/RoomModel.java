@@ -167,4 +167,10 @@ public class RoomModel extends CommonModel {
 	
 	@JsonProperty("totalAmt")
 	private String totalAmt;
+	
+	@JsonProperty("numOfBedBooked")
+	private String numOfBedBooked;
+	
+	@JsonProperty("numOfCotBooked")
+	private String numOfCotBooked;
 }

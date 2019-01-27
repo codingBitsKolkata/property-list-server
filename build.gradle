@@ -24,7 +24,7 @@ apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 
 group = 'com.orastays'
-version = '1'
+//version = '1'
 sourceCompatibility = 1.8
 
 repositories {
@@ -35,10 +35,10 @@ repositories {
 task fatJar(type: Jar) {
 	manifest {
         attributes 'Implementation-Title': 'PropertyList',  
-        	'Implementation-Version': version,
+        	//'Implementation-Version': version,
         	'Main-Class': 'com.orastays.property.propertylist.PropertyListApplication'
     }
-    baseName = project.name + '-all'
+    baseName = project.name
     from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
     with jar
 }

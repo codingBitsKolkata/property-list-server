@@ -23,8 +23,8 @@ private static final Logger logger = LogManager.getLogger(HomeValidation.class);
 	
 	public UserModel validateBookmark(WishlistModel wishlistModel) throws FormExceptions {
 
-		if (logger.isDebugEnabled()) {
-			logger.debug("validateBookmark -- Start");
+		if (logger.isInfoEnabled()) {
+			logger.info("validateBookmark -- Start");
 		}
 
 		UserModel userModel = getUserDetails(wishlistModel.getUserToken());
@@ -52,8 +52,8 @@ private static final Logger logger = LogManager.getLogger(HomeValidation.class);
 		if (exceptions.size() > 0)
 			throw new FormExceptions(exceptions);
 
-		if (logger.isDebugEnabled()) {
-			logger.debug("validateBookmark -- End");
+		if (logger.isInfoEnabled()) {
+			logger.info("validateBookmark -- End");
 		}
 		
 		return userModel;

@@ -98,7 +98,7 @@ public class AuthorizeUserValidation {
 			String jsonString = gson.toJson(responseModel.getResponseBody());
 			userModel = gson.fromJson(jsonString, UserModel.class);
 			if (Objects.isNull(userModel)) {
-				exceptions.put(messageUtil.getBundle("token.invalid.code"), new Exception(messageUtil.getBundle("token.invalid.message")));
+				exceptions.put(messageUtil.getBundle("session.expires.code"), new Exception(messageUtil.getBundle("session.expires.message")));
 			}
 
 			if (logger.isInfoEnabled()) {
@@ -107,7 +107,7 @@ public class AuthorizeUserValidation {
 		} catch (Exception e) {
 			e.printStackTrace();
 			// Disabled the below line to pass the Token Validation
-			exceptions.put(messageUtil.getBundle("token.invalid.code"), new Exception(messageUtil.getBundle("token.invalid.message")));
+			exceptions.put(messageUtil.getBundle("session.expires.code"), new Exception(messageUtil.getBundle("session.expires.message")));
 		}
 
 		if (exceptions.size() > 0)

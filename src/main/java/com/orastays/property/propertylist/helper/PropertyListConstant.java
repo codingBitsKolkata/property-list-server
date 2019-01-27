@@ -20,4 +20,7 @@ public final class PropertyListConstant {
 	public static final String STR_N = "N";
 	public static final String SHARED = "SHARED";
 	public static final String PRIVATE = "PRIVATE";
+	public static final String MODE_CASH = "CASH";
+	public static final String MODE_CASHLESS = "CASHLESS";
+	public static final String MODE_PARTIAL = "PARTIAL";
 }

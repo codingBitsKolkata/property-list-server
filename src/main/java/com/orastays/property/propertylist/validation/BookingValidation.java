@@ -20,8 +20,8 @@ public class BookingValidation extends AuthorizeUserValidation {
 	
 	public UserModel validatePropertyBooking(FilterCiteriaModel filterCiteriaModel) throws FormExceptions {
 
-		if (logger.isDebugEnabled()) {
-			logger.debug("validatePropertyBooking -- Start");
+		if (logger.isInfoEnabled()) {
+			logger.info("validatePropertyBooking -- Start");
 		}
 
 		UserModel userModel = propertyListValidation.validateFetchPriceDetails(filterCiteriaModel);
@@ -40,11 +40,14 @@ public class BookingValidation extends AuthorizeUserValidation {
 			}
 		}
 		
-		// Validate Total Price
-		if (StringUtils.isBlank(filterCiteriaModel.getReturnURL())) {
-			exceptions.put(messageUtil.getBundle("returnURL.null.code"), new Exception(messageUtil.getBundle("returnURL.null.message")));
+		if (StringUtils.isBlank(filterCiteriaModel.getSuccessURL())) {
+			exceptions.put(messageUtil.getBundle("successURL.null.code"), new Exception(messageUtil.getBundle("successURL.null.message")));
 		}
-				
+		
+		if (StringUtils.isBlank(filterCiteriaModel.getFailureURL())) {
+			exceptions.put(messageUtil.getBundle("failureURL.null.code"), new Exception(messageUtil.getBundle("failureURL.null.message")));
+		}
+		
 		if(Objects.isNull(filterCiteriaModel.getBookingInfoModel())) {
 			exceptions.put(messageUtil.getBundle("travellerinfo.null.code"), new Exception(messageUtil.getBundle("travellerinfo.null.message")));
 		} else {
@@ -67,8 +70,8 @@ public class BookingValidation extends AuthorizeUserValidation {
 		if (exceptions.size() > 0)
 			throw new FormExceptions(exceptions);
 		
-		if (logger.isDebugEnabled()) {
-			logger.debug("validatePropertyBooking -- End");
+		if (logger.isInfoEnabled()) {
+			logger.info("validatePropertyBooking -- End");
 		}
 		
 		return userModel;

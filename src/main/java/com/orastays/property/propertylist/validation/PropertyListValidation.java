@@ -31,8 +31,8 @@ public class PropertyListValidation extends AuthorizeUserValidation {
 	
 	public UserModel validateFetchProperties(FilterCiteriaModel filterCiteriaModel) throws FormExceptions {
 
-		if (logger.isDebugEnabled()) {
-			logger.debug("validateFetchProperties -- Start");
+		if (logger.isInfoEnabled()) {
+			logger.info("validateFetchProperties -- Start");
 		}
 
 		UserModel userModel = null;
@@ -160,8 +160,8 @@ public class PropertyListValidation extends AuthorizeUserValidation {
 			}
 		}
 
-		if (logger.isDebugEnabled()) {
-			logger.debug("validateFetchProperties -- End");
+		if (logger.isInfoEnabled()) {
+			logger.info("validateFetchProperties -- End");
 		}
 		
 		return userModel;
@@ -169,8 +169,8 @@ public class PropertyListValidation extends AuthorizeUserValidation {
 	
 	public UserModel validateFetchPropertyDetails(FilterCiteriaModel filterCiteriaModel) throws FormExceptions {
 
-		if (logger.isDebugEnabled()) {
-			logger.debug("validateFetchPropertyDetails -- Start");
+		if (logger.isInfoEnabled()) {
+			logger.info("validateFetchPropertyDetails -- Start");
 		}
 
 		UserModel userModel = null;
@@ -313,8 +313,8 @@ public class PropertyListValidation extends AuthorizeUserValidation {
 			}
 		}
 
-		if (logger.isDebugEnabled()) {
-			logger.debug("validateFetchPropertyDetails -- End");
+		if (logger.isInfoEnabled()) {
+			logger.info("validateFetchPropertyDetails -- End");
 		}
 		
 		return userModel;
@@ -322,8 +322,8 @@ public class PropertyListValidation extends AuthorizeUserValidation {
 
 	public UserModel validateFetchPriceDetails(FilterCiteriaModel filterCiteriaModel) throws FormExceptions {
 
-		if (logger.isDebugEnabled()) {
-			logger.debug("validateFetchPriceDetails -- Start");
+		if (logger.isInfoEnabled()) {
+			logger.info("validateFetchPriceDetails -- Start");
 		}
 
 		UserModel userModel = null;
@@ -463,8 +463,8 @@ public class PropertyListValidation extends AuthorizeUserValidation {
 			}
 		}
 
-		if (logger.isDebugEnabled()) {
-			logger.debug("validateFetchPriceDetails -- End");
+		if (logger.isInfoEnabled()) {
+			logger.info("validateFetchPriceDetails -- End");
 		}
 		
 		return userModel;

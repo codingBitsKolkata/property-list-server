@@ -14,8 +14,11 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.orastays.property.propertylist.exceptions.FormExceptions;
+import com.orastays.property.propertylist.helper.PropertyListConstant;
 import com.orastays.property.propertylist.helper.Util;
 import com.orastays.property.propertylist.model.FilterCiteriaModel;
 import com.orastays.property.propertylist.model.PropertyModel;
@@ -23,6 +26,7 @@ import com.orastays.property.propertylist.model.ResponseModel;
 import com.orastays.property.propertylist.model.RoomModel;
 import com.orastays.property.propertylist.model.booking.BookingModel;
 import com.orastays.property.propertylist.model.booking.BookingVsRoomModel;
+import com.orastays.property.propertylist.model.booking.FormOfPayment;
 import com.orastays.property.propertylist.model.booking.PaymentModel;
 import com.orastays.property.propertylist.model.user.UserModel;
 import com.orastays.property.propertylist.service.BookingService;
@@ -42,8 +46,6 @@ public class BookingServiceImpl extends BaseServiceImpl implements BookingServic
 		
 		Map<String, Exception> exceptions = new LinkedHashMap<>();
 		PaymentModel paymentModel = null;
-		//UserModel userModel = new UserModel();
-		//userModel.setUserId("1");
 		UserModel userModel = bookingValidation.validatePropertyBooking(filterCiteriaModel);
 		if(Objects.nonNull(userModel)) {
 			PropertyModel propertyModel = propertyListService.fetchPriceDetails(filterCiteriaModel);
@@ -61,7 +63,8 @@ public class BookingServiceImpl extends BaseServiceImpl implements BookingServic
 				bookingModel.setCheckinDate(filterCiteriaModel.getCheckInDate());
 				bookingModel.setCheckoutDate(filterCiteriaModel.getCheckOutDate());
 				bookingModel.setNumOfDays(String.valueOf(Util.getDayDiff(filterCiteriaModel.getCheckInDate(), filterCiteriaModel.getCheckOutDate())));
-				bookingModel.setReturnURL(filterCiteriaModel.getReturnURL());
+				bookingModel.setSuccessURL(filterCiteriaModel.getSuccessURL());
+				bookingModel.setFailureURL(filterCiteriaModel.getFailureURL());
 				
 				String finalPrice = propertyModel.getPriceDetails().get("finalPrice");
 				if(!StringUtils.equals(finalPrice, filterCiteriaModel.getTotalAmt())) {
@@ -78,7 +81,12 @@ public class BookingServiceImpl extends BaseServiceImpl implements BookingServic
 					bookingModel.setUserFinalPrice(finalPrice);
 					bookingModel.setUserId(userModel.getUserId());
 					
-					// TODO Set BookingVsRoomModel
+					FormOfPayment formOfPayment = new FormOfPayment();
+					formOfPayment.setCurrency("INR");
+					formOfPayment.setMode(PropertyListConstant.MODE_CASHLESS);
+					formOfPayment.setPercentage(messageUtil.getBundle("payment_percentage"));
+					bookingModel.setFormOfPayment(formOfPayment);
+					
 					List<BookingVsRoomModel> bookingVsRooms = new ArrayList<>();
 					for(RoomModel roomModel : propertyModel.getRoomModels()) {
 						
@@ -92,23 +100,33 @@ public class BookingServiceImpl extends BaseServiceImpl implements BookingServic
 							bookingVsRoomModel.setNumOfAdult(roomModel.getNoOfGuest());
 							bookingVsRoomModel.setNumOfChild(roomModel.getNoOfChild());
 							bookingVsRoomModel.setNumOfCot(roomModel.getNumOfCot());
-							//bookingVsRoomModel.setNumOfSharedBed(numOfSharedBed);
-							//bookingVsRoomModel.setNumOfSharedCot(numOfSharedCot);
+							
+							if (StringUtils.equals(filterCiteriaModel.getStayType(), PropertyListConstant.SHARED)) { // Customer Wants SHARED Rooms
+								bookingVsRoomModel.setNumOfSharedBed(roomModel.getNoOfGuest());
+								bookingVsRoomModel.setNumOfSharedCot(roomModel.getNumOfCot());
+								bookingVsRoomModel.setTotalNumOfSharedBed(roomModel.getNumOfBed());
+								bookingVsRoomModel.setTotalNumOfSharedCot(roomModel.getNumOfCot());
+							}
+							
 							bookingVsRoomModel.setOraDiscount(roomModel.getOraDiscount());
 							bookingVsRoomModel.setOraFinalPrice(roomModel.getOraFinalPrice());
 							bookingVsRoomModel.setOraMarkUp(roomModel.getOraPercentage());
 							bookingVsRoomModel.setOraPrice(roomModel.getOraPrice());
 							bookingVsRoomModel.setOraRoomName(roomModel.getOraRoomName());
 							bookingVsRoomModel.setTotalAmt(roomModel.getTotalAmt());
-							//bookingVsRoomModel.setTotalNumOfSharedBed(totalNumOfSharedBed);
-							//bookingVsRoomModel.setTotalNumOfSharedCot(totalNumOfSharedCot);
+							bookingVsRoomModel.setRoomId(roomModel.getRoomId());
 							
 							bookingVsRooms.add(bookingVsRoomModel);
 						}
 					}
 					
 					bookingModel.setBookingVsRooms(bookingVsRooms);
-					System.out.println("bookingModel ==>> "+bookingModel);
+					try {
+						System.out.println("bookingModel ==>> "+new ObjectMapper().writeValueAsString(bookingModel));
+					} catch (JsonProcessingException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					
 					Gson gson = new Gson();
 					try {

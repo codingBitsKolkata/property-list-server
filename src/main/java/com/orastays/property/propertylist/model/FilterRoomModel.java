@@ -25,5 +25,7 @@ public class FilterRoomModel {
 	private RoomEntity roomEntity;
 	private Boolean isSelected;
 	private Double totalPrice;
+	private String numOfBedBooked;
+	private String numOfCotBooked;
 	
 }

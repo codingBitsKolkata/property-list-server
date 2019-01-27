@@ -37,6 +37,7 @@ public class BookingController extends BaseController {
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
 			@ApiResponse(code = 201, message = "Please Try after Sometime!!!") })
 	public ResponseEntity<ResponseModel> propertyBooking(@RequestBody FilterCiteriaModel filterCiteriaModel) {
+		
 		if (logger.isInfoEnabled()) {
 			logger.info("propertyBooking -- START");
 		}
