@@ -13,7 +13,7 @@ public interface PropertyListService {
 
 	List<PropertyListViewModel> fetchProperties(FilterCiteriaModel filterCiteriaModel) throws FormExceptions;
 
-	BookingVsRoomModel roomDetailsByOraRoomName(String oraRoomName);
+	List<BookingVsRoomModel> roomDetailsByOraRoomName(List<BookingVsRoomModel> bookingVsRoomModels);
 
 	PropertyModel fetchPropertyById(String propertyId);
 

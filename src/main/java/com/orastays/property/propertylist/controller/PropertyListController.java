@@ -93,21 +93,22 @@ public class PropertyListController extends BaseController {
 		}
 	}
 	
-	@GetMapping(value = "/room-details-by-oraRoomName", produces = "application/json")
+	@PostMapping(value = "/room-details-by-oraRoomName", produces = "application/json")
 	@ApiOperation(value = "Room Details By Ora Room Name", response = ResponseModel.class)
+	//@ApiIgnore
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK"),
 			@ApiResponse(code = 201, message = "Please Try after Sometime!!!") })
-	public ResponseEntity<ResponseModel> roomDetailsByOraRoomName(@RequestParam(value = "oraRoomName", required = true) String oraRoomName) {
+	public ResponseEntity<ResponseModel> roomDetailsByOraRoomName(@RequestBody List<BookingVsRoomModel> bookingVsRoomModels) {
 
 		if (logger.isInfoEnabled()) {
 			logger.info("roomDetailsByOraRoomName -- START");
 		}
 
 		ResponseModel responseModel = new ResponseModel();
-		Util.printLog(oraRoomName, PropertyListConstant.INCOMING, "Room Details By Ora Room Name", request);
+		Util.printLog(bookingVsRoomModels, PropertyListConstant.INCOMING, "Room Details By Ora Room Name", request);
 		try {
-			BookingVsRoomModel bookingVsRoomModel = propertyService.roomDetailsByOraRoomName(oraRoomName);
-			responseModel.setResponseBody(bookingVsRoomModel);
+			List<BookingVsRoomModel> bookingVsRoomModels2 = propertyService.roomDetailsByOraRoomName(bookingVsRoomModels);
+			responseModel.setResponseBody(bookingVsRoomModels2);
 			responseModel.setResponseCode(messageUtil.getBundle(PropertyListConstant.COMMON_SUCCESS_CODE));
 			responseModel.setResponseMessage(messageUtil.getBundle(PropertyListConstant.COMMON_SUCCESS_MESSAGE));
 		} catch (Exception e) {

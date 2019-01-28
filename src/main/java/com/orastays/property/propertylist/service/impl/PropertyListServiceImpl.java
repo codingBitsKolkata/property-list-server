@@ -385,42 +385,47 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 	}
 	
 	@Override
-	public BookingVsRoomModel roomDetailsByOraRoomName(String oraRoomName) {
+	public List<BookingVsRoomModel> roomDetailsByOraRoomName(List<BookingVsRoomModel> bookingVsRoomModels) {
 
 		if (logger.isInfoEnabled()) {
 			logger.info("roomDetailsByOraRoomName -- START");
 		}
 		
-		BookingVsRoomModel bookingVsRoomModel = new BookingVsRoomModel();
+		List<BookingVsRoomModel> bookingVsRoomModels2 = new ArrayList<>();
+		for(BookingVsRoomModel input : bookingVsRoomModels) {
+			BookingVsRoomModel bookingVsRoomModel = new BookingVsRoomModel();
+			
+			try {
+				Map<String, String> innerMap1 = new LinkedHashMap<>();
+				innerMap1.put("status", String.valueOf(Status.ACTIVE.ordinal()));
+				innerMap1.put("oraRoomName", input.getOraRoomName());
 		
-		try {
-			Map<String, String> innerMap1 = new LinkedHashMap<>();
-			innerMap1.put("status", String.valueOf(Status.ACTIVE.ordinal()));
-			innerMap1.put("oraRoomName", oraRoomName);
-	
-			Map<String, Map<String, String>> outerMap1 = new LinkedHashMap<>();
-			outerMap1.put("eq", innerMap1);
-	
-			Map<String, Map<String, Map<String, String>>> alliasMap = new LinkedHashMap<>();
-			alliasMap.put(entitymanagerPackagesToScan+".RoomEntity", outerMap1);
-			
-			RoomEntity roomEntity = roomDAO.fetchObjectBySubCiteria(alliasMap);
-			if(Objects.nonNull(roomEntity)) {
-				bookingVsRoomModel.setTotalNumOfSharedBed(roomEntity.getNumOfBed());
-				bookingVsRoomModel.setTotalNumOfSharedCot(roomEntity.getNumOfCot());
+				Map<String, Map<String, String>> outerMap1 = new LinkedHashMap<>();
+				outerMap1.put("eq", innerMap1);
+		
+				Map<String, Map<String, Map<String, String>>> alliasMap = new LinkedHashMap<>();
+				alliasMap.put(entitymanagerPackagesToScan+".RoomEntity", outerMap1);
+				
+				RoomEntity roomEntity = roomDAO.fetchObjectBySubCiteria(alliasMap);
+				if(Objects.nonNull(roomEntity)) {
+					bookingVsRoomModel.setTotalNumOfSharedBed(roomEntity.getNumOfBed());
+					bookingVsRoomModel.setTotalNumOfSharedCot(roomEntity.getNumOfCot());
+				}
+				
+			} catch (Exception e) {
+				if (logger.isInfoEnabled()) {
+					logger.info("Exception in roomDetailsByOraRoomName -- "+Util.errorToString(e));
+				}
 			}
 			
-		} catch (Exception e) {
-			if (logger.isInfoEnabled()) {
-				logger.info("Exception in roomDetailsByOraRoomName -- "+Util.errorToString(e));
-			}
+			bookingVsRoomModels2.add(bookingVsRoomModel);
 		}
 		
 		if (logger.isInfoEnabled()) {
 			logger.info("roomDetailsByOraRoomName -- END");
 		}
 		
-		return bookingVsRoomModel;
+		return bookingVsRoomModels2;
 	}
 
 	@Override
