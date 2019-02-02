@@ -43,10 +43,6 @@ public class GstSlabEntity extends CommonEntity {
 	@JsonProperty("percentage")
 	private String percentage;
 
-//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "gstSlabEntity", cascade = { CascadeType.ALL })
-//	@JsonProperty("bookingVsRooms")
-//	private List<BookingVsRoomEntity> bookingVsRoomEntities;
-
 	@Override
 	public String toString() {
 		return Long.toString(gstSlabId);

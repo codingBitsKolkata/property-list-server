@@ -39,10 +39,6 @@ public class ConvenienceEntity extends CommonEntity {
 	@JsonProperty("gstPercentage")
 	private String gstPercentage;
 	
-//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "convenienceEntity", cascade = { CascadeType.ALL })
-//	@JsonProperty("bookings")
-//	private List<BookingEntity> bookingEntities;
-
 	@Override
 	public String toString() {
 		return Long.toString(convenienceId);

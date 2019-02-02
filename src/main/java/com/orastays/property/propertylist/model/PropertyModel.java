@@ -89,6 +89,15 @@ public class PropertyModel extends CommonModel {
 
 	@JsonProperty("advancePercentage")
 	private String advancePercentage;
+	
+	@JsonProperty("location")
+	private String location;
+
+	@JsonProperty("cityType")
+	private CityModel cityModel;
+	
+	@JsonProperty("propertyVsToiletrys")
+	private PropertyVsToiletryModel propertyVsToiletryModel;
 
 	@JsonProperty("userTypeId")
 	private String userTypeId;

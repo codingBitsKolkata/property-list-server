@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -123,10 +124,19 @@ public class PropertyEntity extends CommonEntity {
 	@JsonProperty("advancePercentage")
 	private String advancePercentage;
 
+	@Column(name = "location")
+	@JsonProperty("location")
+	private String location;
+
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "property_type_id", nullable = false)
 	@JsonProperty("propertyType")
 	private PropertyTypeEntity propertyTypeEntity;
+
+	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
+	@JoinColumn(name = "city_id", nullable = false)
+	@JsonProperty("city")
+	private CityEntity cityEntity;
 
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "stay_type_id", nullable = false)
@@ -165,6 +175,10 @@ public class PropertyEntity extends CommonEntity {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "propertyEntity", cascade = { CascadeType.ALL })
 	@JsonProperty("propertyVsSpaceRules")
 	private List<PropertyVsSpaceRuleEntity> propertyVsSpaceRuleEntities;
+
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "propertyEntity", cascade = { CascadeType.ALL })
+	@JsonProperty("propertyVsToiletrys")
+	private PropertyVsToiletryEntity propertyVsToiletryEntity;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "propertyEntity", cascade = { CascadeType.ALL })
 	@JsonProperty("propertyVsSpecialExperiences")
