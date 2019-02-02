@@ -100,7 +100,10 @@ public class CommonConverter {
 	protected PropertyVsSpaceRuleConverter propertyVsSpaceRuleConverter;
 
 	@Autowired
-	protected PropertyVsSpecialExperienceConverter vsSpecialExperienceConverter;
+	protected PropertyVsSpecialExperienceConverter propertyVsSpecialExperienceConverter;
+	
+	@Autowired
+	protected PropertyVsToiletryConverter propertyVsToiletryConverter;
 
 	@Autowired
 	protected DocumentConverter documentConverter;

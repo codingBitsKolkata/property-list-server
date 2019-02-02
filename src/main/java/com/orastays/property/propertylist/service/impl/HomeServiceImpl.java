@@ -231,10 +231,11 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 				}
 				
 			} catch (Exception e) {
-				e.printStackTrace();
+				//e.printStackTrace();
 				if (logger.isInfoEnabled()) {
 					logger.info("Exception in findByRating -- "+Util.errorToString(e));
 				}
+				System.err.println("propertyEntity ==>> "+propertyEntity);
 				ratingCount.put(propertyEntity, 0); // Rating
 			}
 		});

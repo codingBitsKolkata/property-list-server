@@ -49,7 +49,7 @@ public class PropertyConverter extends CommonConverter implements BaseConverter<
 			propertyModel = (PropertyModel) Util.transform(modelMapper, e, propertyModel);
 			propertyModel.setPropertyTypeModel(propertyTypeConverter.entityToModel(e.getPropertyTypeEntity()));
 			propertyModel.setStayTypeModel(stayTypeConverter.entityToModel(e.getStayTypeEntity()));
-			
+			propertyModel.setPropertyVsToiletryModel(propertyVsToiletryConverter.entityToModel(e.getPropertyVsToiletryEntity()));
 			propertyModel.setPropertyVsDocumentModels(propertyVsDocumentConverter.entityListToModelList(e.getPropertyVsDocumentEntities()));
 			propertyModel.setPropertyVsDescriptionModels(propertyVsDescriptionConverter.entityListToModelList(e.getPropertyVsDescriptionEntities()));
 			propertyModel.setPropertyVsGuestAccessModels(propertyVsGuestAccessConverter.entityListToModelList(e.getPropertyVsGuestAccessEntities()));
@@ -57,7 +57,7 @@ public class PropertyConverter extends CommonConverter implements BaseConverter<
 			propertyModel.setPropertyVsNearbyModels(propertyVsNearbyConverter.entityListToModelList(e.getPropertyVsNearbyEntities()));
 			propertyModel.setPropertyVsPriceDropModels(propertyVsPriceDropConverter.entityListToModelList(e.getPropertyVsPriceDropEntities()));
 			propertyModel.setPropertyVsSpaceRuleModels(propertyVsSpaceRuleConverter.entityListToModelList(e.getPropertyVsSpaceRuleEntities()));
-			propertyModel.setPropertyVsSpecialExperienceModels(vsSpecialExperienceConverter.entityListToModelList(e.getPropertyVsSpecialExperienceEntities()));
+			propertyModel.setPropertyVsSpecialExperienceModels(propertyVsSpecialExperienceConverter.entityListToModelList(e.getPropertyVsSpecialExperienceEntities()));
 			
 			// Room Details
 			propertyModel.setRoomModels(roomConverter.entityListToModelList(e.getRoomEntities()));
