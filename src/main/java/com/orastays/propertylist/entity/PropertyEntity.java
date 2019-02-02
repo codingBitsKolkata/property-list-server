@@ -25,7 +25,7 @@ import lombok.Setter;
 @Table(name = "master_property")
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false, of="propertyId")
 public class PropertyEntity extends CommonEntity {
 
 	private static final long serialVersionUID = -7666760673115186373L;
@@ -147,6 +147,10 @@ public class PropertyEntity extends CommonEntity {
 	@JoinColumn(name = "host_vs_account_id", nullable = false)
 	@JsonProperty("hostVsAccount")
 	private HostVsAccountEntity hostVsAccountEntity;
+	
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "propertyEntity", cascade = { CascadeType.ALL })
+	@JsonProperty("propertyVsToiletry")
+	private PropertyVsToiletryEntity propertyVsToiletryEntity;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "propertyEntity", cascade = { CascadeType.ALL })
 	@JsonProperty("propertyVsDocuments")
@@ -175,10 +179,6 @@ public class PropertyEntity extends CommonEntity {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "propertyEntity", cascade = { CascadeType.ALL })
 	@JsonProperty("propertyVsSpaceRules")
 	private List<PropertyVsSpaceRuleEntity> propertyVsSpaceRuleEntities;
-
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "propertyEntity", cascade = { CascadeType.ALL })
-	@JsonProperty("propertyVsToiletrys")
-	private PropertyVsToiletryEntity propertyVsToiletryEntity;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "propertyEntity", cascade = { CascadeType.ALL })
 	@JsonProperty("propertyVsSpecialExperiences")

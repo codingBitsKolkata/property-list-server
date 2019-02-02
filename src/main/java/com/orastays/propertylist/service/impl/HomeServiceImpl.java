@@ -19,6 +19,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.client.HttpClientErrorException;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -769,7 +770,12 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 				ratings.add("0"); // Review Count
 			}
 			
-			
+		} catch (HttpClientErrorException e) {
+			if (logger.isInfoEnabled()) {
+				logger.info("Exception in getRatingAndReview -- "+(e.getCause()));
+			}
+			ratings.add("0");
+			ratings.add("0");
 		} catch (Exception e) {
 			if (logger.isInfoEnabled()) {
 				logger.info("Exception in getRatingAndReview -- "+Util.errorToString(e));

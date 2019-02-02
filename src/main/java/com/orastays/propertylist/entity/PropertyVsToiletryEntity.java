@@ -21,10 +21,10 @@ import lombok.Setter;
 @Table(name = "property_vs_toiletry")
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(callSuper = false, of="propertyVsToiletryId")
 public class PropertyVsToiletryEntity extends CommonEntity  {
 	
-	private static final long serialVersionUID = 136704694247669382L;
+	private static final long serialVersionUID = 8677302774166485255L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
