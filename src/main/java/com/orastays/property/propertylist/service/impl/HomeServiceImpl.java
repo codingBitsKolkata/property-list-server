@@ -231,9 +231,11 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 				}
 				
 			} catch (Exception e) {
+				e.printStackTrace();
 				if (logger.isInfoEnabled()) {
 					logger.info("Exception in findByRating -- "+Util.errorToString(e));
 				}
+				ratingCount.put(propertyEntity, 0); // Rating
 			}
 		});
 		
@@ -304,6 +306,7 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 				if (logger.isInfoEnabled()) {
 					logger.info("Exception in findByBooking -- "+Util.errorToString(e));
 				}
+				bookingCount.put(propertyEntity, 0);
 			}
 		});
 		
@@ -379,7 +382,6 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 		
 		return propertyListViewModel;
 	}
-	
 	
 	private PropertyListViewModel findByPrice(List<PropertyEntity> propertyEntities) {
 		
@@ -786,7 +788,7 @@ public class HomeServiceImpl extends BaseServiceImpl implements HomeService {
 	public List<OfferModel> fetchOffer() throws FormExceptions {
 		
 		if (logger.isInfoEnabled()) {
-			logger.info("fetchPropertyTypes -- START");
+			logger.info("fetchOffer -- START");
 		}
 		
 		List<OfferModel> offerModels = null;

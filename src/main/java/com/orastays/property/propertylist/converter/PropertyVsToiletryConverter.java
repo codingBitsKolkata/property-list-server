@@ -36,7 +36,7 @@ public class PropertyVsToiletryConverter extends CommonConverter
 		
 		PropertyVsToiletryModel propertyVsToiletryModel = null;
 		
-		if(Objects.nonNull(e) && e.getStatus() == Status.ACTIVE.ordinal()){
+		if(Objects.nonNull(e) && e.getStatus() == Status.ACTIVE.ordinal()) {
 			propertyVsToiletryModel = new PropertyVsToiletryModel();
 			propertyVsToiletryModel = (PropertyVsToiletryModel) Util.transform(modelMapper, e, propertyVsToiletryModel);
 		}

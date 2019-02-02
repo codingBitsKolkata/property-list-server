@@ -44,7 +44,7 @@ public class PropertyConverter extends CommonConverter implements BaseConverter<
 		}
 		
 		PropertyModel propertyModel = null;
-		if(Objects.nonNull(e)) {
+		if(Objects.nonNull(e) && e.getStatus() == Status.ACTIVE.ordinal()) {
 			propertyModel = new PropertyModel();
 			propertyModel = (PropertyModel) Util.transform(modelMapper, e, propertyModel);
 			propertyModel.setPropertyTypeModel(propertyTypeConverter.entityToModel(e.getPropertyTypeEntity()));
