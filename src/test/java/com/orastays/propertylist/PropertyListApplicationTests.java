@@ -1,4 +1,4 @@
-package com.orastays.property.propertylist;
+package com.orastays.propertylist;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
