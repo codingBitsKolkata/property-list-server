@@ -32,7 +32,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping("/api")
+//@RequestMapping("/api")
 @Api(value = "Property List", tags = "Property List")
 public class PropertyListController extends BaseController {
 
