@@ -169,7 +169,7 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 				Gson gson = new Gson();
 				String jsonString = gson.toJson(responseModel.getResponseBody());
 				gson = new Gson();
-				Type listType = new TypeToken<List<UserReviewModel>>() {}.getType();
+				Type listType = new TypeToken<List<PropertyListViewModel>>() {}.getType();
 				List<PropertyListViewModel> hotelPropertyListViewModels = gson.fromJson(jsonString, listType);
 				
 				if (logger.isInfoEnabled()) {
