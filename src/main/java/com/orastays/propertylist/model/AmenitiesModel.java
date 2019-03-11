@@ -41,9 +41,6 @@ public class AmenitiesModel extends CommonModel {
 	@JsonProperty("aminitiesType")
 	private String aminitiesType;
 
-	@JsonProperty("languageId")
-	private String languageId;
-
 	@JsonProperty("parentId")
 	private String parentId;
 	
