@@ -21,6 +21,7 @@ import com.orastays.propertylist.entity.PropertyEntity;
 import com.orastays.propertylist.entity.RoomEntity;
 import com.orastays.propertylist.exceptions.FormExceptions;
 import com.orastays.propertylist.helper.PropertyListConstant;
+import com.orastays.propertylist.helper.PropertyType;
 import com.orastays.propertylist.helper.Status;
 import com.orastays.propertylist.helper.Util;
 import com.orastays.propertylist.model.ConvenienceModel;
@@ -155,6 +156,33 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		} catch (Exception e) {
 			if (logger.isInfoEnabled()) {
 				logger.info("Exception in fetchProperty -- "+Util.errorToString(e));
+			}
+		}
+		
+		// Fetch External Hotel
+		try {
+			
+			if(StringUtils.equals(filterCiteriaModel.getPropertyTypeId(), String.valueOf(PropertyType.HOTEL.ordinal()))) {
+				filterCiteriaModel.setNoOfAdult(filterCiteriaModel.getRoomModels().get(0).getNoOfGuest());
+				filterCiteriaModel.setNoOfChild(filterCiteriaModel.getNoOfChild());
+				ResponseModel responseModel = restTemplate.postForObject(messageUtil.getBundle("hotel.server.url") +"fetch-hotels", filterCiteriaModel, ResponseModel.class);
+				Gson gson = new Gson();
+				String jsonString = gson.toJson(responseModel.getResponseBody());
+				gson = new Gson();
+				Type listType = new TypeToken<List<UserReviewModel>>() {}.getType();
+				List<PropertyListViewModel> hotelPropertyListViewModels = gson.fromJson(jsonString, listType);
+				
+				if (logger.isInfoEnabled()) {
+					logger.info("hotelPropertyListViewModels ==>> "+hotelPropertyListViewModels);
+				}
+				
+				System.err.println("hotelPropertyListViewModels ==>> "+hotelPropertyListViewModels);
+				propertyListViewModels.addAll(hotelPropertyListViewModels);
+			}
+			
+		} catch (Exception e) {
+			if (logger.isInfoEnabled()) {
+				logger.info("Exception in Hotel Server -- "+Util.errorToString(e));
 			}
 		}
 		

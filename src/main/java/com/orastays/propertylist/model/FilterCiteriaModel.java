@@ -81,4 +81,16 @@ public class FilterCiteriaModel {
 	
 	@JsonProperty("successURL")
 	private String successURL;
+	
+	@JsonProperty("noOfAdult")
+	private String noOfAdult;
+
+	@JsonProperty("noOfChild")
+	private String noOfChild;
+	
+	@JsonProperty("countryName")
+	private String countryName;
+
+	@JsonProperty("cityName")
+	private String cityName;
 }

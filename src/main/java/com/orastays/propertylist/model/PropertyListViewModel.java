@@ -75,4 +75,7 @@ public class PropertyListViewModel {
 	
 	@JsonProperty("stayType")
 	private String stayType;
+	
+	@JsonProperty("correlationID")
+	private String correlationID;
 }
