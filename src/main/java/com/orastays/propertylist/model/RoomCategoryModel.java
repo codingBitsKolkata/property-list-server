@@ -21,9 +21,6 @@ public class RoomCategoryModel extends CommonModel {
 	@JsonProperty("name")
 	private String name;
 	
-	@JsonProperty("languageId")
-	private String languageId;
-	
 	@JsonProperty("parentId")
 	private String parentId;
 	

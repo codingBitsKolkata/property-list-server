@@ -21,9 +21,6 @@ public class SpaceRuleModel extends CommonModel {
 	@JsonProperty("spruleId")
 	private String spruleId;
 
-	@JsonProperty("languageId")
-	private String languageId;
-
 	@JsonProperty("parentId")
 	private String parentId;
 

@@ -24,9 +24,6 @@ public class MealPlanCategoryModel extends CommonModel {
 	@JsonProperty("mpcName")
 	private String mpcName;
 
-	@JsonProperty("languageId")
-	private String languageId;
-
 	@JsonProperty("parentId")
 	private String parentId;
 

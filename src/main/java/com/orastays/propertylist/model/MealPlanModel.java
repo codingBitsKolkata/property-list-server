@@ -21,9 +21,6 @@ public class MealPlanModel extends CommonModel {
 	@JsonProperty("mealPlanName")
 	private String mealPlanName;
 
-	@JsonProperty("languageId")
-	private String languageId;
-
 	@JsonProperty("parentId")
 	private String parentId;
 

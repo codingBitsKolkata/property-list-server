@@ -19,9 +19,6 @@ public class PropertyVsDescriptionModel extends CommonModel {
 	@JsonProperty("description")
 	private String description;
 	
-	@JsonProperty("languageId")
-	private String languageId;
-	
 	@JsonProperty("property")
 	private PropertyModel propertyModel;
 }

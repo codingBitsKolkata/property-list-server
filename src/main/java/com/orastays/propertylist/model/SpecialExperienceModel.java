@@ -21,9 +21,6 @@ public class SpecialExperienceModel extends CommonModel {
 	@JsonProperty("experienceId")
 	private String experienceId;
 
-	@JsonProperty("languageId")
-	private String languageId;
-
 	@JsonProperty("parentId")
 	private String parentId;
 

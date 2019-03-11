@@ -21,9 +21,6 @@ public class PropertyTypeModel extends CommonModel {
 	@JsonProperty("propertyTypeId")
 	private String propertyTypeId;
 	
-	@JsonProperty("languageId")
-	private String languageId;
-	
 	@JsonProperty("parentId")
 	private String parentId;
 	

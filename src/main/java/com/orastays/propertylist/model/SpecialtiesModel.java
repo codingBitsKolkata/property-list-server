@@ -24,9 +24,6 @@ public class SpecialtiesModel extends CommonModel {
 	@JsonProperty("specialitiesName")
 	private String specialitiesName;
 	
-	@JsonProperty("languageId")
-	private String languageId;
-	
 	@JsonProperty("parentId")
 	private String parentId;
 	
