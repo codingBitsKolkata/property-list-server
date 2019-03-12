@@ -185,4 +185,7 @@ public class PropertyModel extends CommonModel {
 	
 	@JsonProperty("priceDetails")
 	private Map<String, String> priceDetails;
+	
+	@JsonProperty("correlationID")
+	private String correlationID;
 }

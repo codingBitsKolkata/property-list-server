@@ -202,150 +202,177 @@ public class PropertyListServiceImpl extends BaseServiceImpl implements Property
 		
 		UserModel userModel = propertyListValidation.validateFetchPropertyDetails(filterCiteriaModel);
 		PropertyModel propertyModel = null;
+		if (StringUtils.isBlank(filterCiteriaModel.getCorrelationID())) {
+			
+			try {
+				Map<String, String> innerMap1 = new LinkedHashMap<>();
+				innerMap1.put("status", String.valueOf(Status.ACTIVE.ordinal()));
+				innerMap1.put("propertyId", String.valueOf(Long.parseLong(filterCiteriaModel.getPropertyId())));
 		
-		try {
-			Map<String, String> innerMap1 = new LinkedHashMap<>();
-			innerMap1.put("status", String.valueOf(Status.ACTIVE.ordinal()));
-			innerMap1.put("propertyId", String.valueOf(Long.parseLong(filterCiteriaModel.getPropertyId())));
-	
-			Map<String, Map<String, String>> outerMap1 = new LinkedHashMap<>();
-			outerMap1.put("eq", innerMap1);
-	
-			Map<String, Map<String, Map<String, String>>> alliasMap = new LinkedHashMap<>();
-			alliasMap.put(entitymanagerPackagesToScan+".PropertyEntity", outerMap1);
-			
-			Map<String, String> innerMap2 = new LinkedHashMap<>();
-			innerMap2.put("propertyTypeId", filterCiteriaModel.getPropertyTypeId());
-
-			Map<String, Map<String, String>> outerMap2 = new LinkedHashMap<>();
-			outerMap2.put("eq", innerMap2);
-
-			alliasMap.put("propertyTypeEntity", outerMap2);
-			
-			PropertyEntity propertyEntity = propertyDAO.fetchObjectBySubCiteria(alliasMap);
-			if(Objects.nonNull(propertyEntity)) {
+				Map<String, Map<String, String>> outerMap1 = new LinkedHashMap<>();
+				outerMap1.put("eq", innerMap1);
+		
+				Map<String, Map<String, Map<String, String>>> alliasMap = new LinkedHashMap<>();
+				alliasMap.put(entitymanagerPackagesToScan+".PropertyEntity", outerMap1);
 				
-				boolean flag = true;
-				List<PropertyEntity> filteredPropertyEntitiesByRadius = propertyDAO.selectByRadius(filterCiteriaModel);
-					// Filter By Property Start Date and End Date
-					if(propertyListHelper.filterByPropertyDate(propertyEntity, filterCiteriaModel)) {
-						
-						// Filter by location // Mandatory
-						if(propertyListHelper.filterByLocation(propertyEntity, filteredPropertyEntitiesByRadius)) {
-							// Filter by checkInDate // Mandatory
-							// Filter by checkOutDate // Mandatory
-							// Filter by roomModels // Mandatory
-							Map<Boolean, Map<String, FilterRoomModel>> filterResult = propertyListHelper.filterBycheckInDate(propertyEntity, filterCiteriaModel);
-							if (filterResult.containsKey(true)) {
-								
-								Map<String, FilterRoomModel> filteredRooms = filterResult.get(true);
-								System.err.println("filteredRooms ==>> "+filteredRooms);
-								// Filter By Rating
-								if (!CollectionUtils.isEmpty(filterCiteriaModel.getRatings())) {
-									if (!propertyListHelper.filterByRating(propertyEntity, filterCiteriaModel)) {
-										flag = false;
-									}
-								}
-								
-								// Filter by amenitiesModels
-								if (!CollectionUtils.isEmpty(filterCiteriaModel.getAmenitiesModels())) {
-									if (!propertyListHelper.filterByAmmenities(propertyEntity, filterCiteriaModel)) {
-										flag = false;
-									}
-								}
-								
-								
-								// Filter by budgets
-								if(!CollectionUtils.isEmpty(filterCiteriaModel.getBudgets())) {
-									if (!propertyListHelper.filterByBudget(propertyEntity, filterCiteriaModel, filteredRooms)) {
-										flag = false;
-									}
-								}
-								
-								
-								// Filter by popularLocations
-								if(!CollectionUtils.isEmpty(filterCiteriaModel.getPopularLocations())) {
-									if (!propertyListHelper.filterByPopularLocation(propertyEntity, filterCiteriaModel)) {
-										flag = false;
-									}
-								}
-								
-								
-								// Filter by spaceRuleModels // Couple Friendly, Pet Friendly
-								if(!CollectionUtils.isEmpty(filterCiteriaModel.getSpaceRuleModels())) {
-									if (!propertyListHelper.filterBySpaceRule(propertyEntity, filterCiteriaModel)) {
-										flag = false;
-									}
-								}
-								
-								
-								// Filter by pgCategorySexModels // Male/Female
-								if(!StringUtils.isBlank(filterCiteriaModel.getPgCategorySex())) {
-									if (!propertyListHelper.filterBySex(propertyEntity, filterCiteriaModel)) {
-										flag = false;
-									}
-								}
-								
-								if(flag) {
-									propertyModel = propertyConverter.entityToModel(propertyEntity);
+				Map<String, String> innerMap2 = new LinkedHashMap<>();
+				innerMap2.put("propertyTypeId", filterCiteriaModel.getPropertyTypeId());
+	
+				Map<String, Map<String, String>> outerMap2 = new LinkedHashMap<>();
+				outerMap2.put("eq", innerMap2);
+	
+				alliasMap.put("propertyTypeEntity", outerMap2);
+				
+				PropertyEntity propertyEntity = propertyDAO.fetchObjectBySubCiteria(alliasMap);
+				if(Objects.nonNull(propertyEntity)) {
+					
+					boolean flag = true;
+					List<PropertyEntity> filteredPropertyEntitiesByRadius = propertyDAO.selectByRadius(filterCiteriaModel);
+						// Filter By Property Start Date and End Date
+						if(propertyListHelper.filterByPropertyDate(propertyEntity, filterCiteriaModel)) {
+							
+							// Filter by location // Mandatory
+							if(propertyListHelper.filterByLocation(propertyEntity, filteredPropertyEntitiesByRadius)) {
+								// Filter by checkInDate // Mandatory
+								// Filter by checkOutDate // Mandatory
+								// Filter by roomModels // Mandatory
+								Map<Boolean, Map<String, FilterRoomModel>> filterResult = propertyListHelper.filterBycheckInDate(propertyEntity, filterCiteriaModel);
+								if (filterResult.containsKey(true)) {
 									
-									//Calculate Price
-									propertyListHelper.priceCalculationForRoomDetails(propertyEntity, filterCiteriaModel, filteredRooms, propertyModel);
-									
-									// Calculate Convenience
-									ConvenienceModel convenienceModel = convenienceService.getActiveConvenienceModel();
-									if (logger.isInfoEnabled()) {
-										logger.info("convenienceModel ==>> "+convenienceModel);
+									Map<String, FilterRoomModel> filteredRooms = filterResult.get(true);
+									System.err.println("filteredRooms ==>> "+filteredRooms);
+									// Filter By Rating
+									if (!CollectionUtils.isEmpty(filterCiteriaModel.getRatings())) {
+										if (!propertyListHelper.filterByRating(propertyEntity, filterCiteriaModel)) {
+											flag = false;
+										}
 									}
-									System.err.println("convenienceModel ==>> "+convenienceModel);
 									
-									if (Objects.nonNull(convenienceModel)) {
-										propertyModel.setConvenienceFee(convenienceModel.getAmount());
-										propertyModel.setConvenienceGSTPercentage(convenienceModel.getGstPercentage());
-										propertyModel.setConvenienceGSTAmount(String.valueOf(Math.round(Double.parseDouble(convenienceModel.getAmount()) * Double.parseDouble(convenienceModel.getGstPercentage()) / 100 * 100D) / 100D));
-									} else {
+									// Filter by amenitiesModels
+									if (!CollectionUtils.isEmpty(filterCiteriaModel.getAmenitiesModels())) {
+										if (!propertyListHelper.filterByAmmenities(propertyEntity, filterCiteriaModel)) {
+											flag = false;
+										}
+									}
+									
+									
+									// Filter by budgets
+									if(!CollectionUtils.isEmpty(filterCiteriaModel.getBudgets())) {
+										if (!propertyListHelper.filterByBudget(propertyEntity, filterCiteriaModel, filteredRooms)) {
+											flag = false;
+										}
+									}
+									
+									
+									// Filter by popularLocations
+									if(!CollectionUtils.isEmpty(filterCiteriaModel.getPopularLocations())) {
+										if (!propertyListHelper.filterByPopularLocation(propertyEntity, filterCiteriaModel)) {
+											flag = false;
+										}
+									}
+									
+									
+									// Filter by spaceRuleModels // Couple Friendly, Pet Friendly
+									if(!CollectionUtils.isEmpty(filterCiteriaModel.getSpaceRuleModels())) {
+										if (!propertyListHelper.filterBySpaceRule(propertyEntity, filterCiteriaModel)) {
+											flag = false;
+										}
+									}
+									
+									
+									// Filter by pgCategorySexModels // Male/Female
+									if(!StringUtils.isBlank(filterCiteriaModel.getPgCategorySex())) {
+										if (!propertyListHelper.filterBySex(propertyEntity, filterCiteriaModel)) {
+											flag = false;
+										}
+									}
+									
+									if(flag) {
+										propertyModel = propertyConverter.entityToModel(propertyEntity);
 										
-										propertyModel.setConvenienceFee("0");
-										propertyModel.setConvenienceGSTPercentage("0");
-										propertyModel.setConvenienceGSTAmount("0");
+										//Calculate Price
+										propertyListHelper.priceCalculationForRoomDetails(propertyEntity, filterCiteriaModel, filteredRooms, propertyModel);
+										
+										// Calculate Convenience
+										ConvenienceModel convenienceModel = convenienceService.getActiveConvenienceModel();
+										if (logger.isInfoEnabled()) {
+											logger.info("convenienceModel ==>> "+convenienceModel);
+										}
+										System.err.println("convenienceModel ==>> "+convenienceModel);
+										
+										if (Objects.nonNull(convenienceModel)) {
+											propertyModel.setConvenienceFee(convenienceModel.getAmount());
+											propertyModel.setConvenienceGSTPercentage(convenienceModel.getGstPercentage());
+											propertyModel.setConvenienceGSTAmount(String.valueOf(Math.round(Double.parseDouble(convenienceModel.getAmount()) * Double.parseDouble(convenienceModel.getGstPercentage()) / 100 * 100D) / 100D));
+										} else {
+											
+											propertyModel.setConvenienceFee("0");
+											propertyModel.setConvenienceGSTPercentage("0");
+											propertyModel.setConvenienceGSTAmount("0");
+										}
+										
+										// Setting Price Details in Key Value Pair
+										setPriceDetails(propertyModel);
+										
+										// Setting Reviews for the property
+										propertyModel.setUserReviewModels(fetchPropertyReviews(propertyModel.getPropertyId()));
+										
+										// Set Rating, Rating Text And Review Count
+										propertyModel.setRating(propertyListHelper.getRatingAndReview(propertyEntity).get(0));
+										propertyModel.setReviewCount(propertyListHelper.getRatingAndReview(propertyEntity).get(1));
+										
+										if(Double.parseDouble(propertyModel.getRating()) >= Double.parseDouble(messageUtil.getBundle("rating.key1"))) {
+											propertyModel.setRatingText(messageUtil.getBundle("rating.value1"));
+										} else if(Double.parseDouble(propertyModel.getRating()) >= Double.parseDouble(messageUtil.getBundle("rating.key2"))) {
+											propertyModel.setRatingText(messageUtil.getBundle("rating.value2"));
+										} else {
+											propertyModel.setRatingText(messageUtil.getBundle("rating.value3"));
+										}
+										
+										// Setting Host Details
+										propertyModel.setUserModel(getUserDetails(propertyEntity.getHostVsAccountEntity().getUserId()));
+										
+										if(Objects.nonNull(userModel)) {
+											setBookMark(propertyModel, userModel);
+										}
+										
+										// TODO Analysis Text
+										propertyModel.setAnalyticsText("");
+										
 									}
-									
-									// Setting Price Details in Key Value Pair
-									setPriceDetails(propertyModel);
-									
-									// Setting Reviews for the property
-									propertyModel.setUserReviewModels(fetchPropertyReviews(propertyModel.getPropertyId()));
-									
-									// Set Rating, Rating Text And Review Count
-									propertyModel.setRating(propertyListHelper.getRatingAndReview(propertyEntity).get(0));
-									propertyModel.setReviewCount(propertyListHelper.getRatingAndReview(propertyEntity).get(1));
-									
-									if(Double.parseDouble(propertyModel.getRating()) >= Double.parseDouble(messageUtil.getBundle("rating.key1"))) {
-										propertyModel.setRatingText(messageUtil.getBundle("rating.value1"));
-									} else if(Double.parseDouble(propertyModel.getRating()) >= Double.parseDouble(messageUtil.getBundle("rating.key2"))) {
-										propertyModel.setRatingText(messageUtil.getBundle("rating.value2"));
-									} else {
-										propertyModel.setRatingText(messageUtil.getBundle("rating.value3"));
-									}
-									
-									// Setting Host Details
-									propertyModel.setUserModel(getUserDetails(propertyEntity.getHostVsAccountEntity().getUserId()));
-									
-									if(Objects.nonNull(userModel)) {
-										setBookMark(propertyModel, userModel);
-									}
-									
-									// TODO Analysis Text
-									propertyModel.setAnalyticsText("");
-									
-								}
+								} 
 							} 
 						} 
-					} 
+					}
+			} catch (Exception e) {
+				if (logger.isInfoEnabled()) {
+					logger.info("Exception in fetchPropertyDetails -- "+Util.errorToString(e));
 				}
-		} catch (Exception e) {
-			if (logger.isInfoEnabled()) {
-				logger.info("Exception in fetchPropertyDetails -- "+Util.errorToString(e));
+			}
+		} else {
+			// Fetch External Hotel
+			try {
+				
+				if(StringUtils.equals(filterCiteriaModel.getPropertyTypeId(), String.valueOf(PropertyType.HOTEL.ordinal()))) {
+					filterCiteriaModel.setNoOfAdult(filterCiteriaModel.getRoomModels().get(0).getNoOfGuest());
+					filterCiteriaModel.setNoOfChild(filterCiteriaModel.getNoOfChild());
+					ResponseModel responseModel = restTemplate.postForObject(messageUtil.getBundle("hotel.server.url") +"fetch-hotel-details", filterCiteriaModel, ResponseModel.class);
+					Gson gson = new Gson();
+					String jsonString = gson.toJson(responseModel.getResponseBody());
+					gson = new Gson();
+					propertyModel = gson.fromJson(jsonString, PropertyModel.class);
+					
+					if (logger.isInfoEnabled()) {
+						logger.info("propertyModel ==>> "+propertyModel);
+					}
+					
+					System.err.println("propertyModel ==>> "+propertyModel);
+				}
+				
+			} catch (Exception e) {
+				if (logger.isInfoEnabled()) {
+					logger.info("Exception in Hotel Server -- "+Util.errorToString(e));
+				}
 			}
 		}
 		
