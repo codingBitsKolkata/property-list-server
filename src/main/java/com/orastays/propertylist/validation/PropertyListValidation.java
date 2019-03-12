@@ -188,13 +188,13 @@ public class PropertyListValidation extends AuthorizeUserValidation {
 			if (!Util.isNumeric(filterCiteriaModel.getPropertyId())) {
 				exceptions.put(messageUtil.getBundle("property.id.invalid.code"), new Exception(messageUtil.getBundle("property.id.invalid.message")));
 			} else {
-				propertyEntity = propertyDAO.find(Long.parseLong(filterCiteriaModel.getPropertyId()));
-				if (Objects.isNull(propertyEntity) && propertyEntity.getStatus() != Status.ACTIVE.ordinal()) {
-					exceptions.put(messageUtil.getBundle("property.id.invalid.code"), new Exception(messageUtil.getBundle("property.id.invalid.message")));
-				} else {
-					// May Be Hotel if CorrelationId is present
-					if (StringUtils.isBlank(filterCiteriaModel.getCorrelationID())) {
+				// May Be Hotel if CorrelationId is present
+				if (StringUtils.isBlank(filterCiteriaModel.getCorrelationID())) {
+					propertyEntity = propertyDAO.find(Long.parseLong(filterCiteriaModel.getPropertyId()));
+					if (Objects.isNull(propertyEntity) && propertyEntity.getStatus() != Status.ACTIVE.ordinal()) {
 						exceptions.put(messageUtil.getBundle("property.id.invalid.code"), new Exception(messageUtil.getBundle("property.id.invalid.message")));
+					} else {
+						
 					}
 				}
 			}
